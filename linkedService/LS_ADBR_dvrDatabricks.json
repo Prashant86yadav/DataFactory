@@ -1,0 +1,31 @@
+{
+	"name": "LS_ADBR_dvrDatabricks",
+	"properties": {
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "@linkedService().dvrDatabricksWorkspaceURL",
+			"accessToken": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AZKV_DVR",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "LS-Databricks-AccessToken",
+				"secretVersion": ""
+			},
+			"existingClusterId": "@linkedService().dvrDatabricksClusterId"
+		},
+		"parameters": {
+			"dvrDatabricksWorkspaceURL": {
+				"type": "string",
+				"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
+			},
+			"dvrDatabricksClusterId": {
+				"type": "string",
+				"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
+			}
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
