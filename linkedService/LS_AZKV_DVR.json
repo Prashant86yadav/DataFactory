@@ -1,0 +1,11 @@
+{
+	"name": "LS_AZKV_DVR",
+	"properties": {
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://s-ause-kv-covid19dvr.vault.azure.net"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}
