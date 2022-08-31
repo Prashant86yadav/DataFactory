@@ -74,6 +74,10 @@
 							"type": "Expression"
 						},
 						"readBehavior": "queryAll"
+					},
+					"dataset": {
+						"referenceName": "ds_safc_brpQuery",
+						"type": "DatasetReference"
 					}
 				}
 			},
