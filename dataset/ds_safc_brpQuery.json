@@ -1,0 +1,12 @@
+{
+	"name": "ds_safc_brpQuery",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SAFC_BRP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SalesforceObject",
+		"schema": []
+	}
+}
