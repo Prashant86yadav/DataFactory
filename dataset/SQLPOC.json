@@ -1,0 +1,12 @@
+{
+	"name": "SQLPOC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSSQLPOC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}
