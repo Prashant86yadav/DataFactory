@@ -14,8 +14,11 @@
 				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Fastest",
 			"escapeChar": "\\",
+			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
 		"schema": [
