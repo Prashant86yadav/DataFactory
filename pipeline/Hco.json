@@ -66,15 +66,6 @@
 							"typeProperties": {
 								"source": {
 									"type": "DelimitedTextSource",
-									"additionalColumns": [
-										{
-											"name": "date",
-											"value": {
-												"value": "@utcnow()",
-												"type": "Expression"
-											}
-										}
-									],
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
