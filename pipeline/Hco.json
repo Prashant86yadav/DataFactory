@@ -99,16 +99,8 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "AnalyticsDatafeed",
-									"type": "DatasetReference",
-									"parameters": {
-										"containerName": "stacspoc01",
-										"foldername": "adobe-datafeeds / adobe-analytics--datafeed",
-										"files": {
-											"value": "@item()",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "DelimitedText1",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
