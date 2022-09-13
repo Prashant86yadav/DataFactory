@@ -1,0 +1,274 @@
+{
+	"name": "s5_Copy_File_to_Failed_Folder",
+	"properties": {
+		"description": "save failed rows to CSV file",
+		"activities": [
+			{
+				"name": "Log - Extract errored rows",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy Errored File",
+						"dependencyConditions": [
+							"Failed",
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(activity('Copy Errored File').output)",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Copy Errored File",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": {
+								"value": "@pipeline().parameters.sourceFilename",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "Copy Errored File",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": {
+								"value": "@pipeline().parameters.targetFilename",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"type": {
+							"value": {
+								"value": "@if(equals(activity('Copy Errored File').Status, 'Failed'), 'error', 'info')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@concat('Exported Failures [',pipeline().parameters.sourceFilename,']')",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							},
+							"correlation_id": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.correlation_id",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy Errored File",
+						"dependencyConditions": [
+							"Skipped",
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "AzureSqlDatabase",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Copy Errored File",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				}
+			}
+		],
+		"parameters": {
+			"correlation_id": {
+				"type": "string",
+				"defaultValue": "EABF3D35-C9B8-4EA5-ADCE-5E96F2FA7749"
+			},
+			"sourceFilename": {
+				"type": "string"
+			},
+			"targetFilename": {
+				"type": "string"
+			},
+			"containerName": {
+				"type": "string"
+			},
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.0.1",
+					"sourceSystemName": "Exported Failures",
+					"optionalDataSinkType": "AzureSqlDatabase",
+					"paths": {
+						"log": "log",
+						"success": "processed",
+						"fail": "failed"
+					},
+					"targetDir": "exported-failures",
+					"stgContainer": "data-loader-stg",
+					"stgFileSuffix": ".json",
+					"targetFileSuffix": ".csv"
+				}
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}
