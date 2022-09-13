@@ -15,7 +15,8 @@
 				"defaultValue": "adobe-datafeeds"
 			},
 			"files": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "*"
 			}
 		},
 		"annotations": [],
@@ -23,6 +24,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().files",
+					"type": "Expression"
+				},
 				"folderPath": {
 					"value": "@dataset().foldername",
 					"type": "Expression"
