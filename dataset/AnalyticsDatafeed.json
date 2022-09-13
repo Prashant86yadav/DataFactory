@@ -15,8 +15,7 @@
 				"defaultValue": "adobe-datafeeds"
 			},
 			"files": {
-				"type": "string",
-				"defaultValue": "*"
+				"type": "string"
 			}
 		},
 		"annotations": [],
