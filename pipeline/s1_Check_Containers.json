@@ -1,0 +1,541 @@
+{
+	"name": "s1_Check_Containers",
+	"properties": {
+		"activities": [
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Delete discovered file cache",
+						"dependencyConditions": [
+							"Skipped",
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "@if(contains(pipeline().parameters.Configuration, 'optionalDataSinkType'), pipeline().parameters.Configuration.optionalDataSinkType, 'AzureSqlDatabase')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get registered containers",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@pipeline().parameters.Configuration.queries.getRegisteredContainers",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Process each container",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get registered containers",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get registered containers').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Check for files",
+							"type": "GetMetadata",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 3,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"fieldList": [],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true
+								}
+							}
+						},
+						{
+							"name": "Has children",
+							"type": "Switch",
+							"dependsOn": [
+								{
+									"activity": "Filter children",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@if(activity('Check for files').output.exists,if(empty(activity('Filter children').output.value),'Container has no files','Default'),'Container does not exist')",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "Container does not exist",
+										"activities": [
+											{
+												"name": "Log - Container Not Found",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Check for files').output))\n",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Registered container does not exist",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@item().containerName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": null,
+															"type": "String"
+														},
+														"type": {
+															"value": "warn",
+															"type": "String"
+														}
+													}
+												}
+											}
+										]
+									},
+									{
+										"value": "Container has no files",
+										"activities": [
+											{
+												"name": "Log - Container has no files",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Check for files').output))\n",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> No new files found in container",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@item().containerName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": null,
+															"type": "String"
+														},
+														"type": {
+															"value": "info",
+															"type": "String"
+														}
+													}
+												}
+											}
+										]
+									}
+								],
+								"defaultActivities": [
+									{
+										"name": "Store discovered files",
+										"type": "Lookup",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureSqlSource",
+												"sqlReaderStoredProcedureName": "[util].[add_key_group_value]",
+												"storedProcedureParameters": {
+													"base64_data": {
+														"type": "String",
+														"value": {
+															"value": "@base64(\nstring(union(\nitem(),\njson(concat(\n'{'\n,'\"files\":'\n,activity('Filter children').output.value\n,'}'\n)))))",
+															"type": "Expression"
+														}
+													},
+													"group_id": {
+														"type": "Guid",
+														"value": {
+															"value": "@pipeline().RunId",
+															"type": "Expression"
+														}
+													}
+												},
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "Filter children",
+							"type": "Filter",
+							"dependsOn": [
+								{
+									"activity": "Check for files",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@if(activity('Check for files').output.exists,activity('Check for files').output.childItems,json('[]'))",
+									"type": "Expression"
+								},
+								"condition": {
+									"value": "@equals(item().type,'File')",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Ingest discovered files",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get discovered files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get discovered files').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Ingest files",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": true,
+								"parameters": {
+									"Configuration": {
+										"value": "@union(json(item().data),\njson(concat(\n'{'\n,'\"logPath\":\"',json(item().data).containerName,'/' ,pipeline().parameters.Configuration.paths.log,'\"'\n,',\"successPath\":\"',json(item().data).containerName,'/',pipeline().parameters.Configuration.paths.success,'\"'\n,',\"failPath\":\"',json(item().data).containerName,'/',pipeline().parameters.Configuration.paths.fail,'\"'\n,',\"targetSchema\":\"',pipeline().parameters.Configuration.targetSchema,'\"'\n,',\"targetTable\":\"',pipeline().parameters.Configuration.targetTable,'\"'\n,'}'\n)))",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Get discovered files",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Process each container",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[util].[get_key_group_value]",
+						"storedProcedureParameters": {
+							"group_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Delete discovered file cache",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Ingest discovered files",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[util].[del_key_group_value]",
+						"storedProcedureParameters": {
+							"group_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			}
+		],
+		"concurrency": 1,
+		"parameters": {
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.1.0",
+					"sourceSystemName": "Data Files to Staging",
+					"optionalDataSinkType": "AzureSqlDatabase",
+					"queries": {
+						"getRegisteredContainers": "SELECT CASE WHEN [version] IS NULL THEN '0.1' ELSE CAST([version] as varchar(15))END [configVersion],[system_name] [sourceSystemName],[container_name] [containerName],[template_name][templateName],LOWER([file_type]) [fileType],[dc_priority] [dcPriority],csv_escape [csvEscape],csv_delimiter[csvDelimiter],csv_quote [csvQuote],[status] FROM [config].[file_template_registry] where container_name is not null and template_name is not null and system_name is not null;"
+					},
+					"paths": {
+						"log": "log",
+						"success": "processed",
+						"fail": "failed"
+					},
+					"targetSchema": "stg",
+					"targetTable": "file_data"
+				}
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}
