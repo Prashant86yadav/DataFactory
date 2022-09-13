@@ -174,7 +174,13 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"fieldList": [],
+								"fieldList": [
+									"lastModified",
+									"exists",
+									"itemType",
+									"childItems",
+									"itemName"
+								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true
