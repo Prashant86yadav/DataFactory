@@ -13,6 +13,9 @@
 			"foldername": {
 				"type": "string",
 				"defaultValue": "adobe-datafeeds"
+			},
+			"files": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
