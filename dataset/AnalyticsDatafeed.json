@@ -20,8 +20,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "staging01-acsincdev_2022-01-03.tsv.gz",
-				"folderPath": "adobe-analytics--datafeed",
+				"folderPath": "adobe-campaign--datafeed/staging/home/neolane/nl7/var/acsorg_mkt_stage1/export",
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": "\t",
