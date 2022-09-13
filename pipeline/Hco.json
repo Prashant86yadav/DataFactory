@@ -70,7 +70,7 @@
 										{
 											"name": "Lastmodified",
 											"value": {
-												"value": "@utcNow()",
+												"value": "@string(utcNow())",
 												"type": "Expression"
 											}
 										}
