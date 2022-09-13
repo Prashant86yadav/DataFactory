@@ -5,6 +5,19 @@
 			"referenceName": "Datafeeds",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"containerName": {
+				"type": "string",
+				"defaultValue": "stacspoc01"
+			},
+			"foldername": {
+				"type": "string",
+				"defaultValue": "adobe-datafeeds"
+			},
+			"filename": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
