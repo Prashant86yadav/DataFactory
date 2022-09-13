@@ -1,0 +1,931 @@
+{
+	"name": "s2_Container_Files_To_Staging",
+	"properties": {
+		"activities": [
+			{
+				"name": "Process each file",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Configuration.files",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Process file",
+							"type": "Switch",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@if(endswith(item().name,'.csv'),'csv',if(endswith(item().name,'.xml'),'xml','Default'))",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "csv",
+										"activities": [
+											{
+												"name": "JSON File to SQL Staging",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "CSV File to JSON Staging File",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "JsonSource",
+														"additionalColumns": [
+															{
+																"name": "dl_created_on",
+																"value": {
+																	"value": "@utcnow()",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_file_path",
+																"value": {
+																	"value": "@pipeline().parameters.Configuration.containerName",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_correlation_id",
+																"value": {
+																	"value": "@pipeline().RunId",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_file_name",
+																"value": {
+																	"value": "@item().name",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_template_name",
+																"value": {
+																	"value": "@pipeline().parameters.Configuration.templateName",
+																	"type": "Expression"
+																}
+															}
+														],
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "JsonReadSettings"
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink",
+														"disableMetricsCollection": false
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Archive CSV File",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "JSON File to SQL Staging",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false,
+															"deleteFilesAfterCompletion": true
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "BinarySink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Log - JSON File to SQL Staging",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "JSON File to SQL Staging",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('JSON File to SQL Staging').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> JSON File to SQL Staging",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{variables('stagingContainerName')}/@{concat(\npipeline().RunId\n,'_'\n,pipeline().parameters.Configuration.containerName\n,'_'\n,item().name\n,'.json')}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.targetSchema}.@{pipeline().parameters.Configuration.targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('JSON File to SQL Staging').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Log - Archive CSV File",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Archive CSV File",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Archive CSV File').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Archive CSV file @{if(equals(activity('Archive CSV File').Status, 'Failed'), 'to Failed', 'to Succeeded')}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.containerName}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{if(equals(activity('Archive CSV File').Status, 'Failed'), pipeline().parameters.Configuration.failPath, pipeline().parameters.Configuration.successPath)}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Archive CSV File').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "CSV File to JSON Staging File",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "JsonSink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														},
+														"formatSettings": {
+															"type": "JsonWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Log - CSV File to JSON Staging File",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "CSV File to JSON Staging File",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('CSV File to JSON Staging File').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> CSV File to JSON Staging File",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.containerName}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{variables('stagingContainerName')}/@{concat(\npipeline().RunId\n,'_'\n,pipeline().parameters.Configuration.containerName\n,'_'\n,item().name\n,'.json')}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('CSV File to JSON Staging File').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Archive Failed CSV File",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "CSV File to JSON Staging File",
+														"dependencyConditions": [
+															"Failed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false,
+															"deleteFilesAfterCompletion": true
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "BinarySink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Delete JSON Staging File",
+												"type": "Delete",
+												"dependsOn": [
+													{
+														"activity": "JSON File to SQL Staging",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"enableLogging": false,
+													"storeSettings": {
+														"type": "AzureBlobFSReadSettings",
+														"recursive": false,
+														"enablePartitionDiscovery": false
+													}
+												}
+											}
+										]
+									},
+									{
+										"value": "xml",
+										"activities": [
+											{
+												"name": "XML File to SQL Staging",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "XmlSource",
+														"additionalColumns": [
+															{
+																"name": "dl_created_on",
+																"value": {
+																	"value": "@utcnow()",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_file_path",
+																"value": {
+																	"value": "@pipeline().parameters.Configuration.containerName",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_correlation_id",
+																"value": {
+																	"value": "@pipeline().RunId",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_file_name",
+																"value": {
+																	"value": "@item().name",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "dl_template_name",
+																"value": {
+																	"value": "@pipeline().parameters.Configuration.templateName",
+																	"type": "Expression"
+																}
+															}
+														],
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false
+														},
+														"formatSettings": {
+															"type": "XmlReadSettings",
+															"validationMode": "none",
+															"namespaces": true
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink",
+														"disableMetricsCollection": false
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Archive XML file",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "XML File to SQL Staging",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "BinarySource",
+														"storeSettings": {
+															"type": "AzureBlobFSReadSettings",
+															"recursive": false,
+															"deleteFilesAfterCompletion": true
+														},
+														"formatSettings": {
+															"type": "BinaryReadSettings"
+														}
+													},
+													"sink": {
+														"type": "BinarySink",
+														"storeSettings": {
+															"type": "AzureBlobFSWriteSettings"
+														}
+													},
+													"enableStaging": false,
+													"enableSkipIncompatibleRow": false
+												}
+											},
+											{
+												"name": "Log - XML File to SQL Staging",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "XML File to SQL Staging",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('XML File to SQL Staging').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> XML File to SQL Staging",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.containerName}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.targetSchema}.@{pipeline().parameters.Configuration.targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('XML File to SQL Staging').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Log - Archive XML file",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Archive XML file",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Archive XML file').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Archive XML file @{if(equals(activity('XML File to SQL Staging').Status, 'Failed'), 'to Failed', 'to Succeeded')}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{pipeline().parameters.Configuration.containerName}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{if(equals(activity('XML File to SQL Staging').Status, 'Failed'), pipeline().parameters.Configuration.failPath, pipeline().parameters.Configuration.successPath)}/@{item().name}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Archive XML file').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							},
+							"correlation_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"correlation_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.templateName",
+									"type": "Expression"
+								}
+							},
+							"correlation_timestamp": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Staging to canonical",
+						"dependencyConditions": [
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "@if(contains(pipeline().parameters.Configuration, 'optionalDataSinkType'), pipeline().parameters.Configuration.optionalDataSinkType, 'AzureSqlDatabase')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Staging to canonical",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process each file",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": false,
+					"parameters": {
+						"CorrelationID": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						},
+						"Configuration": {
+							"value": "@json(concat(\n'{\"configVersion\":\"1.0.1\",\"sourceSystemName\":\"Staging to Canonical' \n,' ['\n,pipeline().parameters.Configuration.templateName\n,'] '\n,formatDateTime(pipeline().TriggerTime,'yyyyMMddHHmm')\n,'\", \"templateName\": \"'\n,pipeline().parameters.Configuration.templateName\n,'\"'\n,'}'))",
+							"type": "Expression"
+						},
+						"CorrelationTimestamp": {
+							"value": "@pipeline().TriggerTime",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object"
+			}
+		},
+		"variables": {
+			"stagingContainerName": {
+				"type": "String",
+				"defaultValue": "data-loader-stg"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}
