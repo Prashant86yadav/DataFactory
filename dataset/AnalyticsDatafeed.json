@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "staging01-acsincdev_2022-01-03.tsv.gz",
 				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
