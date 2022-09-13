@@ -1,0 +1,23 @@
+{
+	"name": "ds_ablb_clnCheckinDaily_write",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AZST_BlobLanding",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "25 Azure Blob files"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "_dvrcln/clnCheckinDaily",
+				"container": "internal"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
