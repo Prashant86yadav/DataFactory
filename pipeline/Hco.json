@@ -70,7 +70,7 @@
 										{
 											"name": "Lastmodified",
 											"value": {
-												"value": "@string(utcNow())",
+												"value": "@utcnow()",
 												"type": "Expression"
 											}
 										}
@@ -79,7 +79,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "@string(item())",
+											"value": "@item()",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*",
