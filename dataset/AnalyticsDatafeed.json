@@ -20,12 +20,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "adobe-campaign--datafeed/staging/home/neolane/nl7/var/acsorg_mkt_stage1/export",
+				"folderPath": "adobe-campaign--datafeed/staging/home/neolane/nl7/var/acsorg_mkt_stage1/export/",
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": "\t",
-			"compressionCodec": "gzip",
-			"compressionLevel": "Fastest",
 			"escapeChar": "\\",
 			"firstRowAsHeader": false,
 			"quoteChar": ""
