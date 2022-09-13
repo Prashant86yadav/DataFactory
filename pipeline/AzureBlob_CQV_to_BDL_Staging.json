@@ -1,0 +1,1801 @@
+{
+	"name": "AzureBlob_CQV_to_BDL_Staging",
+	"properties": {
+		"description": "Hotel Quarantine data picked up from CDL brought into BDL",
+		"activities": [
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Ingest each source file",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Log - Prepare source",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare Source",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Prepare Source').output))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Prepare Source",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.dataPrepAzFunName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": {
+								"value": "@if(equals(length(activity('Prepare Source').output.result), 0),\n'No files found for current configuration or timestamp'\n,concat('Will process ', string(length(activity('Prepare Source').output.result)), ' files'))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"type": {
+							"value": "info",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "Get Metadata from conatiners",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Set start date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Fetch data",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata from conatiners",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT csl.[data] FROM \n[logging].[cdl_sys_log] csl\nWHERE \n\tcsl.[system_name] = '@{pipeline().parameters.Configuration.sourceSystemName}'\nAND csl.[source_name] = '@{activity('Get Metadata from conatiners').output.pipelineRunId}';",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "Set start date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "startDate",
+					"value": {
+						"value": "@if(or(equals(activity('Start Run').output.firstRow.no_history,1),pipeline().parameters.Configuration.forceFullLoad),pipeline().parameters.Configuration.fullLoadStartUTC, activity('Start Run').output.firstRow.last_started)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Prepare Source",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [
+					{
+						"activity": "Fetch data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": {
+						"value": "@pipeline().parameters.Configuration.dataPrepAzFunName",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "@json(activity('Fetch data').output.firstRow.data)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Prepare Target",
+				"type": "AzureFunctionActivity",
+				"dependsOn": [
+					{
+						"activity": "Prepare Source",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"functionName": {
+						"value": "@pipeline().parameters.Configuration.targetPrepAzFunName",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "@pipeline().parameters.Configuration.groupToTargetMap",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log - Prepare Target",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare Target",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Prepare Target').output))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Prepare Target",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.targetPrepAzFunName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"type": {
+							"value": "info",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Prepare targets",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Terminate pipeline if errored",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Prepare Target').output.targetsToPrep",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Run Prep Command",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@activity('Prepare Target').output.targetMap[item()].prepSql",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "LogError - Prepare target",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Run Prep Command",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Run Prep Command')))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Run prep command",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item().groupName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": "error",
+										"type": "String"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Terminate pipeline if errored",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare Target",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[terminate_sys_run_if_errored]",
+					"storedProcedureParameters": {
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						}
+					}
+				}
+			},
+			{
+				"name": "LogAndEnd - Prepare source",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare Source",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[log_and_terminate_system_run]",
+					"storedProcedureParameters": {
+						"log_base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Prepare Source').output))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Prepare Source",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_source_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.dataPrepAzFunName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"log_type": {
+							"value": "error",
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"run_status": {
+							"value": {
+								"value": "@activity('Prepare Source').Status",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "End Run - Get Metadata from conatiners",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata from conatiners",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": {
+								"value": "@activity('Get Metadata from conatiners').Status",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "LogAndEnd - Prepare Target",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare Target",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[log_and_terminate_system_run]",
+					"storedProcedureParameters": {
+						"log_base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Prepare Target').output))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Prepare Target",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_source_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.targetPrepAzFunName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"log_type": {
+							"value": "error",
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"run_status": {
+							"value": {
+								"value": "@activity('Prepare Target').Status",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "End Run - Fetch data",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Fetch data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": {
+								"value": "@activity('Fetch data').Status",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Ingest each source file",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Prepare targets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Prepare Source').output.result",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "CheckDestination",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Log - On source file",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "DECLARE @FULL_LOAD BIT = @{if(item().append,0,1)};\nIF(@FULL_LOAD=1)\n\tBEGIN\n\t\t/* Full Load - Always ingest */\n\t\tSELECT 0 [PartitionIngested];\n\tEND\nELSE\n\tBEGIN\n\t\t/* 2020-09-04: No longer checking for destination APPEND table */\n\t\tIF EXISTS(SELECT TOP 1 1 FROM [@{activity('Prepare Target').output.targetMap[item().group].targetSchema}].[@{activity('Prepare Target').output.targetMap[item().group].targetTable}] WHERE cdl_partition_key = '@{item().partition}')\n\t\t\tBEGIN\n\t\t\t\tSELECT 1 [PartitionIngested];\n\t\t\tEND\n\t\tELSE\n\t\t\tBEGIN\n\t\t\t\tSELECT 0 [PartitionIngested];\n\t\t\tEND\n\tEND",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "Log - On source file",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(concat(\n'{ \"item\":', string(item())\n,', \"map\":', string(activity('Prepare Target').output.targetMap[item().group])\n,'}'\n))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> On source file",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item().fileName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@item().group",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": "info",
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "LogError - Check destination",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "CheckDestination",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('CheckDestination').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Check/Prep destination",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item().fileName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{activity('Prepare Target').output.targetMap[item().group].targetSchema}.@{activity('Prepare Target').output.targetMap[item().group].targetTable}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": "error",
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "LogError - Log - On source file",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Log - On source file",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Log - On source file')))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Source file group mapping",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item().fileName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": null,
+										"type": "String"
+									},
+									"type": {
+										"value": "error",
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Should ingest branch",
+							"type": "Switch",
+							"dependsOn": [
+								{
+									"activity": "CheckDestination",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"on": {
+									"value": "@if(equals(activity('CheckDestination').output.firstRow.PartitionIngested,0),if(item().append,'Append','FullLoad'),'Default')",
+									"type": "Expression"
+								},
+								"cases": [
+									{
+										"value": "FullLoad",
+										"activities": [
+											{
+												"name": "Copy source to SQL Staging Full Load",
+												"description": "Fetch data from source and append CDL fields into CSV",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"additionalColumns": [
+															{
+																"name": "cdl_partition_key",
+																"value": {
+																	"value": "@item().partition",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "cdl_created_on",
+																"value": {
+																	"value": "@formatDateTime(pipeline().TriggerTime,if(contains(item(),'createdOnDateTimeFormat'),item().createdOnDateTimeFormat,'yyyy/MM/dd HH:mm:ss'))",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "cdl_partition_name",
+																"value": "$$FILEPATH"
+															}
+														],
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": false,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink",
+														"preCopyScript": {
+															"value": "@{activity('Prepare Target').output.targetMap[item().group].preCopySql}",
+															"type": "Expression"
+														},
+														"disableMetricsCollection": false
+													},
+													"enableStaging": false,
+													"translator": {
+														"value": "@activity('Prepare Target').output.targetMap[item().group].targetTranslator",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "Log - Copy source to SQL Staging Full Load",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Copy source to SQL Staging Full Load",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Copy source to SQL Staging Full Load').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Copy source to SQL Staging",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{item().sourceFolder}\\@{item().fileName}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].stagingSchema}.@{activity('Prepare Target').output.targetMap[item().group].stagingTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Copy source to SQL Staging Full Load').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Swap staging to prod",
+												"type": "Lookup",
+												"dependsOn": [
+													{
+														"activity": "Copy source to SQL Staging Full Load",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "@activity('Prepare Target').output.targetMap[item().group].swapCommand\n",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													}
+												}
+											},
+											{
+												"name": "Log - Swap staging to prod",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Swap staging to prod",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Swap staging to prod').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Swap staging to prod",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].stagingSchema}.@{activity('Prepare Target').output.targetMap[item().group].stagingTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetSchema}.@{activity('Prepare Target').output.targetMap[item().group].targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Swap staging to prod').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Extract to CSV Full Load",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "Swap staging to prod",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "@{if(contains(pipeline().parameters.Configuration.groupToTargetMap[item().group],'targetDLSourceQuery'),\npipeline().parameters.Configuration.groupToTargetMap[item().group].targetDLSourceQuery,\nconcat('select * from [',activity('Prepare Target').output.targetMap[item().group].targetSchema,'].[',activity('Prepare Target').output.targetMap[item().group].targetTable,'];')\n)}",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"sink": {
+														"type": "DelimitedTextSink",
+														"storeSettings": {
+															"type": "AzureBlobStorageWriteSettings"
+														},
+														"formatSettings": {
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
+														}
+													},
+													"enableStaging": false
+												}
+											},
+											{
+												"name": "Log - Extract to CSV Full Load",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Extract to CSV Full Load",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Extract to CSV Full Load').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Extract to CSV Full Load",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetSchema}.@{activity('Prepare Target').output.targetMap[item().group].targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetFolder}\\@{formatDateTime(pipeline().TriggerTime,'yyyyMMddHHmm')}_@{item().group}_@{item().fileName}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Extract to CSV Full Load').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											}
+										]
+									},
+									{
+										"value": "Append",
+										"activities": [
+											{
+												"name": "Copy source to SQL",
+												"description": "Fetch data from source and add to SQL",
+												"type": "Copy",
+												"dependsOn": [],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "DelimitedTextSource",
+														"additionalColumns": [
+															{
+																"name": "cdl_partition_key",
+																"value": {
+																	"value": "@item().partition",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "cdl_created_on",
+																"value": {
+																	"value": "@formatDateTime(pipeline().TriggerTime,if(contains(item(),'createdOnDateTimeFormat'),item().createdOnDateTimeFormat,'yyyy/MM/dd HH:mm:ss'))",
+																	"type": "Expression"
+																}
+															},
+															{
+																"name": "cdl_partition_name",
+																"value": "$$FILEPATH"
+															}
+														],
+														"storeSettings": {
+															"type": "AzureBlobStorageReadSettings",
+															"recursive": false,
+															"enablePartitionDiscovery": false
+														},
+														"formatSettings": {
+															"type": "DelimitedTextReadSettings"
+														}
+													},
+													"sink": {
+														"type": "AzureSqlSink"
+													},
+													"enableStaging": false,
+													"translator": {
+														"value": "@activity('Prepare Target').output.targetMap[item().group].targetTranslator",
+														"type": "Expression"
+													}
+												}
+											},
+											{
+												"name": "Log - Copy source to DataLake",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Copy source to SQL",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Copy source to SQL').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Copy source to SQL",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{item().sourceFolder}\\@{item().fileName}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetSchema}.@{activity('Prepare Target').output.targetMap[item().group].targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Copy source to SQL').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											},
+											{
+												"name": "Extract to CSV",
+												"type": "Copy",
+												"dependsOn": [
+													{
+														"activity": "Copy source to SQL",
+														"dependencyConditions": [
+															"Succeeded"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"source": {
+														"type": "AzureSqlSource",
+														"sqlReaderQuery": {
+															"value": "@{if(contains(pipeline().parameters.Configuration.groupToTargetMap[item().group],'targetDLSourceQuery'),\npipeline().parameters.Configuration.groupToTargetMap[item().group].targetDLSourceQuery,\nconcat('select * from [',activity('Prepare Target').output.targetMap[item().group].targetSchema,'].[',activity('Prepare Target').output.targetMap[item().group].targetTable,'];')\n)}",
+															"type": "Expression"
+														},
+														"queryTimeout": "02:00:00",
+														"partitionOption": "None"
+													},
+													"sink": {
+														"type": "DelimitedTextSink",
+														"storeSettings": {
+															"type": "AzureBlobStorageWriteSettings"
+														},
+														"formatSettings": {
+															"type": "DelimitedTextWriteSettings",
+															"quoteAllText": true,
+															"fileExtension": ".txt"
+														}
+													},
+													"enableStaging": false
+												}
+											},
+											{
+												"name": "Log - Extract to CSV",
+												"type": "SqlServerStoredProcedure",
+												"dependsOn": [
+													{
+														"activity": "Extract to CSV",
+														"dependencyConditions": [
+															"Completed"
+														]
+													}
+												],
+												"policy": {
+													"timeout": "7.00:00:00",
+													"retry": 0,
+													"retryIntervalInSeconds": 30,
+													"secureOutput": false,
+													"secureInput": false
+												},
+												"userProperties": [],
+												"typeProperties": {
+													"storedProcedureName": "[logging].[create_sys_log]",
+													"storedProcedureParameters": {
+														"base64_data": {
+															"value": {
+																"value": "@base64(string(activity('Extract to CSV').output))",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"context": {
+															"value": {
+																"value": "@{pipeline().Pipeline} -> Extract to CSV",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"run_id": {
+															"value": {
+																"value": "@pipeline().RunId",
+																"type": "Expression"
+															},
+															"type": "Guid"
+														},
+														"source_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetSchema}.@{activity('Prepare Target').output.targetMap[item().group].targetTable}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"system_name": {
+															"value": {
+																"value": "@pipeline().parameters.Configuration.sourceSystemName",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"target_name": {
+															"value": {
+																"value": "@{activity('Prepare Target').output.targetMap[item().group].targetFolder}\\@{formatDateTime(pipeline().TriggerTime,'yyyyMMddHHmm')}_@{item().group}_@{item().fileName}",
+																"type": "Expression"
+															},
+															"type": "String"
+														},
+														"type": {
+															"value": {
+																"value": "@if(equals(activity('Extract to CSV').Status, 'Failed'), 'error', 'info')",
+																"type": "Expression"
+															},
+															"type": "String"
+														}
+													}
+												}
+											}
+										]
+									}
+								],
+								"defaultActivities": [
+									{
+										"name": "LogWarn - file skipped",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(item()))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> File skipped",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "@{item().sourceFolder}\\@{item().fileName}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "@item().group",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": "warn",
+													"type": "String"
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "LogAndEnd - Prepare targets",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Prepare targets",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[log_and_terminate_system_run]",
+					"storedProcedureParameters": {
+						"log_base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Prepare targets')))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Prepare targes",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_source_name": {
+							"value": null,
+							"type": "String"
+						},
+						"log_system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"log_target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"log_type": {
+							"value": "error",
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"run_status": {
+							"value": {
+								"value": "@activity('Prepare targets').Status",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object"
+			}
+		},
+		"variables": {
+			"startDate": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Data Movement"
+		},
+		"annotations": []
+	}
+}
