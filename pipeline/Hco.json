@@ -68,7 +68,7 @@
 									"type": "DelimitedTextSource",
 									"additionalColumns": [
 										{
-											"name": "Lastmodified",
+											"name": "date",
 											"value": {
 												"value": "@utcnow()",
 												"type": "Expression"
