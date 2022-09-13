@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Hco",
 	"properties": {
 		"activities": [
 			{
@@ -24,6 +24,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -69,7 +70,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "@string(item())",
+											"value": "@item()",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*",
@@ -98,8 +99,16 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "DelimitedText2",
-									"type": "DatasetReference"
+									"referenceName": "AnalyticsDatafeed",
+									"type": "DatasetReference",
+									"parameters": {
+										"containerName": "stacspoc01",
+										"foldername": "adobe-datafeeds / adobe-analytics--datafeed",
+										"files": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
