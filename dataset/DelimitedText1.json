@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "adobe-analytics--datafeed",
+				"folderPath": " adobe-datafeeds / adobe-campaign--datafeed / staging / home / neolane / nl7 / var / acsorg_mkt_stage1 / export",
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": ",",
