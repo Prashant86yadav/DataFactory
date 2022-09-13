@@ -1,0 +1,22 @@
+{
+	"name": "unzipped",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Datafeeds",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "unzippedFiles",
+				"container": "adobe-datafeeds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
