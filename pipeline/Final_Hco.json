@@ -70,7 +70,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "adobe-campaign--datafeed/prod/home/neolane/nl7/var/acsorg_mkt_stage1/export/@{item().name}",
+											"value": "adobe-campaign--datafeed/prod/home/neolane/nl7/var/acsorg_mkt_prod1/export/@{item().name}",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*",
