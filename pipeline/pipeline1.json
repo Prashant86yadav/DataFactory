@@ -97,8 +97,9 @@
 									"mappings": [
 										{
 											"source": {
+												"name": "Delivery log ID",
 												"type": "String",
-												"ordinal": 1
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Delivery log ID",
@@ -108,8 +109,9 @@
 										},
 										{
 											"source": {
+												"name": "Label",
 												"type": "String",
-												"ordinal": 2
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Label",
@@ -119,8 +121,9 @@
 										},
 										{
 											"source": {
+												"name": "Event date",
 												"type": "String",
-												"ordinal": 3
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Event date",
@@ -130,8 +133,9 @@
 										},
 										{
 											"source": {
+												"name": "Reason",
 												"type": "String",
-												"ordinal": 4
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Reason",
@@ -141,8 +145,9 @@
 										},
 										{
 											"source": {
+												"name": "Nature of failure",
 												"type": "String",
-												"ordinal": 5
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Nature of failure",
@@ -152,8 +157,9 @@
 										},
 										{
 											"source": {
+												"name": "Failure type",
 												"type": "String",
-												"ordinal": 6
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Failure type",
@@ -163,8 +169,9 @@
 										},
 										{
 											"source": {
+												"name": "Last modified",
 												"type": "String",
-												"ordinal": 7
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Last modified",
@@ -174,8 +181,9 @@
 										},
 										{
 											"source": {
+												"name": "ProfileKey",
 												"type": "String",
-												"ordinal": 8
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "ProfileKey",
@@ -185,8 +193,9 @@
 										},
 										{
 											"source": {
+												"name": "Status",
 												"type": "String",
-												"ordinal": 9
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Status",
@@ -196,8 +205,9 @@
 										},
 										{
 											"source": {
+												"name": "Profile delivery log",
 												"type": "String",
-												"ordinal": 10
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Profile delivery log",
@@ -207,8 +217,9 @@
 										},
 										{
 											"source": {
+												"name": "Content variant",
 												"type": "String",
-												"ordinal": 11
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Content variant",
@@ -218,8 +229,9 @@
 										},
 										{
 											"source": {
+												"name": "Delivery Label",
 												"type": "String",
-												"ordinal": 12
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Delivery Label",
@@ -229,8 +241,9 @@
 										},
 										{
 											"source": {
+												"name": "Delivery Title",
 												"type": "String",
-												"ordinal": 13
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Delivery Title",
@@ -240,8 +253,9 @@
 										},
 										{
 											"source": {
+												"name": "Delivery ID",
 												"type": "String",
-												"ordinal": 14
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "Delivery ID",
@@ -251,8 +265,9 @@
 										},
 										{
 											"source": {
+												"name": "ACS ID",
 												"type": "String",
-												"ordinal": 15
+												"physicalType": "String"
 											},
 											"sink": {
 												"name": "ACS ID",
