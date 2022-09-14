@@ -22,10 +22,7 @@
 					"value": "@dataset().foldername",
 					"type": "Expression"
 				},
-				"container": {
-					"value": "@dataset().containerName",
-					"type": "Expression"
-				}
+				"container": "stacspoc01"
 			},
 			"columnDelimiter": "\t",
 			"compressionCodec": "gzip",
