@@ -11,8 +11,7 @@
 				"defaultValue": "stacspoc01"
 			},
 			"foldername": {
-				"type": "string",
-				"defaultValue": "adobe-datafeeds / adobe-analytics--datafeed"
+				"type": "string"
 			},
 			"files": {
 				"type": "string"
