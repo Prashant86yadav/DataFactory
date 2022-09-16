@@ -11,7 +11,7 @@
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"folderPath": {
-					"value": "adobe-datafeeds/adobe-campaign--datafeed/prod/prod_br",
+					"value": "adobe-campaign--datafeed/prod/prod_br",
 					"type": "Expression"
 				},
 				"container": "adobe-datafeeds"
