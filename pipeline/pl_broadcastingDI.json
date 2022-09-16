@@ -70,7 +70,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
 										"wildcardFolderPath": {
-											"value": "adobe-campaign--datafeed/prod/prod_tr",
+											"value": "adobe-campaign--datafeed/prod/prod_br",
 											"type": "Expression"
 										},
 										"wildcardFileName": {
@@ -111,7 +111,7 @@
 									"referenceName": "SQLPOC",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "tracking"
+										"tablename": "broadcastingLog"
 									}
 								}
 							]
