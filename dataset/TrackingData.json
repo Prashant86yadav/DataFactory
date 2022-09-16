@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText2",
+	"name": "TrackingData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Datafeeds",
