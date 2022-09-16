@@ -8,11 +8,15 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "br"
+				"defaultValue": "tracking"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tracking"
+		}
 	}
 }
