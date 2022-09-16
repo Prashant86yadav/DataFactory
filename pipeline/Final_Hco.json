@@ -70,10 +70,13 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
 										"wildcardFolderPath": {
-											"value": "adobe-campaign--datafeed/prod/prod_br/@{item().name}",
+											"value": "adobe-campaign--datafeed/prod/prod_br",
 											"type": "Expression"
 										},
-										"wildcardFileName": "*",
+										"wildcardFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
