@@ -5,23 +5,12 @@
 			"referenceName": "Datafeeds",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"foldername": {
-				"type": "string"
-			},
-			"files": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": {
-					"value": "@dataset().foldername",
-					"type": "Expression"
-				},
+				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": "\t",
