@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText1",
+	"name": "BroadcastingData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Datafeeds",
