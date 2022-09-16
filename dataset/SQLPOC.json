@@ -5,6 +5,12 @@
 			"referenceName": "LSSQLPOC",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"tablename": {
+				"type": "string",
+				"defaultValue": "br"
+			}
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": []
