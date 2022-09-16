@@ -16,7 +16,10 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "tracking"
+			"table": {
+				"value": "@dataset().tablename",
+				"type": "Expression"
+			}
 		}
 	}
 }
