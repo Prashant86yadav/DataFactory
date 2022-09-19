@@ -126,7 +126,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "LogRunTime",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
