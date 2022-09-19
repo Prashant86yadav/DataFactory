@@ -116,7 +116,7 @@
 									"referenceName": "SQLPOC",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "[hco].[broadcastingLog]"
+										"tablename": "broadcastingLog"
 									}
 								}
 							]
