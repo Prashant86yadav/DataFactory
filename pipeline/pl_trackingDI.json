@@ -98,6 +98,224 @@
 								"enableStaging": false,
 								"translator": {
 									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Delivery log ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery log ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Date",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Date",
+												"type": "DateTime",
+												"physicalType": "datetime"
+											}
+										},
+										{
+											"source": {
+												"name": "Offer",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Offer",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Profile",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Profile",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Requester UUID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Requester UUID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Profile tracking log",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Profile tracking log",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Label",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Label",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Type",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Type",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Url ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Url ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Tracking URL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Tracking URL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Url Label",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Url Label",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Source URL",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Source URL",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Url Category",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Url Category",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Url Variant",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Url Variant",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery Title",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery Title",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery Label",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery Label",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "ACS ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ACS ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
