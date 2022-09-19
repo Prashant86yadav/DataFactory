@@ -7,15 +7,13 @@
 		},
 		"parameters": {
 			"tablename": {
-				"type": "string",
-				"defaultValue": "tracking"
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
 			"table": {
 				"value": "@dataset().tablename",
 				"type": "Expression"
