@@ -118,6 +118,67 @@
 						}
 					]
 				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[hco].[create_sys_log]",
+						"storedProcedureParameters": {
+							"datafactory": {
+								"type": "String",
+								"value": "@pipeline().DataFactory"
+							},
+							"pipelineName": {
+								"type": "String",
+								"value": "@pipeline().Pipeline"
+							},
+							"RunID": {
+								"type": "String",
+								"value": "@pipeline().RunId"
+							},
+							"triggerName": {
+								"type": "String",
+								"value": "@pipeline().TriggerType"
+							},
+							"TriggerTime": {
+								"type": "String",
+								"value": "@pipeline().TriggerName"
+							},
+							"TriggerType": {
+								"type": "String",
+								"value": "@pipeline().TriggerTime"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLPOC",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "tracking"
+						}
+					}
+				}
 			}
 		],
 		"annotations": []
