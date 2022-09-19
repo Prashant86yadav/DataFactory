@@ -85,9 +85,14 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
-									"writeBehavior": "insert",
+									"writeBehavior": "upsert",
+									"upsertSettings": {
+										"useTempDB": true,
+										"keys": [
+											"Delivery log ID"
+										]
+									},
 									"sqlWriterUseTableLock": false,
-									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
@@ -111,7 +116,10 @@
 									"referenceName": "SQLPOC",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "tracking"
+										"tablename": {
+											"value": "[hco].[tracking]",
+											"type": "Expression"
+										}
 									}
 								}
 							]
