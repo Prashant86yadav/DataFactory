@@ -70,7 +70,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
 										"wildcardFolderPath": {
-											"value": "adobe-campaign--datafeed/prod/prod_br",
+											"value": "adobe-analytics--datafeed",
 											"type": "Expression"
 										},
 										"wildcardFileName": {
@@ -102,7 +102,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "TrackingData",
+									"referenceName": "AnalyticsDatafeed",
 									"type": "DatasetReference"
 								}
 							],
