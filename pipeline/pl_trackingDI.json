@@ -157,27 +157,28 @@
 							},
 							"triggerName": {
 								"type": "String",
-								"value": "@pipeline().TriggerType"
+								"value": null
 							},
 							"TriggerTime": {
 								"type": "String",
-								"value": "@pipeline().TriggerName"
+								"value": null
 							},
 							"TriggerType": {
 								"type": "String",
-								"value": "@pipeline().TriggerTime"
+								"value": {
+									"value": "@pipeline().TriggerType",
+									"type": "Expression"
+								}
 							}
 						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "SQLPOC",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "tracking"
-						}
-					}
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
 				}
 			}
 		],
