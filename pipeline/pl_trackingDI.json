@@ -120,8 +120,8 @@
 				}
 			},
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "Stored procedure1",
+				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
 						"activity": "ForEach1",
@@ -139,46 +139,37 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderStoredProcedureName": "[hco].[create_sys_log]",
-						"storedProcedureParameters": {
-							"datafactory": {
-								"type": "String",
-								"value": "@pipeline().DataFactory"
-							},
-							"pipelineName": {
-								"type": "String",
-								"value": "@pipeline().Pipeline"
-							},
-							"RunID": {
-								"type": "String",
-								"value": "@pipeline().RunId"
-							},
-							"triggerName": {
-								"type": "String",
-								"value": null
-							},
-							"TriggerTime": {
-								"type": "String",
-								"value": null
-							},
-							"TriggerType": {
-								"type": "String",
-								"value": {
-									"value": "@pipeline().TriggerType",
-									"type": "Expression"
-								}
-							}
+					"storedProcedureName": "[hco].[create_sys_log]",
+					"storedProcedureParameters": {
+						"datafactory": {
+							"value": "@pipeline().DataFactory",
+							"type": "String"
 						},
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "AzureSQLSP",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": true
+						"pipelineName": {
+							"value": "@pipeline().Pipeline",
+							"type": "String"
+						},
+						"RunID": {
+							"value": "@pipeline().RunId",
+							"type": "String"
+						},
+						"triggerName": {
+							"value": null,
+							"type": "String"
+						},
+						"TriggerTime": {
+							"value": null,
+							"type": "String"
+						},
+						"TriggerType": {
+							"value": null,
+							"type": "String"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "LSSQLPOC",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
