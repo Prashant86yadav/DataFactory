@@ -117,7 +117,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"tablename": {
-											"value": "[hco].[tracking]",
+											"value": "tracking",
 											"type": "Expression"
 										}
 									}
