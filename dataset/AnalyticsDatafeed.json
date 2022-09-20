@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "*.tsv.gz",
 				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
