@@ -124,7 +124,8 @@
 									"referenceName": "SQLTableQ",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "broadcastingLog"
+										"tablename": "broadcastingLog",
+										"schemaname": "hco"
 									}
 								}
 							]
