@@ -331,7 +331,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "SQLPOC",
+									"referenceName": "SQLTableQ",
 									"type": "DatasetReference",
 									"parameters": {
 										"tablename": {
@@ -368,15 +368,24 @@
 					"storedProcedureName": "[hco].[create_sys_log]",
 					"storedProcedureParameters": {
 						"datafactory": {
-							"value": "@pipeline().DataFactory",
+							"value": {
+								"value": "@pipeline().DataFactory",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"pipelineName": {
-							"value": "@pipeline().Pipeline",
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"RunID": {
-							"value": "@pipeline().RunId",
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"triggerName": {

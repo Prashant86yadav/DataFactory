@@ -114,7 +114,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "SQLPOC",
+									"referenceName": "SQLTableQ",
 									"type": "DatasetReference",
 									"parameters": {
 										"tablename": "broadcastingLog"
