@@ -1,5 +1,5 @@
 {
-	"name": "SQLPOC",
+	"name": "SQLTableQ",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LSSQLPOC",
