@@ -106,6 +106,188 @@
 								"enableStaging": false,
 								"translator": {
 									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "Delivery log ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery log ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Label",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Label",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Event date",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Event date",
+												"type": "DateTime",
+												"physicalType": "datetime"
+											}
+										},
+										{
+											"source": {
+												"name": "Reason",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Reason",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Nature of failure",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Nature of failure",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Failure type",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Failure type",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Last modified",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Last modified",
+												"type": "DateTime",
+												"physicalType": "datetime"
+											}
+										},
+										{
+											"source": {
+												"name": "ProfileKey",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ProfileKey",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Status",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Status",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Profile delivery log",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Profile delivery log",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Content variant",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Content variant",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery Label",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery Label",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery Title",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery Title",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "Delivery ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "Delivery ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										},
+										{
+											"source": {
+												"name": "ACS ID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "ACS ID",
+												"type": "String",
+												"physicalType": "nvarchar"
+											}
+										}
+									],
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
