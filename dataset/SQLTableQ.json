@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"tablename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "hco"
 			},
 			"schemaname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "broadcastingLog"
 			}
 		},
 		"annotations": [],
