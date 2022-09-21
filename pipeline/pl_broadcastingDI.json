@@ -104,6 +104,7 @@
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
+								"validateDataConsistency": false,
 								"translator": {
 									"type": "TabularTranslator",
 									"mappings": [
@@ -291,7 +292,8 @@
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
+										"treatBooleanAsNumber": false,
+										"dateTimeFormat": "yyyymmdd"
 									}
 								}
 							},
