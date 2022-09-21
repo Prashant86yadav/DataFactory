@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "prod_broadLogs_20220920_233025",
 				"folderPath": {
 					"value": "adobe-campaign--datafeed/prod/prod_br",
 					"type": "Expression"
