@@ -82,7 +82,7 @@
 											"type": "Expression"
 										},
 										"wildcardFileName": {
-											"value": "*.tsv.gz",
+											"value": "@item().name",
 											"type": "Expression"
 										},
 										"enablePartitionDiscovery": false
