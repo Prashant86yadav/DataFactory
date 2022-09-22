@@ -93,15 +93,8 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
-									"writeBehavior": "upsert",
-									"upsertSettings": {
-										"useTempDB": true,
-										"keys": [
-											"Delivery log ID"
-										]
-									},
-									"sqlWriterUseTableLock": false,
-									"tableOption": "autoCreate",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": true,
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
