@@ -8581,7 +8581,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"tablename": "RawAnalytics",
-										"schemaname": "broadcastingLog"
+										"schemaname": "hco"
 									}
 								}
 							]
