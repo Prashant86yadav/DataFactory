@@ -1,9 +1,9 @@
 {
-	"name": "pl_RawAnalyticsDaily",
+	"name": "pl_RawAnalyticsDaily_Incre",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Metadata",
+				"name": "Get Metadata1",
 				"type": "GetMetadata",
 				"dependsOn": [],
 				"policy": {
@@ -24,7 +24,14 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
+						"modifiedDatetimeStart": {
+							"value": "adddays(utcnow(),-1)",
+							"type": "Expression"
+						},
+						"modifiedDatetimeEnd": {
+							"value": "@utcnow()",
+							"type": "Expression"
+						},
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -46,11 +53,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Metadata').output.childItems",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(item().name, variables('filename'))",
+						"value": "@contains(item().name, 'tsv.gz')\n\n",
 						"type": "Expression"
 					}
 				}
@@ -60,7 +67,7 @@
 				"type": "SetVariable",
 				"dependsOn": [
 					{
-						"activity": "Get Metadata",
+						"activity": "Get Metadata1",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -70,7 +77,7 @@
 				"typeProperties": {
 					"variableName": "filename",
 					"value": {
-						"value": "@concat('prod01-acsincprod_', formatDateTime(addDays(utcNow(),-1), 'yyyy-MM-dd'), '.tsv.gz')",
+						"value": "@activity('Get Metadata1').output.childItems",
 						"type": "Expression"
 					}
 				}
@@ -89,7 +96,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter1').output.value",
+						"value": "@activity('Filter TSV_GZ').output.Values",
 						"type": "Expression"
 					},
 					"activities": [
@@ -8621,7 +8628,7 @@
 		],
 		"variables": {
 			"filename": {
-				"type": "String"
+				"type": "Array"
 			}
 		},
 		"annotations": []
