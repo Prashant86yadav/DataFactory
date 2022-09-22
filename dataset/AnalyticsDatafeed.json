@@ -14,6 +14,7 @@
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
 			"escapeChar": "\\",
 			"firstRowAsHeader": false,
 			"quoteChar": ""
