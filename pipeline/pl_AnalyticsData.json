@@ -19,20 +19,11 @@
 						"referenceName": "AnalyticsDatafeed",
 						"type": "DatasetReference"
 					},
-					"fieldList": [
-						"childItems"
-					],
+					"fieldList": [],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
-						"modifiedDatetimeStart": {
-							"value": "@adddays(utcnow(),-1)",
-							"type": "Expression"
-						},
-						"modifiedDatetimeEnd": {
-							"value": "@utcnow()",
-							"type": "Expression"
-						},
+						"modifiedDatetimeStart": "2022-09-22T00:00:00.512Z",
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -77,14 +68,6 @@
 									"storeSettings": {
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": false,
-										"wildcardFolderPath": {
-											"value": "adobe-analytics--datafeed",
-											"type": "Expression"
-										},
-										"wildcardFileName": {
-											"value": "@item().name",
-											"type": "Expression"
-										},
 										"enablePartitionDiscovery": false
 									},
 									"formatSettings": {
