@@ -113,7 +113,7 @@
 										"recursive": true,
 										"wildcardFolderPath": "adobe-analytics--datafeed",
 										"wildcardFileName": {
-											"value": "@item().value",
+											"value": "@item().name",
 											"type": "Expression"
 										},
 										"enablePartitionDiscovery": false
