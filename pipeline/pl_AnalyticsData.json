@@ -23,7 +23,6 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
-						"modifiedDatetimeStart": "2022-09-22T00:00:00.512Z",
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
