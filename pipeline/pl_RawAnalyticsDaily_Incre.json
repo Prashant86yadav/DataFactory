@@ -25,7 +25,7 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"modifiedDatetimeStart": {
-							"value": "adddays(utcnow(),-1)",
+							"value": "@adddays(utcnow(),-1)",
 							"type": "Expression"
 						},
 						"modifiedDatetimeEnd": {
@@ -96,7 +96,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Filter TSV_GZ').output.Values",
+						"value": "@activity('Filter TSV_GZ').output.Value",
 						"type": "Expression"
 					},
 					"activities": [
@@ -120,7 +120,7 @@
 										"recursive": true,
 										"wildcardFolderPath": "adobe-analytics--datafeed",
 										"wildcardFileName": {
-											"value": "@variables('filename')",
+											"value": "@item().name",
 											"type": "Expression"
 										},
 										"enablePartitionDiscovery": false
