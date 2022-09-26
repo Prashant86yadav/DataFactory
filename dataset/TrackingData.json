@@ -5,6 +5,9 @@
 			"referenceName": "Datafeeds",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "HCO DS"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
