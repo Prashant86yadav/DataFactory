@@ -15,6 +15,9 @@
 				"defaultValue": "broadcastingLog"
 			}
 		},
+		"folder": {
+			"name": "HCO DS"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
