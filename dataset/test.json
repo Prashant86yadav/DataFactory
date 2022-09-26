@@ -1,5 +1,5 @@
 {
-	"name": "unzipped",
+	"name": "test",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Datafeeds",
@@ -10,10 +10,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "unzippedFiles",
+				"fileName": "prodacsincprod_2022-09-24-lookup_data.tar.gz",
+				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"compressionCodec": "TarGZip",
 			"escapeChar": "\\",
 			"quoteChar": "\""
 		},
