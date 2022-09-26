@@ -1,15 +1,15 @@
 {
-	"name": "AzureSQLSP",
+	"name": "DESKTOP_BAG8J8D",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LSSQLPOC",
+			"referenceName": "SQLServeOnPremise",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "HCO DS"
+			"name": "Others"
 		},
 		"annotations": [],
-		"type": "AzureSqlTable",
+		"type": "SqlServerTable",
 		"schema": []
 	}
 }

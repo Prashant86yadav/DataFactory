@@ -5,6 +5,9 @@
 			"referenceName": "LS_SAFC_BRP",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Others"
+		},
 		"annotations": [],
 		"type": "SalesforceObject",
 		"schema": []
