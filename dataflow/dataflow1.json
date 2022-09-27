@@ -10,18 +10,41 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
-				}
-			],
-			"sinks": [
+				},
 				{
 					"dataset": {
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
 				}
 			],
-			"transformations": [],
+			"sinks": [
+				{
+					"name": "cachekey"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "exists1"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          ProductKey as short,",
@@ -65,54 +88,66 @@
 				"     validateSchema: false,",
 				"     inferDriftedColumnTypes: true,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 sink(allowSchemaDrift: true,",
+				"source(output(",
+				"          ProductKey as short,",
+				"          ProductAlternateKey as string,",
+				"          ProductSubcategoryKey as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          EnglishProductName as string,",
+				"          SpanishProductName as string,",
+				"          FrenchProductName as string,",
+				"          StandardCost as string,",
+				"          FinishedGoodsFlag as integer,",
+				"          Color as string,",
+				"          SafetyStockLevel as short,",
+				"          ReorderPoint as short,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeRange as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as integer,",
+				"          ProductLine as string,",
+				"          DealerPrice as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ModelName as string,",
+				"          LargePhoto as string,",
+				"          EnglishDescription as string,",
+				"          FrenchDescription as string,",
+				"          ChineseDescription as string,",
+				"          ArabicDescription as string,",
+				"          HebrewDescription as string,",
+				"          ThaiDescription as string,",
+				"          GermanDescription as string,",
+				"          JapaneseDescription as string,",
+				"          TurkishDescription as string,",
+				"          StartDate as string,",
+				"          EndDate as string,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'select max(productkey) as mk from [dbo].[DimProduct] ',",
+				"     format: 'query') ~> source3",
+				"source1 derive(compT = md5(ProductAlternateKey,EnglishProductName)) ~> derivedColumn1",
+				"source2 derive(comps = md5(ProductAlternateKey,EnglishProductName)) ~> derivedColumn2",
+				"derivedColumn1, derivedColumn2 exists(compT == comps,",
+				"     negate:true,",
+				"     broadcast: 'left')~> exists1",
+				"exists1 derive(ProductKey = cachekey#output()) ~> derivedColumn3",
+				"source3 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          ProductKey,",
-				"          ProductAlternateKey,",
-				"          ProductSubcategoryKey,",
-				"          WeightUnitMeasureCode,",
-				"          SizeUnitMeasureCode,",
-				"          EnglishProductName,",
-				"          SpanishProductName,",
-				"          FrenchProductName,",
-				"          StandardCost,",
-				"          FinishedGoodsFlag,",
-				"          Color,",
-				"          SafetyStockLevel,",
-				"          ReorderPoint,",
-				"          ListPrice,",
-				"          Size,",
-				"          SizeRange,",
-				"          Weight,",
-				"          DaysToManufacture,",
-				"          ProductLine,",
-				"          DealerPrice,",
-				"          Class,",
-				"          Style,",
-				"          ModelName,",
-				"          LargePhoto,",
-				"          EnglishDescription,",
-				"          FrenchDescription,",
-				"          ChineseDescription,",
-				"          ArabicDescription,",
-				"          HebrewDescription,",
-				"          ThaiDescription,",
-				"          GermanDescription,",
-				"          JapaneseDescription,",
-				"          TurkishDescription,",
-				"          StartDate,",
-				"          EndDate,",
-				"          Status",
-				"     )) ~> sink1"
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 1) ~> cachekey"
 			]
 		}
 	}
