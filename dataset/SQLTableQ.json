@@ -8,11 +8,11 @@
 		"parameters": {
 			"tablename": {
 				"type": "string",
-				"defaultValue": "hco"
+				"defaultValue": "DimProduct"
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "broadcastingLog"
+				"defaultValue": "dbo"
 			}
 		},
 		"folder": {
