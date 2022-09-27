@@ -67,6 +67,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -124,8 +125,10 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
+									"preCopyScript": "truncate table [hco].[RawAnalytics]",
 									"writeBehavior": "insert",
-									"sqlWriterUseTableLock": false
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
 								"translator": {
