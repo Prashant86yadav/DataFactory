@@ -140,7 +140,7 @@
 				"derivedColumn1, derivedColumn2 exists(compT == comps,",
 				"     negate:true,",
 				"     broadcast: 'left')~> exists1",
-				"exists1 derive(ProductKey = cachekey#output()) ~> derivedColumn3",
+				"exists1 derive(ProductKey = toInteger(cachekey#output().mk)) ~> derivedColumn3",
 				"source3 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
