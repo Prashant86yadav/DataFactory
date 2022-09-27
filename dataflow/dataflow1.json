@@ -33,10 +33,10 @@
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "A"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "B"
 				},
 				{
 					"name": "exists1"
@@ -130,17 +130,22 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source2",
-				"source(allowSchemaDrift: true,",
+				"source(output(",
+				"          mk as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     isolationLevel: 'READ_COMMITTED',",
 				"     query: 'select max(productkey) as mk from [dbo].[DimProduct] ',",
 				"     format: 'query') ~> source3",
-				"source1 derive(compT = md5(ProductAlternateKey,EnglishProductName)) ~> derivedColumn1",
-				"source2 derive(comps = md5(ProductAlternateKey,EnglishProductName)) ~> derivedColumn2",
-				"derivedColumn1, derivedColumn2 exists(compT == comps,",
+				"source1 derive(compT = md5(ProductAlternateKey,EnglishProductName)) ~> A",
+				"source2 derive(comps = md5(ProductAlternateKey,EnglishProductName)) ~> B",
+				"A, B exists(source1@ProductAlternateKey == source2@ProductAlternateKey",
+				"     && compT == comps,",
 				"     negate:true,",
 				"     broadcast: 'left')~> exists1",
-				"exists1 derive(ProductKey = toInteger(cachekey#output().mk)) ~> derivedColumn3",
+				"exists1 derive(ProductKey = add(toInteger(cachekey#output().mk),1),",
+				"          StartDate = currentDate()) ~> derivedColumn3",
 				"source3 sink(validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
