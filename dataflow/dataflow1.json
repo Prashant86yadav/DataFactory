@@ -167,7 +167,7 @@
 				"     broadcast: 'left')~> exists1",
 				"exists1 derive(ProductKey = add(toInteger(cachekey#output().mk),1),",
 				"          StartDate = toString(currentDate()),",
-				"          Status = '') ~> derivedColumn3",
+				"          Status = 'current') ~> derivedColumn3",
 				"B, A exists(source2@ProductAlternateKey == source1@ProductAlternateKey,",
 				"     negate:false,",
 				"     broadcast: 'auto')~> exists2",
