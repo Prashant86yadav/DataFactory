@@ -1,0 +1,53 @@
+{
+	"name": "Dedupe",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "TestBlob",
+						"type": "DatasetReference"
+					},
+					"name": "BLOBDS"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Rowhash"
+				},
+				{
+					"name": "Distinct"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> BLOBDS",
+				"BLOBDS derive(rowhash = sha2(256, columns())) ~> Rowhash",
+				"Rowhash aggregate(groupBy(rowhash),",
+				"     rowhash1 = count(),",
+				"          each(match(name!='rowhash'), $$ = first($$))) ~> Distinct",
+				"Distinct sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
