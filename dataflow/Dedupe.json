@@ -62,7 +62,23 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          empid,",
+				"          lastname,",
+				"          firstname,",
+				"          title,",
+				"          titleofcourtesy,",
+				"          birthdate,",
+				"          hiredate,",
+				"          address,",
+				"          city,",
+				"          region,",
+				"          postalcode,",
+				"          country,",
+				"          phone,",
+				"          mgrid",
+				"     )) ~> sink1"
 			]
 		}
 	}
