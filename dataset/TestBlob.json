@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "products.csv",
+				"fileName": "emp.csv",
 				"folderPath": "test",
 				"fileSystem": "adobe-datafeeds"
 			},
