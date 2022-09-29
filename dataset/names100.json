@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "100-Records.csv",
+				"fileName": "100 Records.csv",
 				"folderPath": "test",
 				"container": "adobe-datafeeds"
 			},
