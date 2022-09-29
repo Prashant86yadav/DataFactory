@@ -15,16 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "Dedupe",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink1": {
-								"tablename": "Employees",
-								"schemaname": "dbo"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
