@@ -48,7 +48,6 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     inferDriftedColumnTypes: true,",
 				"     ignoreNoFilesFound: false) ~> BLOBDS",
 				"BLOBDS derive(rowhash = sha2(256, columns())) ~> Rowhash",
 				"Rowhash aggregate(groupBy(rowhash),",
