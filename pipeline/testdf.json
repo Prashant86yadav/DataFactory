@@ -16,19 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "SCD",
+						"referenceName": "Dedupe",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"source2": {
-								"tablename": "DimProduct",
-								"schemaname": "dbo"
-							},
-							"source3": {
-								"tablename": "DimProduct",
-								"schemaname": "dbo"
-							},
 							"sink1": {
-								"tablename": "DimProduct",
+								"tablename": "Employees",
 								"schemaname": "dbo"
 							}
 						}
