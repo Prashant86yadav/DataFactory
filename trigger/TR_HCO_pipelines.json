@@ -1,5 +1,5 @@
 {
-	"name": "TR_RawAnalytics",
+	"name": "TR_HCO_pipelines",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
@@ -19,6 +19,12 @@
 			{
 				"pipelineReference": {
 					"referenceName": "pl_trackingDaily_Incre",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "pl_trackingDailyI_ncre",
 					"type": "PipelineReference"
 				}
 			}
