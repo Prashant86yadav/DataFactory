@@ -7,21 +7,53 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"AzureBlobStorage_connectionString": {
+		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
 		},
-		"AzureSqlDatabase_connectionString": {
+		"Datafeeds_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase'"
+			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
 		},
-		"azureDataLake_accountKey": {
+		"LSSQLPOC_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'azureDataLake'"
+			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
 		},
-		"azureDataLake_properties_typeProperties_url": {
+		"LS_AZST_BlobLanding_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
+		},
+		"SQLServeOnPremise_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQLServeOnPremise'"
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://datalake3108.dfs.core.windows.net"
+			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "@linkedService().dvrDatabricksClusterId"
+		},
+		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
+		},
+		"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://dhhsbrp.my.salesforce.com"
+		},
+		"LS_SAFC_BRP_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
+		},
+		"WeatherRestD_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
+		},
+		"lga_google_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
 		},
 		"containerUri": {
 			"type": "string",
@@ -50,21 +82,65 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"AzureBlobStorage_connectionString": {
-						"value": "[parameters('AzureBlobStorage_connectionString')]"
+					"AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					},
-					"AzureSqlDatabase_connectionString": {
-						"value": "[parameters('AzureSqlDatabase_connectionString')]"
+					"Datafeeds_connectionString": {
+						"value": "[parameters('Datafeeds_connectionString')]"
 					},
-					"azureDataLake_accountKey": {
-						"value": "[parameters('azureDataLake_accountKey')]"
+					"LSSQLPOC_connectionString": {
+						"value": "[parameters('LSSQLPOC_connectionString')]"
 					},
-					"azureDataLake_properties_typeProperties_url": {
-						"value": "[parameters('azureDataLake_properties_typeProperties_url')]"
+					"LS_AZST_BlobLanding_connectionString": {
+						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
+					},
+					"SQLServeOnPremise_connectionString": {
+						"value": "[parameters('SQLServeOnPremise_connectionString')]"
+					},
+					"AzureDataLakeStorage_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+					},
+					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
+						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
+					},
+					"WeatherRestD_properties_typeProperties_url": {
+						"value": "[parameters('WeatherRestD_properties_typeProperties_url')]"
+					},
+					"lga_google_properties_typeProperties_url": {
+						"value": "[parameters('lga_google_properties_typeProperties_url')]"
+					},
+					"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
+					},
+					"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]"
+					},
+					"LS_SAFC_BRP_properties_typeProperties_username": {
+						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "acs-as-poc-df01_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_0')]"
+			]
 		}
 	]
 }

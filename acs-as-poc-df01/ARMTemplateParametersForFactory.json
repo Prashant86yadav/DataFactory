@@ -5,17 +5,41 @@
 		"factoryName": {
 			"value": "acs-as-poc-df01"
 		},
-		"AzureBlobStorage_connectionString": {
+		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
-		"AzureSqlDatabase_connectionString": {
+		"Datafeeds_connectionString": {
 			"value": ""
 		},
-		"azureDataLake_accountKey": {
+		"LSSQLPOC_connectionString": {
 			"value": ""
 		},
-		"azureDataLake_properties_typeProperties_url": {
-			"value": "https://datalake3108.dfs.core.windows.net"
+		"LS_AZST_BlobLanding_connectionString": {
+			"value": ""
+		},
+		"SQLServeOnPremise_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
+			"value": "@linkedService().dvrDatabricksClusterId"
+		},
+		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
+			"value": "https://s-ause-kv-covid19dvr.vault.azure.net"
+		},
+		"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
+			"value": "https://dhhsbrp.my.salesforce.com"
+		},
+		"LS_SAFC_BRP_properties_typeProperties_username": {
+			"value": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
+		},
+		"WeatherRestD_properties_typeProperties_url": {
+			"value": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
+		},
+		"lga_google_properties_typeProperties_url": {
+			"value": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
 		}
 	}
 }
