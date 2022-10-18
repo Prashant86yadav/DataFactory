@@ -1,0 +1,576 @@
+{
+	"name": "s6_Delete_Salesforce_Records",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get faulted queries by entity",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Delete faulted imports",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@variables('getFaultedQueriesSql')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Delete faulted inserts by entity",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get faulted queries by entity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get faulted queries by entity').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Get faulted inserts for entity",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@item().query",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"firstRowOnly": false
+							}
+						},
+						{
+							"name": "Records found",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Get faulted inserts for entity",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(activity('Get faulted inserts for entity').output.count,0)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Chunk Salesforce IDs",
+										"type": "AzureFunctionActivity",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 3,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"functionName": "ChunkSalesforceIds",
+											"method": "POST",
+											"body": {
+												"value": "@string(activity('Get faulted inserts for entity').output.value)",
+												"type": "Expression"
+											}
+										}
+									},
+									{
+										"name": "Delete chunked IDs",
+										"type": "ExecutePipeline",
+										"dependsOn": [
+											{
+												"activity": "Chunk Salesforce IDs",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"userProperties": [],
+										"typeProperties": {
+											"waitOnCompletion": true,
+											"parameters": {
+												"Configuration": {
+													"value": "@pipeline().parameters.Configuration",
+													"type": "Expression"
+												},
+												"SalesforceIDs": {
+													"value": "@activity('Chunk Salesforce IDs').output.chunkedIds",
+													"type": "Expression"
+												},
+												"ParentRunID": {
+													"value": "@pipeline().RunId",
+													"type": "Expression"
+												}
+											}
+										}
+									},
+									{
+										"name": "Log - Chunk Salesforce IDs",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Chunk Salesforce IDs",
+												"dependencyConditions": [
+													"Completed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('Chunk Salesforce IDs').output))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> @{if(equals(activity('Chunk Salesforce IDs').Status, 'Failed'), 'Failed to chunk salesforce ids', 'Delete by entity')}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "@item().entity_name",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "@{activity('Get faulted inserts for entity').output.count} orphaned @{if(greater(activity('Get faulted inserts for entity').output.count,1),'records','record')} to delete",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": {
+														"value": "@if(equals(activity('Chunk Salesforce IDs').Status, 'Failed'), 'error', 'info')",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										}
+									}
+								]
+							}
+						},
+						{
+							"name": "Log - Get faulted inserts for entity",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Get faulted inserts for entity",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Get faulted inserts for entity').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Get faulted inserts for entity",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item().instance_name",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": null,
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Get faulted inserts for entity').Status, 'Failed'), 'error', 'info')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							},
+							"correlation_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().parameters.CorrelationID",
+									"type": "Expression"
+								}
+							},
+							"correlation_name": {
+								"type": "String",
+								"value": null
+							},
+							"correlation_timestamp": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().parameters.CorrelationTimestamp",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Delete faulted inserts by entity",
+						"dependencyConditions": [
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "@if(contains(pipeline().parameters.Configuration, 'optionalDataSinkType'), pipeline().parameters.Configuration.optionalDataSinkType, 'AzureSqlDatabase')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Log - Get faulted queries by entity",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get faulted queries by entity",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Get faulted queries by entity').output))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Get faulted queries by entity",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": {
+								"value": "Correlation id: @{pipeline().parameters.CorrelationID}",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"type": {
+							"value": {
+								"value": "@if(equals(activity('Get faulted queries by entity').Status, 'Failed'), 'error', 'info')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Delete faulted imports",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@if(contains(pipeline().parameters.Configuration,'fullDelete'),not(pipeline().parameters.Configuration.fullDelete),bool(1))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Set query for all imports",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "getFaultedQueriesSql",
+								"value": {
+									"value": "declare @@correlation_id uniqueidentifier = '@{pipeline().parameters.CorrelationID}';\n\nwith entity_list as (\nselect distinct [entity_name], max(created_on) [last_insert]\n\tfrom salesforce.operations_completed \nwhere correlation_id = @@correlation_id and operation = 'create'\n\tgroup by [entity_name]\n)\nselect CONCAT(\n\t'SELECT oc.salesforce_id[Id],oc.[entity_name],oc.[instance_name],oc.[correlation_id],fd.[status]',\n\t' FROM salesforce.operations_completed oc',\n\t' inner join canonical.[', [entity_name],'] cn on cn.dl_correlation_id = oc.correlation_id and oc.cn_item_id = cn.dl_item_id',\n\t' inner join stg.file_data fd on fd.item_id = cn.dl_stg_item_id',\n\t' WHERE oc.[operation] = ''create'' and oc.correlation_id = ''', @@correlation_id,''' and oc.[entity_name] = ''',[entity_name],''''\n\t) as query,\t\n\t[entity_name], last_insert\nfrom entity_list\norder by last_insert desc;",
+									"type": "Expression"
+								}
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set query for faulted imports",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "getFaultedQueriesSql",
+								"value": {
+									"value": "declare @@correlation_id uniqueidentifier = '@{pipeline().parameters.CorrelationID}';\n\nwith entity_list as (\nselect distinct [entity_name], max(created_on) [last_insert]\n\tfrom salesforce.operations_completed \nwhere correlation_id = @@correlation_id and operation = 'create'\n\tgroup by [entity_name]\n)\nselect CONCAT(\n\t'SELECT oc.salesforce_id[Id],oc.[entity_name],oc.[instance_name],oc.[correlation_id],fd.[status]',\n\t' FROM salesforce.operations_completed oc',\n\t' inner join canonical.[', [entity_name],'] cn on cn.dl_correlation_id = oc.correlation_id and oc.cn_item_id = cn.dl_item_id',\n\t' inner join stg.file_data fd on fd.item_id = cn.dl_stg_item_id and fd.[status] != ''valid''',\n\t' WHERE oc.[operation] = ''create'' and oc.correlation_id = ''', @@correlation_id,''' and oc.[entity_name] = ''',[entity_name],''''\n\t) as query,\t\n\t[entity_name], last_insert\nfrom entity_list\norder by last_insert desc;",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.0.0",
+					"sourceSystemName": "Delete orphaned records",
+					"optionalDataSinkType": "AzureSqlDatabase",
+					"salesforceAPISecret": "salesforce-api-credentials"
+				}
+			},
+			"CorrelationID": {
+				"type": "string"
+			},
+			"CorrelationTimestamp": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"getFaultedQueriesSql": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}

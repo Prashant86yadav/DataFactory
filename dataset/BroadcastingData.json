@@ -1,0 +1,29 @@
+{
+	"name": "BroadcastingData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Datafeeds",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HCO DS"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": {
+					"value": "adobe-campaign--datafeed/prod/prod_br",
+					"type": "Expression"
+				},
+				"container": "adobe-datafeeds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

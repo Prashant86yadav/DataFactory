@@ -1,0 +1,20 @@
+{
+	"name": "LS_AZST_BlobLanding",
+	"properties": {
+		"type": "AzureBlobStorage",
+		"annotations": [],
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=sausestc19dvr;",
+			"accountKey": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AZKV_DVR",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "LS-Storage-AccessKey",
+				"secretVersion": ""
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
+}

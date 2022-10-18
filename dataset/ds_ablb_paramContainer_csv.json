@@ -1,0 +1,33 @@
+{
+	"name": "ds_ablb_paramContainer_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AZST_BlobLanding",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ContainerName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "20 Azure Blob Parameterised"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": {
+					"value": "@dataset().ContainerName",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

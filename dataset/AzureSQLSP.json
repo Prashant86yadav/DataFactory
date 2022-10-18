@@ -1,0 +1,15 @@
+{
+	"name": "AzureSQLSP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSSQLPOC",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HCO DS"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	}
+}

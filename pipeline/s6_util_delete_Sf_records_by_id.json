@@ -1,0 +1,451 @@
+{
+	"name": "s6_util_delete_Sf_records_by_id",
+	"properties": {
+		"activities": [
+			{
+				"name": "Delete each Id Chunk",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get bearer token",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.SalesforceIDs",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Delete salesforce items by ID",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 2,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "@{json(activity('Get auth details from KeyVault').output.value).sfEnvUrl}/services/data/v50.0/composite/sobjects?ids=@{item()}&allOrNone=false",
+									"type": "Expression"
+								},
+								"method": "DELETE",
+								"headers": {
+									"Authorization": {
+										"value": "Bearer @{activity('Get bearer token').output.access_token}",
+										"type": "Expression"
+									},
+									"Content-Type": "application/json"
+								}
+							}
+						},
+						{
+							"name": "Log - Delete salesforce items by ID",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Delete salesforce items by ID",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Delete salesforce items by ID').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> @{if(equals(activity('Delete salesforce items by ID').Status, 'Failed'), 'Failed to delete batch', 'Deleted batch')}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().parameters.ParentRunID",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@item()",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{json(activity('Get auth details from KeyVault').output.value).sfEnvUrl}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Delete salesforce items by ID').Status, 'Failed'), 'error', 'info')\n\n",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Filter errors",
+							"type": "Filter",
+							"dependsOn": [
+								{
+									"activity": "Delete salesforce items by ID",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"items": {
+									"value": "@json(activity('Delete salesforce items by ID').output.Response)",
+									"type": "Expression"
+								},
+								"condition": {
+									"value": "@not(item().success)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Errors exist",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Filter errors",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@not(empty(activity('Filter errors').output.value))",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "LogWarn - Delete operation had failures",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('Filter errors').output.value))\n\n",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> Errors occurred",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().parameters.ParentRunID",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "Failed to delete @{activity('Filter errors').output.FilteredItemsCount} @{if(greater(activity('Filter errors').output.FilteredItemsCount,1),'records','record')}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "@{if(greater(activity('Filter errors').output.FilteredItemsCount,1),'First error:','Error:')} @{first(first(activity('Filter errors').output.value).errors).statusCode}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": "warn",
+													"type": "String"
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Get auth details from KeyVault",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@{pipeline().globalParameters.dataLoaderKeyVaultUrl}/secrets/@{pipeline().parameters.Configuration.salesforceAPISecret}/?api-version=7.0",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "Get bearer token",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Get auth details from KeyVault",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@{json(activity('Get auth details from KeyVault').output.value).hostUrl}?grant_type=password&client_id=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).consumerKey)}&client_secret=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).consumerSecret)}&username=@{json(activity('Get auth details from KeyVault').output.value).userName}&password=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).password)}@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).securityToken)}",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"body": {
+						"value": "@string(json('{}'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log - Get auth details from KeyVault",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get auth details from KeyVault",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Get auth details from KeyVault')))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Get auth details from KeyVault",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().parameters.ParentRunID",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": null,
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"type": {
+							"value": {
+								"value": "@if(equals(activity('Get auth details from KeyVault').Status, 'Failed'), 'error', 'info')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Log - Get bearer token",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get bearer token",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Get bearer token')))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Get bearer token",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().parameters.ParentRunID",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": null,
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"type": {
+							"value": {
+								"value": "@if(equals(activity('Get bearer token').Status, 'Failed'), 'error', 'info')",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.0.0",
+					"sourceSystemName": "Delete orphaned objects",
+					"optionalDataSinkType": "AzureSqlDatabase",
+					"salesforceAPISecret": "salesforce-api-credentials"
+				}
+			},
+			"SalesforceIDs": {
+				"type": "array"
+			},
+			"ParentRunID": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load/Admin"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-02-01T02:26:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,866 @@
+{
+	"name": "Ingest_Excel_Config",
+	"properties": {
+		"activities": [
+			{
+				"name": "Process sheets",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set file name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Configuration.source.sheets",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Ingest sheet",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"additionalColumns": [
+										{
+											"name": "dl_correlation_id",
+											"value": {
+												"value": "@pipeline().RunId",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "dl_file_name",
+											"value": {
+												"value": "@variables('sourceFile')",
+												"type": "Expression"
+											}
+										},
+										{
+											"name": "dl_file_path",
+											"value": {
+												"value": "@variables('sourceContainer')",
+												"type": "Expression"
+											}
+										}
+									],
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": false
+									}
+								},
+								"enableStaging": false
+							}
+						},
+						{
+							"name": "Post processing",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Clean and Trim Strings",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "@{if(contains(item(),'postProcessingSql'), item().postProcessingSql, '')}\nSELECT @@rowcount [rows_updated];",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "Clean and Trim Strings",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Ingest sheet",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderStoredProcedureName": "[util].[clean_string_values]",
+									"storedProcedureParameters": {
+										"correlation_id": {
+											"type": "Guid",
+											"value": null
+										},
+										"schema_name": {
+											"type": "String",
+											"value": {
+												"value": "@item().targetSchema",
+												"type": "Expression"
+											}
+										},
+										"table_name": {
+											"type": "String",
+											"value": {
+												"value": "@item().targetTable",
+												"type": "Expression"
+											}
+										}
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "Log - Ingest sheet",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Ingest sheet",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Ingest sheet').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Ingest sheet",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "[@{variables('sourceFile')}].@{item().sheetName}(@{item().sheetRange})",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{item().targetSchema}.@{item().targetTable}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Ingest sheet').Status, 'Failed'), 'error', 'info')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Log - Post processing",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Post processing",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Ingest sheet').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Post processing",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@{item().targetSchema}.@{item().targetTable}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{activity('Post processing').output.firstRow.rows_updated} records updated",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Ingest sheet').Status, 'Failed'), 'error', 'info')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Log - Clean and Trim Strings",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Clean and Trim Strings",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Clean and Trim Strings').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Clean and Trim Strings",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@{item().targetSchema}.@{item().targetTable}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{activity('Clean and Trim Strings').output.firstRow.rows_cleaned} records cleaned",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Clean and Trim Strings').Status, 'Failed'), 'error', 'info')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(string(pipeline().parameters.Configuration))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Get Salesforce Ref Data",
+						"dependencyConditions": [
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "@if(contains(pipeline().parameters.Configuration, 'optionalDataSinkType'), pipeline().parameters.Configuration.optionalDataSinkType, 'AzureSqlDatabase')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Set container name",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "sourceContainer",
+					"value": {
+						"value": "@if(empty(pipeline().parameters.SourceContainer),pipeline().parameters.Configuration.source.folder,pipeline().parameters.SourceContainer)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Set file name",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Set container name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "sourceFile",
+					"value": {
+						"value": "@if(empty(pipeline().parameters.SourceFile),pipeline().parameters.Configuration.source.fileName,pipeline().parameters.SourceFile)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Log - Run Config",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Set file name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(pipeline().parameters.Configuration))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Mapping Source",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": {
+								"value": "@{variables('sourceContainer')}\\@{variables('sourceFile')}",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": "Data Loader Maps",
+							"type": "String"
+						},
+						"type": {
+							"value": "info",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Move file",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Update Canonical Tables",
+						"dependencyConditions": [
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": false,
+							"deleteFilesAfterCompletion": {
+								"value": "@not(empty(pipeline().parameters.SourceContainer))",
+								"type": "Expression"
+							}
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				}
+			},
+			{
+				"name": "Update Canonical Tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Refresh salesforce metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[config].[create_canonical_tables]",
+					"storedProcedureParameters": {
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Mapping Source",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"pipeline_name": {
+							"value": {
+								"value": "@pipeline().Pipeline",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Refresh salesforce metadata",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process sheets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Log - Update Canonical Tables",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Update Canonical Tables",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[create_sys_log]",
+					"storedProcedureParameters": {
+						"base64_data": {
+							"value": {
+								"value": "@base64(string(activity('Update Canonical Tables')))",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"context": {
+							"value": {
+								"value": "@{pipeline().Pipeline} -> Update Canonical Tables",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"source_name": {
+							"value": null,
+							"type": "String"
+						},
+						"system_name": {
+							"value": {
+								"value": "@pipeline().parameters.Configuration.sourceSystemName",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"target_name": {
+							"value": null,
+							"type": "String"
+						},
+						"type": {
+							"value": "error",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Get Salesforce Ref Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Move file",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true,
+					"parameters": {
+						"Configuration": {
+							"value": "@json('{\n\t\"configVersion\": \"1.0\",\n\t\"sourceSystemName\": \"Data Loader Salesforce Ref Data\",\n\t\"salesforceObjectName\": \"Group\",\n\t\"translationGroupName\": \"Owner.Queue\",\n\t\"salesforceGroupType\": \"Queue\",\n\t\"soqlQuery\": \"select id, name, developerName, email, type from Group\"\n}')",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.9.1",
+					"sourceSystemName": "Data Loader Config Load",
+					"source": {
+						"type": "Excel",
+						"fileName": "Consolidated Non ELR_202012221200.xlsx",
+						"folder": "data-loader-config",
+						"sheets": [
+							{
+								"sheetName": "Relationships",
+								"sheetRange": "A1:H20000",
+								"targetSchema": "config",
+								"targetTable": "relationship_map",
+								"postProcessingSql": "delete from [config].[relationship_map] where [salesforce_entity] is null or [template_name] is null; update config.relationship_map set related_field = 'Id' where related_object is not null and related_field is null; UPDATE rm SET salesforce_entity = ofb.parentSObject, salesforce_field = ofb.[name] from config.relationship_map rm inner join salesforce.vw_object_fields_basic ofb on ofb.parentSObject = rm.salesforce_entity and ofb.[name] = rm.salesforce_field; UPDATE rm SET related_object = ofb.parentSObject, related_field = ofb.[name] from config.relationship_map rm inner join salesforce.vw_object_fields_basic ofb on ofb.parentSObject = rm.related_object and ofb.[name] = rm.related_field; UPDATE config.relationship_map SET source_instance_name = LOWER(source_instance_name), related_instance_name = LOWER(related_instance_name);",
+								"loadType": "Full"
+							},
+							{
+								"sheetName": "XML Files",
+								"sheetRange": "A1:O20000",
+								"targetSchema": "config",
+								"targetTable": "template_data_map",
+								"postProcessingSql": "delete from [config].[template_data_map] where [salesforce_entity] is null;UPDATE tdm SET salesforce_entity = ofb.parentSObject, salesforce_field = ofb.[name],salesforce_object_source_instance_name = LOWER(salesforce_object_source_instance_name) from config.template_data_map tdm inner join salesforce.vw_object_fields_basic ofb on ofb.parentSObject = tdm.salesforce_entity and ofb.[name] = tdm.salesforce_field;",
+								"loadType": "Full"
+							},
+							{
+								"sheetName": "Source to Salesforce Picklist",
+								"sheetRange": "A1:D20000",
+								"targetSchema": "config",
+								"targetTable": "data_transform_map",
+								"postProcessingSql": "delete from [config].[data_transform_map] where [translation_group_name] is null;",
+								"loadType": "Full"
+							},
+							{
+								"sheetName": "Template Registrations",
+								"sheetRange": "A1:L20000",
+								"targetSchema": "config",
+								"targetTable": "file_template_registry",
+								"postProcessingSql": "delete from [config].[file_template_registry] where [template_name] is null;",
+								"loadType": "Full"
+							},
+							{
+								"sheetName": "CSV Files",
+								"sheetRange": "A1:N20000",
+								"targetSchema": "config",
+								"targetTable": "template_data_map_csv",
+								"postProcessingSql": "delete from [config].[template_data_map_csv] where [template_name] is null;UPDATE tdm SET salesforce_entity = ofb.parentSObject, salesforce_field = ofb.[name],salesforce_object_source_instance_name = LOWER(salesforce_object_source_instance_name) from config.template_data_map_csv tdm inner join salesforce.vw_object_fields_basic ofb on ofb.parentSObject = tdm.salesforce_entity and ofb.[name] = tdm.salesforce_field;",
+								"loadType": "Full"
+							}
+						]
+					}
+				}
+			},
+			"SourceContainer": {
+				"type": "string"
+			},
+			"SourceFile": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"sourceContainer": {
+				"type": "String"
+			},
+			"sourceFile": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}

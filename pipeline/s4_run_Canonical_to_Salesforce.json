@@ -1,0 +1,344 @@
+{
+	"name": "s4_run_Canonical_to_Salesforce",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fetch template config",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "DECLARE @@templateName nvarchar(100);\nselect top 1 @@templateName = template_name from stg.file_data where correlation_id = '@{pipeline().parameters.CorrelationID}';\n\ndeclare @@res nvarchar(max) = (\nSELECT \n\tftr.template_name\n\t,ftr.system_name\n\t,ftr.container_name\n\t,ftr.dc_priority\n\t,(SELECT \n\t   [template_name]\n\t  ,[salesforce_entity]\n      ,[salesforce_field]\n      ,[source_instance_name]\n  FROM [config].[vw_salesforce_all_mapped_fields] \n  WHERE \n\t[template_name] = ftr.[template_name]\n\tFOR JSON PATH, INCLUDE_NULL_VALUES) as [mapped_fields]\n\t,(\n\tSELECT [template_name]\n      ,[salesforce_entity]\n      ,[salesforce_field]\n      ,[related_object]\n\t  ,[related_field]\n      ,[source_instance_name]\n      ,[related_instance_name]\n      ,[create_or_update]\n  FROM [config].[vw_relationship_map]\n  WHERE \n\t[template_name] = ftr.[template_name]\n\tFOR JSON PATH, INCLUDE_NULL_VALUES) as [relationships]\nFROM config.file_template_registry ftr\n  WHERE \n\tftr.[template_name] = @@templateName\n\t\n FOR JSON PATH, WITHOUT_ARRAY_WRAPPER)\nselect @@res as 'data';",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "If data exists",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Fetch template config",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@not(equals(activity('Fetch template config').output.firstRow.data,null))",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Generate run config",
+							"type": "AzureFunctionActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 3,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"functionName": "CreateCanonicalConfig",
+								"method": "POST",
+								"headers": {
+									"DL-FuncVersion": "9"
+								},
+								"body": {
+									"value": "@union(json(activity('Fetch template config').output.firstRow.data)\n,pipeline().globalParameters.dcManagedEntities)",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Run Canonical To Salesforce",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Generate run config",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "s4_Canonical_to_Salesforce",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": false,
+								"parameters": {
+									"Configuration": {
+										"value": "@union(activity('Generate run config').output, json(concat('{\"templateName\":\"', json(activity('Fetch template config').output.firstRow.data).template_name, '\"}')))",
+										"type": "Expression"
+									},
+									"CorrelationID": {
+										"value": "@pipeline().parameters.CorrelationID",
+										"type": "Expression"
+									},
+									"CorrelationTimestamp": {
+										"value": "@pipeline().parameters.CorrelationTimestamp",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Start Run",
+							"type": "Lookup",
+							"dependsOn": [
+								{
+									"activity": "Set system name for error",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+									"storedProcedureParameters": {
+										"base64_data": {
+											"type": "String",
+											"value": {
+												"value": "@base64(string(json(activity('Fetch template config').output.firstRow.data)))",
+												"type": "Expression"
+											}
+										},
+										"context": {
+											"type": "String",
+											"value": {
+												"value": "@pipeline().Pipeline",
+												"type": "Expression"
+											}
+										},
+										"run_id": {
+											"type": "Guid",
+											"value": {
+												"value": "@pipeline().RunId",
+												"type": "Expression"
+											}
+										},
+										"system_name": {
+											"type": "String",
+											"value": {
+												"value": "@variables('systemNameForError')",
+												"type": "Expression"
+											}
+										},
+										"type": {
+											"type": "String",
+											"value": {
+												"value": "@pipeline().TriggerName",
+												"type": "Expression"
+											}
+										},
+										"started": {
+											"type": "Datetime",
+											"value": {
+												"value": "@pipeline().TriggerTime",
+												"type": "Expression"
+											}
+										},
+										"correlation_id": {
+											"type": "Guid",
+											"value": {
+												"value": "@pipeline().parameters.CorrelationID",
+												"type": "Expression"
+											}
+										},
+										"correlation_name": {
+											"type": "String",
+											"value": {
+												"value": "@json(activity('Fetch template config').output.firstRow.data).template_name",
+												"type": "Expression"
+											}
+										},
+										"correlation_timestamp": {
+											"type": "Datetime",
+											"value": {
+												"value": "@pipeline().parameters.CorrelationTimestamp",
+												"type": "Expression"
+											}
+										}
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "End Run",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "LogError - Generate run config",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[update_sys_run]",
+								"storedProcedureParameters": {
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"status": {
+										"value": "Succeeded",
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "LogError - Generate run config",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Start Run",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Generate run config').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Generate canonical to salesforce queries",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": "CreateCanonicalConfig",
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@variables('systemNameForError')",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@json(replace(substring(activity('Generate run config').Error.Message,0,lastindexOf(activity('Generate run config').Error.Message,'.')),'Call to provided Azure function ''CreateCanonicalConfig'' failed with status-''BadRequest'' and message - ''','')).Message",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": "error",
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Set system name for error",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Generate run config",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "systemNameForError",
+								"value": {
+									"value": "Canonical to Salesforce [@{json(activity('Fetch template config').output.firstRow.data).template_name}] @{formatDateTime(pipeline().parameters.CorrelationTimestamp,'yyyyMMddHHmm')}",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"CorrelationID": {
+				"type": "string"
+			},
+			"CorrelationTimestamp": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"systemNameForError": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"name": "acs-as-poc-df01",
+	"properties": {
+		"globalConfigurations": {
+			"PipelineBillingEnabled": "false"
+		}
+	},
+	"location": "australiasoutheast"
+}

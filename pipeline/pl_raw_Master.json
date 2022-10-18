@@ -1,0 +1,58 @@
+{
+	"name": "pl_raw_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "pl_rawbrp_rawAccount",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "pl_rawbrp_rawLocation",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_rawbrp_rawAccount",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_rawbrp_rawLocation",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_rawsvg_rawCheckin",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true,
+					"parameters": {
+						"HoursToExtract": {
+							"value": "@pipeline().globalParameters.svgHoursToExtract",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"concurrency": 1,
+		"folder": {
+			"name": "DVR Product Dashboard/10 Raw Data Lake"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-03-30T01:56:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

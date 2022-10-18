@@ -1,0 +1,26 @@
+{
+	"name": "TrackingData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Datafeeds",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "HCO DS"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "adobe-campaign--datafeed/prod/prod_tr",
+				"container": "adobe-datafeeds"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

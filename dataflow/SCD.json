@@ -1,0 +1,200 @@
+{
+	"name": "SCD",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "TestBlob",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				}
+			],
+			"sinks": [
+				{
+					"name": "cachekey"
+				},
+				{
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "A"
+				},
+				{
+					"name": "B"
+				},
+				{
+					"name": "exists1"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "exists2"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "update"
+				},
+				{
+					"name": "union1"
+				},
+				{
+					"name": "insert"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductKey as short,",
+				"          ProductAlternateKey as string,",
+				"          ProductSubcategoryKey as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          EnglishProductName as string,",
+				"          SpanishProductName as string,",
+				"          FrenchProductName as string,",
+				"          StandardCost as string,",
+				"          FinishedGoodsFlag as integer,",
+				"          Color as string,",
+				"          SafetyStockLevel as short,",
+				"          ReorderPoint as short,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeRange as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as integer,",
+				"          ProductLine as string,",
+				"          DealerPrice as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ModelName as string,",
+				"          LargePhoto as string,",
+				"          EnglishDescription as string,",
+				"          FrenchDescription as string,",
+				"          ChineseDescription as string,",
+				"          ArabicDescription as string,",
+				"          HebrewDescription as string,",
+				"          ThaiDescription as string,",
+				"          GermanDescription as string,",
+				"          JapaneseDescription as string,",
+				"          TurkishDescription as string,",
+				"          StartDate as string,",
+				"          EndDate as string,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          ProductKey as short,",
+				"          ProductAlternateKey as string,",
+				"          ProductSubcategoryKey as string,",
+				"          WeightUnitMeasureCode as string,",
+				"          SizeUnitMeasureCode as string,",
+				"          EnglishProductName as string,",
+				"          SpanishProductName as string,",
+				"          FrenchProductName as string,",
+				"          StandardCost as string,",
+				"          FinishedGoodsFlag as integer,",
+				"          Color as string,",
+				"          SafetyStockLevel as short,",
+				"          ReorderPoint as short,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          SizeRange as string,",
+				"          Weight as string,",
+				"          DaysToManufacture as integer,",
+				"          ProductLine as string,",
+				"          DealerPrice as string,",
+				"          Class as string,",
+				"          Style as string,",
+				"          ModelName as string,",
+				"          LargePhoto as string,",
+				"          EnglishDescription as string,",
+				"          FrenchDescription as string,",
+				"          ChineseDescription as string,",
+				"          ArabicDescription as string,",
+				"          HebrewDescription as string,",
+				"          ThaiDescription as string,",
+				"          GermanDescription as string,",
+				"          JapaneseDescription as string,",
+				"          TurkishDescription as string,",
+				"          StartDate as string,",
+				"          EndDate as string,",
+				"          Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source(output(",
+				"          mk as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_COMMITTED',",
+				"     query: 'select max(productkey) as mk from [dbo].[DimProduct] ',",
+				"     format: 'query') ~> source3",
+				"source1 derive(compT = md5(ProductAlternateKey,EnglishProductName)) ~> A",
+				"source2 derive(comps = md5(ProductAlternateKey,EnglishProductName)) ~> B",
+				"A, B exists(compT == comps,",
+				"     negate:true,",
+				"     broadcast: 'left')~> exists1",
+				"exists1 derive(ProductKey = add(toInteger(cachekey#output().mk),1),",
+				"          StartDate = toString(currentDate()),",
+				"          Status = 'current') ~> derivedColumn3",
+				"B, A exists(source2@ProductAlternateKey == source1@ProductAlternateKey,",
+				"     negate:false,",
+				"     broadcast: 'auto')~> exists2",
+				"exists2 derive(Status = '',",
+				"          EndDate = toString(currentDate())) ~> derivedColumn4",
+				"derivedColumn4 alterRow(upsertIf(true())) ~> update",
+				"insert, update union(byName: true)~> union1",
+				"derivedColumn3 alterRow(insertIf(true())) ~> insert",
+				"source3 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: true,",
+				"     saveOrder: 0) ~> cachekey",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:true,",
+				"     upsertable:false,",
+				"     keys:['ProductAlternateKey'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,1048 @@
+{
+	"name": "s4_Canonical_to_Salesforce",
+	"properties": {
+		"description": "Dynamic pipeline writing to Salesforce",
+		"activities": [
+			{
+				"name": "Start Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[logging].[create_sys_run]",
+						"storedProcedureParameters": {
+							"base64_data": {
+								"type": "String",
+								"value": {
+									"value": "@base64(concat('[',string(pipeline().parameters.Configuration),',','{\"sfObjectBatchSize\":',string(pipeline().globalParameters.sfObjectBatchSize),'}]'))",
+									"type": "Expression"
+								}
+							},
+							"context": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().Pipeline",
+									"type": "Expression"
+								}
+							},
+							"run_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().RunId",
+									"type": "Expression"
+								}
+							},
+							"system_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.sourceSystemName",
+									"type": "Expression"
+								}
+							},
+							"type": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().TriggerName",
+									"type": "Expression"
+								}
+							},
+							"started": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().TriggerTime",
+									"type": "Expression"
+								}
+							},
+							"correlation_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().parameters.CorrelationID",
+									"type": "Expression"
+								}
+							},
+							"correlation_name": {
+								"type": "String",
+								"value": {
+									"value": "@pipeline().parameters.Configuration.templateName",
+									"type": "Expression"
+								}
+							},
+							"correlation_timestamp": {
+								"type": "Datetime",
+								"value": {
+									"value": "@pipeline().parameters.CorrelationTimestamp",
+									"type": "Expression"
+								}
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "End Run",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Update dupe check status",
+						"dependencyConditions": [
+							"Skipped",
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[logging].[update_sys_run]",
+					"storedProcedureParameters": {
+						"optional_data_sink_type": {
+							"value": {
+								"value": "@if(contains(pipeline().parameters.Configuration, 'optionalDataSinkType'), pipeline().parameters.Configuration.optionalDataSinkType, 'AzureSqlDatabase')",
+								"type": "Expression"
+							},
+							"type": "String"
+						},
+						"run_id": {
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
+							"type": "Guid"
+						},
+						"status": {
+							"value": "Succeeded",
+							"type": "String"
+						}
+					}
+				}
+			},
+			{
+				"name": "Update dupe check status",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Create Notes",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Configuration.dupeCheckUpdates",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "On object to update",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": {
+										"value": "SELECT '@{item().entityName}' [target_entity];",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								}
+							}
+						},
+						{
+							"name": "Log - Update salesforce object",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Update salesforce object",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[logging].[create_sys_log]",
+								"storedProcedureParameters": {
+									"base64_data": {
+										"value": {
+											"value": "@base64(string(activity('Update salesforce object').output))",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"context": {
+										"value": {
+											"value": "@{pipeline().Pipeline} -> Update duplicate check status",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"run_id": {
+										"value": {
+											"value": "@pipeline().RunId",
+											"type": "Expression"
+										},
+										"type": "Guid"
+									},
+									"source_name": {
+										"value": {
+											"value": "@{item().entityName} (@{item().instanceName})",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"system_name": {
+										"value": {
+											"value": "@pipeline().parameters.Configuration.sourceSystemName",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"target_name": {
+										"value": {
+											"value": "@{item().entityName}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"type": {
+										"value": {
+											"value": "@if(equals(activity('Update salesforce object').Status, 'Failed'), 'error', 'info')",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						},
+						{
+							"name": "Update salesforce object",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "On object to update",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"additionalColumns": [
+										{
+											"name": "ETL_batch_id__c",
+											"value": {
+												"value": "@item().batchId",
+												"type": "Expression"
+											}
+										}
+									],
+									"sqlReaderQuery": {
+										"value": "SELECT cn.Id, cn.dl_item_id [ETL_item_id__c],'Inserted' [DC_queue_status__c] @{if(contains(item(),'canonicalSelectAdditionalFields'),item().canonicalSelectAdditionalFields,'')} FROM canonical.[@{item().entityName}] cn INNER JOIN stg.file_data fd on fd.item_id = cn.dl_stg_item_id and fd.[status] = 'Valid' WHERE cn.dl_correlation_id = '@{pipeline().parameters.CorrelationID}' AND cn.Id is not null AND cn.@{item().canonicalFilter};",
+										"type": "Expression"
+									},
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "SalesforceSink",
+									"writeBatchSize": {
+										"value": "@if(contains(pipeline().globalParameters.sfObjectBatchSize,item().entityName)\n\t, pipeline().globalParameters.sfObjectBatchSize[item().entityName]\n\t,pipeline().globalParameters.globalBulkApiBatchSize)",
+										"type": "Expression"
+									},
+									"writeBehavior": "upsert",
+									"externalIdFieldName": "Id",
+									"ignoreNullValues": true
+								},
+								"enableStaging": false,
+								"enableSkipIncompatibleRow": true
+							}
+						},
+						{
+							"name": "If updates skipped",
+							"type": "IfCondition",
+							"dependsOn": [
+								{
+									"activity": "Update salesforce object",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"expression": {
+									"value": "@greater(activity('Update salesforce object').output.rowsSkipped,0)",
+									"type": "Expression"
+								},
+								"ifTrueActivities": [
+									{
+										"name": "Ingest logs - Update salesforce object",
+										"type": "Copy",
+										"dependsOn": [
+											{
+												"activity": "Warn - Updates skipped",
+												"dependencyConditions": [
+													"Completed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "DelimitedTextSource",
+												"additionalColumns": [
+													{
+														"name": "correlation_id",
+														"value": {
+															"value": "@pipeline().parameters.CorrelationID",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "entity_name",
+														"value": {
+															"value": "@item().entityName",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "activity_name",
+														"value": {
+															"value": "Update duplicate check records",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "instance_name",
+														"value": {
+															"value": "@if(greater(length(item().instanceName),80),substring(item().instanceName,0,80),item().instanceName)",
+															"type": "Expression"
+														}
+													}
+												],
+												"storeSettings": {
+													"type": "AzureBlobFSReadSettings",
+													"recursive": false,
+													"wildcardFolderPath": {
+														"value": "@activity('Update salesforce object').output.logFilePath",
+														"type": "Expression"
+													},
+													"wildcardFileName": "*.txt",
+													"enablePartitionDiscovery": false
+												},
+												"formatSettings": {
+													"type": "DelimitedTextReadSettings"
+												}
+											},
+											"sink": {
+												"type": "AzureSqlSink",
+												"writeBehavior": "insert"
+											},
+											"enableStaging": false
+										}
+									},
+									{
+										"name": "Warn - Updates skipped",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('Update salesforce object').output))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> Failed to set DC status to 'Inserted'",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "@{activity('Update salesforce object').output.rowsSkipped} rows out of @{activity('Update salesforce object').output.rowsRead} rows read. See logs in salesforce.copy_log for correlation_id @{pipeline().parameters.CorrelationID}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "@item().entityName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": "Warn",
+													"type": "String"
+												}
+											}
+										}
+									},
+									{
+										"name": "fetch updated records",
+										"type": "Copy",
+										"dependsOn": [],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "SalesforceSource",
+												"additionalColumns": [
+													{
+														"name": "entity_name",
+														"value": {
+															"value": "@item().entityName",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "instance_name",
+														"value": {
+															"value": "@if(greater(length(item().instanceName),80),substring(item().instanceName,0,80),item().instanceName)",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "operation",
+														"value": {
+															"value": "Update",
+															"type": "Expression"
+														}
+													}
+												],
+												"query": {
+													"value": "select Id, ETL_item_id__c, ETL_correlation_ID__c, ETL_batch_id__c from @{item().entityName} where ETL_correlation_ID__c = '@{pipeline().parameters.CorrelationID}' and ETL_batch_id__c = '@{item().batchId}'",
+													"type": "Expression"
+												},
+												"readBehavior": "query"
+											},
+											"sink": {
+												"type": "AzureSqlSink",
+												"writeBehavior": "insert",
+												"disableMetricsCollection": false
+											},
+											"enableStaging": false
+										}
+									},
+									{
+										"name": "Log - fetch updated records",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "fetch updated records",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('fetch updated records').output))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> fetch updated records",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "@item().entityName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "salesforce.@{item().entityName} (@{item().instanceName})",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": {
+														"value": "@if(equals(activity('fetch updated records').Status, 'Failed'), 'error', 'info')",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										}
+									},
+									{
+										"name": "write failed operations",
+										"type": "Copy",
+										"dependsOn": [
+											{
+												"activity": "fetch updated records",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureSqlSource",
+												"additionalColumns": [
+													{
+														"name": "entity_name",
+														"value": {
+															"value": "@item().entityName",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "operation",
+														"value": {
+															"value": "@if(item().isUpdate,'Update','Create')",
+															"type": "Expression"
+														}
+													},
+													{
+														"name": "batch_id",
+														"value": {
+															"value": "@item().batchId",
+															"type": "Expression"
+														}
+													}
+												],
+												"sqlReaderQuery": {
+													"value": "select \n  r.dl_item_id [cn_item_id]\n, r.dl_stg_item_id [stg_item_id]\n, r.dl_correlation_id [correlation_id]\n ,r.dl_instance_name [instance_name]\nFROM canonical.[@{item().entityName}] r \nWHERE r.dl_item_id not in (select sub.cn_item_id from salesforce.operations_completed sub where sub.[correlation_id] = r.dl_correlation_id AND sub.[batch_id] = '@{item().batchId}')\nAND r.dl_correlation_id = '@{pipeline().parameters.CorrelationID}' AND r.@{item().canonicalFilter};",
+													"type": "Expression"
+												},
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											},
+											"sink": {
+												"type": "AzureSqlSink",
+												"writeBehavior": "insert",
+												"disableMetricsCollection": false
+											},
+											"enableStaging": false
+										}
+									},
+									{
+										"name": "Update faulted records",
+										"type": "Lookup",
+										"dependsOn": [
+											{
+												"activity": "write failed operations",
+												"dependencyConditions": [
+													"Succeeded"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"source": {
+												"type": "AzureSqlSource",
+												"sqlReaderQuery": {
+													"value": "declare @@correlation_id uniqueidentifier = '@{pipeline().parameters.CorrelationID}';\ndeclare @@batch_id uniqueidentifier = '@{item().batchId}';\ndeclare @@entity_name nvarchar(80) = '@{item().entityName}';\ndeclare @@instance_name nvarchar(80) = '@{item().instanceName}';\nUPDATE ic SET ic.[status] = 'Faulted' FROM salesforce.operations_completed ic inner join canonical.[@{item().entityName}] cn on cn.dl_item_id = ic.cn_item_id WHERE cn.dl_stg_item_id in (select distinct s.stg_item_id from salesforce.operations_failed s where s.correlation_id = @@correlation_id and s.[batch_id] = @@batch_id) AND ic.correlation_id = @@correlation_id;\ndeclare @@entity_records_updated integer = @@rowcount;\nUPDATE stg.file_data SET [status] = 'Faulted' WHERE item_id in (select distinct s.stg_item_id from salesforce.operations_failed s where s.correlation_id = @@correlation_id and s.[batch_id] = @@batch_id) and correlation_id = @@correlation_id;\nselect @@rowcount [stg_records_updated], @@entity_records_updated[cn_records_updated], @@entity_name[entity_name], @@instance_name[instance_name];",
+													"type": "Expression"
+												},
+												"queryTimeout": "02:00:00",
+												"partitionOption": "None"
+											}
+										}
+									},
+									{
+										"name": "Log - write failed operations",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "write failed operations",
+												"dependencyConditions": [
+													"Completed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('write failed operations').output))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> write failed @{if(item().isUpdate,'updates','inserts')}",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": {
+														"value": "canonical.@{item().entityName} (@{item().instanceName})",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": {
+														"value": "@item().entityName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"type": {
+													"value": {
+														"value": "@if(equals(activity('write failed operations').Status, 'Failed'), 'error', 'warn')",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										}
+									},
+									{
+										"name": "Log - Update faulted records",
+										"type": "SqlServerStoredProcedure",
+										"dependsOn": [
+											{
+												"activity": "Update faulted records",
+												"dependencyConditions": [
+													"Failed"
+												]
+											}
+										],
+										"policy": {
+											"timeout": "7.00:00:00",
+											"retry": 0,
+											"retryIntervalInSeconds": 30,
+											"secureOutput": false,
+											"secureInput": false
+										},
+										"userProperties": [],
+										"typeProperties": {
+											"storedProcedureName": "[logging].[create_sys_log]",
+											"storedProcedureParameters": {
+												"base64_data": {
+													"value": {
+														"value": "@base64(string(activity('Update faulted records').output))",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"context": {
+													"value": {
+														"value": "@{pipeline().Pipeline} -> Update faulted records",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"run_id": {
+													"value": {
+														"value": "@pipeline().RunId",
+														"type": "Expression"
+													},
+													"type": "Guid"
+												},
+												"source_name": {
+													"value": null,
+													"type": "String"
+												},
+												"system_name": {
+													"value": {
+														"value": "@pipeline().parameters.Configuration.sourceSystemName",
+														"type": "Expression"
+													},
+													"type": "String"
+												},
+												"target_name": {
+													"value": null,
+													"type": "String"
+												},
+												"type": {
+													"value": {
+														"value": "@if(equals(activity('Update faulted records').Status, 'Failed'), 'error', 'warn')",
+														"type": "Expression"
+													},
+													"type": "String"
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Process Lookups",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Start Run",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Configuration.lookups",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "process lookup in batches",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": true,
+								"parameters": {
+									"Configuration": {
+										"value": "@json(concat('{'\n,'\"sourceSystemName\":\"',string(pipeline().parameters.Configuration.sourceSystemName) ,'\"'\n,',\"lookup\":{'\n,'\"canonicalQuery\":\"',item().canonicalQuery,'\"'\n,',\"canonicalUpdate\":\"',item().canonicalUpdate ,'\"'\n,',\"entityName\":\"',item().entityName,'\"'\n,',\"instanceName\":\"',item().instanceName,'\"'\n,',\"lookupField\":\"',item().lookupField,'\"'\n,',\"queryFields\":\"',item().queryFields,'\"'\n,',\"batchId\":\"',item().batchId,'\"'\n,'}'\n,'}'))",
+										"type": "Expression"
+									},
+									"CorrelationID": {
+										"value": "@pipeline().parameters.CorrelationID",
+										"type": "Expression"
+									},
+									"ParentRunID": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Create or update Salesforce objects",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process Lookups",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true,
+					"parameters": {
+						"Configuration": {
+							"value": "@pipeline().parameters.Configuration",
+							"type": "Expression"
+						},
+						"CorrelationID": {
+							"value": "@pipeline().parameters.CorrelationID",
+							"type": "Expression"
+						},
+						"ParentRunID": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Find invalid rows",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Update dupe check status",
+						"dependencyConditions": [
+							"Completed",
+							"Skipped"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select count(1) [invalid_rows] from stg.file_data where [status] != 'Valid' and correlation_id = '@{pipeline().parameters.CorrelationID}';",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					}
+				}
+			},
+			{
+				"name": "Invalid rows found",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Find invalid rows",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@not(equals(activity('Find invalid rows').output.firstRow.invalid_rows,0))",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "Export faulted rows to CSV",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": false,
+								"parameters": {
+									"correlation_id": {
+										"value": "@pipeline().parameters.CorrelationID",
+										"type": "Expression"
+									},
+									"Configuration": {
+										"value": "@json(concat(\n'{\"configVersion\":\"1.0.0\",\"optionalDataSinkType\":\"AzureSqlDatabase\",\"paths\":{\"log\":\"log\",\"success\":\"processed\",\"fail\":\"failed\"},\"targetDir\":\"exported-failures\",\"stgContainer\":\"data-loader-stg\",\"stgFileSuffix\":\".json\",\"targetFileSuffix\":\".csv\"'\n,',\"sourceSystemName\":\"Export Faulted Rows' \n,' ['\n,pipeline().parameters.Configuration.templateName\n,'] '\n,formatDateTime(pipeline().parameters.CorrelationTimestamp,'yyyyMMddHHmm')\n,'\", \"templateName\": \"'\n,pipeline().parameters.Configuration.templateName\n,'\"'\n,'}'))",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Delete orphanded records",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitOnCompletion": false,
+								"parameters": {
+									"Configuration": {
+										"value": "@json(concat(\n'{\"configVersion\":\"1.0.2\",\"fullDelete\":false,\"sourceSystemName\":\"Delete incomplete imports' \n,' ['\n,pipeline().parameters.Configuration.templateName\n,'] '\n,formatDateTime(pipeline().parameters.CorrelationTimestamp,'yyyyMMddHHmm')\n,'\", \"templateName\": \"'\n,pipeline().parameters.Configuration.templateName\n,'\"'\n,',\"optionalDataSinkType\": \"AzureSqlDatabase\"'\n,',\"salesforceAPISecret\": \"salesforce-api-credentials\"'\n,'}'))",
+										"type": "Expression"
+									},
+									"CorrelationID": {
+										"value": "@pipeline().parameters.CorrelationID",
+										"type": "Expression"
+									},
+									"CorrelationTimestamp": {
+										"value": "@pipeline().parameters.CorrelationTimestamp",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Create Notes",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Create or update Salesforce objects",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true,
+					"parameters": {
+						"CorrelationID": {
+							"value": "@pipeline().parameters.CorrelationID",
+							"type": "Expression"
+						},
+						"CorrelationTimestamp": {
+							"value": "@utcnow()",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Configuration": {
+				"type": "object"
+			},
+			"CorrelationID": {
+				"type": "string"
+			},
+			"CorrelationTimestamp": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"salesforceLoggingPath": {
+				"type": "String",
+				"defaultValue": "copyactivity-logs/cn-to-sf"
+			},
+			"stagingContainerName": {
+				"type": "String",
+				"defaultValue": "data-loader-stg"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}

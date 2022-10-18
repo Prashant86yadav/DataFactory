@@ -1,0 +1,195 @@
+{
+	"name": "s4_Create_Notes",
+	"properties": {
+		"activities": [
+			{
+				"name": "Chunks",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderStoredProcedureName": "[salesforce].[note_insert_chunks]",
+						"storedProcedureParameters": {
+							"batch_size": {
+								"type": "Int32",
+								"value": {
+									"value": "@if(contains(pipeline().globalParameters.sfObjectBatchSize,'Note')\n\t, pipeline().globalParameters.sfObjectBatchSize['Note']\n\t,pipeline().globalParameters.globalBulkApiBatchSize)",
+									"type": "Expression"
+								}
+							},
+							"correlation_id": {
+								"type": "Guid",
+								"value": {
+									"value": "@pipeline().parameters.CorrelationID",
+									"type": "Expression"
+								}
+							},
+							"template_name": {
+								"type": "String",
+								"value": "aaaa"
+							}
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Loop Chunks",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Chunks",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@array(activity('Chunks').output.value)",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Get auth details from KeyVault",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": true,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "@{pipeline().globalParameters.dataLoaderKeyVaultUrl}/secrets/@{pipeline().parameters.Configuration.salesforceApiSecret}/?api-version=7.0",
+									"type": "Expression"
+								},
+								"method": "GET",
+								"authentication": {
+									"type": "MSI",
+									"resource": "https://vault.azure.net"
+								}
+							}
+						},
+						{
+							"name": "Get bearer token",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "Get auth details from KeyVault",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": true,
+								"secureInput": true
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "@{json(activity('Get auth details from KeyVault').output.value).hostUrl}?grant_type=password&client_id=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).consumerKey)}&client_secret=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).consumerSecret)}&username=@{json(activity('Get auth details from KeyVault').output.value).userName}&password=@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).password)}@{encodeUriComponent(json(activity('Get auth details from KeyVault').output.value).securityToken)}",
+									"type": "Expression"
+								},
+								"method": "POST",
+								"body": {
+									"value": "@string(json('{}'))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Create ContentNote record",
+							"type": "WebActivity",
+							"dependsOn": [
+								{
+									"activity": "Get bearer token",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "@{json(activity('Get auth details from KeyVault').output.value).sfEnvUrl}/services/data/v50.0/composite",
+									"type": "Expression"
+								},
+								"method": "POST",
+								"headers": {
+									"Authorization": {
+										"value": "Bearer @{activity('Get bearer token').output.access_token}",
+										"type": "Expression"
+									},
+									"Content-Type": {
+										"value": "application/json",
+										"type": "Expression"
+									}
+								},
+								"body": {
+									"value": "@item().data",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"CorrelationID": {
+				"type": "string",
+				"defaultValue": "@pipeline().parameters.CorrelationID"
+			},
+			"CorrelationTimestamp": {
+				"type": "string"
+			},
+			"Configuration": {
+				"type": "object",
+				"defaultValue": {
+					"configVersion": "1.0.0",
+					"sourceSystemName": "Create Note Object",
+					"salesforceApiSecret": "salesforce-api-credentials",
+					"salesforceInstanceUrl": "salesforce-api-url"
+				}
+			}
+		},
+		"variables": {
+			"requestBody": {
+				"type": "String",
+				"defaultValue": "{\"compositeRequest\":[{\"method\":\"POST\",\"url\":\"/services/data/v50.0/sobjects/ContentNote\",\"referenceId\":\"refContentNote\",\"body\":{\"Content\":\"VGhpcyBpcyBhIDxiPnNhbXBsZTwvYj4gbm90ZQ==\",\"Title\":\"Sample note\"}},{\"method\":\"POST\",\"url\":\"/services/data/v50.0/sobjects/ContentDocumentLink\",\"referenceId\":\"refContentDocumentLink\",\"body\":{\"ContentDocumentId\":\"@pipeline().parameters.Configuration.parentRef\",\"LinkedEntityId\":\"5002O000006R5H8QAK\"}}]}"
+			}
+		},
+		"folder": {
+			"name": "Core Bulk Data Load"
+		},
+		"annotations": []
+	}
+}
