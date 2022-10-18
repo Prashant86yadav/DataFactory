@@ -29,10 +29,6 @@
 							"value": "@adddays(utcnow(),-1)",
 							"type": "Expression"
 						},
-						"modifiedDatetimeEnd": {
-							"value": "@utcnow()",
-							"type": "Expression"
-						},
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
