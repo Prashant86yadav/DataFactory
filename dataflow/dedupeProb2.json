@@ -5,26 +5,14 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "names100",
-						"type": "DatasetReference"
-					},
 					"name": "sourceName"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "dupefolder",
-						"type": "DatasetReference"
-					},
 					"name": "sinkDupes"
 				},
 				{
-					"dataset": {
-						"referenceName": "dupefolder",
-						"type": "DatasetReference"
-					},
 					"name": "sinkNoDupes"
 				}
 			],
@@ -122,8 +110,7 @@
 				"          Password as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> sourceName",
+				"     validateSchema: false) ~> sourceName",
 				"MapNames derive(SoundexValue = soundex(fullname)) ~> FuzzyMatch",
 				"Orig1 aggregate(groupBy(SoundexValue),",
 				"     soundexmatch = sum(1)) ~> groupSoundex",
