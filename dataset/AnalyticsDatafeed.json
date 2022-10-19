@@ -13,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "prod01-acsincprod_2022-01-01.tsv.gz",
 				"folderPath": "adobe-analytics--datafeed",
 				"container": "adobe-datafeeds"
 			},
