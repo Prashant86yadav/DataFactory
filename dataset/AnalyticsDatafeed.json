@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "adobe-analytics--datafeed",
+				"folderPath": "adobe-analytics--datafeed/prod",
 				"container": "adobe-datafeeds"
 			},
 			"columnDelimiter": "\t",
