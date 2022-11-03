@@ -22602,6 +22602,13 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_RawAnalyticsDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -22609,14 +22616,14 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2022-10-18T04:51:00",
-						"timeZone": "AUS Eastern Standard Time",
+						"startTime": "2022-10-04T00:00:00",
+						"timeZone": "GMT Standard Time",
 						"schedule": {
 							"minutes": [
 								0
 							],
 							"hours": [
-								6
+								0
 							]
 						}
 					}
@@ -22624,7 +22631,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]"
+				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
+				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
 			]
 		},
 		{
