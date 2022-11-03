@@ -61,7 +61,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_AnalyticsData_full')]",
+			"name": "[concat(parameters('factoryName'), '/pl_RawanalyticsData_full')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -133,6 +133,14 @@
 							"storeSettings": {
 								"type": "AzureBlobStorageReadSettings",
 								"recursive": true,
+								"modifiedDatetimeStart": {
+									"value": "2020-11-03T00:00:00.00Z\n",
+									"type": "Expression"
+								},
+								"modifiedDatetimeEnd": {
+									"value": "2022-11-03T00:00:00.00Z\n",
+									"type": "Expression"
+								},
 								"enablePartitionDiscovery": false
 							},
 							"formatSettings": {
@@ -8739,7 +8747,7 @@
 								"type": "AzureBlobStorageReadSettings",
 								"recursive": true,
 								"modifiedDatetimeStart": {
-									"value": "@addminutes(utcnow(),-1765)",
+									"value": "@addDays(utcnow(),-1)",
 									"type": "Expression"
 								},
 								"modifiedDatetimeEnd": {
