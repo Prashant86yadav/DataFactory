@@ -25,6 +25,14 @@
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings",
 						"recursive": true,
+						"modifiedDatetimeStart": {
+							"value": "2020-11-03T00:00:00.00Z",
+							"type": "Expression"
+						},
+						"modifiedDatetimeEnd": {
+							"value": "2022-11-03T00:00:00.00Z",
+							"type": "Expression"
+						},
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
