@@ -177,7 +177,7 @@
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
-												"wildcardFolderPath": "adobe-analytics--datafeed",
+												"wildcardFolderPath": "adobe-analytics--datafeed/prod",
 												"wildcardFileName": {
 													"value": "@item().name",
 													"type": "Expression"
@@ -8739,7 +8739,7 @@
 								"type": "AzureBlobStorageReadSettings",
 								"recursive": true,
 								"modifiedDatetimeStart": {
-									"value": "@adddays(utcnow(),-1)",
+									"value": "@addminutes(utcnow(),-1765)",
 									"type": "Expression"
 								},
 								"modifiedDatetimeEnd": {
@@ -8832,7 +8832,7 @@
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
-												"wildcardFolderPath": "adobe-analytics--datafeed",
+												"wildcardFolderPath": "adobe-analytics--datafeed/prod",
 												"wildcardFileName": {
 													"value": "@item().name",
 													"type": "Expression"
@@ -18583,7 +18583,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "adobe-analytics--datafeed",
+						"folderPath": "adobe-analytics--datafeed/prod/",
 						"container": "adobe-datafeeds"
 					},
 					"columnDelimiter": "\t",
@@ -22583,13 +22583,6 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "pl_RawAnalyticsDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
 							"referenceName": "pl_broadcastingDaily_Incre",
 							"type": "PipelineReference"
 						},
@@ -22622,7 +22615,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]"
 			]

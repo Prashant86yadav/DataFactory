@@ -173,7 +173,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "adobe-analytics--datafeed",
+						"folderPath": "adobe-analytics--datafeed/prod/",
 						"container": "adobe-datafeeds"
 					},
 					"columnDelimiter": "\t",
@@ -4108,7 +4108,7 @@
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
-												"wildcardFolderPath": "adobe-analytics--datafeed",
+												"wildcardFolderPath": "adobe-analytics--datafeed/prod",
 												"wildcardFileName": {
 													"value": "@item().name",
 													"type": "Expression"
@@ -12670,7 +12670,7 @@
 								"type": "AzureBlobStorageReadSettings",
 								"recursive": true,
 								"modifiedDatetimeStart": {
-									"value": "@adddays(utcnow(),-1)",
+									"value": "@addminutes(utcnow(),-1765)",
 									"type": "Expression"
 								},
 								"modifiedDatetimeEnd": {
@@ -12763,7 +12763,7 @@
 											"storeSettings": {
 												"type": "AzureBlobStorageReadSettings",
 												"recursive": true,
-												"wildcardFolderPath": "adobe-analytics--datafeed",
+												"wildcardFolderPath": "adobe-analytics--datafeed/prod",
 												"wildcardFileName": {
 													"value": "@item().name",
 													"type": "Expression"
