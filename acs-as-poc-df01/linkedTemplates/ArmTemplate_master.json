@@ -91,11 +91,11 @@
 					"LSSQLPOC_connectionString": {
 						"value": "[parameters('LSSQLPOC_connectionString')]"
 					},
-					"LS_AZST_BlobLanding_connectionString": {
-						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
-					},
 					"SQLServeOnPremise_connectionString": {
 						"value": "[parameters('SQLServeOnPremise_connectionString')]"
+					},
+					"LS_AZST_BlobLanding_connectionString": {
+						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
