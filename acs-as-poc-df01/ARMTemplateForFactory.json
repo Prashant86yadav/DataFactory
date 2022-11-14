@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
 		},
-		"SQLServeOnPremise_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQLServeOnPremise'"
-		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
@@ -22517,19 +22513,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SQLServeOnPremise')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('SQLServeOnPremise_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/WeatherRestD')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -22612,16 +22595,6 @@
 				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/IRPrivatenwk')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
 		}
 	]
 }

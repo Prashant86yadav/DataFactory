@@ -17,9 +17,6 @@
 		"LS_AZST_BlobLanding_connectionString": {
 			"value": ""
 		},
-		"SQLServeOnPremise_connectionString": {
-			"value": ""
-		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"
 		},

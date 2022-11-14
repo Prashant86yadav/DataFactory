@@ -23,10 +23,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
 		},
-		"SQLServeOnPremise_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'SQLServeOnPremise'"
-		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
@@ -90,9 +86,6 @@
 					},
 					"LSSQLPOC_connectionString": {
 						"value": "[parameters('LSSQLPOC_connectionString')]"
-					},
-					"SQLServeOnPremise_connectionString": {
-						"value": "[parameters('SQLServeOnPremise_connectionString')]"
 					},
 					"LS_AZST_BlobLanding_connectionString": {
 						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
