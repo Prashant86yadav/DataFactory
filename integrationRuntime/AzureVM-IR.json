@@ -1,0 +1,6 @@
+{
+	"name": "AzureVM-IR",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
