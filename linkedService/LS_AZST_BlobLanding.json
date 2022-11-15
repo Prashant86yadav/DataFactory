@@ -1,20 +1,16 @@
 {
 	"name": "LS_AZST_BlobLanding",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
-		"type": "AzureBlobStorage",
 		"annotations": [],
+		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"connectionString": "DefaultEndpointsProtocol=https;AccountName=sausestc19dvr;",
-			"accountKey": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "LS_AZKV_DVR",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "LS-Storage-AccessKey",
-				"secretVersion": ""
-			}
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=stacspoc01;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiNjViMWFjMC03ZTE3LTQ4YTktOTFjNC0xNWJlNjkwODU3MGUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AzureVM-IR",
+			"type": "IntegrationRuntimeReference"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
