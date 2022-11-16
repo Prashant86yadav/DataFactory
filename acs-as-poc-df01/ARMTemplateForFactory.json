@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"AzureDLStorage02_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDLStorage02'"
-		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -19,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
 		},
-		"LSAZSQLPOC2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LSAZSQLPOC2'"
-		},
 		"LSSQLPOC_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
@@ -30,10 +22,6 @@
 		"LS_AZST_BlobLanding_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
-		},
-		"AzureDLStorage02_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacspoc02.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -22358,29 +22346,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDLStorage02')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDLStorage02_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDLStorage02_accountKey')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "AzureVM-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AzureVM-IR')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -22406,19 +22371,6 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('Datafeeds_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LSAZSQLPOC2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('LSAZSQLPOC2_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -22691,6 +22643,35 @@
 			"properties": {
 				"privateLinkResourceId": "[parameters('PE-AzureSQLPOC2_properties_privateLinkResourceId')]",
 				"groupId": "[parameters('PE-AzureSQLPOC2_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureManagedVM-IR02')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Australia Southeast",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"

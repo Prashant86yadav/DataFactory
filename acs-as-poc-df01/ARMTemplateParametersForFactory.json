@@ -5,16 +5,10 @@
 		"factoryName": {
 			"value": "acs-as-poc-df01"
 		},
-		"AzureDLStorage02_accountKey": {
-			"value": ""
-		},
 		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
 		"Datafeeds_connectionString": {
-			"value": ""
-		},
-		"LSAZSQLPOC2_connectionString": {
 			"value": ""
 		},
 		"LSSQLPOC_connectionString": {
@@ -22,9 +16,6 @@
 		},
 		"LS_AZST_BlobLanding_connectionString": {
 			"value": ""
-		},
-		"AzureDLStorage02_properties_typeProperties_url": {
-			"value": "https://stacspoc02.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"

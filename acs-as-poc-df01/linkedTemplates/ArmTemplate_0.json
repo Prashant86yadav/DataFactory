@@ -15,17 +15,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
 		},
-		"LSAZSQLPOC2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LSAZSQLPOC2'"
-		},
 		"LSSQLPOC_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
-		},
-		"AzureDLStorage02_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDLStorage02'"
 		},
 		"LS_AZST_BlobLanding_connectionString": {
 			"type": "secureString",
@@ -47,10 +39,6 @@
 			"type": "string",
 			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
 		},
-		"AzureDLStorage02_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacspoc02.dfs.core.windows.net/"
-		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "@linkedService().dvrDatabricksClusterId"
@@ -62,6 +50,14 @@
 		"LS_SAFC_BRP_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
+		},
+		"PE-AzureDLPOC2_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Storage/storageAccounts/stacspoc02"
+		},
+		"PE-AzureDLPOC2_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
 		}
 	},
 	"variables": {
@@ -94,19 +90,6 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('Datafeeds_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LSAZSQLPOC2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('LSAZSQLPOC2_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -183,6 +166,35 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureManagedVM-IR02')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Australia Southeast",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false
+						},
+						"pipelineExternalComputeScaleProperties": {
+							"timeToLive": 60
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AnalyticsDatafeed')]",
@@ -3874,29 +3886,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDLStorage02')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDLStorage02_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDLStorage02_accountKey')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "AzureVM-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AzureVM-IR')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/LS_ADBR_DVR_DataLake')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -4016,6 +4005,18 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default/PE-AzureDLPOC2')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"privateLinkResourceId": "[parameters('PE-AzureDLPOC2_properties_privateLinkResourceId')]",
+				"groupId": "[parameters('PE-AzureDLPOC2_properties_groupId')]"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
 			]
 		}
 	]

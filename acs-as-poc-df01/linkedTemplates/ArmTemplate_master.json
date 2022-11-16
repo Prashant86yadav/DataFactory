@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"AzureDLStorage02_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDLStorage02'"
-		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -19,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
 		},
-		"LSAZSQLPOC2_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LSAZSQLPOC2'"
-		},
 		"LSSQLPOC_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
@@ -30,10 +22,6 @@
 		"LS_AZST_BlobLanding_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
-		},
-		"AzureDLStorage02_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacspoc02.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -112,14 +100,8 @@
 					"Datafeeds_connectionString": {
 						"value": "[parameters('Datafeeds_connectionString')]"
 					},
-					"LSAZSQLPOC2_connectionString": {
-						"value": "[parameters('LSAZSQLPOC2_connectionString')]"
-					},
 					"LSSQLPOC_connectionString": {
 						"value": "[parameters('LSSQLPOC_connectionString')]"
-					},
-					"AzureDLStorage02_accountKey": {
-						"value": "[parameters('AzureDLStorage02_accountKey')]"
 					},
 					"LS_AZST_BlobLanding_connectionString": {
 						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
@@ -136,9 +118,6 @@
 					"lga_google_properties_typeProperties_url": {
 						"value": "[parameters('lga_google_properties_typeProperties_url')]"
 					},
-					"AzureDLStorage02_properties_typeProperties_url": {
-						"value": "[parameters('AzureDLStorage02_properties_typeProperties_url')]"
-					},
 					"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
 					},
@@ -147,6 +126,12 @@
 					},
 					"LS_SAFC_BRP_properties_typeProperties_username": {
 						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
+					},
+					"PE-AzureDLPOC2_properties_privateLinkResourceId": {
+						"value": "[parameters('PE-AzureDLPOC2_properties_privateLinkResourceId')]"
+					},
+					"PE-AzureDLPOC2_properties_groupId": {
+						"value": "[parameters('PE-AzureDLPOC2_properties_groupId')]"
 					}
 				}
 			},
@@ -165,12 +150,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"PE-AzureDLPOC2_properties_privateLinkResourceId": {
-						"value": "[parameters('PE-AzureDLPOC2_properties_privateLinkResourceId')]"
-					},
-					"PE-AzureDLPOC2_properties_groupId": {
-						"value": "[parameters('PE-AzureDLPOC2_properties_groupId')]"
 					},
 					"PE-AzureSQLPOC2_properties_privateLinkResourceId": {
 						"value": "[parameters('PE-AzureSQLPOC2_properties_privateLinkResourceId')]"
