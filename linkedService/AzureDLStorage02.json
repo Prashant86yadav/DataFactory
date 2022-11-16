@@ -6,10 +6,10 @@
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://stacspoc02.dfs.core.windows.net/",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJkYzY1NTNiOC1kZGVhLTQ2YWItYTY0ZS1iMWQxNWIwZGExZTEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBFNTExNTAyLUU1ODgtNDJEMC1BMUQzLTUxREI5ODRFODg2OF85NDExZTMwZi1hZDU2LTRmMjgtOWIwYS1iMjllZThhZTY2ZTEiDQp9"
 		},
 		"connectVia": {
-			"referenceName": "AzureVM-IR",
+			"referenceName": "AzureManagedVM-IR02",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
