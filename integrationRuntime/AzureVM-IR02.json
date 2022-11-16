@@ -1,0 +1,13 @@
+{
+	"name": "AzureVM-IR02",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "One that is not managed by Azure",
+		"typeProperties": {
+			"linkedInfo": {
+				"resourceId": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourcegroups/rg-poc/providers/Microsoft.DataFactory/factories/acs-as-poc-df01/integrationruntimes/AzureVM-IR",
+				"authorizationType": "Rbac"
+			}
+		}
+	}
+}
