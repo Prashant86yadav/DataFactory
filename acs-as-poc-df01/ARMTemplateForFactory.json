@@ -51,22 +51,6 @@
 			"type": "string",
 			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
 		},
-		"WeatherRestD_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
-		},
-		"lga_google_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
-		},
-		"PE-AzureSQLPOC2_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Sql/servers/acs-as-poc-db02"
-		},
-		"PE-AzureSQLPOC2_properties_groupId": {
-			"type": "string",
-			"defaultValue": "sqlServer"
-		},
 		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
 			"type": "string",
 			"defaultValue": "https://acsau.my.salesforce.com/"
@@ -74,6 +58,14 @@
 		"SalesforceACSProd_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
+		},
+		"WeatherRestD_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
+		},
+		"lga_google_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
 		}
 	},
 	"variables": {
@@ -22532,6 +22524,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SalesforceACSProd')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('SalesforceACSProd_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SalesforceACSProd_password')]"
+					},
+					"securityToken": {
+						"type": "SecureString",
+						"value": "[parameters('SalesforceACSProd_securityToken')]"
+					},
+					"apiVersion": "54.0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/WeatherRestD')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -22630,41 +22645,6 @@
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
 			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default/PE-AzureSQLPOC2')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks/managedPrivateEndpoints",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"privateLinkResourceId": "[parameters('PE-AzureSQLPOC2_properties_privateLinkResourceId')]",
-				"groupId": "[parameters('PE-AzureSQLPOC2_properties_groupId')]"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SalesforceACSProd')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('SalesforceACSProd_properties_typeProperties_username')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SalesforceACSProd_password')]"
-					},
-					"securityToken": {
-						"type": "SecureString",
-						"value": "[parameters('SalesforceACSProd_securityToken')]"
-					},
-					"apiVersion": "54.0"
-				}
-			},
 			"dependsOn": []
 		}
 	]
