@@ -17,6 +17,12 @@
 		"LS_AZST_BlobLanding_connectionString": {
 			"value": ""
 		},
+		"SalesforceACSProd_password": {
+			"value": ""
+		},
+		"SalesforceACSProd_securityToken": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"
 		},
@@ -38,17 +44,17 @@
 		"lga_google_properties_typeProperties_url": {
 			"value": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
 		},
-		"PE-AzureDLPOC2_properties_privateLinkResourceId": {
-			"value": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Storage/storageAccounts/stacspoc02"
-		},
-		"PE-AzureDLPOC2_properties_groupId": {
-			"value": "dfs"
-		},
 		"PE-AzureSQLPOC2_properties_privateLinkResourceId": {
 			"value": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Sql/servers/acs-as-poc-db02"
 		},
 		"PE-AzureSQLPOC2_properties_groupId": {
 			"value": "sqlServer"
+		},
+		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
+			"value": "https://acsau.my.salesforce.com/"
+		},
+		"SalesforceACSProd_properties_typeProperties_username": {
+			"value": "prashant.yadvendra@acs.org.au"
 		}
 	}
 }
