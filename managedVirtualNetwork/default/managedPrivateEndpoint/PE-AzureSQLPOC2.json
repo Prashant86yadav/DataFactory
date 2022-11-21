@@ -1,7 +1,0 @@
-{
-	"name": "PE-AzureSQLPOC2",
-	"properties": {
-		"privateLinkResourceId": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Sql/servers/acs-as-poc-db02",
-		"groupId": "sqlServer"
-	}
-}
