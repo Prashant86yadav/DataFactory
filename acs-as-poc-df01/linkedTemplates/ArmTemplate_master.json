@@ -23,6 +23,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
 		},
+		"SalesforceACSProd_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SalesforceACSProd'"
+		},
+		"SalesforceACSProd_securityToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
@@ -43,6 +51,14 @@
 			"type": "string",
 			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
 		},
+		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://acsau.my.salesforce.com/"
+		},
+		"SalesforceACSProd_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "prashant.yadvendra@acs.org.au"
+		},
 		"WeatherRestD_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
@@ -50,22 +66,6 @@
 		"lga_google_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
-		},
-		"PE-AzureDLPOC2_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Storage/storageAccounts/stacspoc02"
-		},
-		"PE-AzureDLPOC2_properties_groupId": {
-			"type": "string",
-			"defaultValue": "dfs"
-		},
-		"PE-AzureSQLPOC2_properties_privateLinkResourceId": {
-			"type": "string",
-			"defaultValue": "/subscriptions/21bc9655-818c-4350-bf02-506bfc8fd46c/resourceGroups/rg-poc/providers/Microsoft.Sql/servers/acs-as-poc-db02"
-		},
-		"PE-AzureSQLPOC2_properties_groupId": {
-			"type": "string",
-			"defaultValue": "sqlServer"
 		},
 		"containerUri": {
 			"type": "string",
@@ -103,6 +103,12 @@
 					"LSSQLPOC_connectionString": {
 						"value": "[parameters('LSSQLPOC_connectionString')]"
 					},
+					"SalesforceACSProd_password": {
+						"value": "[parameters('SalesforceACSProd_password')]"
+					},
+					"SalesforceACSProd_securityToken": {
+						"value": "[parameters('SalesforceACSProd_securityToken')]"
+					},
 					"LS_AZST_BlobLanding_connectionString": {
 						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					},
@@ -111,6 +117,12 @@
 					},
 					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
+					},
+					"SalesforceACSProd_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]"
+					},
+					"SalesforceACSProd_properties_typeProperties_username": {
+						"value": "[parameters('SalesforceACSProd_properties_typeProperties_username')]"
 					},
 					"WeatherRestD_properties_typeProperties_url": {
 						"value": "[parameters('WeatherRestD_properties_typeProperties_url')]"
@@ -126,12 +138,6 @@
 					},
 					"LS_SAFC_BRP_properties_typeProperties_username": {
 						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
-					},
-					"PE-AzureDLPOC2_properties_privateLinkResourceId": {
-						"value": "[parameters('PE-AzureDLPOC2_properties_privateLinkResourceId')]"
-					},
-					"PE-AzureDLPOC2_properties_groupId": {
-						"value": "[parameters('PE-AzureDLPOC2_properties_groupId')]"
 					}
 				}
 			},
@@ -150,12 +156,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"PE-AzureSQLPOC2_properties_privateLinkResourceId": {
-						"value": "[parameters('PE-AzureSQLPOC2_properties_privateLinkResourceId')]"
-					},
-					"PE-AzureSQLPOC2_properties_groupId": {
-						"value": "[parameters('PE-AzureSQLPOC2_properties_groupId')]"
 					}
 				}
 			},
