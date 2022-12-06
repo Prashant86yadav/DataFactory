@@ -17,7 +17,6 @@
 				"fileSystem": "databrickslanding"
 			},
 			"columnDelimiter": ",",
-			"compressionCodec": "snappy",
 			"encodingName": "UTF-8",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
