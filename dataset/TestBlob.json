@@ -13,11 +13,12 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "emp.csv",
-				"folderPath": "test",
-				"fileSystem": "adobe-datafeeds"
+				"fileName": "testdump",
+				"fileSystem": "databrickslanding"
 			},
 			"columnDelimiter": ",",
+			"compressionCodec": "snappy",
+			"encodingName": "UTF-8",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
