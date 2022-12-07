@@ -1,0 +1,495 @@
+{
+	"name": "membership ingest",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Billing Grade",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Billing Grade",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Branch Group",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Branch Group",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Member Grade",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Member Grade",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Date of Birth",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date of Birth",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Gender",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification Group",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Certification Group",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification Level",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Certification Level",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PPP",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PPP",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "PPP Account for Current Membership",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "PPP Account for Current Membership",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Account 18 Digits ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Account 18 Digits ID",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Email",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Primary Account Type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Primary Account Type",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Membership Number",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Membership Number",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Membership Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Membership Status",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Account Name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Account Name",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Current Membership Expiry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Current Membership Expiry",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Joined Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Joined Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BGG",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BGG",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Branch",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Branch",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Geography",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Geography",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Home Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Home Country",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Work Country",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Work Country",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Former Billing Grade1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Former Billing Grade1",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Former Billing Grade2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Former Billing Grade2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Days since Current Membership Expiry",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Days since Current Membership Expiry",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Days Check",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Days Check",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Billing Grade 2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Billing Grade 2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BGG2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BGG2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Branch Group 2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Branch Group 2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Coment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Comment",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "New",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "New?",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Created Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Created Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Deactivated Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Deactivated Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification Expiry Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Certification Expiry Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Date Of Commencement",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Date Of Commencement",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Last Modified Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Last Modified Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ExcelDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "member_dump_dec",
+							"schemaname": "dbo"
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
