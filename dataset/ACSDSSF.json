@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "CaseTeamMember"
+			"objectApiName": "Case"
 		}
 	}
 }
