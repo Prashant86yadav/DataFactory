@@ -7,9 +7,6 @@
 		},
 		"annotations": [],
 		"type": "SalesforceObject",
-		"schema": [],
-		"typeProperties": {
-			"objectApiName": "Assessment__c"
-		}
+		"schema": []
 	}
 }
