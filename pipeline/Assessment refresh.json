@@ -60,12 +60,10 @@
 		],
 		"parameters": {
 			"sourcetable": {
-				"type": "string",
-				"defaultValue": "case"
+				"type": "string"
 			},
 			"targettable": {
-				"type": "string",
-				"defaultValue": "case"
+				"type": "string"
 			}
 		},
 		"annotations": []
