@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Assessment object",
+				"name": "Copy Salesforce object",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
