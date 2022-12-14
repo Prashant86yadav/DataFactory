@@ -1,10 +1,6 @@
 {
 	"name": "sqltargetdel",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "sqldsdeltarget",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "SqlServerTable",
 		"schema": [],
