@@ -66,6 +66,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "ACS"
+		},
 		"annotations": []
 	}
 }
