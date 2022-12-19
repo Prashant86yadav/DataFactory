@@ -1,0 +1,75 @@
+{
+	"name": "SF Object Refresh",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Salesforce object",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": "select   Id\n,OwnerId\n,IsDeleted\n,Name\n,CurrencyIsoCode\n,RecordTypeId\n,CreatedDate\n,CreatedById\n,LastModifiedDate\n,LastModifiedById\n,SystemModstamp\n,LastActivityDate\n,LastViewedDate\n,LastReferencedDate\n,ACSMembershipNumberFormula__c\n,ANZSCOCode__c\n,ActivationDate__c\n,Active__c\n,ApplicantFirstName__c\n,ApplicantInterview__c\n,ApplicantName__c\n,ApplicantPaid__c\n,ApplicantState__c\n,ApplicantSubmitEmailSent__c\n,Applicant_Last_Name__c\n,Applicant_Name_Formula__c\n,Applicant_Title__c\n,Applicant_eligible_for_Senior_Membership__c\n,ApplicationStatusIndicator__c\n,ApplicationSubtype__c\n,ApplicationType__c\n,AssessmentClosedDate__c\n,AssessmentComments__c\n,AssessmentDate__c\n,AssessmentDueDate__c\n,AssessmentPathway__c\n,AssessmentResult__c\n,Assessment_18_Digits_ID__c\n,Assessment_Report_ID__c\n,Assessment_Template_ID__c\n,Assessor1ConflictOfInterest__c\n,Assessor2ConflictofInterest__c\n,AssessorReviewComments__c\n,Assessor_Appeal_Comments__c\n,Assessor__c\n,AvgAssessorTimeDays__c\n,BECEndorsementReason__c\n,BECEndorsement__c\n,BFCChair__c\n,BalanceDue__c\n,BirthCertificateOrPassportApproved__c\n,BoxFolderId__c\n,BranchManager__c\n,CBOKNotes__c\n,CPD_Hours_Percentage_Complete__c\n,CPD_Hours_Required__c\n,CPD_Run_Rate_Variance__c\n,CPD_Target_Run_Rate__c\n,CPPathwayScenario__c\n,CPPathway__c\n,CTPathwayScenario__c\n,CTPathway__c\n,CV_Notes__c\n,Calculated__c\n,CanUnsuitableBeRectified__c\n,CaseAge__c\n,CaseManager__c\n,Certificate_Renewed__c\n,CertificationExpiryDate__c\n,CertificationPeriod__c\n,CertificationStatus__c\n,Certification_Type__c\n,Change_Management__c\n,Citation__c\n,CommentsaddedtoUnsuccessfulEmail__c\n,CompanyorUniversity__c\n,CompletedApplicationReceivedDate__c\n,Conga_Assessment_Report_Download__c\n,Conga_Next_Action_Merge__c\n,Contact_Email__c\n,Contact__c\n,Continuing__c\n,ContributionRecognisedElsewhere__c\n,ContributionWorthyofRecognition__c\n,CountryOfBirth__c\n,CountryOfResidence__c\n,CreateBoxFolder__c\n,CreditCardonFile__c\n,CurrentUserCaseManager__c\n,Current_Certification__c\n,DIACComments__c\n,Data_Information_Management__c\n,Data_Migrated_from_XEN__c\n,DateOfBirth__c\n,DateOfKnowledgeMet__c\n,Days_Remaining__c\n,Days_Since_Submission_Date__c\n,DeadlineDate__c\n,DefaultEmailAddress__c\n,DefaultMailAddressCode__c\n,DefaultMailAddressID__c\n,DefaultMailAddressStreet__c\n,DefaultMailCity__c\n,DefaultMailCountry__c\n,DefaultMailPostalCode__c\n,DefaultMailState__c\n,Education__c\n,Email_Address__c\n,Email_Template__c\n,Employed_in_ICT_school_research_facility__c\n,End_Date__c\n,ErrorsFoundCount__c\n,Ethics__c\n,ExcelledInWhichRoleArea__c\n,Experience__c\n,FinalReview__c\n,FinalisedDate__c\n,FollowUpDueDate__c\n,Former_ANZSCO__c\n,Former_Application_Sub_Type__c\n,Former_Application_Type__c\n,Former_Assessor_Name__c\n,FromAssessorDate__c\n,FromAssessorNotEdited__c\n,Hardware_Software_Fundamentals__c\n,HasCMSIntegrationCompleted__c\n,Has_10yrs_of_professional_ICT_experience__c\n,Highest_level_of_qualification_achieved__c\n,Holds_Masters_by_Research_PhD__c\n,HonoursandAwards__c\n,Human_computer_Interaction__c\n,ICTManagement__c\n,ICTProblemSolving__c\n,ICTProfessionalKnowledge__c\n,ICT_Problem_Solving__c\n,IT_Project_Management__c\n,IT_governance__c\n,ImpactOnITFieldManagement__c\n,InPreparation15DayReminderDate__c\n,InPreparation15DayReminder__c\n,InPreparation25DayReminderDate__c\n,InPreparation25DayReminder__c\n,Internal_Notes__c\n,Interpersonal_Communication__c\n,IsICTKnowledgeAcceptable__c\n,Keep_Certification_Status_Private__c\n,LapsedComments__c\n,LapsedFollowUp__c\n,LastModifiedUserProfileName__c\n,MCAssessmentOutcome__c\n,Manual_Data_Entry__c,\nMeetCBOKRequirements__c,\nMembershipExpiry__c,\nMobile__c,\nNFCAssessmentOutcome__c,\nNationality__c,\nNetworking__c,\nNext_Action_Due_Date__c,\nNext_Action__c,\nNominationSecondedByDate__c,\nNominationSecondedByEmail__c,\nNominationSecondedByPhone__c,\nNominationSecondedBy__c,\nNominatorACSMembershipNumber__c,\nNominatorEmail__c,\nNominatorName__c,\nNominatorPhoneNumber__c,\nNominator_Declaration_Date__c,\nNonDecisionReady__c,\nOriginalApplicationReceived__c,\nOriginal_Received_Date__c,\nOverdrive_Target__c,\nPassport_Number__c,\nPassword__c,\nPayment_Recieved__c,\nPeriodofMajorContribution__c,\nPhoneNumber__c,\nPlagiarismDetected__c,\nPosition_Title_1__c,\nPosition_Title_2__c,\nPotential_RMD__c,\nPrevious_Certification__c,\nPriorityReason__c,\nPriority__c,\nProfessionalYearComplete__c,\nProfessionalism__c,\nProgramming__c,\nProjectReportUpload__c,\nProjectReportsAttachedAndAcceptable__c,\nPublicationsandPatents__c,\nQADate__c,\nQualityCheckComment__c,\nQuality_Check_Status__c,\nREFERENCE_TO_X_EN__c,\nRMDCalculationErrorMessages__c,\nRMDLogicUsed__c,\nRPLComments__c,\nReady_for_Renewal__c,\nReasonforAppeal__c,\nReasonforReviewChangeofANZSCO__c,\nReasonforReviewExperience__c,\nReasonforReviewQualification__c,\nReasonforReview__c,\nRectifyComment__c,\nReferToDIAC__c,\nReferee_Company_1__c,\nReferee_Company_2__c,\nReferee_Email_1__c,\nReferee_Email_2__c,\nReferee_Name_1__c,\nReferee_Name_2__c,\nReferee_Phone_1__c,\nReferee_Phone_2__c,\nRelatedAssessment__c,\nRelatedCertification__c,\nRenewalProcessed__c,\nRequirementsMetDate__c,\nResultLetterApproved__c,\nResult_Letter_Template__c,\nReviewOrAppealEmailTemplate__c,\nReviewOrAppealTemplateID__c,\nReview_Unsuitable__c,\nSFIA_Specialism__c,\nSecurity_Management__c,\nSecurity_Policy__c,\nService_Management__c,\nSkillsAgent__c,\nSocietal_Issues_Legal_issues_Privacy__c,\nStatus__c,\nSubmissionDate__c,\nSuggested_Pathway__c,\nSuggested_Type__c,\nSystems_Acquisition__c,\nSystems_Development__c,\nTarget_CPD_Hours__c,\nTeamwork_Concepts_and_Issues__c,\nTechnologyBuilding__c,\nTechnologyResources__c,\nTotalAcceptedExperienceYM__c,\nTotalCPDHours__c,\nTotal_CPD_Hours_and_Minutes__c,\nTotal_CPD_Minutes_Conversion__c,\nTypeofCertificationAssessment__c,\nUnsuccessfulNominationCommunication__c,\nWhatMakesContributionDistinguished__c,\nWithAssessorDate__c,\nX5YearsProfessionalICTExpAtSFIA6__c,\nYears_in_SFIA_Specialism__c,\nYears_of_experience_in_ICT__c,\nNo_of_Qualification_Accreditation__c,\nTotalAcceptedExperienceDays__c,\nTranscriptRollupQualifications__c,\nCertification_Lodged_with_Membership__c,\nApplicantAttachmentsBoxFolderId__c,\nAssessorAttachmentsBoxFolderId__c,\nCmsApplicantBoxDocumentDetails__c,\nCmsBoxApplicantFileIdsToMove__c,\nResultLetterBoxFolderId__c,\nMonthActivated__c,\nExpriyMonth__c,\nApplicationCreatedDateInXenAndSF__c,\nXen_Application_ID__c,\nPrioriyInformation__c,\nCertificate_Specialism__c,\nRecommendedANZSCO__c,\nRecommendedApplicationType__c,\nLinkedApplication__c,\nCaseClosed__c,\nApplicantDOB__c,\nNo_RPL_Document__c,\nRMDFormatted__c,\nDateofKnowledgeMetFormatted__c,\nBypassValidation__c,\nCurrentPreviousWeekFinalisedDate__c,\nCurrentPreviousMonthFinalisedDate__c,\nRelated_Certification_Status__c,\nOutfit_Assessment_Last_Update__c,\nOutfit_Last_Letter_Template__c,\nOutfit_Letter_Content__c,\nEmail_Correspondence_Sent__c,\nCertification_Expiry_Date_As_Text__c,\nDays_Since_Activation__c,\nMembership_Status__c,\nPendula_Test__c,\nPlagScan_Doc_Id__c,\nPlagiarism_Completion_Date__c,\nOutfit_Report_Document_Id__c,\nOutfit_Report_Document_Name__c,\nPlagiarism_Error__c,\nPlagiarism_Flag__c,\nPlagiarism_Level__c,\nPlagiarism_Score__c,\nPlagiarism_Status__c,\nPlagiarism_Submission_Date__c,\nView_in_PlagScan__c,\nRequest_Additional_Documents__c,\nUnsuitable_Outcome__c,\nProductID__c,\nGTI_Application__c,\nCertification_Category__c from assessment__c  ;",
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "--drop table [dbo].[assessment]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ACSDSSF",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": {
+								"value": "@pipeline().parameters.targettable",
+								"type": "Expression"
+							},
+							"schemaname": "dbo"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"sourcetable": {
+				"type": "string"
+			},
+			"targettable": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ACS"
+		},
+		"annotations": []
+	}
+}
