@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "AccreditedCourse__c"
+			"objectApiName": "Qualification__c"
 		}
 	}
 }
