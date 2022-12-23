@@ -1,0 +1,17 @@
+{
+	"name": "TR_SF_Refresh",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2022-12-24T00:00:00",
+				"timeZone": "AUS Eastern Standard Time"
+			}
+		}
+	}
+}
