@@ -5,6 +5,12 @@
 		"factoryName": {
 			"value": "acs-as-poc-df01"
 		},
+		"ACSSFPROD_password": {
+			"value": ""
+		},
+		"ACSSFPROD_securityToken": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
@@ -22,6 +28,12 @@
 		},
 		"SalesforceACSProd_securityToken": {
 			"value": ""
+		},
+		"ACSSFPROD_properties_typeProperties_environmentUrl": {
+			"value": " https://acsau.my.salesforce.com"
+		},
+		"ACSSFPROD_properties_typeProperties_username": {
+			"value": "prashant.yadvendra@acs.org.au"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"
