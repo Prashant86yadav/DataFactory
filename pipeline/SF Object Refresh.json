@@ -1,0 +1,81 @@
+{
+	"name": "SF Object Refresh",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Salesforce object",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ACSDSSFOR",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": {
+								"value": "@pipeline().parameters.targettable",
+								"type": "Expression"
+							},
+							"schemaname": "dbo"
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"sourcetable": {
+				"type": "string",
+				"defaultValue": "contact__c"
+			},
+			"targettable": {
+				"type": "string",
+				"defaultValue": "contact"
+			}
+		},
+		"variables": {
+			"HWM": {
+				"type": "String",
+				"defaultValue": "2199-12-31 00:00:00"
+			}
+		},
+		"folder": {
+			"name": "ACS"
+		},
+		"annotations": []
+	}
+}

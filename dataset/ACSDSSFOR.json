@@ -1,0 +1,15 @@
+{
+	"name": "ACSDSSFOR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ACSSFPROD",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SalesforceObject",
+		"schema": [],
+		"typeProperties": {
+			"objectApiName": "Assessment__c"
+		}
+	}
+}

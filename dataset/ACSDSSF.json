@@ -1,0 +1,12 @@
+{
+	"name": "ACSDSSF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ACSSFPROD",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SalesforceObject",
+		"schema": []
+	}
+}
