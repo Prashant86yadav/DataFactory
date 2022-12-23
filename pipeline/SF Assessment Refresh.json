@@ -115,7 +115,10 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "assessment",
+							"tablename": {
+								"value": "@pipeline().parameters.TargetTableName",
+								"type": "Expression"
+							},
 							"schemaname": "dbo"
 						}
 					}
