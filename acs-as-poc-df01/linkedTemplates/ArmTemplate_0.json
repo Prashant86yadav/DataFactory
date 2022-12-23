@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
 		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
+		},
 		"Datafeeds_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
@@ -35,13 +39,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
-		"LS_AZST_BlobLanding_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
-		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
-			"defaultValue": " https://acsau.my.salesforce.com"
+			"defaultValue": "https://acsau.my.salesforce.com/"
 		},
 		"ACSSFPROD_properties_typeProperties_username": {
 			"type": "string",
@@ -70,18 +70,6 @@
 		"lga_google_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
-		},
-		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "@linkedService().dvrDatabricksClusterId"
-		},
-		"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://dhhsbrp.my.salesforce.com"
-		},
-		"LS_SAFC_BRP_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
 		}
 	},
 	"variables": {
@@ -123,6 +111,24 @@
 					"accountKey": {
 						"type": "SecureString",
 						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "https://adb-7757545527689401.1.azuredatabricks.net",
+					"clusterId": "1127-214634-tp05ut7i",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
 					}
 				}
 			},
@@ -236,6 +242,44 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACSDSSF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ACSSFPROD",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ACSSFPROD')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACSDSSFOR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ACSSFPROD",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"schema": [],
+				"typeProperties": {
+					"objectApiName": "Assessment__c"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ACSSFPROD')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AnalyticsDatafeed')]",
@@ -3783,7 +3827,10 @@
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
-				"typeProperties": {}
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "assessment_schema"
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSSQLPOC')]"
@@ -3818,6 +3865,181 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ExcelDS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Datafeeds",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Report input from SF",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Membership all data 01122022.xlsx",
+						"folderPath": "test",
+						"container": "adobe-datafeeds"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
@@ -3880,11 +4102,11 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "emp.csv",
-						"folderPath": "test",
-						"fileSystem": "adobe-datafeeds"
+						"fileName": "testdump",
+						"fileSystem": "databrickslanding"
 					},
 					"columnDelimiter": ",",
+					"encodingName": "UTF-8",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
@@ -3924,128 +4146,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_ADBR_DVR_DataLake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "AzureDatabricksDeltaLake",
-				"parameters": {
-					"dvrDatabricksWorkspaceURL": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
-					},
-					"dvrDatabricksClusterId": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
-					}
-				},
-				"annotations": [],
-				"typeProperties": {
-					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
-					"clusterId": "@linkedService().dvrDatabricksClusterId",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-Databricks-AccessToken",
-						"secretVersion": ""
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_ADBR_dvrDatabricks')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"dvrDatabricksWorkspaceURL": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
-					},
-					"dvrDatabricksClusterId": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
-					}
-				},
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-Databricks-AccessToken",
-						"secretVersion": ""
-					},
-					"existingClusterId": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_AZST_BlobLanding')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_AZST_BlobLanding_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AzureVM-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AzureVM-IR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SAFC_BRP')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-SalesforceBrpSecret",
-						"secretVersion": ""
-					},
-					"securityToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-SalesforceBrpToken"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
 			]
 		}
 	]
