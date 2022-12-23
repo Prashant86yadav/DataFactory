@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"ACSSFPROD_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
+		},
+		"ACSSFPROD_securityToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -30,6 +38,14 @@
 		"SalesforceACSProd_securityToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
+		},
+		"ACSSFPROD_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": " https://acsau.my.salesforce.com"
+		},
+		"ACSSFPROD_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "prashant.yadvendra@acs.org.au"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -94,6 +110,12 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ACSSFPROD_password": {
+						"value": "[parameters('ACSSFPROD_password')]"
+					},
+					"ACSSFPROD_securityToken": {
+						"value": "[parameters('ACSSFPROD_securityToken')]"
+					},
 					"AzureDataLakeStorage_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					},
@@ -111,6 +133,12 @@
 					},
 					"LS_AZST_BlobLanding_connectionString": {
 						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
+					},
+					"ACSSFPROD_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
+					},
+					"ACSSFPROD_properties_typeProperties_username": {
+						"value": "[parameters('ACSSFPROD_properties_typeProperties_username')]"
 					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
