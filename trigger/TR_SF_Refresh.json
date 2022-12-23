@@ -2,7 +2,7 @@
 	"name": "TR_SF_Refresh",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
