@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Assessment__c"
+			"objectApiName": "Credential__c"
 		}
 	}
 }
