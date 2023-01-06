@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "CPDHours__c"
+			"objectApiName": "litmos"
 		}
 	}
 }
