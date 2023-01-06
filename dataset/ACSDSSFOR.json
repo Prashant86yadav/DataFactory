@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Litmos__Program__c"
+			"objectApiName": "Litmos__LitmosObjectIndex__c"
 		}
 	}
 }
