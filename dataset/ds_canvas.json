@@ -1,0 +1,12 @@
+{
+	"name": "ds_canvas",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Canvas REST",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
