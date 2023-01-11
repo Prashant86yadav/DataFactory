@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "api/courses"
+			"relativeUrl": "api/v1/courses/123/pages/a-wiki-page"
 		},
 		"schema": []
 	}
