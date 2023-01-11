@@ -1,0 +1,17 @@
+{
+	"name": "REST_Anon_AutoRes",
+	"properties": {
+		"type": "RestService",
+		"parameters": {
+			"hostUrl": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"typeProperties": {
+			"url": "@{linkedService().hostUrl}",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
