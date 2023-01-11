@@ -8,10 +8,9 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Report input from SF",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Membership all data 01122022.xlsx",
+				"fileName": "Membership all data 09012023.xlsx",
 				"folderPath": "test",
 				"container": "adobe-datafeeds"
 			},
