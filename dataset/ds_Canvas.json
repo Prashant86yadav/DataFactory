@@ -1,0 +1,15 @@
+{
+	"name": "ds_Canvas",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Canvas REST",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "https://education.acs.org.au/api/v1/courses"
+		},
+		"schema": []
+	}
+}
