@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/lti/courses/:course_id/line_items/:line_item_id/results"
+			"relativeUrl": "/api/lti/accounts/"
 		},
 		"schema": []
 	}
