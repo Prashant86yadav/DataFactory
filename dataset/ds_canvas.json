@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/courses/enrollment_type"
+			"relativeUrl": "/api/v1/courses"
 		},
 		"schema": []
 	}
