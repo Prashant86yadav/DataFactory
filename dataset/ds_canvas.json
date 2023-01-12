@@ -5,10 +5,19 @@
 			"referenceName": "Canvas REST",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"relativeurl": {
+				"type": "string",
+				"defaultValue": "/api/v1/accounts/2/courses"
+			}
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/accounts/2/courses"
+			"relativeUrl": {
+				"value": "@dataset().relativeurl",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}
