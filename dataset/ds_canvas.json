@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/accounts/\"name\": \"Australian Computer Society\""
+			"relativeUrl": "/api/v1/accounts/1/courses"
 		},
 		"schema": []
 	}
