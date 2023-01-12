@@ -5,7 +5,14 @@
 			{
 				"name": "Copy data1",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ForEach1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -22,6 +29,9 @@
 						"requestMethod": "GET",
 						"additionalHeaders": {
 							"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4 "
+						},
+						"paginationRules": {
+							"MaxRequestNumber": "5"
 						}
 					},
 					"sink": {
@@ -40,7 +50,13 @@
 				"inputs": [
 					{
 						"referenceName": "ds_canvas",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeurl": {
+								"value": "@concat('/api/v1/accounts/', variables('currentSA'),'/courses')",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -48,13 +64,61 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "TWRP",
+							"tablename": "courses",
 							"schemaname": "dbo"
 						}
 					}
 				]
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.subaccount",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Set Current Variable value",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "currentSA",
+								"value": {
+									"value": "@item()",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
+		"parameters": {
+			"tablename": {
+				"type": "string"
+			},
+			"schemaname": {
+				"type": "string"
+			},
+			"subaccount": {
+				"type": "array",
+				"defaultValue": [
+					1
+				]
+			}
+		},
+		"variables": {
+			"currentSA": {
+				"type": "String",
+				"defaultValue": "['']"
+			}
+		},
 		"folder": {
 			"name": "ACS"
 		},
