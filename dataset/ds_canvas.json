@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/accounts/7/courses"
+			"relativeUrl": "/api/v1/accounts/6/courses"
 		},
 		"schema": []
 	}
