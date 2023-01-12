@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/accounts/1/sub_accounts"
+			"relativeUrl": "/api/v1/accounts/1/sub_accounts?recursive=true"
 		},
 		"schema": []
 	}
