@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "/api/v1/accounts/\"name\": \"prashant yadvendra\""
+			"relativeUrl": "/api/v1/accounts/\"name\": \"Australian Computer Society\""
 		},
 		"schema": []
 	}
