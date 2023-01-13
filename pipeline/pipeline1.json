@@ -40,10 +40,13 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mapComplexValuesToString": true
+					}
 				},
 				"inputs": [
 					{
@@ -57,7 +60,11 @@
 				"outputs": [
 					{
 						"referenceName": "SQLTableQ",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "enrollmentcanvas",
+							"schemaname": "dbo"
+						}
 					}
 				]
 			}
