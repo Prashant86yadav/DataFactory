@@ -134,6 +134,7 @@
 				}
 			}
 		],
+		"concurrency": 10,
 		"variables": {
 			"offset": {
 				"type": "String",
