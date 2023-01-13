@@ -131,6 +131,7 @@
 				}
 			}
 		],
+		"concurrency": 10,
 		"parameters": {
 			"offset": {
 				"type": "int",
