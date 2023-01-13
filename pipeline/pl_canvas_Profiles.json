@@ -103,8 +103,7 @@
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
-								"parallelCopies": 20,
-								"dataIntegrationUnits": 32
+								"parallelCopies": 10
 							},
 							"inputs": [
 								{
