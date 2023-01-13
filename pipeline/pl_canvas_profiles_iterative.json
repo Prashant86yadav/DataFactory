@@ -129,26 +129,6 @@
 									"type": "Expression"
 								}
 							}
-						},
-						{
-							"name": "Set fetch again",
-							"type": "SetVariable",
-							"dependsOn": [
-								{
-									"activity": "Set offset again",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "fetch",
-								"value": {
-									"value": "@string(sub(int(variables('rowcount')),5000))",
-									"type": "Expression"
-								}
-							}
 						}
 					]
 				}
