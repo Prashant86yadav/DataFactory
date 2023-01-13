@@ -68,7 +68,8 @@
 						"value": "@variables('userid')",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
+					"batchCount": 50,
 					"activities": [
 						{
 							"name": "Copy Users from canvas",
@@ -104,7 +105,7 @@
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false,
-								"parallelCopies": 10
+								"parallelCopies": 32
 							},
 							"inputs": [
 								{
