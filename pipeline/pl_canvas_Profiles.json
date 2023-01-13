@@ -1,10 +1,39 @@
 {
-	"name": "pl_canvas_users",
+	"name": "pl_canvas_Profiles",
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEach1",
-				"type": "ForEach",
+				"name": "Fetch_Userid",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select id  from [dbo].[CanvasUsers] order by id\noffset @{pipeline().parameters.offset} rows fetch next @{pipeline().parameters.fetch} rows only",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Set userId",
+				"type": "SetVariable",
 				"dependsOn": [
 					{
 						"activity": "Fetch_Userid",
@@ -15,23 +44,36 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
-					"items": {
+					"variableName": "userid",
+					"value": {
 						"value": "@activity('Fetch_Userid').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set userId",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('userid')",
 						"type": "Expression"
 					},
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Copy Users from canvas_copy1",
+							"name": "Copy Users from canvas",
 							"type": "Copy",
-							"dependsOn": [
-								{
-									"activity": "Set userid",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -55,9 +97,9 @@
 								},
 								"sink": {
 									"type": "AzureSqlSink",
+									"preCopyScript": "truncate table [dbo].[CanvasProfiles]\n",
 									"writeBehavior": "insert",
 									"sqlWriterUseTableLock": false,
-									"tableOption": "autoCreate",
 									"disableMetricsCollection": false
 								},
 								"enableStaging": false
@@ -68,7 +110,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"relativeurl": {
-											"value": "@concat('/api/v1/accounts/', variables('userid'),'/courses')",
+											"value": "@concat('/api/v1/users/', item().id,'/profile')",
 											"type": "Expression"
 										}
 									}
@@ -79,58 +121,34 @@
 									"referenceName": "SQLTableQ",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "CanvasUsers",
+										"tablename": "CanvasProfiles",
 										"schemaname": "dbo"
 									}
 								}
 							]
-						},
-						{
-							"name": "Set userid",
-							"type": "SetVariable",
-							"dependsOn": [],
-							"userProperties": [],
-							"typeProperties": {
-								"variableName": "userid",
-								"value": {
-									"value": "@activity('Fetch_Userid').output.value",
-									"type": "Expression"
-								}
-							}
 						}
 					]
 				}
-			},
-			{
-				"name": "Fetch_Userid",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select  top 10 id  as id from [dbo].[CanvasUsers]",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"dataset": {
-						"referenceName": "AzureSQLSP",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
 			}
 		],
+		"parameters": {
+			"offset": {
+				"type": "int",
+				"defaultValue": 0
+			},
+			"fetch": {
+				"type": "string",
+				"defaultValue": "4999"
+			}
+		},
 		"variables": {
+			"eachuserid": {
+				"type": "Array",
+				"defaultValue": []
+			},
 			"userid": {
-				"type": "Array"
+				"type": "Array",
+				"defaultValue": []
 			}
 		},
 		"folder": {
