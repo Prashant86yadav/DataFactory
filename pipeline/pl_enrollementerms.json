@@ -57,7 +57,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "enrollmentterms",
+							"tablename": "eterms",
 							"schemaname": "dbo"
 						}
 					}
