@@ -1,0 +1,73 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "@{'/api/v1/accounts/1/terms'}"
+					},
+					{
+						"name": "Destination",
+						"value": "@{'dbo'}.@{'EnrollmentTerms'}"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"additionalHeaders": {
+							"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4 "
+						},
+						"paginationRules": {
+							"supportRFC5988": "true"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_canvas",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeurl": "/api/v1/accounts/1/terms"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "EnrollmentTerms",
+							"schemaname": "dbo"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ACS"
+		},
+		"annotations": []
+	}
+}
