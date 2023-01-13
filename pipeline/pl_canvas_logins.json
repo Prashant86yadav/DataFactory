@@ -1,0 +1,161 @@
+{
+	"name": "pl_canvas_logins",
+	"properties": {
+		"activities": [
+			{
+				"name": "Fetch_Userid",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select id  from [dbo].[CanvasUsers] order by id\noffset @{pipeline().parameters.offset} rows fetch next @{pipeline().parameters.fetch} rows only",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Set userId",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Fetch_Userid",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "userid",
+					"value": {
+						"value": "@activity('Fetch_Userid').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Set userId",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('userid')",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "Copy Users from canvas",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "RestSource",
+									"httpRequestTimeout": "00:01:40",
+									"requestInterval": "00.00:00:00.010",
+									"requestMethod": "GET",
+									"additionalHeaders": {
+										"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4"
+									},
+									"paginationRules": {
+										"supportRFC5988": "true"
+									}
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"preCopyScript": "\n",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false,
+									"disableMetricsCollection": false
+								},
+								"enableStaging": false,
+								"parallelCopies": 10
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_canvas",
+									"type": "DatasetReference",
+									"parameters": {
+										"relativeurl": {
+											"value": "@concat('/api/v1/users/', item().id,'/logins')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SQLTableQ",
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": "CanvasProfiles",
+										"schemaname": "dbo"
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"concurrency": 10,
+		"parameters": {
+			"offset": {
+				"type": "int",
+				"defaultValue": 0
+			},
+			"fetch": {
+				"type": "string",
+				"defaultValue": "4999"
+			}
+		},
+		"variables": {
+			"eachuserid": {
+				"type": "Array",
+				"defaultValue": []
+			},
+			"userid": {
+				"type": "Array",
+				"defaultValue": []
+			}
+		},
+		"folder": {
+			"name": "ACS"
+		},
+		"annotations": []
+	}
+}
