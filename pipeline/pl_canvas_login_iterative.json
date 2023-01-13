@@ -85,7 +85,7 @@
 						"value": "@variables('iteration')",
 						"type": "Expression"
 					},
-					"isSequential": true,
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "Execute Pipeline1",
