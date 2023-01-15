@@ -1,0 +1,16 @@
+{
+	"name": "ds_memeberhsip",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSSQLPOC",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "[dbo]",
+			"table": "[member_dump_jan]"
+		}
+	}
+}
