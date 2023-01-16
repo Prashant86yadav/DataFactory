@@ -124,7 +124,7 @@
 									"referenceName": "SQLTableQ",
 									"type": "DatasetReference",
 									"parameters": {
-										"tablename": "Canvaslogins",
+										"tablename": "CanvasUserHistory",
 										"schemaname": "dbo"
 									}
 								}
