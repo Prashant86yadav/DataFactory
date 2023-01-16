@@ -1,5 +1,5 @@
 {
-	"name": "pl_canvas_userhistory_iterative",
+	"name": "pl_canvas_UserHistory_iterative",
 	"properties": {
 		"activities": [
 			{
@@ -94,7 +94,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"pipeline": {
-									"referenceName": "pl_canvas_Profiles",
+									"referenceName": "pl_canvas_user_history",
 									"type": "PipelineReference"
 								},
 								"waitOnCompletion": true,
