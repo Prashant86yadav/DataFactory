@@ -22,24 +22,117 @@
 		"LS_SAFC_BRP_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
-		},
-		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "assessment__c"
-		},
-		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "assessment"
-		},
-		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "  Id ,OwnerId ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate ,ACSMembershipNumberFormula__c ,ANZSCOCode__c ,ActivationDate__c ,Active__c ,ApplicantFirstName__c ,ApplicantInterview__c ,ApplicantName__c ,ApplicantPaid__c ,ApplicantState__c ,ApplicantSubmitEmailSent__c ,Applicant_Last_Name__c ,Applicant_Name_Formula__c ,Applicant_Title__c ,Applicant_eligible_for_Senior_Membership__c ,ApplicationStatusIndicator__c ,ApplicationSubtype__c ,ApplicationType__c ,AssessmentClosedDate__c ,AssessmentComments__c ,AssessmentDate__c ,AssessmentDueDate__c ,AssessmentPathway__c ,AssessmentResult__c ,Assessment_18_Digits_ID__c ,Assessment_Report_ID__c ,Assessment_Template_ID__c ,Assessor1ConflictOfInterest__c ,Assessor2ConflictofInterest__c ,AssessorReviewComments__c ,Assessor_Appeal_Comments__c ,Assessor__c ,AvgAssessorTimeDays__c ,BECEndorsementReason__c ,BECEndorsement__c ,BFCChair__c ,BalanceDue__c ,BirthCertificateOrPassportApproved__c ,BoxFolderId__c ,BranchManager__c ,CBOKNotes__c ,CPD_Hours_Percentage_Complete__c ,CPD_Hours_Required__c ,CPD_Run_Rate_Variance__c ,CPD_Target_Run_Rate__c ,CPPathwayScenario__c ,CPPathway__c ,CTPathwayScenario__c ,CTPathway__c ,CV_Notes__c ,Calculated__c ,CanUnsuitableBeRectified__c ,CaseAge__c ,CaseManager__c ,Certificate_Renewed__c ,CertificationExpiryDate__c ,CertificationPeriod__c ,CertificationStatus__c ,Certification_Type__c ,Change_Management__c ,Citation__c ,CommentsaddedtoUnsuccessfulEmail__c ,CompanyorUniversity__c ,CompletedApplicationReceivedDate__c ,Conga_Assessment_Report_Download__c ,Conga_Next_Action_Merge__c ,Contact_Email__c ,Contact__c ,Continuing__c ,ContributionRecognisedElsewhere__c ,ContributionWorthyofRecognition__c ,CountryOfBirth__c ,CountryOfResidence__c ,CreateBoxFolder__c ,CreditCardonFile__c ,CurrentUserCaseManager__c ,Current_Certification__c ,DIACComments__c ,Data_Information_Management__c ,Data_Migrated_from_XEN__c ,DateOfBirth__c ,DateOfKnowledgeMet__c ,Days_Remaining__c ,Days_Since_Submission_Date__c ,DeadlineDate__c ,DefaultEmailAddress__c ,DefaultMailAddressCode__c ,DefaultMailAddressID__c ,DefaultMailAddressStreet__c ,DefaultMailCity__c ,DefaultMailCountry__c ,DefaultMailPostalCode__c ,DefaultMailState__c ,Education__c ,Email_Address__c ,Email_Template__c ,Employed_in_ICT_school_research_facility__c ,End_Date__c ,ErrorsFoundCount__c ,Ethics__c ,ExcelledInWhichRoleArea__c ,Experience__c ,FinalReview__c ,FinalisedDate__c ,FollowUpDueDate__c ,Former_ANZSCO__c ,Former_Application_Sub_Type__c ,Former_Application_Type__c ,Former_Assessor_Name__c ,FromAssessorDate__c ,FromAssessorNotEdited__c ,Hardware_Software_Fundamentals__c ,HasCMSIntegrationCompleted__c ,Has_10yrs_of_professional_ICT_experience__c ,Highest_level_of_qualification_achieved__c ,Holds_Masters_by_Research_PhD__c ,HonoursandAwards__c ,Human_computer_Interaction__c ,ICTManagement__c ,ICTProblemSolving__c ,ICTProfessionalKnowledge__c ,ICT_Problem_Solving__c ,IT_Project_Management__c ,IT_governance__c ,ImpactOnITFieldManagement__c ,InPreparation15DayReminderDate__c ,InPreparation15DayReminder__c ,InPreparation25DayReminderDate__c ,InPreparation25DayReminder__c ,Internal_Notes__c ,Interpersonal_Communication__c ,IsICTKnowledgeAcceptable__c ,Keep_Certification_Status_Private__c ,LapsedComments__c ,LapsedFollowUp__c ,LastModifiedUserProfileName__c ,MCAssessmentOutcome__c ,Manual_Data_Entry__c, MeetCBOKRequirements__c, MembershipExpiry__c, Mobile__c, NFCAssessmentOutcome__c, Nationality__c, Networking__c, Next_Action_Due_Date__c, Next_Action__c, NominationSecondedByDate__c, NominationSecondedByEmail__c, NominationSecondedByPhone__c, NominationSecondedBy__c, NominatorACSMembershipNumber__c, NominatorEmail__c, NominatorName__c, NominatorPhoneNumber__c, Nominator_Declaration_Date__c, NonDecisionReady__c, OriginalApplicationReceived__c, Original_Received_Date__c, Overdrive_Target__c, Passport_Number__c, Password__c, Payment_Recieved__c, PeriodofMajorContribution__c, PhoneNumber__c, PlagiarismDetected__c, Position_Title_1__c, Position_Title_2__c, Potential_RMD__c, Previous_Certification__c, PriorityReason__c, Priority__c, ProfessionalYearComplete__c, Professionalism__c, Programming__c, ProjectReportUpload__c, ProjectReportsAttachedAndAcceptable__c, PublicationsandPatents__c, QADate__c, QualityCheckComment__c, Quality_Check_Status__c, REFERENCE_TO_X_EN__c, RMDCalculationErrorMessages__c, RMDLogicUsed__c, RPLComments__c, Ready_for_Renewal__c, ReasonforAppeal__c, ReasonforReviewChangeofANZSCO__c, ReasonforReviewExperience__c, ReasonforReviewQualification__c, ReasonforReview__c, RectifyComment__c, ReferToDIAC__c, Referee_Company_1__c, Referee_Company_2__c, Referee_Email_1__c, Referee_Email_2__c, Referee_Name_1__c, Referee_Name_2__c, Referee_Phone_1__c, Referee_Phone_2__c, RelatedAssessment__c, RelatedCertification__c, RenewalProcessed__c, RequirementsMetDate__c, ResultLetterApproved__c, Result_Letter_Template__c, ReviewOrAppealEmailTemplate__c, ReviewOrAppealTemplateID__c, Review_Unsuitable__c, SFIA_Specialism__c, Security_Management__c, Security_Policy__c, Service_Management__c, SkillsAgent__c, Societal_Issues_Legal_issues_Privacy__c, Status__c, SubmissionDate__c, Suggested_Pathway__c, Suggested_Type__c, Systems_Acquisition__c, Systems_Development__c, Target_CPD_Hours__c, Teamwork_Concepts_and_Issues__c, TechnologyBuilding__c, TechnologyResources__c, TotalAcceptedExperienceYM__c, TotalCPDHours__c, Total_CPD_Hours_and_Minutes__c, Total_CPD_Minutes_Conversion__c, TypeofCertificationAssessment__c, UnsuccessfulNominationCommunication__c, WhatMakesContributionDistinguished__c, WithAssessorDate__c, X5YearsProfessionalICTExpAtSFIA6__c, Years_in_SFIA_Specialism__c, Years_of_experience_in_ICT__c, No_of_Qualification_Accreditation__c, TotalAcceptedExperienceDays__c, TranscriptRollupQualifications__c, Certification_Lodged_with_Membership__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, ResultLetterBoxFolderId__c, MonthActivated__c, ExpriyMonth__c, ApplicationCreatedDateInXenAndSF__c, Xen_Application_ID__c, PrioriyInformation__c, Certificate_Specialism__c, RecommendedANZSCO__c, RecommendedApplicationType__c, LinkedApplication__c, CaseClosed__c, ApplicantDOB__c, No_RPL_Document__c, RMDFormatted__c, DateofKnowledgeMetFormatted__c, BypassValidation__c, CurrentPreviousWeekFinalisedDate__c, CurrentPreviousMonthFinalisedDate__c, Related_Certification_Status__c, Outfit_Assessment_Last_Update__c, Outfit_Last_Letter_Template__c, Outfit_Letter_Content__c, Email_Correspondence_Sent__c, Certification_Expiry_Date_As_Text__c, Days_Since_Activation__c, Membership_Status__c, Pendula_Test__c, PlagScan_Doc_Id__c, Plagiarism_Completion_Date__c, Outfit_Report_Document_Id__c, Outfit_Report_Document_Name__c, Plagiarism_Error__c, Plagiarism_Flag__c, Plagiarism_Level__c, Plagiarism_Score__c, Plagiarism_Status__c, Plagiarism_Submission_Date__c, View_in_PlagScan__c, Request_Additional_Documents__c, Unsuitable_Outcome__c, ProductID__c, GTI_Application__c, Certification_Category__c"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/TestBlob')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Others"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "testdump",
+						"fileSystem": "databrickslanding"
+					},
+					"columnDelimiter": ",",
+					"encodingName": "UTF-8",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TrackingData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Datafeeds",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "HCO DS"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "adobe-campaign--datafeed/prod/prod_tr",
+						"container": "adobe-datafeeds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_canvas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Canvas REST",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"relativeurl": {
+						"type": "string",
+						"defaultValue": "/api/v1/accounts/2/courses"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "@dataset().relativeurl",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_memeberhsip')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LSSQLPOC",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "[[dbo]",
+					"table": "[[member_dump_jan]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LS_ADBR_DVR_DataLake')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -879,7 +972,7 @@
 					}
 				},
 				"folder": {
-					"name": "ACS"
+					"name": "ACS/Salesforce"
 				},
 				"annotations": []
 			},
@@ -912,7 +1005,6 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -968,11 +1060,153 @@
 					}
 				},
 				"folder": {
-					"name": "ACS"
+					"name": "ACS/Salesforce"
 				},
 				"annotations": []
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl Canvas Course')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@pipeline().parameters.subaccount",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Set Current Variable value",
+									"type": "SetVariable",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "currentSA",
+										"value": {
+											"value": "@item()",
+											"type": "Expression"
+										}
+									}
+								},
+								{
+									"name": "Copy data1",
+									"type": "Copy",
+									"dependsOn": [
+										{
+											"activity": "Set Current Variable value",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"additionalHeaders": {
+												"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4 "
+											},
+											"paginationRules": {
+												"supportRFC5988": "true"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mapComplexValuesToString": false
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "ds_canvas",
+											"type": "DatasetReference",
+											"parameters": {
+												"relativeurl": {
+													"value": "@concat('/api/v1/accounts/', variables('currentSA'),'/courses')",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SQLTableQ",
+											"type": "DatasetReference",
+											"parameters": {
+												"tablename": "courses",
+												"schemaname": "dbo"
+											}
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"tablename": {
+						"type": "string"
+					},
+					"schemaname": {
+						"type": "string"
+					},
+					"subaccount": {
+						"type": "array",
+						"defaultValue": [
+							"110",
+							"2",
+							"7",
+							"6",
+							"108",
+							"109",
+							"112",
+							"111",
+							"113"
+						]
+					}
+				},
+				"variables": {
+					"currentSA": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_canvas')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_RawAnalyticsDaily_Incre')]",
@@ -19057,14 +19291,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_trackingDaily_Incre')]",
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_Assighments')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "GetFileList",
-						"type": "GetMetadata",
+						"name": "Fetch_Userid",
+						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -19075,29 +19309,40 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select id  from [dbo].[canvas_courses]\nwhere workflow_state in ('available', 'completed') order by id\noffset @{pipeline().parameters.offset} rows fetch next @{pipeline().parameters.fetch} rows only",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
 							"dataset": {
-								"referenceName": "TrackingData",
+								"referenceName": "AzureSQLSP",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"modifiedDatetimeStart": {
-									"value": "@adddays(utcnow(),-1)",
-									"type": "Expression"
-								},
-								"modifiedDatetimeEnd": {
-									"value": "@utcnow()",
-									"type": "Expression"
-								},
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Set userId",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_Userid",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "userid",
+							"value": {
+								"value": "@activity('Fetch_Userid').output.value",
+								"type": "Expression"
 							}
 						}
 					},
@@ -19106,7 +19351,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "GetFileList",
+								"activity": "Set userId",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -19115,13 +19360,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GetFileList').output.childItems",
+								"value": "@variables('userid')",
 								"type": "Expression"
 							},
-							"isSequential": true,
+							"isSequential": false,
+							"batchCount": 50,
 							"activities": [
 								{
-									"name": "CopyToSQL",
+									"name": "Copy Users from canvas",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -19134,51 +19380,38 @@
 									"userProperties": [],
 									"typeProperties": {
 										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": false,
-												"wildcardFolderPath": {
-													"value": "adobe-campaign--datafeed/prod/prod_tr",
-													"type": "Expression"
-												},
-												"wildcardFileName": {
-													"value": "@item().name",
-													"type": "Expression"
-												},
-												"enablePartitionDiscovery": false
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"additionalHeaders": {
+												"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4"
 											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
+											"paginationRules": {
+												"supportRFC5988": "true"
 											}
 										},
 										"sink": {
 											"type": "AzureSqlSink",
-											"writeBehavior": "upsert",
-											"upsertSettings": {
-												"useTempDB": true,
-												"keys": [
-													"Delivery log ID"
-												]
-											},
+											"preCopyScript": "\n",
+											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
 											"disableMetricsCollection": false
 										},
 										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
+										"parallelCopies": 32
 									},
 									"inputs": [
 										{
-											"referenceName": "TrackingData",
+											"referenceName": "ds_canvas",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"relativeurl": {
+													"value": "@concat('/api/v1/courses/', item().id,'/assignments')",
+													"type": "Expression"
+												}
+											}
 										}
 									],
 									"outputs": [
@@ -19186,101 +19419,59 @@
 											"referenceName": "SQLTableQ",
 											"type": "DatasetReference",
 											"parameters": {
-												"tablename": {
-													"value": "RawtrackingLog",
-													"type": "Expression"
-												},
-												"schemaname": "hco"
+												"tablename": "canvas_assignments",
+												"schemaname": "dbo"
 											}
 										}
 									]
 								}
 							]
 						}
-					},
-					{
-						"name": "LogRunTime",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "ForEach1",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[hco].[create_sys_log]",
-							"storedProcedureParameters": {
-								"datafactory": {
-									"value": {
-										"value": "@pipeline().DataFactory",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"pipelineName": {
-									"value": {
-										"value": "@pipeline().Pipeline",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"RunID": {
-									"value": {
-										"value": "@pipeline().RunId",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"triggerName": {
-									"value": null,
-									"type": "String"
-								},
-								"TriggerTime": {
-									"value": null,
-									"type": "String"
-								},
-								"TriggerType": {
-									"value": null,
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "LSSQLPOC",
-							"type": "LinkedServiceReference"
-						}
 					}
 				],
+				"concurrency": 10,
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"offset": {
+						"type": "int",
+						"defaultValue": 0
+					},
+					"fetch": {
+						"type": "string",
+						"defaultValue": "4999"
+					}
+				},
+				"variables": {
+					"eachuserid": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"userid": {
+						"type": "Array",
+						"defaultValue": []
+					}
+				},
 				"folder": {
-					"name": "HCO"
+					"name": "ACS/Canvas"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_canvas')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pl_trackingDaily_full')]",
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_Profiles')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "GetFileList",
-						"type": "GetMetadata",
+						"name": "Fetch_Userid",
+						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -19291,21 +19482,40 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select id  from [dbo].[CanvasUsers] order by id\noffset @{pipeline().parameters.offset} rows fetch next @{pipeline().parameters.fetch} rows only",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
 							"dataset": {
-								"referenceName": "TrackingData",
+								"referenceName": "AzureSQLSP",
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"fieldList": [
-								"childItems"
-							],
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Set userId",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_Userid",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "userid",
+							"value": {
+								"value": "@activity('Fetch_Userid').output.value",
+								"type": "Expression"
 							}
 						}
 					},
@@ -19314,7 +19524,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "GetFileList",
+								"activity": "Set userId",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -19323,13 +19533,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('GetFileList').output.childItems",
+								"value": "@variables('userid')",
 								"type": "Expression"
 							},
-							"isSequential": true,
+							"isSequential": false,
 							"activities": [
 								{
-									"name": "CopyToSQL",
+									"name": "Copy Users from canvas",
 									"type": "Copy",
 									"dependsOn": [],
 									"policy": {
@@ -19342,45 +19552,37 @@
 									"userProperties": [],
 									"typeProperties": {
 										"source": {
-											"type": "DelimitedTextSource",
-											"storeSettings": {
-												"type": "AzureBlobStorageReadSettings",
-												"recursive": false,
-												"wildcardFolderPath": {
-													"value": "adobe-campaign--datafeed/prod/prod_tr",
-													"type": "Expression"
-												},
-												"wildcardFileName": {
-													"value": "@item().name",
-													"type": "Expression"
-												},
-												"enablePartitionDiscovery": false
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"additionalHeaders": {
+												"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4"
 											},
-											"formatSettings": {
-												"type": "DelimitedTextReadSettings"
+											"paginationRules": {
+												"supportRFC5988": "true"
 											}
 										},
 										"sink": {
 											"type": "AzureSqlSink",
+											"preCopyScript": "\n",
 											"writeBehavior": "insert",
 											"sqlWriterUseTableLock": false,
 											"disableMetricsCollection": false
 										},
 										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
+										"parallelCopies": 32
 									},
 									"inputs": [
 										{
-											"referenceName": "TrackingData",
+											"referenceName": "ds_canvas",
 											"type": "DatasetReference",
-											"parameters": {}
+											"parameters": {
+												"relativeurl": {
+													"value": "@concat('/api/v1/users/', item().id,'/profile')",
+													"type": "Expression"
+												}
+											}
 										}
 									],
 									"outputs": [
@@ -19388,29 +19590,61 @@
 											"referenceName": "SQLTableQ",
 											"type": "DatasetReference",
 											"parameters": {
-												"tablename": {
-													"value": "RawtrackingLog",
-													"type": "Expression"
-												},
-												"schemaname": "hco"
+												"tablename": "CanvasProfiles",
+												"schemaname": "dbo"
 											}
 										}
 									]
 								}
 							]
 						}
+					}
+				],
+				"concurrency": 10,
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"offset": {
+						"type": "int",
+						"defaultValue": 0
 					},
+					"fetch": {
+						"type": "string",
+						"defaultValue": "4999"
+					}
+				},
+				"variables": {
+					"eachuserid": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"userid": {
+						"type": "Array",
+						"defaultValue": []
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_canvas')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_enrollemnts')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "enrollments based on courseid",
+				"activities": [
 					{
-						"name": "LogRunTime",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "ForEach1",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
+						"name": "Fetch_courseid",
+						"type": "Lookup",
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -19420,208 +19654,320 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[hco].[create_sys_log]",
-							"storedProcedureParameters": {
-								"datafactory": {
-									"value": {
-										"value": "@pipeline().DataFactory",
-										"type": "Expression"
-									},
-									"type": "String"
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "\nselect id  from  [dbo].[courses] where workflow_state ='available' order by id\n",
+									"type": "Expression"
 								},
-								"pipelineName": {
-									"value": {
-										"value": "@pipeline().Pipeline",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"RunID": {
-									"value": {
-										"value": "@pipeline().RunId",
-										"type": "Expression"
-									},
-									"type": "String"
-								},
-								"triggerName": {
-									"value": null,
-									"type": "String"
-								},
-								"TriggerTime": {
-									"value": null,
-									"type": "String"
-								},
-								"TriggerType": {
-									"value": null,
-									"type": "String"
-								}
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "Set userId",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_courseid",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
-						},
-						"linkedServiceName": {
-							"referenceName": "LSSQLPOC",
-							"type": "LinkedServiceReference"
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "courseid",
+							"value": {
+								"value": "@activity('Fetch_courseid').output.value",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set userId",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('courseid')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Copy Users from canvas",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"additionalHeaders": {
+												"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4"
+											},
+											"paginationRules": {
+												"supportRFC5988": "true"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"preCopyScript": "\n",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"parallelCopies": 10
+									},
+									"inputs": [
+										{
+											"referenceName": "ds_canvas",
+											"type": "DatasetReference",
+											"parameters": {
+												"relativeurl": {
+													"value": "@concat('/api/v1/courses/', item().id,'/enrollments')",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SQLTableQ",
+											"type": "DatasetReference",
+											"parameters": {
+												"tablename": "courseEnrollements",
+												"schemaname": "dbo"
+											}
+										}
+									]
+								}
+							]
 						}
 					}
 				],
+				"concurrency": 10,
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"variables": {
+					"eachuserid": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"courseid": {
+						"type": "Array",
+						"defaultValue": []
+					}
+				},
 				"folder": {
-					"name": "HCO"
+					"name": "ACS/Canvas"
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_canvas')]"
+			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/BinaryDataDestinationStore')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_logins')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Connection to your data destination store.  ",
-				"linkedServiceName": {
-					"referenceName": "LS_AZST_BlobLanding",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"Container": {
-						"type": "string"
-					},
-					"Directory": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Others"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "@dataset().Directory",
-							"type": "Expression"
+				"activities": [
+					{
+						"name": "Fetch_Userid",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
 						},
-						"container": {
-							"value": "@dataset().Container",
-							"type": "Expression"
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select id  from [dbo].[CanvasUsers] order by id\noffset @{pipeline().parameters.offset} rows fetch next @{pipeline().parameters.fetch} rows only",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
 						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZST_BlobLanding')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_safc_brpQuery')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SAFC_BRP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Others"
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SAFC_BRP')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pl_broadcastingDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
 					},
 					{
-						"pipelineReference": {
-							"referenceName": "pl_trackingDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
+						"name": "Set userId",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Fetch_Userid",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "userid",
+							"value": {
+								"value": "@activity('Fetch_Userid').output.value",
+								"type": "Expression"
+							}
+						}
 					},
 					{
-						"pipelineReference": {
-							"referenceName": "pl_RawAnalyticsDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-10-04T00:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								0
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set userId",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('userid')",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"batchCount": 50,
+							"activities": [
+								{
+									"name": "Copy Users from canvas",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "RestSource",
+											"httpRequestTimeout": "00:01:40",
+											"requestInterval": "00.00:00:00.010",
+											"requestMethod": "GET",
+											"additionalHeaders": {
+												"Authorization": "Bearer 13129~RukNsJx0ARpUNmQpSv4Thirjmx4UG02owYm63WIfQJDfuYdCZVD2NQruGbOZRgy4"
+											},
+											"paginationRules": {
+												"supportRFC5988": "true"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"preCopyScript": "\n",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": false,
+											"tableOption": "autoCreate",
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"parallelCopies": 32
+									},
+									"inputs": [
+										{
+											"referenceName": "ds_canvas",
+											"type": "DatasetReference",
+											"parameters": {
+												"relativeurl": {
+													"value": "@concat('/api/v1/users/', item().id,'/logins')",
+													"type": "Expression"
+												}
+											}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SQLTableQ",
+											"type": "DatasetReference",
+											"parameters": {
+												"tablename": "Canvaslogins",
+												"schemaname": "dbo"
+											}
+										}
+									]
+								}
 							]
 						}
 					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TR_SF_Refresh')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "SF Assessment Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
-						}
-					}
 				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 12,
-						"startTime": "2022-12-24T00:00:00",
-						"timeZone": "AUS Eastern Standard Time"
+				"concurrency": 10,
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"offset": {
+						"type": "int",
+						"defaultValue": 0
+					},
+					"fetch": {
+						"type": "string",
+						"defaultValue": "4999"
 					}
-				}
+				},
+				"variables": {
+					"eachuserid": {
+						"type": "Array",
+						"defaultValue": []
+					},
+					"userid": {
+						"type": "Array",
+						"defaultValue": []
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF Assessment Refresh')]"
+				"[concat(variables('factoryId'), '/datasets/ds_canvas')]"
 			]
 		}
 	]

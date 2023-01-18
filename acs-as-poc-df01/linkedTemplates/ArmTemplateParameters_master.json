@@ -17,6 +17,9 @@
 		"AzureDatabricksDeltaLake1_accessToken": {
 			"value": ""
 		},
+		"Canvas REST_password": {
+			"value": ""
+		},
 		"Datafeeds_connectionString": {
 			"value": ""
 		},
@@ -32,6 +35,9 @@
 		"SalesforceACSProd_securityToken": {
 			"value": ""
 		},
+		"ls_SQL_membership_connectionString": {
+			"value": ""
+		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"value": "https://acsau.my.salesforce.com/"
 		},
@@ -40,6 +46,12 @@
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"Canvas REST_properties_typeProperties_url": {
+			"value": "https://acslearn.instructure.com"
+		},
+		"Canvas REST_properties_typeProperties_userName": {
+			"value": "prashant.yadvendra"
 		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"value": "@linkedService().dvrDatabricksClusterId"

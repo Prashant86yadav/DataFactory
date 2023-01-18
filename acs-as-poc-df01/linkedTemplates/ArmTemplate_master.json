@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
 		},
+		"Canvas REST_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Canvas REST'"
+		},
 		"Datafeeds_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
@@ -43,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
+		"ls_SQL_membership_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
+		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
 			"defaultValue": "https://acsau.my.salesforce.com/"
@@ -54,6 +62,14 @@
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"Canvas REST_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://acslearn.instructure.com"
+		},
+		"Canvas REST_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "prashant.yadvendra"
 		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -138,6 +154,9 @@
 					"AzureDatabricksDeltaLake1_accessToken": {
 						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
 					},
+					"Canvas REST_password": {
+						"value": "[parameters('Canvas REST_password')]"
+					},
 					"Datafeeds_connectionString": {
 						"value": "[parameters('Datafeeds_connectionString')]"
 					},
@@ -150,6 +169,9 @@
 					"SalesforceACSProd_securityToken": {
 						"value": "[parameters('SalesforceACSProd_securityToken')]"
 					},
+					"ls_SQL_membership_connectionString": {
+						"value": "[parameters('ls_SQL_membership_connectionString')]"
+					},
 					"ACSSFPROD_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
 					},
@@ -158,6 +180,12 @@
 					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+					},
+					"Canvas REST_properties_typeProperties_url": {
+						"value": "[parameters('Canvas REST_properties_typeProperties_url')]"
+					},
+					"Canvas REST_properties_typeProperties_userName": {
+						"value": "[parameters('Canvas REST_properties_typeProperties_userName')]"
 					},
 					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
@@ -203,6 +231,26 @@
 					},
 					"LS_SAFC_BRP_properties_typeProperties_username": {
 						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "acs-as-poc-df01_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
@@ -216,7 +264,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_1')]"
 			]
 		}
 	]
