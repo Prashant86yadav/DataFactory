@@ -9,7 +9,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Litmos__LitmosObjectIndex__c"
+			"objectApiName": "Pendula_Receipt__c"
 		}
 	}
 }
