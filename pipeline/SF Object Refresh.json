@@ -38,7 +38,13 @@
 				"inputs": [
 					{
 						"referenceName": "ACSDSSFOR",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"Api_name": {
+								"value": "@pipeline().parameters.sourcetable",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -59,11 +65,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "contact__c"
+				"defaultValue": "Pendula_Receipt__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "contact"
+				"defaultValue": "Pendula_Receipt__c"
 			}
 		},
 		"variables": {
