@@ -5,6 +5,12 @@
 			"referenceName": "ACSSFPROD",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Api_name": {
+				"type": "string",
+				"defaultValue": "Pendula_Receipt__c"
+			}
+		},
 		"annotations": [],
 		"type": "SalesforceObject",
 		"schema": [],
