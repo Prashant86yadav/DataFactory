@@ -1,0 +1,15 @@
+{
+	"name": "ds_googlerest",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GoogleRestAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "search?engine=google_maps"
+		},
+		"schema": []
+	}
+}
