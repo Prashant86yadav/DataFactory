@@ -5,6 +5,11 @@
 			"referenceName": "ACSSFPROD",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"SourceTableName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "SalesforceObject",
 		"schema": []
