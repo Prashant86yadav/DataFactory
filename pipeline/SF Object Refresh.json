@@ -67,11 +67,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Campaign_Member__c"
+				"defaultValue": "Programs__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Campaign_Member__c"
+				"defaultValue": "Programs__c"
 			}
 		},
 		"variables": {
