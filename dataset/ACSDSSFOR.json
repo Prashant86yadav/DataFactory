@@ -15,7 +15,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Campaign_Member__c"
+			"objectApiName": "Programs__c"
 		}
 	}
 }
