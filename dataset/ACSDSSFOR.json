@@ -8,7 +8,7 @@
 		"parameters": {
 			"Api_name": {
 				"type": "string",
-				"defaultValue": "Pendula_Receipt__c"
+				"defaultValue": "Campaign_Member__c"
 			}
 		},
 		"annotations": [],
