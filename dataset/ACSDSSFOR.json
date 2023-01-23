@@ -8,14 +8,14 @@
 		"parameters": {
 			"Api_name": {
 				"type": "string",
-				"defaultValue": "Campaign_Member__c"
+				"defaultValue": "Contract"
 			}
 		},
 		"annotations": [],
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Programs__c"
+			"objectApiName": "Contract"
 		}
 	}
 }
