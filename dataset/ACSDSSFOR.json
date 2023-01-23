@@ -15,7 +15,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "Pendula_Receipt__c"
+			"objectApiName": "Campaign_Member__c"
 		}
 	}
 }
