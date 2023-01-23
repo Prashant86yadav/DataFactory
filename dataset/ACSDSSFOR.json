@@ -7,8 +7,7 @@
 		},
 		"parameters": {
 			"Api_name": {
-				"type": "string",
-				"defaultValue": "Contract"
+				"type": "string"
 			}
 		},
 		"annotations": [],
