@@ -17,7 +17,7 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF Account_Refresh",
+					"referenceName": "SF Account Refresh",
 					"type": "PipelineReference"
 				},
 				"parameters": {
