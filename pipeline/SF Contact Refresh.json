@@ -205,7 +205,7 @@
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "contact"
+				"defaultValue": "salesforce"
 			}
 		},
 		"variables": {
