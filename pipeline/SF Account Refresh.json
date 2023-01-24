@@ -191,7 +191,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "Account"
+				"defaultValue": "salesforce.Account"
 			},
 			"ColumnList": {
 				"type": "string",
