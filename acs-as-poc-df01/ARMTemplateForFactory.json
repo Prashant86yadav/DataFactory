@@ -1128,6 +1128,244 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SF Contact Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "contact"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "contact"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": " Id, IsDeleted, MasterRecordId, AccountId, LastName, FirstName, Salutation, Name, OtherStreet, OtherCity, OtherState, OtherPostalCode, OtherCountry, OtherLatitude, OtherLongitude, OtherGeocodeAccuracy, MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry, MailingLatitude, MailingLongitude, MailingGeocodeAccuracy, Phone, Fax, MobilePhone, HomePhone, OtherPhone, AssistantPhone, ReportsToId, Email, Title, Department, AssistantName, LeadSource, Birthdate, Description, CurrencyIsoCode, OwnerId, HasOptedOutOfEmail, HasOptedOutOfFax, DoNotCall, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastCURequestDate, LastCUUpdateDate, LastViewedDate, LastReferencedDate, EmailBouncedReason, EmailBouncedDate, IsEmailBounced, PhotoUrl, Jigsaw, JigsawContactId, IndividualId, Assessment__c, IsLead__c, MembershipPPP__c, PreferredName__c, ShadowAccount__c, Contact_18_Digits_ID__c, Membership_Number__c, Login_Generation_Error__c, Login_Generation_Status__c, Litmos__Access_Level__c, Litmos__Completed_Percentage__c, Litmos__Courses_Assigned__c, Litmos__Courses_Completed__c, Litmos__Deactivate_From_Litmos__c, Litmos__Full_Name__c, Litmos__Languages__c, Litmos__Level__c, Litmos__LitmosID__c, Litmos__Litmos_Activated__c, Litmos__Litmos_Login_Access__c, Litmos__Litmos_UserId__c, Litmos__OriginalId__c, Litmos__Sync_Litmos__c, Litmos__Total_Sum_Percentages__c, Litmos__User_Id__c, Litmos__p_Completed_Percentage__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SF Contract Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
