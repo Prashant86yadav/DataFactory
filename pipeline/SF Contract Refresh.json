@@ -122,7 +122,10 @@
 								"value": "@pipeline().parameters.TargetTableName",
 								"type": "Expression"
 							},
-							"schemaname": "salesforce"
+							"schemaname": {
+								"value": "@pipeline().parameters.schemaname",
+								"type": "Expression"
+							}
 						}
 					}
 				}
