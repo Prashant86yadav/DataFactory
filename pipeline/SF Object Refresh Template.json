@@ -27,7 +27,8 @@
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
-					"dataIntegrationUnits": 8,
+					"parallelCopies": 4,
+					"dataIntegrationUnits": 16,
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
