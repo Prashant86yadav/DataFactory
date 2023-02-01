@@ -119,6 +119,18 @@
 		"TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname": {
 			"value": "salesforce"
 		},
+		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName": {
+			"value": "Assessment__history"
+		},
+		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName": {
+			"value": "assessment__history"
+		},
+		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
+		},
+		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname": {
+			"value": "salesforce"
+		},
 		"containerUri": {
 			"value": ""
 		},
