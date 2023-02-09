@@ -389,7 +389,8 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Comment",
+									"name": "Coment",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -400,7 +401,80 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "New?",
+									"name": "New",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Bill grade",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Bill grade",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Status",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Join Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Join Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "BGG2- OLD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "BGG2- OLD",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Branch Group 2 - OLD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Branch Group 2 - OLD",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "New - OLD",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "New - OLD",
+									"type": "String",
 									"physicalType": "String"
 								}
 							},
@@ -460,6 +534,30 @@
 								},
 								"sink": {
 									"name": "Last Modified Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Billing Grade1 Change Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Billing Grade1 Change Date",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Billing Grade2 Change Date",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Billing Grade2 Change Date",
 									"type": "String",
 									"physicalType": "String"
 								}
@@ -483,7 +581,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "member_dump_dec",
+							"tablename": "member_dump_feb",
 							"schemaname": "dbo"
 						}
 					}
