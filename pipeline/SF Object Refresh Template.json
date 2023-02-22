@@ -58,7 +58,7 @@
 								"value": "@pipeline().parameters.targettable",
 								"type": "Expression"
 							},
-							"schemaname": "dbo"
+							"schemaname": "salesforce"
 						}
 					}
 				]
@@ -67,11 +67,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "user"
+				"defaultValue": "Accreditation__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "user"
+				"defaultValue": "Accreditation__c"
 			}
 		},
 		"variables": {
