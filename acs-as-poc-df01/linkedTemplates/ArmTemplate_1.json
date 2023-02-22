@@ -2107,6 +2107,7 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -2142,7 +2143,7 @@
 										"value": "@pipeline().parameters.targettable",
 										"type": "Expression"
 									},
-									"schemaname": "dbo"
+									"schemaname": "salesforce"
 								}
 							}
 						]
@@ -2155,11 +2156,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "user"
+						"defaultValue": "Assessment_Billing_Rates__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "user"
+						"defaultValue": "Assessment_Billing_Rates__c"
 					}
 				},
 				"variables": {
