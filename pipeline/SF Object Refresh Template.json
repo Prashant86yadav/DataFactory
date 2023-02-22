@@ -23,6 +23,7 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -67,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Accreditation__c"
+				"defaultValue": "Assessment_Billing_Rates__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Accreditation__c"
+				"defaultValue": "Assessment_Billing_Rates__c"
 			}
 		},
 		"variables": {
