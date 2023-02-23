@@ -175,6 +175,30 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AccreditedCourse__c"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AccreditedCourse__c"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, AccreditationAssessment__c, Campus__c, Course_ID__c, Course__c, DisplayonWebsite__c, ExpiryDate__c, Notes__c, Outcomes__c, Start_Date__c, SEOUL_Accord__c, Engineers_Australia__c, Specialism__c, Conditions__c, Conditions_Due_Date__c, Conditions_Notes__c, Provisional__c, Provisional_Due_Date__c, Provisional_Notes__c\n"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom": {
+			"type": "string",
+			"defaultValue": "1900-12-31 00:00:00"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
+			"type": "string",
+			"defaultValue": "1900-12-31 00:00:00"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -365,6 +389,24 @@
 					},
 					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]"
+					},
+					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
 					}
 				}
 			},

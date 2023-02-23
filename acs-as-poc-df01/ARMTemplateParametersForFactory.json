@@ -130,6 +130,24 @@
 		},
 		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname": {
 			"value": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName": {
+			"value": "AccreditedCourse__c"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName": {
+			"value": "AccreditedCourse__c"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList": {
+			"value": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, AccreditationAssessment__c, Campus__c, Course_ID__c, Course__c, DisplayonWebsite__c, ExpiryDate__c, Notes__c, Outcomes__c, Start_Date__c, SEOUL_Accord__c, Engineers_Australia__c, Specialism__c, Conditions__c, Conditions_Due_Date__c, Conditions_Notes__c, Provisional__c, Provisional_Due_Date__c, Provisional_Notes__c\n"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname": {
+			"value": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom": {
+			"value": "1900-12-31 00:00:00"
+		},
+		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
+			"value": "1900-12-31 00:00:00"
 		}
 	}
 }
