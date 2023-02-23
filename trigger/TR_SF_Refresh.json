@@ -60,6 +60,20 @@
 					"ColumnList": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue",
 					"schemaname": "salesforce"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF AccreditedCourse__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AccreditedCourse__c",
+					"TargetTableName": "AccreditedCourse__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, AccreditationAssessment__c, Campus__c, Course_ID__c, Course__c, DisplayonWebsite__c, ExpiryDate__c, Notes__c, Outcomes__c, Start_Date__c, SEOUL_Accord__c, Engineers_Australia__c, Specialism__c, Conditions__c, Conditions_Due_Date__c, Conditions_Notes__c, Provisional__c, Provisional_Due_Date__c, Provisional_Notes__c\n",
+					"schemaname": "salesforce",
+					"brpExtractFrom": "1900-12-31 00:00:00",
+					"brpExtractTo": "1900-12-31 00:00:00"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
