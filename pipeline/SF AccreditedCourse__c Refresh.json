@@ -198,7 +198,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": " Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AccommodationBooked__c, AccreditationManager__c, ApplicationType__c, DueDate__c, ExtraMembers__c, FlightsBooked__c, HeadofSchoolEmail__c, HeadofSchoolPhone__c, HeadofSchool__c, InvoiceSent__c, Location__c, LogisticNotes__c, NextActionDueDate__c, NextAction__c, Notes__c, OtherApplicationInformation__c, OtherVisitManager__c, PanelAppointed__c, PanelChair__c, PanelMembers__c, Postcode__c, PrimaryContactEmail__c, PrimaryContactName__c, PrimaryContactPhone__c, RenewDate__c, RenewYear__c, School__c, State__c, StatusIndicator__c, Status__c, Street__c, Suburb__c, UniversityName__c, VisitDate12Weeks__c, VisitDate8weeks__c, VisitDate9weeks__c, VisitDate__c, VisitEmailSent__c, VisitLocation__c, VisitManager__c, Visit_Date_End__c, X2YearsBeforeRenewal__c, UniversityId__c, UniversityCountry__c, Renew_Date_Override__c"
+				"defaultValue": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, AccreditationAssessment__c, Campus__c, Course_ID__c, Course__c, DisplayonWebsite__c, ExpiryDate__c, Notes__c, Outcomes__c, Start_Date__c, SEOUL_Accord__c, Engineers_Australia__c, Specialism__c, Conditions__c, Conditions_Due_Date__c, Conditions_Notes__c, Provisional__c, Provisional_Due_Date__c, Provisional_Notes__c"
 			},
 			"schemaname": {
 				"type": "string",
