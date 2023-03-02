@@ -148,6 +148,24 @@
 		},
 		"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
 			"value": "1900-12-31 00:00:00"
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName": {
+			"value": "Accreditation__c"
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName": {
+			"value": "Accreditation__c"
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList": {
+			"value": " Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AccommodationBooked__c, AccreditationManager__c, ApplicationType__c, DueDate__c, ExtraMembers__c, FlightsBooked__c, HeadofSchoolEmail__c, HeadofSchoolPhone__c, HeadofSchool__c, InvoiceSent__c, Location__c, LogisticNotes__c, NextActionDueDate__c, NextAction__c, Notes__c, OtherApplicationInformation__c, OtherVisitManager__c, PanelAppointed__c, PanelChair__c, PanelMembers__c, Postcode__c, PrimaryContactEmail__c, PrimaryContactName__c, PrimaryContactPhone__c, RenewDate__c, RenewYear__c, School__c, State__c, StatusIndicator__c, Status__c, Street__c, Suburb__c, UniversityName__c, VisitDate12Weeks__c, VisitDate8weeks__c, VisitDate9weeks__c, VisitDate__c, VisitEmailSent__c, VisitLocation__c, VisitManager__c, Visit_Date_End__c, X2YearsBeforeRenewal__c, UniversityId__c, UniversityCountry__c, Renew_Date_Override__c\n "
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname": {
+			"value": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom": {
+			"value": "1900-12-31 00:00:00"
+		},
+		"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo": {
+			"value": "1900-12-31 00:00:00"
 		}
 	}
 }

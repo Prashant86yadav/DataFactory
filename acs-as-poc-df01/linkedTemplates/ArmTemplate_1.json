@@ -2591,6 +2591,7 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -2639,11 +2640,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "AccreditedCourse__c"
+						"defaultValue": "OpportunityLineItem"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "AccreditedCourse__c"
+						"defaultValue": "OpportunityLineItem"
 					}
 				},
 				"variables": {
