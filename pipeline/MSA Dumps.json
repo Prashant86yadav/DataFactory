@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "MSA Dumps",
 	"properties": {
 		"activities": [
 			{
@@ -57,7 +57,7 @@
 			}
 		],
 		"folder": {
-			"name": "ACS"
+			"name": "ACS/MSA"
 		},
 		"annotations": []
 	}
