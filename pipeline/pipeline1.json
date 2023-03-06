@@ -1,0 +1,64 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "with cte as\n(\nselect CountryOfResidence__c as country ,\nLEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \nSUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation, Flag=0\nfrom  [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00'  \nand ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n), \nCTE1 as \n(select top 10 CountryOfResidence__c as country, count(*) as total  from    [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00' \nand CountryOfResidence__c NOT IN ('Australia')\ngroup by CountryOfResidence__c\norder by total desc ),\nCTE2 as (\nselect  ANZSCO_Code,Occupation, country, \nFLAG  =CASE   WHEN country IN (select country from CTE1) THEN 1 Else 0\nEND from CTE)\nselect ANZSCO_Code,Occupation, count(*)  from CTE2\nwhere Flag=0\ngroup by  ANZSCO_Code,Occupation \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".xlsx"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "TestBlob",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ACS"
+		},
+		"annotations": []
+	}
+}
