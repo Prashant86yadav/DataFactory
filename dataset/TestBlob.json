@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "testdump",
-				"fileSystem": "databrickslanding"
+				"folderPath": "test",
+				"fileSystem": "adobe-datafeeds"
 			},
 			"columnDelimiter": ",",
 			"encodingName": "UTF-8",
