@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "OpportunityLineItem"
+				"defaultValue": "Account_History__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "OpportunityLineItem"
+				"defaultValue": "Account_History__c"
 			}
 		},
 		"variables": {
