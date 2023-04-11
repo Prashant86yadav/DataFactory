@@ -1,0 +1,267 @@
+{
+	"name": "SQL_Member_Dump",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureMember_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Billing Grade",
+				"type": "varchar"
+			},
+			{
+				"name": "Branch Group",
+				"type": "varchar"
+			},
+			{
+				"name": "Member Grade",
+				"type": "varchar"
+			},
+			{
+				"name": "Date of Birth",
+				"type": "date"
+			},
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Certification Group",
+				"type": "varchar"
+			},
+			{
+				"name": "Certification Level",
+				"type": "varchar"
+			},
+			{
+				"name": "PPP",
+				"type": "varchar"
+			},
+			{
+				"name": "PPP Account for Current Membership",
+				"type": "varchar"
+			},
+			{
+				"name": "Account 18 Digits ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Email",
+				"type": "varchar"
+			},
+			{
+				"name": "Primary Account Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Membership Number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Membership Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Account Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Current Membership Expiry",
+				"type": "date"
+			},
+			{
+				"name": "Joined Date",
+				"type": "date"
+			},
+			{
+				"name": "BGG",
+				"type": "varchar"
+			},
+			{
+				"name": "Branch",
+				"type": "varchar"
+			},
+			{
+				"name": "Geography",
+				"type": "varchar"
+			},
+			{
+				"name": "Home Country",
+				"type": "varchar"
+			},
+			{
+				"name": "Work Country",
+				"type": "varchar"
+			},
+			{
+				"name": "Former Billing Grade1",
+				"type": "varchar"
+			},
+			{
+				"name": "Former Billing Grade2",
+				"type": "varchar"
+			},
+			{
+				"name": "Days since Current Membership Expiry",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Days Check",
+				"type": "varchar"
+			},
+			{
+				"name": "Billing Grade 2",
+				"type": "varchar"
+			},
+			{
+				"name": "BGG2",
+				"type": "varchar"
+			},
+			{
+				"name": "Branch Group 2",
+				"type": "varchar"
+			},
+			{
+				"name": "Comment",
+				"type": "varchar"
+			},
+			{
+				"name": "New?",
+				"type": "varchar"
+			},
+			{
+				"name": "Created Date",
+				"type": "date"
+			},
+			{
+				"name": "Deactivated Date",
+				"type": "date"
+			},
+			{
+				"name": "Certification Expiry Date",
+				"type": "date"
+			},
+			{
+				"name": "Date Of Commencement",
+				"type": "date"
+			},
+			{
+				"name": "Last Modified Date",
+				"type": "date"
+			},
+			{
+				"name": "FY Year",
+				"type": "varchar"
+			},
+			{
+				"name": "FY",
+				"type": "varchar"
+			},
+			{
+				"name": "Retained_flag",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Churn_flag",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "new_flag",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Heirarchy",
+				"type": "varchar"
+			},
+			{
+				"name": "At Risk",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "subsegments",
+				"type": "varchar"
+			},
+			{
+				"name": "Actual",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Order",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ontimerenewal",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "growthmonthly",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "order month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "On time renewals",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Active",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CP/CT_New",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Lapsed",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CP/CT_Unfinancials",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CP/CT_Total",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Active_financial",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Month",
+				"type": "varchar"
+			},
+			{
+				"name": "ExtractDate",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "member_dump_April"
+		}
+	}
+}
