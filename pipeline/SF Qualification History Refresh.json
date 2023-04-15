@@ -1,0 +1,226 @@
+{
+	"name": "SF Qualification History Refresh",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy Salesforce object",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Set brpExtractTo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+							"type": "Expression"
+						},
+						"readBehavior": "query"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"id"
+							]
+						},
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ACSDSSF",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": {
+								"value": "@pipeline().parameters.TargetTableName",
+								"type": "Expression"
+							},
+							"schemaname": {
+								"value": "@pipeline().parameters.schemaname",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			},
+			{
+				"name": "Set  brpExtractFrom",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GET TGT HWM  SQL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractFrom",
+					"value": {
+						"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "GET TGT HWM  SQL",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": {
+								"value": "@pipeline().parameters.TargetTableName",
+								"type": "Expression"
+							},
+							"schemaname": {
+								"value": "@pipeline().parameters.schemaname",
+								"type": "Expression"
+							}
+						}
+					}
+				}
+			},
+			{
+				"name": "GET SRC HighWaterMark",
+				"description": "Find the latest change in the Salesforce table indicated by the parameter",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Set  brpExtractFrom",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+							"type": "Expression"
+						},
+						"readBehavior": "query"
+					},
+					"dataset": {
+						"referenceName": "ACSDSSF",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "Set brpExtractTo",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GET SRC HighWaterMark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractTo",
+					"value": {
+						"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"SourceTableName": {
+				"type": "string",
+				"defaultValue": "Qualification__c"
+			},
+			"TargetTableName": {
+				"type": "string",
+				"defaultValue": "Qualification__c"
+			},
+			"ColumnList": {
+				"type": "string",
+				"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
+			},
+			"schemaname": {
+				"type": "string",
+				"defaultValue": "salesforce"
+			}
+		},
+		"variables": {
+			"brpExtractFrom": {
+				"type": "String",
+				"defaultValue": "1900-12-31 00:00:00"
+			},
+			"brpExtractTo": {
+				"type": "String",
+				"defaultValue": "1900-12-31 00:00:00"
+			}
+		},
+		"folder": {
+			"name": "ACS/Salesforce"
+		},
+		"annotations": []
+	}
+}
