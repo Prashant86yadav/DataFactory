@@ -27,6 +27,7 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -384,13 +385,10 @@
 							{
 								"source": {
 									"name": "Coment",
-									"type": "String",
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "Coment",
-									"type": "String",
-									"physicalType": "String"
+									"name": "Comment"
 								}
 							},
 							{
@@ -400,21 +398,7 @@
 									"physicalType": "String"
 								},
 								"sink": {
-									"name": "New",
-									"type": "String",
-									"physicalType": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "Bill grade",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "Bill grade",
-									"type": "String",
-									"physicalType": "String"
+									"name": "New?"
 								}
 							},
 							{
@@ -577,12 +561,8 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "SQLTableQ",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "member_dump_feb",
-							"schemaname": "dbo"
-						}
+						"referenceName": "SQL_Member_Dump",
+						"type": "DatasetReference"
 					}
 				]
 			}
