@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
+		"AzureMember_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
+		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
 			"defaultValue": "https://acsau.my.salesforce.com/"
@@ -309,6 +313,20 @@
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
 			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMember_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Connects to Member Database",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureMember_ls_connectionString')]"
+				}
+			},
 			"dependsOn": []
 		},
 		{
@@ -3913,41 +3931,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/BroadcastingData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Datafeeds",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "HCO DS"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": {
-							"value": "adobe-campaign--datafeed/prod/prod_br",
-							"type": "Expression"
-						},
-						"container": "adobe-datafeeds"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ExcelDS')]",
+			"name": "[concat(parameters('factoryName'), '/AzureXL')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3958,94 +3942,16 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Report input from SF",
+					"sheetName": "DHHS WC All Month Contact Servi",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Membership all data 01022023 (1).xlsx",
+						"fileName": "File01.xlsx",
 						"folderPath": "test",
 						"container": "adobe-datafeeds"
 					},
 					"firstRowAsHeader": true
 				},
 				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
 					{
 						"type": "String"
 					},

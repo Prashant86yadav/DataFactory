@@ -7,110 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"ACSSFPROD_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
-		},
-		"ACSSFPROD_securityToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
-		},
-		"AzureDataLakeStorage_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
-		},
-		"AzureDatabricksDeltaLake1_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
-		},
-		"Canvas REST_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Canvas REST'"
-		},
-		"Datafeeds_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
-		},
-		"LSSQLPOC_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
-		},
-		"LS_AZST_BlobLanding_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
-		},
-		"SalesforceACSProd_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SalesforceACSProd'"
-		},
-		"SalesforceACSProd_securityToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
-		},
-		"ls_SQL_membership_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
-		},
-		"AzureMember_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
-		},
-		"ACSSFPROD_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://acsau.my.salesforce.com/"
-		},
-		"ACSSFPROD_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra@acs.org.au"
-		},
-		"AzureDataLakeStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
-		},
-		"Canvas REST_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://acslearn.instructure.com"
-		},
-		"Canvas REST_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra"
-		},
-		"GoogleRestAPI_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://serpapi.com/0fda6c3230aab43ccc68428b89379159af6161a19955a156e3614971f52aca09"
-		},
-		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "@linkedService().dvrDatabricksClusterId"
-		},
-		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
-		},
-		"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://dhhsbrp.my.salesforce.com"
-		},
-		"LS_SAFC_BRP_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
-		},
-		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://acsau.my.salesforce.com/"
-		},
-		"SalesforceACSProd_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra@acs.org.au"
-		},
-		"WeatherRestD_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
-		},
-		"lga_google_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
-		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -258,14 +154,6 @@
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
-		},
-		"containerUri": {
-			"type": "string",
-			"metadata": "URI to storage account containing linked ARM templates"
-		},
-		"containerSasToken": {
-			"type": "string",
-			"metadata": "Sas token to storage account containing linked ARM templates"
 		}
 	},
 	"variables": {
@@ -273,270 +161,921 @@
 	},
 	"resources": [
 		{
-			"name": "acs-as-poc-df01_ArmTemplate_0",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"name": "[concat(parameters('factoryName'), '/SF Qualification History Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
 			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
 				},
 				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
 					},
-					"ACSSFPROD_password": {
-						"value": "[parameters('ACSSFPROD_password')]"
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
 					},
-					"ACSSFPROD_securityToken": {
-						"value": "[parameters('ACSSFPROD_securityToken')]"
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
 					},
-					"AzureDataLakeStorage_accountKey": {
-						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
 					},
-					"AzureDatabricksDeltaLake1_accessToken": {
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_UserHistory_iterative')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup find row count",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select count(*)  as tot from [dbo].[CanvasUsers] \n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
 					},
-					"Canvas REST_password": {
-						"value": "[parameters('Canvas REST_password')]"
+					{
+						"name": "Set variable rowcount String",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup find row count",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "rowcount",
+							"value": {
+								"value": "@string(activity('Lookup find row count').output.firstRow.tot)",
+								"type": "Expression"
+							}
+						}
 					},
-					"Datafeeds_connectionString": {
-						"value": "[parameters('Datafeeds_connectionString')]"
+					{
+						"name": "Set variable Iteration",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable rowcount String",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "iteration",
+							"value": {
+								"value": "@range(1,add(div(int(variables('rowcount')),5000),1))",
+								"type": "Expression"
+							}
+						}
 					},
-					"LSSQLPOC_connectionString": {
-						"value": "[parameters('LSSQLPOC_connectionString')]"
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable Iteration",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('iteration')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Execute Pipeline1",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_canvas_user_history",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"offset": {
+												"value": "@int(variables('offset'))\r\n",
+												"type": "Expression"
+											},
+											"fetch": {
+												"value": "@int(variables('fetch'))",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								{
+									"name": "Set offset again",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Execute Pipeline1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "offset",
+										"value": {
+											"value": "@string(mul(5000,item()))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"concurrency": 10,
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"offset": {
+						"type": "String",
+						"defaultValue": "0"
 					},
-					"SalesforceACSProd_password": {
-						"value": "[parameters('SalesforceACSProd_password')]"
+					"fetch": {
+						"type": "String",
+						"defaultValue": "4999"
 					},
-					"SalesforceACSProd_securityToken": {
-						"value": "[parameters('SalesforceACSProd_securityToken')]"
+					"rowcount": {
+						"type": "String"
 					},
-					"ls_SQL_membership_connectionString": {
-						"value": "[parameters('ls_SQL_membership_connectionString')]"
+					"iteration": {
+						"type": "Array"
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_login_iterative')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup find row count",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select count(*)  as tot from [dbo].[CanvasUsers] \n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
 					},
-					"AzureMember_ls_connectionString": {
-						"value": "[parameters('AzureMember_ls_connectionString')]"
+					{
+						"name": "Set variable rowcount String",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup find row count",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "rowcount",
+							"value": {
+								"value": "@string(activity('Lookup find row count').output.firstRow.tot)",
+								"type": "Expression"
+							}
+						}
 					},
-					"ACSSFPROD_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
+					{
+						"name": "Set variable Iteration",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable rowcount String",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "iteration",
+							"value": {
+								"value": "@range(1,add(div(int(variables('rowcount')),5000),1))",
+								"type": "Expression"
+							}
+						}
 					},
-					"ACSSFPROD_properties_typeProperties_username": {
-						"value": "[parameters('ACSSFPROD_properties_typeProperties_username')]"
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable Iteration",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('iteration')",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Execute Pipeline1",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_canvas_logins",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"offset": {
+												"value": "@int(variables('offset'))\r\n",
+												"type": "Expression"
+											},
+											"fetch": {
+												"value": "@int(variables('fetch'))",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								{
+									"name": "Set offset again",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Execute Pipeline1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "offset",
+										"value": {
+											"value": "@string(mul(5000,item()))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"concurrency": 10,
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"offset": {
+						"type": "String",
+						"defaultValue": "0"
 					},
-					"AzureDataLakeStorage_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
+					"fetch": {
+						"type": "String",
+						"defaultValue": "4999"
 					},
-					"Canvas REST_properties_typeProperties_url": {
-						"value": "[parameters('Canvas REST_properties_typeProperties_url')]"
+					"rowcount": {
+						"type": "String"
 					},
-					"Canvas REST_properties_typeProperties_userName": {
-						"value": "[parameters('Canvas REST_properties_typeProperties_userName')]"
+					"iteration": {
+						"type": "Array"
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_canvas_profiles_iterative')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Lookup find row count",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select count(*)  as tot from [dbo].[CanvasUsers] \n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
 					},
-					"GoogleRestAPI_properties_typeProperties_url": {
-						"value": "[parameters('GoogleRestAPI_properties_typeProperties_url')]"
+					{
+						"name": "Set variable rowcount String",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Lookup find row count",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "rowcount",
+							"value": {
+								"value": "@string(activity('Lookup find row count').output.firstRow.tot)",
+								"type": "Expression"
+							}
+						}
 					},
-					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
-						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
+					{
+						"name": "Set variable Iteration",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "Set variable rowcount String",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "iteration",
+							"value": {
+								"value": "@range(1,add(div(int(variables('rowcount')),5000),1))",
+								"type": "Expression"
+							}
+						}
 					},
-					"SalesforceACSProd_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]"
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Set variable Iteration",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@variables('iteration')",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "Execute Pipeline1",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_canvas_Profiles",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"offset": {
+												"value": "@int(variables('offset'))\r\n",
+												"type": "Expression"
+											},
+											"fetch": {
+												"value": "@int(variables('fetch'))",
+												"type": "Expression"
+											}
+										}
+									}
+								},
+								{
+									"name": "Set offset again",
+									"type": "SetVariable",
+									"dependsOn": [
+										{
+											"activity": "Execute Pipeline1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"variableName": "offset",
+										"value": {
+											"value": "@string(mul(5000,item()))",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"concurrency": 10,
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"offset": {
+						"type": "String",
+						"defaultValue": "0"
 					},
-					"SalesforceACSProd_properties_typeProperties_username": {
-						"value": "[parameters('SalesforceACSProd_properties_typeProperties_username')]"
+					"fetch": {
+						"type": "String",
+						"defaultValue": "4999"
 					},
-					"WeatherRestD_properties_typeProperties_url": {
-						"value": "[parameters('WeatherRestD_properties_typeProperties_url')]"
+					"rowcount": {
+						"type": "String"
 					},
-					"lga_google_properties_typeProperties_url": {
-						"value": "[parameters('lga_google_properties_typeProperties_url')]"
+					"iteration": {
+						"type": "Array"
+					}
+				},
+				"folder": {
+					"name": "ACS/Canvas"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pl_broadcastingDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_trackingDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_RawAnalyticsDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-04T00:00:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								0
+							]
+						}
 					}
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "acs-as-poc-df01_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"name": "[concat(parameters('factoryName'), '/TR_SF_Refresh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
 			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
+						}
 					},
-					"LS_AZST_BlobLanding_connectionString": {
-						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Account Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
+						}
 					},
-					"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Contract Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
+						}
 					},
-					"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF User Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname')]"
+						}
 					},
-					"LS_SAFC_BRP_properties_typeProperties_username": {
-						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccreditedCourse__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Accreditation Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Opportunity Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Qualification History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 12,
+						"startTime": "2022-12-24T00:00:00",
+						"timeZone": "AUS Eastern Standard Time"
 					}
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_0')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_2",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_1')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_3",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_2')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]"
 			]
 		}
 	]

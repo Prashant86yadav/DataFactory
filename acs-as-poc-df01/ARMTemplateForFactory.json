@@ -51,6 +51,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
+		"AzureMember_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
+		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
 			"defaultValue": "https://acsau.my.salesforce.com/"
@@ -238,12 +242,104 @@
 		"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Qualification__c"
+		},
+		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Qualification__c"
+		},
+		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "\nId,\nIsDeleted,\nName,\nCurrencyIsoCode,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nLastActivityDate,\nAssessment__c,\nANZSCO_Code__c,\nAQFComparability__c,\nApplicant_Name__c,\nAssessorNotes__c,\nAttachedTranscriptAssessor__c,\nAustralianQualification__c,\nCEPReference__c,\nCalculationErrorMessages__c,\nCloselyRelatedICTUnitCountMajor__c,\nCloselyRelatedICTUnitCountMinor__c,\nCloselyRelated__c,\nCoreUnitsMajor__c,\nCoreUnitsMinor__c,\nCountString__c,\nCountry__c,\nCourseAccredited__c,\nCourse__c,\nData_Migrated_from_XEN__c,\nDateAwarded__c,\nDateOfCommencement__c,\nDateOfCompletion__c,\nICTContent__c,\nICTUnitCountMajor__c,\nICTUnitCountMinor__c,\nInstitution__c,\nLastCountsCalculatedOn__c,\nNormalDurationOfCourse__c,\nNotACSCourse__c,\nOASCalculator__c,\nPotential_RMD_2_or_5_yrs__c,\nPotential_RMD_4_of_6_yrs__c,\nQual_sited_at_Interview__c,\nQualificationCategory__c,\nTimeTaken__c,\nTotalNumberOfUnitsCRPoints__c,\nTranscriptRollup__c,\nXEN_Qualification_Name__c,\nApplicantAttachmentsBoxFolderId__c,\nAssessorAttachmentsBoxFolderId__c,\nBoxFolderId__c,\nCmsApplicantBoxDocumentDetails__c,\nCmsBoxApplicantFileIdsToMove__c,\nCreateBoxFolder__c,\nUniqueRecordIdentifier__c,\nFullOrPartTime__c,\nRecordLocked__c,\nXenId_Qualification__c,\nResetUnitCounts__c,\nCalculation_Duration__c,\nBypassValidation__c,\nQualification_18_Digits_ID__c,\nApplicantName__c"
+		},
+		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/MSA Dumps')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "with cte as\n(\nselect CountryOfResidence__c as country ,\nLEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \nSUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation, Flag=0\nfrom  [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00'  \nand ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n), \nCTE1 as \n(select top 10 CountryOfResidence__c as country, count(*) as total  from    [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00' \nand CountryOfResidence__c NOT IN ('Australia')\ngroup by CountryOfResidence__c\norder by total desc ),\nCTE2 as (\nselect  ANZSCO_Code,Occupation, country, \nFLAG  =CASE   WHEN country IN (select country from CTE1) THEN 1 Else 0\nEND from CTE)\nselect ANZSCO_Code,Occupation, count(*)  from CTE2\nwhere Flag=0\ngroup by  ANZSCO_Code,Occupation \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".xlsx"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "TestBlob",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/TestBlob')]"
+			]
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Membership ingest')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -275,6 +371,7 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -632,13 +729,10 @@
 									{
 										"source": {
 											"name": "Coment",
-											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Coment",
-											"type": "String",
-											"physicalType": "String"
+											"name": "Comment"
 										}
 									},
 									{
@@ -648,21 +742,7 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "New",
-											"type": "String",
-											"physicalType": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Bill grade",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Bill grade",
-											"type": "String",
-											"physicalType": "String"
+											"name": "New?"
 										}
 									},
 									{
@@ -826,12 +906,9 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "SQLTableQ",
+								"referenceName": "SQL_Member_Dump",
 								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "member_dump_feb",
-									"schemaname": "dbo"
-								}
+								"parameters": {}
 							}
 						]
 					}
@@ -841,12 +918,250 @@
 					"cancelAfter": {}
 				},
 				"folder": {
-					"name": "ACS"
+					"name": "ACS/Membership"
 				},
 				"annotations": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ExcelDS')]",
+				"[concat(variables('factoryId'), '/datasets/SQL_Member_Dump')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Account History Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Account_History__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Account_History__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id ,IsDeleted ,MasterRecordId ,Name ,Type ,RecordTypeId ,ParentId ,BillingStreet ,BillingCity ,BillingState ,BillingPostalCode ,BillingCountry ,BillingLatitude ,BillingLongitude ,BillingGeocodeAccuracy ,ShippingStreet ,ShippingCity ,ShippingState ,ShippingPostalCode ,ShippingCountry ,ShippingLatitude ,ShippingLongitude ,ShippingGeocodeAccuracy ,Phone ,Fax ,AccountNumber ,Website ,PhotoUrl ,Sic ,Industry ,AnnualRevenue ,NumberOfEmployees ,Ownership ,TickerSymbol ,Description ,Rating ,Site ,CurrencyIsoCode ,OwnerId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate ,IsCustomerPortal ,Jigsaw ,JigsawCompanyId ,AccountSource ,SicDesc ,ffbf__AccountParticulars__c ,ffbf__BankBIC__c ,ffbf__PaymentCode__c ,ffbf__PaymentCountryISO__c ,ffbf__PaymentPriority__c ,ffbf__PaymentRoutingMethod__c ,Purchase_Order_Contact__c ,Service_Category__c ,ABN__c ,ANZSCOCode__c ,AccountManager__c ,AccountType__c ,Account_18_Digits_ID__c ,Account_Support__c ,Active_Certification_ID__c ,AdditionalAccountType__c ,AllergyOtherDietaryRequirements__c ,BillingContact__c ,BillingGradeChangeDate__c ,BillingGrade__c ,Billing_Grade1_Change_Date__c ,Billing_Grade2_Change_Date__c ,BoxFolderId__c ,Branch_Newsletters__c ,Branch_Overridden__c ,Branch__c ,Bulk_Upload_PPP_ID__c ,CertificationBadge__c ,CertificationLevel__c ,CommunityUser__c ,Completion_Points_Anzsco__c ,Completion_Points_Bio__c ,Completion_Points_DOB__c ,Completion_Points_Email__c ,Completion_Points_Employer_Name__c ,Completion_Points_Expertise__c ,Completion_Points_FL_Name__c ,Completion_Points_Gender__c ,Completion_Points_H_Address__c ,Completion_Points_Industry__c ,Completion_Points_Languages__c ,Completion_Points_Mobile__c ,Completion_Points_Phone__c ,Completion_Points_Position__c ,Completion_Points_Sec_Email__c ,Completion_Points_Skills__c ,Completion_Points_Specialism__c ,Completion_Points_Sub_Industry__c ,Completion_Points_W_Address__c ,CongaCTCPFormula__c ,CongaCTCPTemplateID__c ,CongaCitySys__c ,CongaCountrySys__c ,CongaMemberCertificate__c ,CongaPostCodeSys__c ,CongaStateSys__c ,CongaStreetSys__c ,ConsultantsDirectory__c ,CreateBoxFolders__c ,Create_User_and_Send_New_Password__c ,CreditCardLast4Digits__c ,CreditCardPaymentToken__c ,CreditCardType__c ,CurrentMembershipExpiry__c ,CurrentYearAmountSpent__c ,Data_Migrated_from_XEN__c ,DateOfBirthText__c ,DateOfBirth__c ,Default_Address__c ,DietaryRequirements__c ,Email__c ,Employer_Name__c ,ExcludeCommercialEmail__c ,ExcludeSMSCommunication__c ,ExcludeThirdPartyMailings__c ,Expertise__c ,Face_to_Face_Interview__c ,Facebook__c ,Former_Billing_Grade1__c ,Former_Billing_Grade2__c ,Gender__c ,Geography__c ,ITWorkforceSize__c ,IndustrySubtype__c ,Membership_Opt_Out__c ,IsLead__c ,KeepCertificationStatusPrivate__c ,KeyContactEmail__c ,KeyContactName__c ,Key_ICT_Skills__c ,Languages__c ,LastContactDate__c ,LinkedIn__c ,LogoImageId__c ,MARARegistrationCode__c ,Manual_Data_Entry__c ,MemberGrade__c ,Member_Role__c ,MembershipDocumentsBoxFolderId__c ,MembershipNumberAutoGen__c ,MembershipNumber__c ,Membership_Status__c ,MigrationAgentPrimaryBusinessName__c ,Mobile__c ,NationalSignificance__c ,New_Membership_Signup_created__c ,PPP__c ,Partial_Copy_of_Person_Bio__c ,PaymentAutoRenew__c ,PaymentFrequency__c ,PaymentMethod__c ,PersonAccountDoNotCall__c ,PersonAccountEmailOptOut__c ,PersonAccountFirstName__c ,PersonAccountJoinedDate__c ,PersonAccountLastName__c ,PersonAccountMiddleName__c ,PersonAccountPositionTitle__c ,PersonAccountPublish__c ,PersonAccountSecondaryEmail__c ,PersonAccountSuffix__c ,PersonBio__c ,PersonImageId__c ,PleaseNote__c ,PreferredContactMethod__c ,PreferredName__c ,ProductArticle__c ,ProfessionalDocumentsBoxFolderId__c ,Professional_Interest__c ,Profile_Completion_Rate__c ,Program_Account_for_Current_Membership__c ,ROIAvailableCurrentFY__c ,ROIAvailableNextFY__c ,ReinvestmentAmount__c ,ReinvestmentRemaining__c ,ReinvestmentSpent__c ,Sister_Society_Member__c ,SkillsAgentIDAssignment__c ,SkillsAgentID__c ,SkillsAgentStatus__c ,SpecialBillingExpiryDate__c ,Specialisms__c ,Title__c ,TotalWorkforceSize__c ,TradingName__c ,Twitter__c ,UENumber__c ,WebsiteRole__c ,WorkHistory__c ,Work_Phone__c ,XEN_User_Type__c ,XenDocumentsBoxFolderId__c ,XenEncryptedPassword__c ,XenId__c ,Skill_Record_Count__c ,Staff_ID__c ,GradingDate__c ,Branch_Newsletters_Change__c ,Credit_Card_Expiry_Date__c ,BPay_CRN__c ,CertificationExpiryDate__c ,Nov_Recurring_Email__c ,Post_Nominals__c ,JoinedLastWeek__c ,Name_With_First_Name_Suffix__c ,Valid_Until_End__c ,CMSJoinNowApplicationType__c ,CmsBoxMembershipFileIdsToMove__c ,CmsDirectDepositBoxDocumentDetails__c ,CmsDirectDepositBoxFileIdsToMove__c ,CmsICTBoxDocumentDetails__c ,CmsICTBoxFileIdsToMove__c ,CmsMembershipBoxDocumentDetails__c ,CmsProfessionBoxFileIdsToMove__c ,CountryOfEducation__c ,CreateUserRecordOnly__c ,DateOfCommencement__c ,DateOfExpectedCompletion__c ,NameOfInstitution__c ,NameOnCreditCard__c ,QualificationName__c ,RememberForFuturePayments__c ,EmployeeId__c ,Identified_for_Merge__c ,Member_Since__c ,JoinedThisMonth__c ,Enrolment_Status__c ,PY_Completion_Date__c ,Provider_Student_Number__c ,VETrack_Number__c ,AccountImage__c ,RecordSource__c ,PostNominalsForCP__c ,AccreditedUniversityFacultySchool__c ,Exclude_from_Email_Communication__c ,SkillsMembershipDuplicateAccount_User__c ,Information_Age__c ,UniqueId__c ,ACS_Newsletter__c ,ACS_Marketing_Communication__c ,SMS_Communications__c ,ThirdParty_Communications__c ,Create_Free_Skills_Membership__c ,SkillsAgentApplication__c ,Number_of_Certifications__c ,Password_Token_Expiry_Date__c ,Password_Token_Used__c ,Password_Token__c ,Days_Until_CC_Expiry__c ,Eligible_for_CC_Expiry_Reminder__c ,Outfit_Certificates_Last_Update__c ,Outfit_Membeship_Cert_Last_Update__c ,Disable_Validation__c ,Short_Name__c ,No_of_Programs_With_Active_Memberships__c ,Total_Active_ROI_Budget__c ,Total_ROI_Balance_Remaining__c ,Total_ROI_Spend__c ,fferpcore__ExemptionCertificate__c ,fferpcore__IsBillingAddressValidated__c ,fferpcore__IsShippingAddressValidated__c ,fferpcore__OutputVatCode__c ,fferpcore__SalesTaxStatus__c ,fferpcore__TaxCode1__c ,fferpcore__TaxCode2__c ,fferpcore__TaxCode3__c ,fferpcore__TaxCountryCode__c ,fferpcore__ValidatedBillingCity__c ,fferpcore__ValidatedBillingCountry__c ,fferpcore__ValidatedBillingPostalCode__c ,fferpcore__ValidatedBillingState__c ,fferpcore__ValidatedBillingStreet__c ,fferpcore__ValidatedShippingCity__c ,fferpcore__ValidatedShippingCountry__c ,fferpcore__ValidatedShippingPostalCode__c ,fferpcore__ValidatedShippingState__c ,fferpcore__ValidatedShippingStreet__c ,fferpcore__VatRegistrationNumber__c ,fferpcore__VatStatus__c ,Facebook_Messenger_Id__c ,Total_Membership_Years__c ,Membership_Balance_Amount__c ,Education_Level__c ,Certificate_Specialism__c ,Is_Active__c ,Elected_Official__c ,Confirmation_of_PSS_Enrollment__c ,Employment_Category__c ,Employment_Type__c ,Higher_Cap__c ,PSS_Insurance_Cover__c ,PSS_Member__c ,Certification_Outfit_Document_Id__c ,Pendula_Test__c ,Current_Membership_Expiry_As_Text__c ,Days_since_Current_Membership_Expiry__c ,Age__c ,Private__c ,Elected_Official_Count__c ,Is_Elected_Official__c ,Member_Tier__c ,Litmos__Active__c ,Litmos__CustomerPriority__c ,Litmos__Litmos_Id__c ,Litmos__NumberofLocations__c ,Litmos__SLAExpirationDate__c ,Litmos__SLASerialNumber__c ,Litmos__SLA__c ,Litmos__UpsellOpportunity__c ,Student_ID__c ,Access_to_Canvas__c ,fferpcore__MaterializedBillingAddressValidated__c ,fferpcore__MaterializedShippingAddressValidated__c ,EU_Applicants_Flag__c ,Is_New_User__c ,Brand__c ,MC_Applicant__c ,Is_Changed__c ,User_Change_Error__c ,PartiallyCompletedMicroCredentialId__c ,Pendula_Resend__c ,Community_Name__c ,HiddenUserLocationState__c ,HiddenFullName__c ,Industry__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
 				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
 			]
 		},
@@ -2589,11 +2904,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "OpportunityLineItem"
+						"defaultValue": "Account_History__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "OpportunityLineItem"
+						"defaultValue": "Account_History__c"
 					}
 				},
 				"variables": {
@@ -26728,6 +27043,103 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureXL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Datafeeds",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "DHHS WC All Month Contact Servi",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "File01.xlsx",
+						"folderPath": "test",
+						"container": "adobe-datafeeds"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/BinaryDataDestinationStore')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -26817,7 +27229,7 @@
 					"sheetName": "Report input from SF",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Membership all data 01022023 (1).xlsx",
+						"fileName": "Membership all data 01042023.xlsx",
 						"folderPath": "test",
 						"container": "adobe-datafeeds"
 					},
@@ -27034,8 +27446,9 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "testdump",
-						"fileSystem": "databrickslanding"
+						"fileName": "ABC.xls",
+						"folderPath": "test",
+						"fileSystem": "adobe-datafeeds"
 					},
 					"columnDelimiter": ",",
 					"encodingName": "UTF-8",
@@ -27295,7 +27708,6 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "AzureDatabricksDeltaLake",
 				"parameters": {
 					"dvrDatabricksWorkspaceURL": {
 						"type": "string",
@@ -27307,6 +27719,7 @@
 					}
 				},
 				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
 				"typeProperties": {
 					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
 					"clusterId": "@linkedService().dvrDatabricksClusterId",
@@ -27649,6 +28062,18 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Qualification History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -27669,7 +28094,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF Assessment History Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccreditedCourse__c Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Accreditation Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Opportunity Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Opportunity Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]"
 			]
 		},
 		{
@@ -27688,6 +28114,530 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMember_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Connects to Member Database",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureMember_ls_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SQL_Member_Dump')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMember_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Billing Grade",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch Group",
+						"type": "varchar"
+					},
+					{
+						"name": "Member Grade",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of Birth",
+						"type": "date"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Certification Group",
+						"type": "varchar"
+					},
+					{
+						"name": "Certification Level",
+						"type": "varchar"
+					},
+					{
+						"name": "PPP",
+						"type": "varchar"
+					},
+					{
+						"name": "PPP Account for Current Membership",
+						"type": "varchar"
+					},
+					{
+						"name": "Account 18 Digits ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Email",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary Account Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Membership Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Membership Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Account Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Current Membership Expiry",
+						"type": "date"
+					},
+					{
+						"name": "Joined Date",
+						"type": "date"
+					},
+					{
+						"name": "BGG",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch",
+						"type": "varchar"
+					},
+					{
+						"name": "Geography",
+						"type": "varchar"
+					},
+					{
+						"name": "Home Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Work Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Former Billing Grade1",
+						"type": "varchar"
+					},
+					{
+						"name": "Former Billing Grade2",
+						"type": "varchar"
+					},
+					{
+						"name": "Days since Current Membership Expiry",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Check",
+						"type": "varchar"
+					},
+					{
+						"name": "Billing Grade 2",
+						"type": "varchar"
+					},
+					{
+						"name": "BGG2",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch Group 2",
+						"type": "varchar"
+					},
+					{
+						"name": "Comment",
+						"type": "varchar"
+					},
+					{
+						"name": "New?",
+						"type": "varchar"
+					},
+					{
+						"name": "Created Date",
+						"type": "date"
+					},
+					{
+						"name": "Deactivated Date",
+						"type": "date"
+					},
+					{
+						"name": "Certification Expiry Date",
+						"type": "date"
+					},
+					{
+						"name": "Date Of Commencement",
+						"type": "date"
+					},
+					{
+						"name": "Last Modified Date",
+						"type": "date"
+					},
+					{
+						"name": "FY Year",
+						"type": "varchar"
+					},
+					{
+						"name": "FY",
+						"type": "varchar"
+					},
+					{
+						"name": "Retained_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Churn_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "new_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Heirarchy",
+						"type": "varchar"
+					},
+					{
+						"name": "At Risk",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "subsegments",
+						"type": "varchar"
+					},
+					{
+						"name": "Actual",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Order",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ontimerenewal",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "growthmonthly",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "order month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "On time renewals",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Active",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_New",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Lapsed",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_Unfinancials",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_Total",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Active_financial",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month",
+						"type": "varchar"
+					},
+					{
+						"name": "ExtractDate",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "member_dump_April01"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureMember_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Qualification History Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
 		}
 	]
 }
