@@ -8,12 +8,9 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Report input from SF",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Membership all data 01042023.xlsx",
-				"folderPath": "test",
-				"container": "adobe-datafeeds"
+				"container": "dewr-reports"
 			},
 			"firstRowAsHeader": true
 		},
