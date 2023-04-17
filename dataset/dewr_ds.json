@@ -12,7 +12,7 @@
 				"type": "AzureBlobStorageLocation",
 				"container": "dewr-reports"
 			},
-			"columnDelimiter": "",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
