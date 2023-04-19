@@ -5,7 +5,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://serpapi.com/search.json?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search",
+			"url": "https://serpapi.com/search?engine=google_maps",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous",
 			"authHeaders": {
