@@ -5,10 +5,19 @@
 			"referenceName": "GoogleRestAPI",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"relativeurl": {
+				"type": "string",
+				"defaultValue": "?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+			}
+		},
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+			"relativeUrl": {
+				"value": "@dataset().relativeurl",
+				"type": "Expression"
+			}
 		},
 		"schema": []
 	}
