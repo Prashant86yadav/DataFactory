@@ -21,7 +21,7 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "GET",
 						"paginationRules": {
-							"AbsoluteUrl": "$.$.serpapi_pagination.next"
+							"supportRFC5988": "true"
 						}
 					},
 					"sink": {
@@ -293,7 +293,7 @@
 						"referenceName": "SERP_API_DS",
 						"type": "DatasetReference",
 						"parameters": {
-							"relativeurl": "engine=google_maps_reviews&data_id=0x6b91102b11504639:0xc9059ac094cfc93"
+							"relativeurl": "engine=google_maps_reviews&data_id=0x6b91102b11504639:0xc9059ac094cfc93&"
 						}
 					}
 				],
