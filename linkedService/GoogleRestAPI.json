@@ -1,12 +1,19 @@
 {
 	"name": "GoogleRestAPI",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
 			"url": "https://serpapi.com/search.json?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"APIKey": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
 		}
 	}
 }
