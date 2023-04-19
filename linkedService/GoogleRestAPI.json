@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://serpapi.com/search.json?&num=10&start={offset}",
+			"url": "https://serpapi.com/search.json?&num=20&start={offset}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
