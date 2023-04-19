@@ -1,0 +1,12 @@
+{
+	"name": "SERP_API_DS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "GoogleRestAPI",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"schema": []
+	}
+}
