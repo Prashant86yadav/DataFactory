@@ -14,7 +14,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "&engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+			"relativeUrl": "engine=google_maps_reviews&data_id=0x6b91102b11504639:0xc9059ac094cfc93"
 		},
 		"schema": []
 	}
