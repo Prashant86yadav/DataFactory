@@ -26,7 +26,10 @@
 				"inputs": [
 					{
 						"referenceName": "SERP_API_DS",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeurl": "?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+						}
 					}
 				]
 			}
