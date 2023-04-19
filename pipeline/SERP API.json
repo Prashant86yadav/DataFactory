@@ -32,6 +32,7 @@
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
 					"translator": {
 						"type": "TabularTranslator",
 						"mappings": [
@@ -181,7 +182,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['link']"
+									"path": "['link']"
 								},
 								"sink": {
 									"name": "reviews'][0]['link"
@@ -189,7 +190,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['user']['name']"
+									"path": "['user']['name']"
 								},
 								"sink": {
 									"name": "name"
@@ -197,7 +198,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['user']['link']"
+									"path": "['user']['link']"
 								},
 								"sink": {
 									"name": "reviews'][0]['user_link"
@@ -205,7 +206,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['user']['thumbnail']"
+									"path": "['user']['thumbnail']"
 								},
 								"sink": {
 									"name": "thumbnail"
@@ -213,7 +214,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['user']['reviews']"
+									"path": "['user']['reviews']"
 								},
 								"sink": {
 									"name": "reviews'][0]['user_reviews"
@@ -221,7 +222,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['user']['photos']"
+									"path": "['user']['photos']"
 								},
 								"sink": {
 									"name": "photos"
@@ -229,7 +230,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['rating']"
+									"path": "['rating']"
 								},
 								"sink": {
 									"name": "reviews'][0]['rating"
@@ -237,7 +238,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['date']"
+									"path": "['date']"
 								},
 								"sink": {
 									"name": "date"
@@ -245,7 +246,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['snippet']"
+									"path": "['snippet']"
 								},
 								"sink": {
 									"name": "snippet"
@@ -253,7 +254,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['likes']"
+									"path": "['likes']"
 								},
 								"sink": {
 									"name": "likes"
@@ -261,7 +262,7 @@
 							},
 							{
 								"source": {
-									"path": "$['reviews'][0]['images'][0]"
+									"path": "['images'][0]"
 								},
 								"sink": {
 									"name": "items"
