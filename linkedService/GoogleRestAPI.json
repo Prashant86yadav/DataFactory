@@ -1,13 +1,19 @@
 {
 	"name": "GoogleRestAPI",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
 			"url": "https://serpapi.com/search.json",
 			"enableServerCertificateValidation": true,
-			"authenticationType": "Anonymous"
+			"authenticationType": "Anonymous",
+			"authHeaders": {
+				"APIKey": {
+					"type": "SecureString",
+					"value": "**********"
+				}
+			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+	}
 }
