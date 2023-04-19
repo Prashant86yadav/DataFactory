@@ -1,0 +1,42 @@
+{
+	"name": "SERP API",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SERP_API_DS",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeurl": "?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ACS/MSA"
+		},
+		"annotations": []
+	}
+}
