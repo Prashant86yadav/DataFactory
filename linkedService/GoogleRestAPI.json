@@ -9,7 +9,7 @@
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous",
 			"authHeaders": {
-				"Authorization": {
+				"api_key": {
 					"type": "SecureString",
 					"value": "**********"
 				}
