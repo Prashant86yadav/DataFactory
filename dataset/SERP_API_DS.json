@@ -7,6 +7,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+		},
 		"schema": []
 	}
 }
