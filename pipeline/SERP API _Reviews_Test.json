@@ -1,0 +1,255 @@
+{
+	"name": "SERP API _Reviews_Test",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "RestSource",
+						"httpRequestTimeout": "00:01:40",
+						"requestInterval": "00.00:00:00.010",
+						"requestMethod": "GET",
+						"paginationRules": {
+							"QueryParameters.next_page_token": "$.serpapi_pagination.next_page_token"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "['link']"
+								},
+								"sink": {
+									"name": "reviews'][0]['link"
+								}
+							},
+							{
+								"source": {
+									"path": "['user']['name']"
+								},
+								"sink": {
+									"name": "name"
+								}
+							},
+							{
+								"source": {
+									"path": "['user']['link']"
+								},
+								"sink": {
+									"name": "reviews'][0]['user_link"
+								}
+							},
+							{
+								"source": {
+									"path": "['user']['thumbnail']"
+								},
+								"sink": {
+									"name": "thumbnail"
+								}
+							},
+							{
+								"source": {
+									"path": "['user']['reviews']"
+								},
+								"sink": {
+									"name": "reviews'][0]['user_reviews"
+								}
+							},
+							{
+								"source": {
+									"path": "['user']['photos']"
+								},
+								"sink": {
+									"name": "photos"
+								}
+							},
+							{
+								"source": {
+									"path": "['rating']"
+								},
+								"sink": {
+									"name": "reviews'][0]['rating"
+								}
+							},
+							{
+								"source": {
+									"path": "['date']"
+								},
+								"sink": {
+									"name": "reviews'][0]['date"
+								}
+							},
+							{
+								"source": {
+									"path": "['snippet']"
+								},
+								"sink": {
+									"name": "snippet"
+								}
+							},
+							{
+								"source": {
+									"path": "['response']['date']"
+								},
+								"sink": {
+									"name": "reviews'][0]['response_date"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['id']"
+								},
+								"sink": {
+									"name": "search_metadata_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['status']"
+								},
+								"sink": {
+									"name": "status"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['created_at']"
+								},
+								"sink": {
+									"name": "created_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['processed_at']"
+								},
+								"sink": {
+									"name": "processed_at"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['google_maps_reviews_url']"
+								},
+								"sink": {
+									"name": "google_maps_reviews_url"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_metadata']['total_time_taken']"
+								},
+								"sink": {
+									"name": "total_time_taken"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_parameters']['engine']"
+								},
+								"sink": {
+									"name": "engine"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_parameters']['data_id']"
+								},
+								"sink": {
+									"name": "data_id"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_parameters']['hl']"
+								},
+								"sink": {
+									"name": "hl"
+								}
+							},
+							{
+								"source": {
+									"path": "$['search_parameters']['next_page_token']"
+								},
+								"sink": {
+									"name": "search_parameters_next_page_token"
+								}
+							},
+							{
+								"source": {
+									"path": "$['place_info']['title']"
+								},
+								"sink": {
+									"name": "title"
+								}
+							},
+							{
+								"source": {
+									"path": "$['place_info']['address']"
+								},
+								"sink": {
+									"name": "address"
+								}
+							},
+							{
+								"source": {
+									"path": "$['place_info']['rating']"
+								},
+								"sink": {
+									"name": "place_info_rating"
+								}
+							},
+							{
+								"source": {
+									"path": "$['place_info']['reviews']"
+								},
+								"sink": {
+									"name": "place_info_reviews"
+								}
+							}
+						],
+						"collectionReference": "$['reviews']",
+						"mapComplexValuesToString": false
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SerpAPI_test",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ACS/MSA"
+		},
+		"annotations": []
+	}
+}
