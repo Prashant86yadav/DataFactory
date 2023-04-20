@@ -261,7 +261,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "member_dump_April01"
+			"table": "Store_reviews"
 		}
 	}
 }
