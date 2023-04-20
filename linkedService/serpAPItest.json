@@ -1,0 +1,12 @@
+{
+	"name": "serpAPItest",
+	"properties": {
+		"annotations": [],
+		"type": "RestService",
+		"typeProperties": {
+			"url": "https://serpapi.com/search.json?api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc&engine=google_maps&place_id=ChIJ82wbL47vEmsRIkpcypTxcO4&type=search",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
