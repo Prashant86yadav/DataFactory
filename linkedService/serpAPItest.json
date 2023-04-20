@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
-			"url": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b91055c44168af3:0xce4c1b5a60009e07&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0xbeb998a81f74f49f&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc",
+			"url": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b91055c44168af3:0xce4c1b5a60009e07&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
