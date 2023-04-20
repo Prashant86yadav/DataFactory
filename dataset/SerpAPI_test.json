@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "engine=google_maps_reviews&data_id=0x6b911ab109d3ff11:0xbeb998a81f74f49f&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
+			"relativeUrl": "/search.json?engine=google_maps_reviews&data_id=0x6b911ab109d3ff11:0xbeb998a81f74f49f&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
 		},
 		"schema": []
 	}
