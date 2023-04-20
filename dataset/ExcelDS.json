@@ -10,7 +10,9 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "dewr-reports"
+				"fileName": "Pizza Store.xlsx",
+				"folderPath": "test",
+				"container": "adobe-datafeeds"
 			},
 			"firstRowAsHeader": true
 		},
