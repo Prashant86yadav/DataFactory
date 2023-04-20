@@ -190,14 +190,6 @@
 							},
 							{
 								"source": {
-									"path": "$['search_parameters']['next_page_token']"
-								},
-								"sink": {
-									"name": "search_parameters_next_page_token"
-								}
-							},
-							{
-								"source": {
 									"path": "$['place_info']['title']"
 								},
 								"sink": {
