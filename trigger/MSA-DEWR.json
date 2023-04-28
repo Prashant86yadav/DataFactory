@@ -1,0 +1,33 @@
+{
+	"name": "MSA-DEWR",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "MSA Dumps",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"startdate": "2023-04-01 00:00:00",
+					"enddate": "2023-04-30 00:00:00"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Month",
+				"interval": 1,
+				"startTime": "2023-04-30T23:59:00",
+				"timeZone": "E. Australia Standard Time",
+				"schedule": {
+					"monthDays": [
+						-1
+					]
+				}
+			}
+		}
+	}
+}
