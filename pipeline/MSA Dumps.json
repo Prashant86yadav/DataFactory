@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "EXEC received_withdrawn pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"value": "\nEXEC received_withdrawn '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -84,7 +84,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "EXEC AQF pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"value": "EXEC AQF '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -150,7 +150,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "EXEC caseload pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"value": "EXEC caseload  '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -216,7 +216,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "EXEC toptencountry pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"value": "EXEC toptencountry   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -282,7 +282,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "EXEC remaining pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"value": "\nEXEC remaining   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
