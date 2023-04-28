@@ -2,7 +2,7 @@
 	"name": "dewr_ds",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Datafeeds",
+			"referenceName": "dewr_ls",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
@@ -14,12 +14,12 @@
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobStorageLocation",
+				"type": "AzureBlobFSLocation",
 				"fileName": {
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"container": "dewr-reports"
+				"fileSystem": "dewr-reports"
 			},
 			"columnDelimiter": "\t",
 			"escapeChar": "\\",
