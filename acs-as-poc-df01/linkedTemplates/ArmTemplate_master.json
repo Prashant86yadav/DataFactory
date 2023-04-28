@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
 		},
+		"AzureMember_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
+		},
 		"Canvas REST_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Canvas REST'"
@@ -47,13 +51,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
+		"dewr_ls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
+		},
 		"ls_SQL_membership_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
-		},
-		"AzureMember_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -77,7 +81,11 @@
 		},
 		"GoogleRestAPI_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://serpapi.com/0fda6c3230aab43ccc68428b89379159af6161a19955a156e3614971f52aca09"
+			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
+		},
+		"HttpTEST_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://serpapi.com/search.json"
 		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -107,9 +115,17 @@
 			"type": "string",
 			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
 		},
+		"dewr_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+		},
 		"lga_google_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
+		},
+		"serpAPItest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -259,6 +275,14 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "2023-04-01 00:00:00"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "2023-04-30 00:00:00"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -298,6 +322,9 @@
 					"AzureDatabricksDeltaLake1_accessToken": {
 						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
 					},
+					"AzureMember_ls_connectionString": {
+						"value": "[parameters('AzureMember_ls_connectionString')]"
+					},
 					"Canvas REST_password": {
 						"value": "[parameters('Canvas REST_password')]"
 					},
@@ -313,11 +340,11 @@
 					"SalesforceACSProd_securityToken": {
 						"value": "[parameters('SalesforceACSProd_securityToken')]"
 					},
+					"dewr_ls_accountKey": {
+						"value": "[parameters('dewr_ls_accountKey')]"
+					},
 					"ls_SQL_membership_connectionString": {
 						"value": "[parameters('ls_SQL_membership_connectionString')]"
-					},
-					"AzureMember_ls_connectionString": {
-						"value": "[parameters('AzureMember_ls_connectionString')]"
 					},
 					"ACSSFPROD_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
@@ -337,6 +364,9 @@
 					"GoogleRestAPI_properties_typeProperties_url": {
 						"value": "[parameters('GoogleRestAPI_properties_typeProperties_url')]"
 					},
+					"HttpTEST_properties_typeProperties_url": {
+						"value": "[parameters('HttpTEST_properties_typeProperties_url')]"
+					},
 					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
 					},
@@ -349,8 +379,14 @@
 					"WeatherRestD_properties_typeProperties_url": {
 						"value": "[parameters('WeatherRestD_properties_typeProperties_url')]"
 					},
+					"dewr_ls_properties_typeProperties_url": {
+						"value": "[parameters('dewr_ls_properties_typeProperties_url')]"
+					},
 					"lga_google_properties_typeProperties_url": {
 						"value": "[parameters('lga_google_properties_typeProperties_url')]"
+					},
+					"serpAPItest_properties_typeProperties_url": {
+						"value": "[parameters('serpAPItest_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -532,6 +568,12 @@
 					},
 					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					}
 				}
 			},

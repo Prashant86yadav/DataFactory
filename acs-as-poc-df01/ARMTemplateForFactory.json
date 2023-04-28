@@ -23,6 +23,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
 		},
+		"AzureMember_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
+		},
 		"Canvas REST_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Canvas REST'"
@@ -47,13 +51,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
+		"dewr_ls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
+		},
 		"ls_SQL_membership_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
-		},
-		"AzureMember_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -77,7 +81,11 @@
 		},
 		"GoogleRestAPI_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://serpapi.com/0fda6c3230aab43ccc68428b89379159af6161a19955a156e3614971f52aca09"
+			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
+		},
+		"HttpTEST_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://serpapi.com/search.json"
 		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -107,9 +115,17 @@
 			"type": "string",
 			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
 		},
+		"dewr_ls_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+		},
 		"lga_google_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
+		},
+		"serpAPItest_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -258,6 +274,14 @@
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "2023-04-01 00:00:00"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "2023-04-30 00:00:00"
 		}
 	},
 	"variables": {
@@ -271,7 +295,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "RW",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -285,7 +309,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "with cte as\n(\nselect CountryOfResidence__c as country ,\nLEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \nSUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation, Flag=0\nfrom  [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00'  \nand ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n), \nCTE1 as \n(select top 10 CountryOfResidence__c as country, count(*) as total  from    [dbo].[assessment]\nwhere FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00' \nand CountryOfResidence__c NOT IN ('Australia')\ngroup by CountryOfResidence__c\norder by total desc ),\nCTE2 as (\nselect  ANZSCO_Code,Occupation, country, \nFLAG  =CASE   WHEN country IN (select country from CTE1) THEN 1 Else 0\nEND from CTE)\nselect ANZSCO_Code,Occupation, count(*)  from CTE2\nwhere Flag=0\ngroup by  ANZSCO_Code,Occupation \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+								"sqlReaderQuery": {
+									"value": "\nEXEC received_withdrawn '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
+									"type": "Expression"
+								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -319,9 +346,279 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "TestBlob",
+								"referenceName": "dewr_ds",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "recieve_withdrawn"
+								}
+							}
+						]
+					},
+					{
+						"name": "AQF",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "RW",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "EXEC AQF '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".xlsx"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
 								"type": "DatasetReference",
 								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dewr_ds",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "AQF"
+								}
+							}
+						]
+					},
+					{
+						"name": "caseload",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "AQF",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "EXEC caseload  '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}'\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".xlsx"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dewr_ds",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "caseload"
+								}
+							}
+						]
+					},
+					{
+						"name": "Top 10 Countries",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "caseload",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "EXEC toptencountry   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".xlsx"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dewr_ds",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "top10countries"
+								}
+							}
+						]
+					},
+					{
+						"name": "Remaining  Countries",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Top 10 Countries",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "\nEXEC remaining   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".xlsx"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "dewr_ds",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "remaining"
+								}
 							}
 						]
 					}
@@ -330,6 +627,16 @@
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
 				},
+				"parameters": {
+					"startdate": {
+						"type": "string",
+						"defaultValue": "2023-04-01 00:00:00"
+					},
+					"enddate": {
+						"type": "string",
+						"defaultValue": "2023-04-30 00:00:00"
+					}
+				},
 				"folder": {
 					"name": "ACS/MSA"
 				},
@@ -337,7 +644,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/TestBlob')]"
+				"[concat(variables('factoryId'), '/datasets/dewr_ds')]"
 			]
 		},
 		{
@@ -925,6 +1232,501 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ExcelDS')]",
 				"[concat(variables('factoryId'), '/datasets/SQL_Member_Dump')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SERP API _Reviews')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"QueryParameters.next_page_token": "$.serpapi_pagination.next_page_token"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['search_metadata']['id']"
+										},
+										"sink": {
+											"name": "search_metadata_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['status']"
+										},
+										"sink": {
+											"name": "status"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['json_endpoint']"
+										},
+										"sink": {
+											"name": "json_endpoint"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['created_at']"
+										},
+										"sink": {
+											"name": "created_at"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['processed_at']"
+										},
+										"sink": {
+											"name": "processed_at"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['google_maps_reviews_url']"
+										},
+										"sink": {
+											"name": "google_maps_reviews_url"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['raw_html_file']"
+										},
+										"sink": {
+											"name": "raw_html_file"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['total_time_taken']"
+										},
+										"sink": {
+											"name": "total_time_taken"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['engine']"
+										},
+										"sink": {
+											"name": "engine"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['data_id']"
+										},
+										"sink": {
+											"name": "data_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['hl']"
+										},
+										"sink": {
+											"name": "hl"
+										}
+									},
+									{
+										"source": {
+											"path": "$['place_info']['title']"
+										},
+										"sink": {
+											"name": "title"
+										}
+									},
+									{
+										"source": {
+											"path": "$['place_info']['address']"
+										},
+										"sink": {
+											"name": "address"
+										}
+									},
+									{
+										"source": {
+											"path": "$['place_info']['rating']"
+										},
+										"sink": {
+											"name": "place_info_rating"
+										}
+									},
+									{
+										"source": {
+											"path": "$['place_info']['reviews']"
+										},
+										"sink": {
+											"name": "place_info_reviews"
+										}
+									},
+									{
+										"source": {
+											"path": "$['topics'][0]['keyword']"
+										},
+										"sink": {
+											"name": "keyword"
+										}
+									},
+									{
+										"source": {
+											"path": "$['topics'][0]['mentions']"
+										},
+										"sink": {
+											"name": "mentions"
+										}
+									},
+									{
+										"source": {
+											"path": "$['topics'][0]['id']"
+										},
+										"sink": {
+											"name": "topics'][0]['id"
+										}
+									},
+									{
+										"source": {
+											"path": "[['link']"
+										},
+										"sink": {
+											"name": "reviews'][0]['link"
+										}
+									},
+									{
+										"source": {
+											"path": "[['user']['name']"
+										},
+										"sink": {
+											"name": "name"
+										}
+									},
+									{
+										"source": {
+											"path": "[['user']['link']"
+										},
+										"sink": {
+											"name": "reviews'][0]['user_link"
+										}
+									},
+									{
+										"source": {
+											"path": "[['user']['thumbnail']"
+										},
+										"sink": {
+											"name": "thumbnail"
+										}
+									},
+									{
+										"source": {
+											"path": "[['user']['reviews']"
+										},
+										"sink": {
+											"name": "reviews'][0]['user_reviews"
+										}
+									},
+									{
+										"source": {
+											"path": "[['user']['photos']"
+										},
+										"sink": {
+											"name": "photos"
+										}
+									},
+									{
+										"source": {
+											"path": "[['rating']"
+										},
+										"sink": {
+											"name": "reviews'][0]['rating"
+										}
+									},
+									{
+										"source": {
+											"path": "[['date']"
+										},
+										"sink": {
+											"name": "date"
+										}
+									},
+									{
+										"source": {
+											"path": "[['snippet']"
+										},
+										"sink": {
+											"name": "snippet"
+										}
+									},
+									{
+										"source": {
+											"path": "[['likes']"
+										},
+										"sink": {
+											"name": "likes"
+										}
+									},
+									{
+										"source": {
+											"path": "[['images'][0]"
+										},
+										"sink": {
+											"name": "items"
+										}
+									},
+									{
+										"source": {
+											"path": "$['serpapi_pagination']['next']"
+										},
+										"sink": {
+											"name": "next"
+										}
+									},
+									{
+										"source": {
+											"path": "$['serpapi_pagination']['next_page_token']"
+										},
+										"sink": {
+											"name": "next_page_token"
+										}
+									}
+								],
+								"collectionReference": "$['reviews']"
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SERP_API_DS",
+								"type": "DatasetReference",
+								"parameters": {
+									"relativeurl": "/search.json?api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc&engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SERP_API_DS')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SERP API _Reviews_Test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"QueryParameters.next_page_token": "$.serpapi_pagination.next_page_token"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['search_metadata']['id']"
+										},
+										"sink": {
+											"name": "id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['status']"
+										},
+										"sink": {
+											"name": "status"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['json_endpoint']"
+										},
+										"sink": {
+											"name": "json_endpoint"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['created_at']"
+										},
+										"sink": {
+											"name": "created_at"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['processed_at']"
+										},
+										"sink": {
+											"name": "processed_at"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['google_maps_reviews_url']"
+										},
+										"sink": {
+											"name": "google_maps_reviews_url"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['raw_html_file']"
+										},
+										"sink": {
+											"name": "raw_html_file"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_metadata']['total_time_taken']"
+										},
+										"sink": {
+											"name": "total_time_taken"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['engine']"
+										},
+										"sink": {
+											"name": "engine"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['data_id']"
+										},
+										"sink": {
+											"name": "data_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_parameters']['hl']"
+										},
+										"sink": {
+											"name": "hl"
+										}
+									},
+									{
+										"source": {
+											"path": "$['search_information']['reviews_results_state']"
+										},
+										"sink": {
+											"name": "reviews_results_state"
+										}
+									}
+								],
+								"collectionReference": "",
+								"mapComplexValuesToString": false
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SerpAPI_test",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SerpAPI_test')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]"
 			]
 		},
 		{
@@ -3139,6 +3941,244 @@
 					"ColumnList": {
 						"type": "string",
 						"defaultValue": " Id, IsDeleted, AccountId, RecordTypeId, IsPrivate, Name, Description, StageName, Amount, Probability, ExpectedRevenue, TotalOpportunityQuantity, CloseDate, Type, NextStep, LeadSource, IsClosed, IsWon, ForecastCategory, ForecastCategoryName, CurrencyIsoCode, CampaignId, HasOpportunityLineItem, Pricebook2Id, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, PushCount, LastStageChangeDate, FiscalQuarter, FiscalYear, Fiscal, ContactId, LastViewedDate, LastReferencedDate, ContractId, HasOpenActivity, HasOverdueTask, LastAmountChangedHistoryId, LastCloseDateChangedHistoryId, Brand__c, ACS_Office__c, AccountEmail__c, AccountOwner__c, Automated_Tax_Receipt_Sent__c, Balance__c, BankReference__c, BatchRunDate__c, BoxFolderId__c, CappedOrMembershipBased__c, ChargeDateEmail__c, CongaCitySys__c, CongaCountrySys__c, CongaMembershipSubscriptionRenewal__c, CongaPaymentConfirmationEmailNonCC__c, CongaPostCodeSys__c, CongaStateSys__c, CongaStreetSys__c, CongaTaxInvoiceSaveOnly__c, CongaTaxReceiptAutoEmailNonCC__c, Conga_Email_Sent_From__c, Conga_Skills_Tax_Receipt_Auto_Email__c, CreateBoxFolder__c, CreditController__c, CreditNoteGenerated__c, CreditNoteID__c, Data_Migrated_from_XEN__c, DaysOutstanding__c, EstimatedBudget__c, GenerateCreditNote__c, Grand_Total_of_Non_Optional_Incl_GST__c, ICSFileID__c, Incomplete_Membership__c, Initial_Email_Sent_Non_CC__c, Invoice_Number__c, Invoiced__c, MOUType__c, Manual_Data_Entry__c, MembershipRenewalEmailSent__c, MembershipRenewal__c, Membership_End_Date__c, Membership_Start_Date__c, NeedsApproval__c, NextSteps__c, NumberofMembers__c, OpportunitySource__c, Opportunity_18_Digits_ID__c, Opportunity_ID_Autonumber__c, Opportunity_ID__c, Opportunity_Receipt_Template_ID__c, Oppportunity_Email_Template_ID__c, Oppty_Email_Temp_ID_Non_CC__c, Product_Type__c, Proposal_Template_Generated__c, Proposal_Used__c, Proposal_template_ID__c, Purchase_Order_Number__c, ReEngagementDate__c, ReadyToInvoice__c, ReasonForRefund__c, Reason__c, RefundApprovedDate__c, RefundBankDetails__c, Refund_Amount__c, Related_Contact_Email__c, Related_Contact_First_Name__c, Related_Contact_Title__c, Related_Contact__c, Related_Program__c, ReoccurringPaymentEmailSent__c, Sales_Invoice_ID__c, ScheduledEndDate__c, ScheduledStartDate__c, SolutionInterest__c, Grand_Total_of_Non_Optional_Excl_GST__c, Non_Optional_Grand_Total_GST__c, ProductCount__c, StateAllocationCode__c, Closed_Date_Updated_From_1st_Transaction__c, First_Transaction_Date__c, Canberra__c, Count_Update_Time__c, New_South_Wales__c, Northern_Territory__c, Overseas__c, PPP_Automation_Opp__c, Queensland__c, South_Australia__c, Tasmania__c, Victoria__c, Western_Australia__c, Refund_for_Duplicate_Payment__c, Conga_Membership_and_Certification_Email__c, NoOfMembersOnProgram__c, Approval_Status__c, Product_Family_Approval__c, MonthCreated__c, CloseMonth__c, CreatedInTheLast365Days__c, ClosedIn_the_Last_365_Days__c, Quater_Created__c, EventStartDate__c, Id__c, Parent_Account_Name__c, Parent_Account_Name_Link__c, South_Pacific_Overseas__c, Account_Name__c, Outfit_Membership_Renewal_Last_Update__c, Last_Attachment_Added__c, Send_Membership_Renewal_Email__c, Outfit_Tax_Invoice_Last_Update__c, Outfit_Tax_Invoice_Non_CC_Last_Update__c, Outfit_Tax_Invoice_Receipt_Non_CC_Last_U__c, Application_ID_Pendula__c, Skills_Recipient__c, Outfit_Event_Related_ACS_Office__c, Related_Program_Account_Mismatch__c, Approval_Required__c, Grand_Total_of_Non_WFD_Incl_GST__c, Needs_Approval__c, Payment_Due_Date__c, Program_Id_for_Documents__c, Program_for_Documents__c, Project__c, Reassign_Opportunity__c, Related_Program_End_Date__c, Renewal_Committed__c, Renewal_Started__c, Renewing_Program_Id__c, Send_Inactive_Notification_Date__c, Send_Inactive_Opportunity_Notification__c, Superseded_By__c, Upsell__c, Grand_Total_of_Non_WFD_Excl_GST__c, Membership_Opportunity_Product_Rollup__c, Non_WFD_Grand_Total_GST__c, PPP_Full_Fee_Memberships__c, ROI_Budget__c, WFD_Opportunity_Product_End_Date__c, WFD_Opportunity_Product_Rollup_All__c, WFD_Opportunity_Product_Rollup__c, WFD_Opportunity_Product_Start_Date__c, Pendula_Tax_Receipt_Sent__c, Total_Refund_Amount__c, Count_of_Transactions__c, Sum_of_Transactions__c, Days_Until_Closing__c, Eligible_for_Chatbot__c, October_Membership_Renewal_Communication__c, Outfit_Event_Tax_Invoice_Last_Update__c, Event_Member_Invoice_Payment__c, Outfit_Document_Date__c, Receipt_Outfit_Document_Id__c, Current_Membership_Expiry__c, Current_Membership_Expiry_As_Text__c, Private_Account__c, Outfit_Sales_Order_Document_Id__c, Outfit_Sales_Order_Document_Name__c, Litmos__Competitor_s__c, Litmos__CurrentGenerators__c, Litmos__DeliveryInstallationStatus__c, Litmos__MainCompetitors__c, Litmos__OrderNumber__c, Litmos__TrackingNumber__c, Is_Lead__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Qualification History Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
 					},
 					"schemaname": {
 						"type": "string",
@@ -27035,7 +28075,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "assessment_schema"
+					"table": "google_reviews_pizzahut01"
 				}
 			},
 			"dependsOn": [
@@ -27226,10 +28266,10 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Report input from SF",
+					"sheetName": "Sheet1",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Membership all data 01042023.xlsx",
+						"fileName": "Pizza Store.xlsx",
 						"folderPath": "test",
 						"container": "adobe-datafeeds"
 					},
@@ -27237,156 +28277,59 @@
 				},
 				"schema": [
 					{
+						"name": "Store Name ",
 						"type": "String"
 					},
 					{
+						"name": "Store Rating ",
 						"type": "String"
 					},
 					{
+						"name": "user rating ",
 						"type": "String"
 					},
 					{
+						"name": "Comments",
 						"type": "String"
 					},
 					{
+						"name": "Keyword",
 						"type": "String"
 					},
 					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
+						"name": "Date Posted ",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SERP_API_DS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "GoogleRestAPI",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"relativeurl": {
+						"type": "string",
+						"defaultValue": "?engine=google_maps&place_id=ChIJOUZQESsQkWsRk_xMCaxZkAw&type=search"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "/search.json?api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc&engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GoogleRestAPI')]"
 			]
 		},
 		{
@@ -27428,706 +28371,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LSSQLPOC')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestBlob')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Others"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "ABC.xls",
-						"folderPath": "test",
-						"fileSystem": "adobe-datafeeds"
-					},
-					"columnDelimiter": ",",
-					"encodingName": "UTF-8",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TrackingData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Datafeeds",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "HCO DS"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"folderPath": "adobe-campaign--datafeed/prod/prod_tr",
-						"container": "adobe-datafeeds"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_canvas')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Canvas REST",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"relativeurl": {
-						"type": "string",
-						"defaultValue": "/api/v1/accounts/2/courses"
-					}
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": {
-						"value": "@dataset().relativeurl",
-						"type": "Expression"
-					}
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Canvas REST')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_googlerest')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "GoogleRestAPI",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "RestResource",
-				"typeProperties": {
-					"relativeUrl": "search?engine=google_maps"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/GoogleRestAPI')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_memeberhsip')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LSSQLPOC",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "[[dbo]",
-					"table": "[[member_dump_jan]"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LSSQLPOC')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_safc_brpQuery')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_SAFC_BRP",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Others"
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_SAFC_BRP')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ACSSFPROD')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('ACSSFPROD_properties_typeProperties_username')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('ACSSFPROD_password')]"
-					},
-					"securityToken": {
-						"type": "SecureString",
-						"value": "[parameters('ACSSFPROD_securityToken')]"
-					},
-					"apiVersion": "54.0"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "https://adb-7757545527689401.1.azuredatabricks.net",
-					"clusterId": "1127-214634-tp05ut7i",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Canvas REST')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('Canvas REST_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('Canvas REST_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('Canvas REST_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Datafeeds')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('Datafeeds_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GoogleRestAPI')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('GoogleRestAPI_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LSSQLPOC')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('LSSQLPOC_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_ADBR_DVR_DataLake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"dvrDatabricksWorkspaceURL": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
-					},
-					"dvrDatabricksClusterId": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
-					}
-				},
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
-					"clusterId": "@linkedService().dvrDatabricksClusterId",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-Databricks-AccessToken",
-						"secretVersion": ""
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_ADBR_dvrDatabricks')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"parameters": {
-					"dvrDatabricksWorkspaceURL": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
-					},
-					"dvrDatabricksClusterId": {
-						"type": "string",
-						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
-					}
-				},
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
-					"accessToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-Databricks-AccessToken",
-						"secretVersion": ""
-					},
-					"existingClusterId": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_AZKV_DVR')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureKeyVault",
-				"typeProperties": {
-					"baseUrl": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_AZST_BlobLanding')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('LS_AZST_BlobLanding_connectionString')]"
-				},
-				"connectVia": {
-					"referenceName": "AzureVM-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/AzureVM-IR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LS_SAFC_BRP')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-SalesforceBrpSecret",
-						"secretVersion": ""
-					},
-					"securityToken": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "LS_AZKV_DVR",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "LS-SalesforceBrpToken"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SalesforceACSProd')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Salesforce",
-				"typeProperties": {
-					"environmentUrl": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]",
-					"username": "[parameters('SalesforceACSProd_properties_typeProperties_username')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SalesforceACSProd_password')]"
-					},
-					"securityToken": {
-						"type": "SecureString",
-						"value": "[parameters('SalesforceACSProd_securityToken')]"
-					},
-					"apiVersion": "54.0"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/WeatherRestD')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "RestService",
-				"typeProperties": {
-					"url": "[parameters('WeatherRestD_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": false,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/lga_google')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "HttpServer",
-				"typeProperties": {
-					"url": "[parameters('lga_google_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_SQL_membership')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_SQL_membership_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pl_broadcastingDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "pl_trackingDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "pl_RawAnalyticsDaily_Incre",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2022-10-04T00:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								0
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
-				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TR_SF_Refresh')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "SF Assessment Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Account Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Contract Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF User Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Assessment History Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF AccreditedCourse__c Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]",
-							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]",
-							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Accreditation Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]",
-							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]",
-							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Opportunity Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF Qualification History Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Hour",
-						"interval": 12,
-						"startTime": "2022-12-24T00:00:00",
-						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF Assessment Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Contract Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF User Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Assessment History Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF AccreditedCourse__c Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Accreditation Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Opportunity Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureVM-IR')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureMember_ls')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Connects to Member Database",
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('AzureMember_ls_connectionString')]"
-				}
-			},
-			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQL_Member_Dump')]",
@@ -28394,7 +28637,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "member_dump_April01"
+					"table": "Store_reviews"
 				}
 			},
 			"dependsOn": [
@@ -28402,241 +28645,844 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SF Qualification History Refresh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/SerpAPI_test')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "serpAPItest",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "/search.json?engine=google_maps_reviews&data_id= 0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/serpAPItest')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TestBlob')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Others"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "ABC.xls",
+						"folderPath": "test",
+						"fileSystem": "adobe-datafeeds"
+					},
+					"columnDelimiter": ",",
+					"encodingName": "UTF-8",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TrackingData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Datafeeds",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "HCO DS"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"folderPath": "adobe-campaign--datafeed/prod/prod_tr",
+						"container": "adobe-datafeeds"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dewr_ds')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dewr_ls",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"fileSystem": "dewr-reports"
+					},
+					"columnDelimiter": "\t",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dewr_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_canvas')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Canvas REST",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"relativeurl": {
+						"type": "string",
+						"defaultValue": "/api/v1/accounts/2/courses"
+					}
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": {
+						"value": "@dataset().relativeurl",
+						"type": "Expression"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Canvas REST')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_googlerest')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "GoogleRestAPI",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "search?engine=google_maps"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GoogleRestAPI')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_memeberhsip')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LSSQLPOC",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "[[dbo]",
+					"table": "[[member_dump_jan]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LSSQLPOC')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_safc_brpQuery')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SAFC_BRP",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Others"
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SAFC_BRP')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACSSFPROD')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('ACSSFPROD_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('ACSSFPROD_password')]"
+					},
+					"securityToken": {
+						"type": "SecureString",
+						"value": "[parameters('ACSSFPROD_securityToken')]"
+					},
+					"apiVersion": "54.0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "https://adb-7757545527689401.1.azuredatabricks.net",
+					"clusterId": "1127-214634-tp05ut7i",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMember_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Connects to Member Database",
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureMember_ls_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Canvas REST')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('Canvas REST_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Basic",
+					"userName": "[parameters('Canvas REST_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Canvas REST_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Datafeeds')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Datafeeds_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/GoogleRestAPI')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('GoogleRestAPI_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HttpTEST')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpTEST_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LSSQLPOC')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('LSSQLPOC_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_ADBR_DVR_DataLake')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"dvrDatabricksWorkspaceURL": {
+						"type": "string",
+						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
+					},
+					"dvrDatabricksClusterId": {
+						"type": "string",
+						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
+					}
+				},
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLake",
+				"typeProperties": {
+					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
+					"clusterId": "@linkedService().dvrDatabricksClusterId",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_AZKV_DVR",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "LS-Databricks-AccessToken",
+						"secretVersion": ""
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_ADBR_dvrDatabricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"dvrDatabricksWorkspaceURL": {
+						"type": "string",
+						"defaultValue": "(Delete this bit to test default value)https://adb-7240470309362382.2.azuredatabricks.net/"
+					},
+					"dvrDatabricksClusterId": {
+						"type": "string",
+						"defaultValue": "(Delete this bit to test default value)0910-042839-cilia673"
+					}
+				},
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "@linkedService().dvrDatabricksWorkspaceURL",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_AZKV_DVR",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "LS-Databricks-AccessToken",
+						"secretVersion": ""
+					},
+					"existingClusterId": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AZKV_DVR')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_AZST_BlobLanding')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('LS_AZST_BlobLanding_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AzureVM-IR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AzureVM-IR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LS_SAFC_BRP')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_AZKV_DVR",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "LS-SalesforceBrpSecret",
+						"secretVersion": ""
+					},
+					"securityToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "LS_AZKV_DVR",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "LS-SalesforceBrpToken"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_AZKV_DVR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SalesforceACSProd')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Salesforce",
+				"typeProperties": {
+					"environmentUrl": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]",
+					"username": "[parameters('SalesforceACSProd_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SalesforceACSProd_password')]"
+					},
+					"securityToken": {
+						"type": "SecureString",
+						"value": "[parameters('SalesforceACSProd_securityToken')]"
+					},
+					"apiVersion": "54.0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WeatherRestD')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('WeatherRestD_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": false,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dewr_ls')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('dewr_ls_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('dewr_ls_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/lga_google')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('lga_google_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_SQL_membership')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_SQL_membership_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/serpAPItest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('serpAPItest_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
 					{
-						"name": "Copy Salesforce object",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set brpExtractTo",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "pl_broadcastingDaily_Incre",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"id"
-									]
-								},
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						]
+						"parameters": {}
 					},
 					{
-						"name": "Set  brpExtractFrom",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET TGT HWM  SQL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractFrom",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
-								"type": "Expression"
-							}
+						"pipelineReference": {
+							"referenceName": "pl_trackingDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_RawAnalyticsDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-04T00:00:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								0
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
+				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
+				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TR_SF_Refresh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
 						}
 					},
 					{
-						"name": "GET TGT HWM  SQL",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "SF Account Refresh",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
 						}
 					},
 					{
-						"name": "GET SRC HighWaterMark",
-						"description": "Find the latest change in the Salesforce table indicated by the parameter",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Set  brpExtractFrom",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "SF Contract Refresh",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"dataset": {
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
 						}
 					},
 					{
-						"name": "Set brpExtractTo",
-						"description": "",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET SRC HighWaterMark",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractTo",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
-								"type": "Expression"
-							}
+						"pipelineReference": {
+							"referenceName": "SF User Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccreditedCourse__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Accreditation Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Opportunity Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Qualification History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
 						}
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"SourceTableName": {
-						"type": "string",
-						"defaultValue": "Qualification__c"
-					},
-					"TargetTableName": {
-						"type": "string",
-						"defaultValue": "Qualification__c"
-					},
-					"ColumnList": {
-						"type": "string",
-						"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
-					},
-					"schemaname": {
-						"type": "string",
-						"defaultValue": "salesforce"
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 12,
+						"startTime": "2022-12-24T00:00:00",
+						"timeZone": "AUS Eastern Standard Time"
 					}
-				},
-				"variables": {
-					"brpExtractFrom": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					},
-					"brpExtractTo": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					}
-				},
-				"folder": {
-					"name": "ACS/Salesforce"
-				},
-				"annotations": []
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
-				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Assessment Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Contract Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF User Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Assessment History Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF AccreditedCourse__c Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Accreditation Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Opportunity Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureVM-IR')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "MSA Dumps",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
+							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2023-04-30T23:59:00",
+						"timeZone": "E. Australia Standard Time",
+						"schedule": {
+							"monthDays": [
+								-1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/MSA Dumps')]"
 			]
 		}
 	]

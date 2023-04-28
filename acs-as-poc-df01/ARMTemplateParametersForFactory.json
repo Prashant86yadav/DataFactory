@@ -17,6 +17,9 @@
 		"AzureDatabricksDeltaLake1_accessToken": {
 			"value": ""
 		},
+		"AzureMember_ls_connectionString": {
+			"value": ""
+		},
 		"Canvas REST_password": {
 			"value": ""
 		},
@@ -35,10 +38,10 @@
 		"SalesforceACSProd_securityToken": {
 			"value": ""
 		},
-		"ls_SQL_membership_connectionString": {
+		"dewr_ls_accountKey": {
 			"value": ""
 		},
-		"AzureMember_ls_connectionString": {
+		"ls_SQL_membership_connectionString": {
 			"value": ""
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
@@ -57,7 +60,10 @@
 			"value": "prashant.yadvendra"
 		},
 		"GoogleRestAPI_properties_typeProperties_url": {
-			"value": "https://serpapi.com/0fda6c3230aab43ccc68428b89379159af6161a19955a156e3614971f52aca09"
+			"value": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
+		},
+		"HttpTEST_properties_typeProperties_url": {
+			"value": "https://serpapi.com/search.json"
 		},
 		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
 			"value": "@linkedService().dvrDatabricksClusterId"
@@ -80,8 +86,14 @@
 		"WeatherRestD_properties_typeProperties_url": {
 			"value": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
 		},
+		"dewr_ls_properties_typeProperties_url": {
+			"value": "https://stacspoc01.dfs.core.windows.net/"
+		},
 		"lga_google_properties_typeProperties_url": {
 			"value": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
+		},
+		"serpAPItest_properties_typeProperties_url": {
+			"value": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
@@ -193,6 +205,12 @@
 		},
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"value": "salesforce"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+			"value": "2023-04-01 00:00:00"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+			"value": "2023-04-30 00:00:00"
 		}
 	}
 }
