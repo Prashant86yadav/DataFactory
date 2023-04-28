@@ -17,14 +17,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "WIth CTE as \n(select  SubmissionDate__c,ANZSCOCode__c,\n     LEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \n     SUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation\n,   CASE WHEN CountryOfResidence__c  ='Australia' THEN 'Onshore'\n               Else 'offshore' END as Location,\n    CASE WHEN Status__c  IN ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents') THEN 'Received'\n              WHEN Status__c  IN ('Abandoned') THEN 'Withdrawn'\n             END AS CaseStatus, \n   Case when (select count(*)  from [salesforce].[Qualification__c] Q where Q.Assessment__c =A.id  AND  Q.AustralianQualification__c ='Yes' )  > 0 Then 'AQF'\n           Else 'Non-AQF' END as AQF\nfrom  [dbo].[assessment] A WHERE\nApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\nAND  Status__c IN  ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents','Abandoned')\n),\n--RW CTE is  Within Period -- Where SubmissionDate__c  Between   '2023-01-01 00:00:00' and '2023-01-31 00:00:00' \nRW as (\nselect ANZSCO_Code ,Occupation,  CaseStatus, \ncount(*) as total\nfrom CTE\nwhere  SubmissionDate__c  between  '2023-03-01 00:00:00' and '2023-03-31 00:00:00'\nAND ANZSCOCode__c  IS NOT  NULL\ngroup by ANZSCO_Code, Occupation, CaseStatus )\n\nselect * from RW\n",
+						"sqlReaderQuery": {
+							"value": "EXEC received_withdrawn pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -51,7 +54,10 @@
 				"outputs": [
 					{
 						"referenceName": "dewr_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "recieve_withdrawn"
+						}
 					}
 				]
 			},
@@ -77,14 +83,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "with CTE as\n(select id,AssessmentResult__c, FinalisedDate__c,ANZSCOCode__c, \n              LEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \n              SUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation\n,           CASE WHEN CountryOfResidence__c  ='Australia' THEN 'Onshore'\n               Else 'offshore' \n\t\t\t   END as Location,\n          CASE  WHEN Status__c  IN ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents') THEN 'Received'\n               WHEN Status__c  IN ('Abandoned') THEN 'Withdrawn'\n               END AS CaseStatus, \n          Case when (select count(*)  from [salesforce].[Qualification__c] Q where Q.Assessment__c =A.id  AND  Q.AustralianQualification__c ='Yes' )  > 0 Then 'AQF'\n              Else 'Non-AQF' \n\t\t\t   END as AQF\nfrom  [dbo].[assessment] A WHERE\n            ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n            AND  Status__c IN  ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents','Abandoned')\n           and  FinalisedDate__c  >=   '2023-03-01 00:00:00' and FinalisedDate__c< ='2023-03-31 00:00:00'\n), \nAQF as (\n--AQF CTE is all cases FinalisedDate__c  Between '2023-01-01 00:00:00' and '2023-01-31 00:00:00', Grouped by AQF & Non AQF\nselect ANZSCO_Code ,ANZSCOCode__c, Occupation,  AssessmentResult__c, AQF,count(*) as total\nfrom CTE \nwhere ANZSCO_Code IS NOT NULL AND AssessmentResult__c IS NOT NULL \nAND FinalisedDate__c between '2023-03-01 00:00:00' AND '2023-03-31 00:00:00'\ngroup by ANZSCO_Code ,ANZSCOCode__c,Occupation,  AssessmentResult__c, AQF\n)\nselect * from AQF\n\n",
+						"sqlReaderQuery": {
+							"value": "EXEC AQF pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -111,7 +120,10 @@
 				"outputs": [
 					{
 						"referenceName": "dewr_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "AQF"
+						}
 					}
 				]
 			},
@@ -137,14 +149,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "--caseLoad  (This will make sense only if it is Run on EOM )\nWIth CTE as \n(select *, \nLEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \nSUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation\n, CASE WHEN CountryOfResidence__c  ='Australia' THEN 'Onshore'\nElse 'offshore' END as Location,\nCASE WHEN Status__c  IN ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents') THEN 'Received'\n WHEN Status__c  IN ('Abandoned') THEN 'Withdrawn'\nEND AS CaseStatus, \nCase when (select count(*)  from [salesforce].[Qualification__c] Q where Q.Assessment__c =A.id  AND  Q.AustralianQualification__c ='Yes' )  > 0 Then 'AQF'\nElse 'Non-AQF' END as AQF\nfrom  [dbo].[assessment] A WHERE\nApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\nAND  Status__c IN  ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','Case Finalised','From Assessor','Awaiting Documents','Abandoned')\n),\n --The number of skills assessment applications for onshore applicants your organisation currently has on hand that have not been completed or withdrawn,\n --regardless of whether or not you may have started assessing them or are still awaiting additional information.\t\t\t\t\t\n --caseload CTE says all cases which are NOT IN  case finalised, in Prep and Abandoned \ncaseload as (\nselect ANZSCO_Code ,Occupation,  Location, \ncount(*) as totalcaselaod\nfrom CTE\nwhere  SubmissionDate__c <= '2023-03-31 00:00:00' --has to be month end of reporting period \nAND ANZSCOCode__c  IS NOT  NULL\naND Status__c IN ('To be Allocated','Ready to Assess','Awaiting Payment','Allocated','Awaiting Reply','With Assessor','From Assessor','Awaiting Documents' )\ngroup by ANZSCO_Code, Occupation, Location )\nselect * from caseload",
+						"sqlReaderQuery": {
+							"value": "EXEC caseload pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -171,7 +186,10 @@
 				"outputs": [
 					{
 						"referenceName": "dewr_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "caseload"
+						}
 					}
 				]
 			},
@@ -197,14 +215,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "with cte as\n(\n    select CountryOfBirth__c  as country ,\n        LEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \n        SUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation, \n       \tFlag=0\n     from  [dbo].[assessment]\n    where FinalisedDate__c  Between '2023-03-01 00:00:00' and '2023-03-31 00:00:00'  \n    and ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n), \nCTE1 as \n    (   select top 10 CountryOfBirth__c  as country, count(*) as total  from    [dbo].[assessment] \n                    where FinalisedDate__c  Between '2023-03-01 00:00:00' and '2023-03-31 00:00:00' \n                    and CountryOfBirth__c NOT IN ('Australia')\n                    group by CountryOfBirth__c\n                    order by total desc ),\nCTE2 as (\n      select  ANZSCO_Code, Occupation,  country, \n     FLAG  =CASE WHEN country IN (select country from CTE1) THEN 1 Else 0\n     END\n\t FROM  CTE)\n\nselect ANZSCO_Code,country, Occupation, count(*)  from CTE2  where Flag=1 \ngroup by  ANZSCO_Code,Occupation , country",
+						"sqlReaderQuery": {
+							"value": "EXEC toptencountry pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -231,7 +252,10 @@
 				"outputs": [
 					{
 						"referenceName": "dewr_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "top10countries"
+						}
 					}
 				]
 			},
@@ -257,14 +281,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "with cte as\n(\n    select CountryOfBirth__c  as country ,\n        LEFT(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )-1)  as ANZSCO_Code, \n        SUBSTRING(ANZSCOCode__c,CHARINDEX('(',ANZSCOCode__c )+ 1,LEN(ANZSCOCode__c)-9)  as Occupation, \n       \tFlag=0\n     from  [dbo].[assessment]\n    where FinalisedDate__c  Between '2023-03-01 00:00:00' and '2023-03-31 00:00:00'  \n    and ApplicationType__c   IN    ('Recognition of Prior Learning' , 'Temporary Graduate 485', 'Skills', 'Post Australian Study')\n), \nCTE1 as \n    (   select top 10 CountryOfBirth__c  as country, count(*) as total  from    [dbo].[assessment] \n                    where FinalisedDate__c  Between '2023-03-01 00:00:00' and '2023-03-31 00:00:00' \n                    and CountryOfBirth__c NOT IN ('Australia')\n                    group by CountryOfBirth__c\n                    order by total desc ),\nCTE2 as (\n      select  ANZSCO_Code, Occupation,  country, \n     FLAG  =CASE WHEN country IN (select country from CTE1) THEN 1 Else 0\n     END\n\t FROM  CTE)\n\nselect ANZSCO_Code,Occupation, count(*)  from CTE2  where Flag=0 group by  ANZSCO_Code,Occupation ",
+						"sqlReaderQuery": {
+							"value": "EXEC remaining pipeline().parameters.startdate,pipeline().parameters.enddate",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
 						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
@@ -291,11 +318,24 @@
 				"outputs": [
 					{
 						"referenceName": "dewr_ds",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "remaining"
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"startdate": {
+				"type": "string",
+				"defaultValue": "2023-01-01 00:00:00"
+			},
+			"enddate": {
+				"type": "string",
+				"defaultValue": "2023-01-31 00:00:00"
+			}
+		},
 		"folder": {
 			"name": "ACS/MSA"
 		},
