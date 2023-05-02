@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "2023-04-01 00:00:00"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "2023-04-30 00:00:00"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -154,20 +162,402 @@
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-04-01 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-04-30 00:00:00"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_broadcastingDaily_Incre')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "GetFileList",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "BroadcastingData",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"modifiedDatetimeStart": {
+									"value": "@adddays(utcnow(),-1)",
+									"type": "Expression"
+								},
+								"modifiedDatetimeEnd": {
+									"value": "@utcnow()",
+									"type": "Expression"
+								},
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
+						}
+					},
+					{
+						"name": "ForEach1",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "GetFileList",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('GetFileList').output.childItems",
+								"type": "Expression"
+							},
+							"isSequential": true,
+							"activities": [
+								{
+									"name": "CopyToSQL",
+									"type": "Copy",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "DelimitedTextSource",
+											"storeSettings": {
+												"type": "AzureBlobStorageReadSettings",
+												"recursive": false,
+												"wildcardFolderPath": {
+													"value": "adobe-campaign--datafeed/prod/prod_br",
+													"type": "Expression"
+												},
+												"wildcardFileName": {
+													"value": "@item().name",
+													"type": "Expression"
+												},
+												"enablePartitionDiscovery": false
+											},
+											"formatSettings": {
+												"type": "DelimitedTextReadSettings"
+											}
+										},
+										"sink": {
+											"type": "AzureSqlSink",
+											"writeBehavior": "insert",
+											"sqlWriterUseTableLock": true,
+											"disableMetricsCollection": false
+										},
+										"enableStaging": false,
+										"validateDataConsistency": false,
+										"translator": {
+											"type": "TabularTranslator",
+											"mappings": [
+												{
+													"source": {
+														"name": "Delivery log ID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Delivery log ID",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Label",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Label",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Event date",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Event date",
+														"type": "DateTime",
+														"physicalType": "datetime"
+													}
+												},
+												{
+													"source": {
+														"name": "Reason",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Reason",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Nature of failure",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Nature of failure",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Failure type",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Failure type",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Last modified",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Last modified",
+														"type": "DateTime",
+														"physicalType": "datetime"
+													}
+												},
+												{
+													"source": {
+														"name": "ProfileKey",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ProfileKey",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Status",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Status",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Profile delivery log",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Profile delivery log",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Content variant",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Content variant",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Delivery Label",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Delivery Label",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Delivery Title",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Delivery Title",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "Delivery ID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "Delivery ID",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												},
+												{
+													"source": {
+														"name": "ACS ID",
+														"type": "String",
+														"physicalType": "String"
+													},
+													"sink": {
+														"name": "ACS ID",
+														"type": "String",
+														"physicalType": "nvarchar"
+													}
+												}
+											],
+											"typeConversion": true,
+											"typeConversionSettings": {
+												"allowDataTruncation": true,
+												"treatBooleanAsNumber": false
+											}
+										}
+									},
+									"inputs": [
+										{
+											"referenceName": "BroadcastingData",
+											"type": "DatasetReference",
+											"parameters": {}
+										}
+									],
+									"outputs": [
+										{
+											"referenceName": "SQLTableQ",
+											"type": "DatasetReference",
+											"parameters": {
+												"tablename": "RawbroadcastingLog",
+												"schemaname": "hco"
+											}
+										}
+									]
+								}
+							]
+						}
+					},
+					{
+						"name": "LogRunTime",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "ForEach1",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[hco].[create_sys_log]",
+							"storedProcedureParameters": {
+								"datafactory": {
+									"value": {
+										"value": "@pipeline().DataFactory",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"pipelineName": {
+									"value": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"RunID": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"triggerName": {
+									"value": null,
+									"type": "String"
+								},
+								"TriggerTime": {
+									"value": null,
+									"type": "String"
+								},
+								"TriggerType": {
+									"value": null,
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "LSSQLPOC",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "HCO"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_canvas_Assighments')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -1995,6 +2385,78 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MSA View Refresh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "msa_dailyopencases_refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2023-05-03T08:00:00",
+						"timeZone": "AUS Eastern Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								8
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "MSA Dumps",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
+							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2023-04-30T23:59:00",
+						"timeZone": "E. Australia Standard Time",
+						"schedule": {
+							"monthDays": [
+								-1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -2043,6 +2505,7 @@
 				}
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]"
 			]
 		},
@@ -2171,42 +2634,6 @@
 						"interval": 12,
 						"startTime": "2022-12-24T00:00:00",
 						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "MSA Dumps",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
-							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 1,
-						"startTime": "2023-04-30T23:59:00",
-						"timeZone": "E. Australia Standard Time",
-						"schedule": {
-							"monthDays": [
-								-1
-							]
-						}
 					}
 				}
 			},

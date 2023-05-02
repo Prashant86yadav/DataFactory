@@ -127,6 +127,14 @@
 			"type": "string",
 			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0"
 		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+			"type": "string",
+			"defaultValue": "2023-04-01 00:00:00"
+		},
+		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+			"type": "string",
+			"defaultValue": "2023-04-30 00:00:00"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -274,14 +282,6 @@
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-04-01 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-04-30 00:00:00"
 		}
 	},
 	"variables": {
@@ -4440,6 +4440,83 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/msa_dailyopencases_refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from psas.opencasesdaily OPTION (MAXRECURSION 0)",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [psas].[dailyCases]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "opencasesdaily",
+									"schemaname": "psas"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "dailyCases",
+									"schemaname": "psas"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
 			]
 		},
@@ -29237,6 +29314,82 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/MSA View Refresh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "msa_dailyopencases_refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2023-05-03T08:00:00",
+						"timeZone": "AUS Eastern Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								8
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/msa_dailyopencases_refresh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "MSA Dumps",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
+							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2023-04-30T23:59:00",
+						"timeZone": "E. Australia Standard Time",
+						"schedule": {
+							"monthDays": [
+								-1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/MSA Dumps')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -29446,44 +29599,6 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "MSA Dumps",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
-							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 1,
-						"startTime": "2023-04-30T23:59:00",
-						"timeZone": "E. Australia Standard Time",
-						"schedule": {
-							"monthDays": [
-								-1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/MSA Dumps')]"
-			]
 		}
 	]
 }
