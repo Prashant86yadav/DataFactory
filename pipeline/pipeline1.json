@@ -15,6 +15,10 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"readBehavior": "query"
+					},
 					"sink": {
 						"type": "AzureDatabricksDeltaLakeSink",
 						"importSettings": {
@@ -23,9 +27,15 @@
 					},
 					"enableStaging": false
 				},
+				"inputs": [
+					{
+						"referenceName": "ACSDSSFOR",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
-						"referenceName": "DS_ACSDatabricksDeltaLake",
+						"referenceName": "ds_databricksDeltaLake_db",
 						"type": "DatasetReference"
 					}
 				]

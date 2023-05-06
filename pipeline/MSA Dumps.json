@@ -53,7 +53,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dewr_ds",
+						"referenceName": "ds_dewr_dataLake",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "recieve_withdrawn"
@@ -119,7 +119,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dewr_ds",
+						"referenceName": "ds_dewr_dataLake",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "AQF"
@@ -185,7 +185,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dewr_ds",
+						"referenceName": "ds_dewr_dataLake",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "caseload"
@@ -251,7 +251,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dewr_ds",
+						"referenceName": "ds_dewr_dataLake",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "top10countries"
@@ -317,7 +317,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "dewr_ds",
+						"referenceName": "ds_dewr_dataLake",
 						"type": "DatasetReference",
 						"parameters": {
 							"filename": "remaining"

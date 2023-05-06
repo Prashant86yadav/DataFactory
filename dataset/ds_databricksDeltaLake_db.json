@@ -1,5 +1,5 @@
 {
-	"name": "DS_ACSDatabricksDeltaLake",
+	"name": "ds_databricksDeltaLake_db",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Ls_ACSDatabricksDeltaLake",

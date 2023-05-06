@@ -1,5 +1,5 @@
 {
-	"name": "dewr_ds",
+	"name": "ds_dewr_dataLake",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "dewr_ls",

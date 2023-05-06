@@ -1,5 +1,5 @@
 {
-	"name": "ds_memeberhsip",
+	"name": "ds_poc_db",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LSSQLPOC",

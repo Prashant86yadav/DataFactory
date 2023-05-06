@@ -1,5 +1,5 @@
 {
-	"name": "SQL_Member_Dump",
+	"name": "ds_sql_memebershipdb",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureMember_ls",
