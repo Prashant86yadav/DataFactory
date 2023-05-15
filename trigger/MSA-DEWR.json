@@ -23,6 +23,12 @@
 				"startTime": "2023-04-30T23:59:00",
 				"timeZone": "E. Australia Standard Time",
 				"schedule": {
+					"minutes": [
+						55
+					],
+					"hours": [
+						23
+					],
 					"monthDays": [
 						-1
 					]
