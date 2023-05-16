@@ -13,9 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Account.txt",
-				"folderPath": "landing",
-				"fileSystem": "databricks"
+				"fileName": "races.csv",
+				"fileSystem": "databrickslanding"
 			},
 			"columnDelimiter": ",",
 			"encodingName": "UTF-8",
