@@ -9,7 +9,7 @@
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
 			"database": "msa",
-			"table": "accounts"
+			"table": "races"
 		},
 		"schema": []
 	}
