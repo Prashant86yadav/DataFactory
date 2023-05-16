@@ -13,9 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "ABC.xls",
-				"folderPath": "test",
-				"fileSystem": "adobe-datafeeds"
+				"folderPath": "landing",
+				"fileSystem": "databricks"
 			},
 			"columnDelimiter": ",",
 			"encodingName": "UTF-8",
