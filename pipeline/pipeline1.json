@@ -54,36 +54,6 @@
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Copy data2",
-				"type": "Copy",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SalesforceSource",
-						"query": "select * from task",
-						"readBehavior": "query"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "ACSDSSFOR",
-						"type": "DatasetReference",
-						"parameters": {
-							"SourceTableName": "task"
-						}
-					}
-				]
 			}
 		],
 		"folder": {
