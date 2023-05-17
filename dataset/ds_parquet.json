@@ -1,0 +1,37 @@
+{
+	"name": "ds_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "landing",
+				"fileSystem": "databricks"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "DateValue",
+				"type": "DATE"
+			},
+			{
+				"name": "opencases",
+				"type": "INT64"
+			},
+			{
+				"name": "opencases_lower",
+				"type": "INT64"
+			},
+			{
+				"name": "opencases_upper",
+				"type": "INT64"
+			}
+		]
+	}
+}
