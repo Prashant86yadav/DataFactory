@@ -13,8 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "Account",
-				"folderPath": "landing",
+				"fileName": "account",
+				"folderPath": "landing/raw/account",
 				"fileSystem": "databricks"
 			},
 			"columnDelimiter": ",",
