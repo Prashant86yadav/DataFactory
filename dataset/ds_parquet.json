@@ -10,7 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "landing",
+				"fileName": "task",
+				"folderPath": "landing/raw/account",
 				"fileSystem": "databricks"
 			},
 			"compressionCodec": "snappy"
