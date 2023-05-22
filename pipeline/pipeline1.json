@@ -17,16 +17,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select *  from account ",
 						"readBehavior": "query"
 					},
 					"sink": {
 						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "PreserveHierarchy"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "ParquetWriteSettings",
+							"maxRowsPerFile": 0
 						}
 					},
 					"enableStaging": false,
@@ -42,10 +43,7 @@
 				"inputs": [
 					{
 						"referenceName": "ACSDSSFOR",
-						"type": "DatasetReference",
-						"parameters": {
-							"SourceTableName": "account"
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
