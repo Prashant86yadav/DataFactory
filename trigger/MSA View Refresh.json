@@ -9,18 +9,6 @@
 					"referenceName": "msa_dailyopencases_refresh",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "SF task Refresh",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"SourceTableName": "task",
-					"TargetTableName": "task",
-					"ColumnList": "Id\n,RecordTypeId\n,WhoId\n,WhatId\n,Subject\n,ActivityDate\n,Status\n,Priority\n,IsHighPriority\n,OwnerId\n,Description\n,CurrencyIsoCode\n,Type\n,IsDeleted\n,AccountId\n,IsClosed\n,CreatedDate\n,CreatedById\n,LastModifiedDate\n,LastModifiedById\n,SystemModstamp\n,IsArchived\n,IsVisibleInSelfService\n,CallDurationInSeconds\n,CallType\n,CallDisposition\n,CallObject\n,ReminderDateTime\n,IsReminderSet\n,RecurrenceActivityId\n,IsRecurrence\n,RecurrenceStartDateOnly\n,RecurrenceEndDateOnly\n,RecurrenceTimeZoneSidKey\n,RecurrenceType\n,RecurrenceInterval\n,RecurrenceDayOfWeekMask\n,RecurrenceDayOfMonth\n,RecurrenceInstance\n,RecurrenceMonthOfYear\n,RecurrenceRegeneratedType\n,TaskSubtype\n,CompletedDateTime\n,Data_Migrated_from_XEN__c\n,XEN_Activity_Type__c\n,XenId_Activities__c\n,WFD_Project_Outputs_Activities__c\n,Facebook_Message__c\n,Interaction_Type__c\n,Pendula__Message__c",
-					"schemaname": "dbo"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
