@@ -10,8 +10,8 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"startdate": "2023-04-01 00:00:00",
-					"enddate": "2023-04-30 00:00:00"
+					"startdate": "2023-05-01 00:00:00",
+					"enddate": "2023-05-31 00:00:00"
 				}
 			}
 		],
@@ -24,7 +24,7 @@
 				"timeZone": "E. Australia Standard Time",
 				"schedule": {
 					"minutes": [
-						55
+						30
 					],
 					"hours": [
 						23
