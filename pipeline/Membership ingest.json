@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
+						"query": "select * from account",
 						"readBehavior": "query"
 					},
 					"sink": {
