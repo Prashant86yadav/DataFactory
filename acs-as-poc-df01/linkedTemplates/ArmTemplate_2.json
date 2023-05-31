@@ -20596,10 +20596,10 @@
 						"timeZone": "AUS Eastern Standard Time",
 						"schedule": {
 							"minutes": [
-								0
+								55
 							],
 							"hours": [
-								11
+								23
 							],
 							"monthDays": [
 								-1
