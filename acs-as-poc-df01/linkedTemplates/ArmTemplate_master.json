@@ -19,9 +19,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
+		"AzureDatabricksPremium_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksPremium'"
 		},
 		"AzureMember_ls_connectionString": {
 			"type": "secureString",
@@ -42,6 +42,14 @@
 		"LS_AZST_BlobLanding_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
+		},
+		"Ls_ACSDatabricksDeltaLake_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'Ls_ACSDatabricksDeltaLake'"
+		},
+		"Ls_AzurePOCDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'Ls_AzurePOCDatabricks'"
 		},
 		"SalesforceACSProd_password": {
 			"type": "secureString",
@@ -83,25 +91,13 @@
 			"type": "string",
 			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
 		},
-		"HttpTEST_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://serpapi.com/search.json"
-		},
-		"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "@linkedService().dvrDatabricksClusterId"
-		},
 		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
 		},
-		"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
+		"Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "https://dhhsbrp.my.salesforce.com"
-		},
-		"LS_SAFC_BRP_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "srv-prod-dvr-dashboardreportinguser@dhhsvicgovau.onmicrosoft.brp.com"
+			"defaultValue": "0323-061008-xwb0cb1p"
 		},
 		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -111,21 +107,17 @@
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
 		},
-		"WeatherRestD_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://api.weather.gov/gridpoints/SEW/124,67/forecast"
-		},
 		"dewr_ls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
 		},
-		"lga_google_properties_typeProperties_url": {
+		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
 			"type": "string",
-			"defaultValue": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSshBgCbldwtXKoqWsumyzaG6Q063vWGLEmZWDkdjK49MVf7YvcVso4v8yrPfo8CN1t_Q4Hp8TF_MPm/pub?gid=1405835782&single=true&output=csv"
+			"defaultValue": "2023-05-01 00:00:00"
 		},
-		"serpAPItest_properties_typeProperties_url": {
+		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
 			"type": "string",
-			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=/search.json?engine=google_maps_reviews&data_id=0x6b12ef8e2f1b6cf3:0xee70f194ca5c4a22&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc:0x6b9110fc584d3cc3:0x6c82df6dc503c3d0"
+			"defaultValue": "2023-05-31 00:00:00"
 		},
 		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
 			"type": "string",
@@ -170,22 +162,6 @@
 		"TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList": {
 			"type": "string",
 			"defaultValue": "\nId\n,AccountId\n,CurrencyIsoCode\n,OwnerExpirationNotice\n,StartDate\n,EndDate,\nBillingStreet,\nBillingCity,\nBillingState,\nBillingPostalCode,\nBillingCountry,\nBillingLatitude,\nBillingLongitude,\nBillingGeocodeAccuracy,\nShippingStreet,\nShippingCity,\nShippingState,\nShippingPostalCode,\nShippingCountry,\nShippingLatitude,\nShippingLongitude,\nShippingGeocodeAccuracy,\nContractTerm,\nOwnerId,\nStatus,\nCompanySignedId,\nCompanySignedDate,\nCustomerSignedId,\nCustomerSignedTitle,\nCustomerSignedDate,\nSpecialTerms,\nActivatedById,\nActivatedDate,\nStatusCode,\nDescription,\nRecordTypeId,\nName,\nIsDeleted,\nContractNumber,\nLastApprovedDate,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nLastActivityDate,\nLastViewedDate,\nLastReferencedDate,\nBatchRunDate__c,\nBulkUploadedPPPMember__c,\nCreated_by_PPP_Bulk_Upload__c,\nCurrentMembership__c,\nCurrentMonthYear__c,\nData_Migrated_from_XEN__c,\nDaysSinceStartDate__c,\nExpiryCaseCreated__c,\nGrade__c,\nIndividualMovedtoPPP__c,\nLocation__c,\nLodgedWithCertificationApplication__c,\nMOUType__c,\nManual_Data_Entry__c,\nMemberBillingGrade__c,\nMembershipExpiry__c,\nMembershipID__c,\nMembership_18_Digits_ID__c,\nMembership_End_Date_12months__c,\nMembership_End_Date_1Day__c,\nMembership_End_Date_3months__c,\nMembership_Start_Date_Was_Null__c,\nNew__c,\nNon_Financed_Flag__c,\nPPPKeyContactEmail__c,\nPPPKeyContactName__c,\nPPPMOU1Approved__c,\nPPPName__c,\nPPP__c,\nPreferredName__c,\nPreviousMembership__c,\nProgram__c,\nRelatedAccountEmail__c,\nRenewalProcessed__c,\nSister_Society_Member_Grade__c,\nSister_Society_Membership_Expiry_Date__c,\nSister_Society_Membership_Number__c,\nSister_Society_Name__c,\nStartDatePlus12Months__c,\nSubscriptionNoticeSent__c,\nUpdatedViaFlow__c,\nWelcomeEmailSent__c,\nZeroCostMembership__c,\nTermination_Reason__c,\nGrading_Date__c,\nDate_Resigned__c,\nPPP_Account_Name__c,\nBulk_PPP_Renewed_as_Active__c,\nRe_Order_Cards__c,\nRe_Order_Cards_Date__c,\nRe_Order_Last_week__c,\nSkillsMembershipAgent__c,\nPY_Second_Year_Email_Sent__c,\nMembership_Expiry_Discrepancy__c,\nDetach_from_PPP__c,\nMembership_Expiry_Within_30_days__c,\nSkillsMembershipApplicationOrigin__c,\nSkillsMembershipDuplicateAccountUser__c,\nSkillsMembershipOptOut__c,\nZipline_Mobile__c,\nApproval_URL_Link__c,\nApproval_URL__c,\nCertification_Level__c,\nDetached__c,\nFor_Renewal__c,\nLast_Login_Date__c,\nMOU_Type__c,\nProduct_Selected__c,\nPendula_Test__c,\nMembership_Expiry_Date_As_Text__c,\nCOVID_19__c"
-		},
-		"TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "user"
-		},
-		"TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "user"
-		},
-		"TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": " Id, Username, LastName, FirstName, Name, CompanyName, Division, Department, Title, Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Email, EmailPreferencesAutoBcc, EmailPreferencesAutoBccStayInTouch, EmailPreferencesStayInTouchReminder, SenderEmail, SenderName, Signature, StayInTouchSubject, StayInTouchSignature, StayInTouchNote, Phone, Fax, MobilePhone, Alias, CommunityNickname, BadgeText, IsActive, TimeZoneSidKey, UserRoleId, LocaleSidKey, ReceivesInfoEmails, ReceivesAdminInfoEmails, EmailEncodingKey, DefaultCurrencyIsoCode, CurrencyIsoCode, ProfileId, UserType, LanguageLocaleKey, EmployeeNumber, DelegatedApproverId, ManagerId, LastLoginDate, LastPasswordChangeDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, NumberOfFailedLogins, OfflineTrialExpirationDate, OfflinePdaTrialExpirationDate, UserPermissionsMarketingUser, UserPermissionsOfflineUser, UserPermissionsAvantgoUser, UserPermissionsCallCenterAutoLogin, UserPermissionsSFContentUser, UserPermissionsInteractionUser, UserPermissionsSupportUser, UserPermissionsChatterAnswersUser, ForecastEnabled, UserPreferencesActivityRemindersPopup, UserPreferencesEventRemindersCheckboxDefault, UserPreferencesTaskRemindersCheckboxDefault, UserPreferencesReminderSoundOff, UserPreferencesDisableAllFeedsEmail, UserPreferencesDisableFollowersEmail, UserPreferencesDisableProfilePostEmail, UserPreferencesDisableChangeCommentEmail, UserPreferencesDisableLaterCommentEmail, UserPreferencesDisProfPostCommentEmail, UserPreferencesContentNoEmail, UserPreferencesContentEmailAsAndWhen, UserPreferencesApexPagesDeveloperMode, UserPreferencesReceiveNoNotificationsAsApprover, UserPreferencesReceiveNotificationsAsDelegatedApprover, UserPreferencesHideCSNGetChatterMobileTask, UserPreferencesDisableMentionsPostEmail, UserPreferencesDisMentionsCommentEmail, UserPreferencesHideCSNDesktopTask, UserPreferencesHideChatterOnboardingSplash, UserPreferencesHideSecondChatterOnboardingSplash, UserPreferencesDisCommentAfterLikeEmail, UserPreferencesDisableLikeEmail, UserPreferencesSortFeedByComment, UserPreferencesDisableMessageEmail, UserPreferencesHideLegacyRetirementModal, UserPreferencesDisableBookmarkEmail, UserPreferencesDisableSharePostEmail, UserPreferencesEnableAutoSubForFeeds, UserPreferencesDisableFileShareNotificationsForApi, UserPreferencesShowTitleToExternalUsers, UserPreferencesShowManagerToExternalUsers, UserPreferencesShowEmailToExternalUsers, UserPreferencesShowWorkPhoneToExternalUsers, UserPreferencesShowMobilePhoneToExternalUsers, UserPreferencesShowFaxToExternalUsers, UserPreferencesShowStreetAddressToExternalUsers, UserPreferencesShowCityToExternalUsers, UserPreferencesShowStateToExternalUsers, UserPreferencesShowPostalCodeToExternalUsers, UserPreferencesShowCountryToExternalUsers, UserPreferencesShowProfilePicToGuestUsers, UserPreferencesShowTitleToGuestUsers, UserPreferencesShowCityToGuestUsers, UserPreferencesShowStateToGuestUsers, UserPreferencesShowPostalCodeToGuestUsers, UserPreferencesShowCountryToGuestUsers, UserPreferencesShowForecastingChangeSignals, UserPreferencesHideS1BrowserUI, UserPreferencesDisableEndorsementEmail, UserPreferencesPathAssistantCollapsed, UserPreferencesCacheDiagnostics, UserPreferencesShowEmailToGuestUsers, UserPreferencesShowManagerToGuestUsers, UserPreferencesShowWorkPhoneToGuestUsers, UserPreferencesShowMobilePhoneToGuestUsers, UserPreferencesShowFaxToGuestUsers, UserPreferencesShowStreetAddressToGuestUsers, UserPreferencesLightningExperiencePreferred, UserPreferencesPreviewLightning, UserPreferencesHideEndUserOnboardingAssistantModal, UserPreferencesHideLightningMigrationModal, UserPreferencesHideSfxWelcomeMat, UserPreferencesHideBiggerPhotoCallout, UserPreferencesGlobalNavBarWTShown, UserPreferencesGlobalNavGridMenuWTShown, UserPreferencesCreateLEXAppsWTShown, UserPreferencesFavoritesWTShown, UserPreferencesRecordHomeSectionCollapseWTShown, UserPreferencesRecordHomeReservedWTShown, UserPreferencesFavoritesShowTopFavorites, UserPreferencesExcludeMailAppAttachments, UserPreferencesSuppressTaskSFXReminders, UserPreferencesSuppressEventSFXReminders, UserPreferencesPreviewCustomTheme, UserPreferencesHasCelebrationBadge, UserPreferencesUserDebugModePref, UserPreferencesSRHOverrideActivities, UserPreferencesNewLightningReportRunPageEnabled, UserPreferencesReverseOpenActivitiesView, UserPreferencesHasSentWarningEmail, UserPreferencesNativeEmailClient, UserPreferencesHideBrowseProductRedirectConfirmation, UserPreferencesHideOnlineSalesAppWelcomeMat, ContactId, AccountId, CallCenterId, Extension, PortalRole, IsPortalEnabled, FederationIdentifier, AboutMe, FullPhotoUrl, SmallPhotoUrl, IsExtIndicatorVisible, OutOfOfficeMessage, MediumPhotoUrl, DigestFrequency, DefaultGroupNotificationFrequency, LastViewedDate, LastReferencedDate, BannerPhotoUrl, SmallBannerPhotoUrl, MediumBannerPhotoUrl, IsProfilePhotoActive, IndividualId, XEN_ID__c, AccountID__c, Assessor__c, CMSIntegrationUserEmail__c, MemberAccountId__c, Membership_Number__c, Office_Address_City__c, Office_Address_Country__c, Office_Address_Postal_Code__c, Office_Address_State__c, Office_Address_Street__c, WebsiteRole__c, FullName__c, User_18_Digit_Id__c, Deactivated_Date__c, Purchase_Order_Approver__c, Litmos__Access_Level__c, Litmos__Completed_Percentage__c Litmos__Courses_Assigned__c, Litmos__Courses_Completed__c, Litmos__Deactivate_From_Litmos__c, Litmos__Learning_Paths_Assigned__c, Litmos__Learning_Paths_Completed__c, Litmos__LitmosUserId__c, Litmos__Litmos_Activated__c, Litmos__Litmos_Login_Access__c, Litmos__OriginalId__c, Litmos__Sync_Litmos__c, Litmos__Team_Id__c, Litmos__Total_Sum_Percentages__c, Litmos__Total_User_Program_Results__c, Litmos__User_Id__c, Litmos__lp_Completed_Percentage__c, Litmos__p_Completed_Percentage__c, Access_to_Canvas__c, User_15_Digit_Id__c, Billing_Grade__c, Member_Grade__c, WebRole__c, CardExpiryDate__c, CertifiedToDate__c, ComputerProfStatus__c, IsAustralianUser__c, Is_Litmos__c, Is_New_User__c, MembershipExpiryDate__c, PartiallyCompletedCertID__c, Position_Title__c, Preferred_Name__c, Is_Changed__c, PartiallyCompletedMicroCredentialId__c, Community_Name__c"
-		},
-		"TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
 		},
 		"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -251,22 +227,6 @@
 			"type": "string",
 			"defaultValue": "1900-12-31 00:00:00"
 		},
-		"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Opportunity"
-		},
-		"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Opportunity"
-		},
-		"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": " Id, IsDeleted, AccountId, RecordTypeId, IsPrivate, Name, Description, StageName, Amount, Probability, ExpectedRevenue, TotalOpportunityQuantity, CloseDate, Type, NextStep, LeadSource, IsClosed, IsWon, ForecastCategory, ForecastCategoryName, CurrencyIsoCode, CampaignId, HasOpportunityLineItem, Pricebook2Id, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, PushCount, LastStageChangeDate, FiscalQuarter, FiscalYear, Fiscal, ContactId, LastViewedDate, LastReferencedDate, ContractId, HasOpenActivity, HasOverdueTask, LastAmountChangedHistoryId, LastCloseDateChangedHistoryId, Brand__c, ACS_Office__c, AccountEmail__c, AccountOwner__c, Automated_Tax_Receipt_Sent__c, Balance__c, BankReference__c, BatchRunDate__c, BoxFolderId__c, CappedOrMembershipBased__c, ChargeDateEmail__c, CongaCitySys__c, CongaCountrySys__c, CongaMembershipSubscriptionRenewal__c, CongaPaymentConfirmationEmailNonCC__c, CongaPostCodeSys__c, CongaStateSys__c, CongaStreetSys__c, CongaTaxInvoiceSaveOnly__c, CongaTaxReceiptAutoEmailNonCC__c, Conga_Email_Sent_From__c, Conga_Skills_Tax_Receipt_Auto_Email__c, CreateBoxFolder__c, CreditController__c, CreditNoteGenerated__c, CreditNoteID__c, Data_Migrated_from_XEN__c, DaysOutstanding__c, EstimatedBudget__c, GenerateCreditNote__c, Grand_Total_of_Non_Optional_Incl_GST__c, ICSFileID__c, Incomplete_Membership__c, Initial_Email_Sent_Non_CC__c, Invoice_Number__c, Invoiced__c, MOUType__c, Manual_Data_Entry__c, MembershipRenewalEmailSent__c, MembershipRenewal__c, Membership_End_Date__c, Membership_Start_Date__c, NeedsApproval__c, NextSteps__c, NumberofMembers__c, OpportunitySource__c, Opportunity_18_Digits_ID__c, Opportunity_ID_Autonumber__c, Opportunity_ID__c, Opportunity_Receipt_Template_ID__c, Oppportunity_Email_Template_ID__c, Oppty_Email_Temp_ID_Non_CC__c, Product_Type__c, Proposal_Template_Generated__c, Proposal_Used__c, Proposal_template_ID__c, Purchase_Order_Number__c, ReEngagementDate__c, ReadyToInvoice__c, ReasonForRefund__c, Reason__c, RefundApprovedDate__c, RefundBankDetails__c, Refund_Amount__c, Related_Contact_Email__c, Related_Contact_First_Name__c, Related_Contact_Title__c, Related_Contact__c, Related_Program__c, ReoccurringPaymentEmailSent__c, Sales_Invoice_ID__c, ScheduledEndDate__c, ScheduledStartDate__c, SolutionInterest__c, Grand_Total_of_Non_Optional_Excl_GST__c, Non_Optional_Grand_Total_GST__c, ProductCount__c, StateAllocationCode__c, Closed_Date_Updated_From_1st_Transaction__c, First_Transaction_Date__c, Canberra__c, Count_Update_Time__c, New_South_Wales__c, Northern_Territory__c, Overseas__c, PPP_Automation_Opp__c, Queensland__c, South_Australia__c, Tasmania__c, Victoria__c, Western_Australia__c, Refund_for_Duplicate_Payment__c, Conga_Membership_and_Certification_Email__c, NoOfMembersOnProgram__c, Approval_Status__c, Product_Family_Approval__c, MonthCreated__c, CloseMonth__c, CreatedInTheLast365Days__c, ClosedIn_the_Last_365_Days__c, Quater_Created__c, EventStartDate__c, Id__c, Parent_Account_Name__c, Parent_Account_Name_Link__c, South_Pacific_Overseas__c, Account_Name__c, Outfit_Membership_Renewal_Last_Update__c, Last_Attachment_Added__c, Send_Membership_Renewal_Email__c, Outfit_Tax_Invoice_Last_Update__c, Outfit_Tax_Invoice_Non_CC_Last_Update__c, Outfit_Tax_Invoice_Receipt_Non_CC_Last_U__c, Application_ID_Pendula__c, Skills_Recipient__c, Outfit_Event_Related_ACS_Office__c, Related_Program_Account_Mismatch__c, Approval_Required__c, Grand_Total_of_Non_WFD_Incl_GST__c, Needs_Approval__c, Payment_Due_Date__c, Program_Id_for_Documents__c, Program_for_Documents__c, Project__c, Reassign_Opportunity__c, Related_Program_End_Date__c, Renewal_Committed__c, Renewal_Started__c, Renewing_Program_Id__c, Send_Inactive_Notification_Date__c, Send_Inactive_Opportunity_Notification__c, Superseded_By__c, Upsell__c, Grand_Total_of_Non_WFD_Excl_GST__c, Membership_Opportunity_Product_Rollup__c, Non_WFD_Grand_Total_GST__c, PPP_Full_Fee_Memberships__c, ROI_Budget__c, WFD_Opportunity_Product_End_Date__c, WFD_Opportunity_Product_Rollup_All__c, WFD_Opportunity_Product_Rollup__c, WFD_Opportunity_Product_Start_Date__c, Pendula_Tax_Receipt_Sent__c, Total_Refund_Amount__c, Count_of_Transactions__c, Sum_of_Transactions__c, Days_Until_Closing__c, Eligible_for_Chatbot__c, October_Membership_Renewal_Communication__c, Outfit_Event_Tax_Invoice_Last_Update__c, Event_Member_Invoice_Payment__c, Outfit_Document_Date__c, Receipt_Outfit_Document_Id__c, Current_Membership_Expiry__c, Current_Membership_Expiry_As_Text__c, Private_Account__c, Outfit_Sales_Order_Document_Id__c, Outfit_Sales_Order_Document_Name__c, Litmos__Competitor_s__c, Litmos__CurrentGenerators__c, Litmos__DeliveryInstallationStatus__c, Litmos__MainCompetitors__c, Litmos__OrderNumber__c, Litmos__TrackingNumber__c, Is_Lead__c"
-		},
-		"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
-		},
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "Qualification__c"
@@ -282,6 +242,22 @@
 		"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "task"
+		},
+		"TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "task"
+		},
+		"TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id ,RecordTypeId ,WhoId ,WhatId ,Subject ,ActivityDate ,Status ,Priority ,IsHighPriority ,OwnerId ,Description ,CurrencyIsoCode ,Type ,IsDeleted ,AccountId ,IsClosed ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,IsArchived ,IsVisibleInSelfService ,CallDurationInSeconds ,CallType ,CallDisposition ,CallObject ,ReminderDateTime ,IsReminderSet ,RecurrenceActivityId ,IsRecurrence ,RecurrenceStartDateOnly ,RecurrenceEndDateOnly ,RecurrenceTimeZoneSidKey ,RecurrenceType ,RecurrenceInterval ,RecurrenceDayOfWeekMask ,RecurrenceDayOfMonth ,RecurrenceInstance ,RecurrenceMonthOfYear ,RecurrenceRegeneratedType ,TaskSubtype ,CompletedDateTime ,Data_Migrated_from_XEN__c ,XEN_Activity_Type__c ,XenId_Activities__c ,WFD_Project_Outputs_Activities__c ,Facebook_Message__c ,Interaction_Type__c ,Pendula__Message__c"
+		},
+		"TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "dbo"
 		},
 		"containerUri": {
 			"type": "string",
@@ -319,8 +295,8 @@
 					"AzureDataLakeStorage_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
 					},
-					"AzureDatabricksDeltaLake1_accessToken": {
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
+					"AzureDatabricksPremium_accessToken": {
+						"value": "[parameters('AzureDatabricksPremium_accessToken')]"
 					},
 					"AzureMember_ls_connectionString": {
 						"value": "[parameters('AzureMember_ls_connectionString')]"
@@ -333,6 +309,12 @@
 					},
 					"LSSQLPOC_connectionString": {
 						"value": "[parameters('LSSQLPOC_connectionString')]"
+					},
+					"Ls_ACSDatabricksDeltaLake_accessToken": {
+						"value": "[parameters('Ls_ACSDatabricksDeltaLake_accessToken')]"
+					},
+					"Ls_AzurePOCDatabricks_accessToken": {
+						"value": "[parameters('Ls_AzurePOCDatabricks_accessToken')]"
 					},
 					"SalesforceACSProd_password": {
 						"value": "[parameters('SalesforceACSProd_password')]"
@@ -364,11 +346,11 @@
 					"GoogleRestAPI_properties_typeProperties_url": {
 						"value": "[parameters('GoogleRestAPI_properties_typeProperties_url')]"
 					},
-					"HttpTEST_properties_typeProperties_url": {
-						"value": "[parameters('HttpTEST_properties_typeProperties_url')]"
-					},
 					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
+					},
+					"Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId')]"
 					},
 					"SalesforceACSProd_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]"
@@ -376,17 +358,8 @@
 					"SalesforceACSProd_properties_typeProperties_username": {
 						"value": "[parameters('SalesforceACSProd_properties_typeProperties_username')]"
 					},
-					"WeatherRestD_properties_typeProperties_url": {
-						"value": "[parameters('WeatherRestD_properties_typeProperties_url')]"
-					},
 					"dewr_ls_properties_typeProperties_url": {
 						"value": "[parameters('dewr_ls_properties_typeProperties_url')]"
-					},
-					"lga_google_properties_typeProperties_url": {
-						"value": "[parameters('lga_google_properties_typeProperties_url')]"
-					},
-					"serpAPItest_properties_typeProperties_url": {
-						"value": "[parameters('serpAPItest_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -408,15 +381,6 @@
 					},
 					"LS_AZST_BlobLanding_connectionString": {
 						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
-					},
-					"LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('LS_ADBR_dvrDatabricks_properties_typeProperties_existingClusterId')]"
-					},
-					"LS_SAFC_BRP_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_environmentUrl')]"
-					},
-					"LS_SAFC_BRP_properties_typeProperties_username": {
-						"value": "[parameters('LS_SAFC_BRP_properties_typeProperties_username')]"
 					}
 				}
 			},
@@ -437,6 +401,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
+						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate')]"
+					},
+					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
+						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					}
 				}
 			},
@@ -457,12 +433,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
@@ -490,18 +460,6 @@
 					},
 					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF User Refresh_parameters_schemaname')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]"
@@ -551,18 +509,6 @@
 					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
 					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Opportunity Refresh_parameters_schemaname')]"
-					},
 					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]"
 					},
@@ -574,6 +520,18 @@
 					},
 					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname')]"
 					}
 				}
 			},
