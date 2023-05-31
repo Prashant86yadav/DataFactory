@@ -90,10 +90,10 @@
 			"value": "2023-05-31 00:00:00"
 		},
 		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"value": "2023-04-01 00:00:00"
+			"value": "2023-05-01 00:00:00"
 		},
 		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"value": "2023-04-30 00:00:00"
+			"value": "2023-05-31 00:00:00"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
