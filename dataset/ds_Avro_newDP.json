@@ -1,0 +1,19 @@
+{
+	"name": "ds_Avro_newDP",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_DataLake_DPP",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Avro",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "rawAssessment",
+				"fileSystem": "landing"
+			}
+		},
+		"schema": []
+	}
+}

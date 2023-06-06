@@ -21,17 +21,16 @@
 						"readBehavior": "query"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "AvroSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "AvroWriteSettings"
 						}
 					},
 					"enableStaging": false,
+					"parallelCopies": 2,
 					"translator": {
 						"type": "TabularTranslator",
 						"typeConversion": true,
@@ -49,7 +48,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "TestBlob",
+						"referenceName": "ds_Avro_newDP",
 						"type": "DatasetReference"
 					}
 				]
