@@ -13,7 +13,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "databrickslanding"
+				"folderPath": "rawAssessment/rawfile",
+				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
 			"encodingName": "UTF-8",
