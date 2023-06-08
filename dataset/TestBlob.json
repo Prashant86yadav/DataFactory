@@ -17,6 +17,7 @@
 				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
+			"compressionCodec": "gzip",
 			"encodingName": "UTF-8",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
