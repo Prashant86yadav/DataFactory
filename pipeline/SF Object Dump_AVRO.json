@@ -16,9 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": "select * from assessment__c",
-						"readBehavior": "query"
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from Employee",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AvroSink",
@@ -42,7 +43,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
+						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
 					}
 				],
