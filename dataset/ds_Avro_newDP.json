@@ -13,7 +13,7 @@
 				"folderPath": "rawAssessment/rawfile",
 				"fileSystem": "landing"
 			},
-			"avroCompressionCodec": "deflate"
+			"avroCompressionCodec": "snappy"
 		},
 		"schema": []
 	}
