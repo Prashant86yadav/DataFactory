@@ -24,8 +24,7 @@
 					"sink": {
 						"type": "AvroSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
 							"type": "AvroWriteSettings"
