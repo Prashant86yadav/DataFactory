@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Dump CSV Data Lake",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
