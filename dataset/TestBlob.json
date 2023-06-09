@@ -13,6 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": "data_81834eef-64e8-4d5d-a5ac-5fdc1fe6f72d_d5954238-61f7-45be-9a86-e5b3ce09929e.csv.gz",
 				"folderPath": "rawAssessment/csv",
 				"fileSystem": "landing"
 			},
