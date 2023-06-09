@@ -12,7 +12,8 @@
 				"type": "AzureBlobFSLocation",
 				"folderPath": "rawAssessment/rawfile",
 				"fileSystem": "landing"
-			}
+			},
+			"avroCompressionCodec": "deflate"
 		},
 		"schema": []
 	}
