@@ -13,7 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "rawAssessment/rawfile",
+				"folderPath": "rawAssessment/csv",
 				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
