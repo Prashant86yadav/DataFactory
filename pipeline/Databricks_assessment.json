@@ -149,7 +149,13 @@
 									"readBehavior": "queryAll"
 								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "ACSDSSF",
+									"type": "DatasetReference"
+								}
+							]
 						},
 						{
 							"name": "CREATE Partition",
