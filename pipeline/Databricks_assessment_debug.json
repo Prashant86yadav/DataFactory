@@ -16,7 +16,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Shared/ETL/nb_rawdvr_getHighWaterMark",
+					"notebookPath": "/ACSIngest/nb_rawdvr_getHighWaterMark",
 					"baseParameters": {
 						"tableName": {
 							"value": "msa.@{pipeline().parameters.TableName}",
