@@ -72,6 +72,20 @@
 			"RerunToDate": {
 				"type": "string",
 				"defaultValue": "2199-12-31 00:00:00.000"
+			},
+			"ColumnList": {
+				"type": "string",
+				"defaultValue": "id,name"
+			}
+		},
+		"variables": {
+			"brpExtractFrom": {
+				"type": "String",
+				"defaultValue": "2199-12-31 00:00:00"
+			},
+			"brpExtractTo": {
+				"type": "String",
+				"defaultValue": "2199-12-31 00:00:00"
 			}
 		},
 		"folder": {
