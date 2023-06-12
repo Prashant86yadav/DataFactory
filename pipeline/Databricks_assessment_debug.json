@@ -74,7 +74,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM  @{pipeline().parameters.sfschemaname}.@{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM  @{pipeline().parameters.sfschemaname}.@{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
 							"type": "Expression"
 						},
 						"readBehavior": "queryAll"
@@ -118,7 +118,7 @@
 			},
 			"TableName": {
 				"type": "string",
-				"defaultValue": "assessment__c"
+				"defaultValue": "assessment"
 			},
 			"ColumnList": {
 				"type": "string",
@@ -129,7 +129,8 @@
 				"defaultValue": "salesforce"
 			},
 			"sfTableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "assessment__c"
 			}
 		},
 		"variables": {
