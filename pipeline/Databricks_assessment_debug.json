@@ -105,6 +105,173 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Set brpExtractTo",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@greater(variables('brpExtractTo'), variables('brpExtractFrom'))",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "COPY rawbrp",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "CREATE Partition",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "SalesforceSource",
+									"query": {
+										"value": "SELECT @{pipeline().parameters.ColumnList} FROM @{pipeline().parameters.TableName}\nWHERE LastModifiedDate > {ts'@{variables('brpExtractFrom')}'}\nAND CreatedDate <= {ts'@{variables('brpExtractTo')}'}\n",
+										"type": "Expression"
+									},
+									"readBehavior": "queryAll"
+								},
+								"enableStaging": false
+							}
+						},
+						{
+							"name": "CREATE Partition",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Set partitionTO",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set partitionFROM",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set partitionMONTH",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								},
+								{
+									"activity": "Set partitionYEAR",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Shared/ETL/nb_rawdvr_addPartition",
+								"baseParameters": {
+									"tableName": {
+										"value": "rawbrp.raw@{pipeline().parameters.TableName}",
+										"type": "Expression"
+									},
+									"paramYEAR": {
+										"value": "@variables('partitionYEAR')",
+										"type": "Expression"
+									},
+									"paramMONTH": {
+										"value": "@variables('partitionMONTH')",
+										"type": "Expression"
+									},
+									"paramFROM": {
+										"value": "@variables('partitionFROM')",
+										"type": "Expression"
+									},
+									"paramTO": {
+										"value": "@variables('partitionTO')",
+										"type": "Expression"
+									}
+								}
+							}
+						},
+						{
+							"name": "Set partitionYEAR",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "partitionYEAR",
+								"value": {
+									"value": "@{formatDateTime(replace(variables('brpExtractTo'),' ','T'), 'yyyy')}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set partitionMONTH",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "partitionMONTH",
+								"value": {
+									"value": "@{formatDateTime(replace(variables('brpExtractTo'),' ','T'), 'MM')}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set partitionFROM",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "partitionFROM",
+								"value": {
+									"value": "@{formatDateTime(replace(variables('brpExtractFrom'),' ','T'), 'yyyyMMddHHmmssfff')}",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Set partitionTO",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "partitionTO",
+								"value": {
+									"value": "@{formatDateTime(replace(variables('brpExtractTo'),' ','T'), 'yyyyMMddHHmmssfff')}",
+									"type": "Expression"
+								}
+							}
+						}
+					]
+				}
 			}
 		],
 		"parameters": {
