@@ -118,7 +118,7 @@
 			},
 			"TableName": {
 				"type": "string",
-				"defaultValue": "assessment"
+				"defaultValue": "assessment__c"
 			},
 			"ColumnList": {
 				"type": "string",
@@ -127,6 +127,9 @@
 			"sfschemaname": {
 				"type": "string",
 				"defaultValue": "salesforce"
+			},
+			"sfTableName": {
+				"type": "string"
 			}
 		},
 		"variables": {
