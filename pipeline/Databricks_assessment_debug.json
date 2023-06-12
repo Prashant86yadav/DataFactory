@@ -1,0 +1,81 @@
+{
+	"name": "Databricks_assessment_debug",
+	"properties": {
+		"description": "checkin pipeline",
+		"activities": [
+			{
+				"name": "GET TGT HighWaterMark",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Shared/ETL/nb_rawdvr_getHighWaterMark",
+					"baseParameters": {
+						"tableName": {
+							"value": "msa.@{pipeline().parameters.TableName}",
+							"type": "Expression"
+						},
+						"defaultHWM": "1970-01-01 00:00:00.000"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_databricksProd",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"parameters": {
+			"RerunFromDate": {
+				"type": "string",
+				"defaultValue": "2199-12-31 00:00:00.000"
+			},
+			"RerunToDate": {
+				"type": "string",
+				"defaultValue": "2199-12-31 00:00:00.000"
+			},
+			"TableName": {
+				"type": "string",
+				"defaultValue": "assessment"
+			},
+			"ColumnList": {
+				"type": "string",
+				"defaultValue": "Id, CreatedDate"
+			}
+		},
+		"variables": {
+			"brpExtractFrom": {
+				"type": "String",
+				"defaultValue": "2199-12-31 00:00:00"
+			},
+			"brpExtractTo": {
+				"type": "String",
+				"defaultValue": "2199-12-31 00:00:00"
+			},
+			"partitionYEAR": {
+				"type": "String"
+			},
+			"partitionMONTH": {
+				"type": "String"
+			},
+			"partitionFROM": {
+				"type": "String"
+			},
+			"partitionTO": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "DVR Product Dashboard/98 Common"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-17T23:26:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
