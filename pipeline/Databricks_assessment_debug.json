@@ -226,6 +226,10 @@
 										"type": "Expression"
 									}
 								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ls_databricksProd",
+								"type": "LinkedServiceReference"
 							}
 						},
 						{
