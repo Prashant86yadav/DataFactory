@@ -153,7 +153,13 @@
 									"readBehavior": "queryAll"
 								},
 								"enableStaging": false
-							}
+							},
+							"inputs": [
+								{
+									"referenceName": "ACSDSSF",
+									"type": "DatasetReference"
+								}
+							]
 						},
 						{
 							"name": "CREATE Partition",
@@ -193,7 +199,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"notebookPath": "/Shared/ETL/nb_rawdvr_addPartition",
+								"notebookPath": "/Shared/ACSIngest/nb_rawdvr_addPartition",
 								"baseParameters": {
 									"tableName": {
 										"value": "rawbrp.raw@{pipeline().parameters.TableName}",
@@ -216,6 +222,10 @@
 										"type": "Expression"
 									}
 								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ls_databricksProd",
+								"type": "LinkedServiceReference"
 							}
 						},
 						{
