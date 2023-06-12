@@ -74,7 +74,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM  @{pipeline().parameters.sfschemaname}.@{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
 							"type": "Expression"
 						},
 						"readBehavior": "queryAll"
