@@ -225,7 +225,7 @@
 								"notebookPath": "/Shared/ACSIngest/nb_rawdvr_addPartition",
 								"baseParameters": {
 									"tableName": {
-										"value": "rawbrp.raw@{pipeline().parameters.TableName}",
+										"value": "msa.@{pipeline().parameters.TableName}",
 										"type": "Expression"
 									},
 									"paramYEAR": {
