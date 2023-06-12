@@ -147,7 +147,7 @@
 								"source": {
 									"type": "SalesforceSource",
 									"query": {
-										"value": "SELECT @{pipeline().parameters.ColumnList} FROM @{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate > {ts'@{variables('brpExtractFrom')}'}\nAND CreatedDate <= {ts'@{variables('brpExtractTo')}'}\n",
+										"value": "SELECT @{pipeline().parameters.ColumnList} FROM @{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate > {ts'@{variables('brpExtractFrom')}'}\nAND CreatedDate <= {ts'@{variables('brpExtractTo')}'}'}\n",
 										"type": "Expression"
 									},
 									"readBehavior": "queryAll"
