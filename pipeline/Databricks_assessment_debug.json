@@ -29,6 +29,26 @@
 					"referenceName": "ls_databricksProd",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set brpExtractFrom",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GET TGT HighWaterMark",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractFrom",
+					"value": {
+						"value": "@if(\n  less(\n    pipeline().parameters.RerunFromDate\n  , formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n  )\n  , pipeline().parameters.RerunFromDate\n  , formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n)",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
