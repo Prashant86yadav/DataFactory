@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Databricks_assessment",
 	"properties": {
 		"description": "checkin pipeline",
 		"activities": [
@@ -19,7 +19,7 @@
 					"notebookPath": "/Shared/ETL/nb_rawdvr_getHighWaterMark",
 					"baseParameters": {
 						"tableName": {
-							"value": "rawbrp.raw@{pipeline().parameters.TableName}",
+							"value": "msa.@{pipeline().parameters.TableName}",
 							"type": "Expression"
 						},
 						"defaultHWM": "1970-01-01 00:00:00.000"
