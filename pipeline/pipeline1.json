@@ -281,7 +281,7 @@
 			},
 			"TableName": {
 				"type": "string",
-				"defaultValue": "Account"
+				"defaultValue": "assessment"
 			},
 			"ColumnList": {
 				"type": "string",
