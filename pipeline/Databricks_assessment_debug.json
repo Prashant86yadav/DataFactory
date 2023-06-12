@@ -123,6 +123,10 @@
 			"ColumnList": {
 				"type": "string",
 				"defaultValue": "Id, CreatedDate"
+			},
+			"sfschemaname": {
+				"type": "string",
+				"defaultValue": "salesforce"
 			}
 		},
 		"variables": {
