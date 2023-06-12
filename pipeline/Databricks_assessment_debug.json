@@ -86,44 +86,13 @@
 				}
 			},
 			{
-				"name": "GET SRC HighWaterMark_copy1",
-				"description": "Find the latest change in the Salesforce table indicated by the parameter",
-				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "GET SRC HighWaterMark",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-							"type": "Expression"
-						},
-						"readBehavior": "queryAll"
-					}
-				}
-			},
-			{
 				"name": "If Condition1",
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "GET SRC HighWaterMark_copy1",
+						"activity": "Set brpExtractTo",
 						"dependencyConditions": [
-							"Succeeded"
+							"Completed"
 						]
 					}
 				],
@@ -285,6 +254,27 @@
 							}
 						}
 					]
+				}
+			},
+			{
+				"name": "Set brpExtractTo",
+				"description": "",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GET SRC HighWaterMark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractTo",
+					"value": {
+						"value": "@if(\n  less(\n    pipeline().parameters.RerunToDate\n  , formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff')\n  )\n  , pipeline().parameters.RerunToDate\n  , formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff')\n)",
+						"type": "Expression"
+					}
 				}
 			}
 		],
