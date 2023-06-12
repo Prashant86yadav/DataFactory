@@ -49,6 +49,65 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "GET SRC HighWaterMark",
+				"description": "Find the latest change in the Salesforce table indicated by the parameter",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Set brpExtractFrom",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+							"type": "Expression"
+						},
+						"readBehavior": "queryAll"
+					},
+					"dataset": {
+						"referenceName": "ACSDSSF",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "GET SRC HighWaterMark_copy1",
+				"description": "Find the latest change in the Salesforce table indicated by the parameter",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"query": {
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.TableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+							"type": "Expression"
+						},
+						"readBehavior": "queryAll"
+					}
+				}
 			}
 		],
 		"parameters": {
