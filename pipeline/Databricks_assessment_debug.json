@@ -118,7 +118,7 @@
 			},
 			"TableName": {
 				"type": "string",
-				"defaultValue": "salesforce.assessment"
+				"defaultValue": "assessment"
 			},
 			"ColumnList": {
 				"type": "string",
