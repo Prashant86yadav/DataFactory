@@ -152,11 +152,34 @@
 									},
 									"readBehavior": "queryAll"
 								},
-								"enableStaging": false
+								"sink": {
+									"type": "AvroSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "AvroWriteSettings"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
 							},
 							"inputs": [
 								{
 									"referenceName": "ACSDSSF",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_Avro_newDP",
 									"type": "DatasetReference"
 								}
 							]
