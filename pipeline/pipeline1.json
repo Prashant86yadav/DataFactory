@@ -59,11 +59,11 @@
 		"parameters": {
 			"sfschemaname": {
 				"type": "string",
-				"defaultValue": "assessment__c"
+				"defaultValue": "salesforce"
 			},
 			"sfTableName": {
 				"type": "string",
-				"defaultValue": "salesforce"
+				"defaultValue": "assessment__c"
 			},
 			"RerunFromDate": {
 				"type": "string",
