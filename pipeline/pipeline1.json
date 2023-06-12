@@ -56,6 +56,24 @@
 				]
 			}
 		],
+		"parameters": {
+			"sfschemaname": {
+				"type": "string",
+				"defaultValue": "assessment__c"
+			},
+			"sfTableName": {
+				"type": "string",
+				"defaultValue": "salesforce"
+			},
+			"RerunFromDate": {
+				"type": "string",
+				"defaultValue": "2199-12-31 00:00:00.000"
+			},
+			"RerunToDate": {
+				"type": "string",
+				"defaultValue": "2199-12-31 00:00:00.000"
+			}
+		},
 		"folder": {
 			"name": "DVR Product Dashboard/98 Common"
 		},
