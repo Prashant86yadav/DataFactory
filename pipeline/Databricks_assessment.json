@@ -142,7 +142,7 @@
 							"typeProperties": {
 								"source": {
 									"type": "SalesforceSource",
-									"query": "select id, name from assessment__c",
+									"query": "select Id,\nOwnerId,\nIsDeleted,\nName,\nCurrencyIsoCode,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nLastActivityDate,\nLastViewedDate,\nLastReferencedDate,\nACSMembershipNumberFormula__c,\nANZSCOCode__c,\nActivationDate__c,\nActive__c,\nApplicantFirstName__c,\nApplicantInterview__c,\nApplicantName__c,\nApplicantPaid__c,\nApplicantState__c,\nApplicantSubmitEmailSent__c,\nApplicant_Last_Name__c,\nApplicant_Name_Formula__c,\nApplicant_Title__c from assessment__c",
 									"readBehavior": "queryAll"
 								},
 								"enableStaging": false
