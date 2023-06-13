@@ -86,7 +86,7 @@
 				}
 			},
 			{
-				"name": "Set brpExtractFrom_copy1",
+				"name": "Set brpExtractFrom_EOY",
 				"type": "SetVariable",
 				"dependsOn": [
 					{
