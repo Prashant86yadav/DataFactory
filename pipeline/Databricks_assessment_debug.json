@@ -183,6 +183,7 @@
 									"referenceName": "ds_Avro_newDP",
 									"type": "DatasetReference",
 									"parameters": {
+										"ContainerName": "landing",
 										"filename": {
 											"value": "@{pipeline().parameters.TableName}_@{pipeline().RunId}",
 											"type": "Expression"
