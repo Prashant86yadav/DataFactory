@@ -12,8 +12,7 @@
 				"type": "AzureBlobFSLocation",
 				"folderPath": "rawMSA/rawAssessment",
 				"fileSystem": "landing"
-			},
-			"avroCompressionCodec": "snappy"
+			}
 		},
 		"schema": []
 	}
