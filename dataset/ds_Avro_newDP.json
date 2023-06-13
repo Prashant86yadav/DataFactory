@@ -5,6 +5,14 @@
 			"referenceName": "ls_DataLake_DPP",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"ContainerName": {
+				"type": "string"
+			},
+			"FolderName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Avro",
 		"typeProperties": {
