@@ -147,7 +147,7 @@
 								"source": {
 									"type": "SalesforceSource",
 									"query": {
-										"value": "SELECT @{pipeline().parameters.ColumnList} FROM @{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate > {ts'@{variables('brpExtractFrom')}'}\nAND CreatedDate <= {ts'@{variables('brpExtractTo')}'}'}\n",
+										"value": "SELECT @{pipeline().parameters.ColumnList}\nFROM @{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate > TIMESTAMP '@{formatDateTime(variables('brpExtractFrom'), 'yyyy-MM-dd HH:mm:ss')}'\n  AND CreatedDate <= TIMESTAMP '@{formatDateTime(variables('brpExtractTo'), 'yyyy-MM-dd HH:mm:ss')}'\n",
 										"type": "Expression"
 									},
 									"readBehavior": "queryAll"
