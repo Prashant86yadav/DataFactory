@@ -18,7 +18,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "SELECT Id, OwnerId, IsDeleted, Name FROM @{pipeline().parameters.sfTableName}\nWHERE LastModifiedDate > {ts'@{variables('brpExtractFrom')}'}\nAND CreatedDate <= {ts'@{variables('brpExtractTo')}'}'}\n",
+							"value": "SELECT Id, OwnerId, IsDeleted, Name\nFROM assessment__c\nWHERE LastModifiedDate > TIMESTAMP '2199-12-31 00:00:00'\n  AND CreatedDate <= TIMESTAMP '2199-12-31 00:00:00'\n",
 							"type": "Expression"
 						},
 						"readBehavior": "queryAll"
