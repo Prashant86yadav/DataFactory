@@ -184,6 +184,10 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"ContainerName": "landing",
+										"FolderName": {
+											"value": "@{pipeline().parameters.TableName}/YEAR=@{variables('partitionYEAR')}/MONTH=@{variables('partitionMONTH')}/FROMTO=@{variables('partitionFROM')}_@{variables('partitionTO')}",
+											"type": "Expression"
+										},
 										"filename": {
 											"value": "@{pipeline().parameters.TableName}_@{pipeline().RunId}",
 											"type": "Expression"
