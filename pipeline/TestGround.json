@@ -31,8 +31,9 @@
 			}
 		],
 		"parameters": {
-			"date": {
-				"type": "string"
+			"TableName": {
+				"type": "string",
+				"defaultValue": "msa.assessment"
 			}
 		},
 		"folder": {
