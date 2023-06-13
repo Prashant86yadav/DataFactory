@@ -71,12 +71,12 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[EOYproc]",
 					"storedProcedureParameters": {
-						"date": {
+						"inputDate": {
 							"value": {
 								"value": "@variables('brpExtractFrom')",
 								"type": "Expression"
 							},
-							"type": "Datetime"
+							"type": "DateTime"
 						}
 					}
 				},
