@@ -50,16 +50,6 @@
 				}
 			},
 			{
-				"name": "Set brpExtractEOY",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "brpExtractFrom",
-					"value": "[object Object]"
-				}
-			},
-			{
 				"name": "Stored procedure1",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
@@ -79,7 +69,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[EOYproc]"
+					"storedProcedureName": "[dbo].[EOYproc]",
+					"storedProcedureParameters": {
+						"date": {
+							"value": {
+								"value": "@variables('brpExtractFrom')",
+								"type": "Expression"
+							},
+							"type": "Datetime"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "LSSQLPOC",
