@@ -158,7 +158,8 @@
 										"type": "AzureBlobFSWriteSettings"
 									},
 									"formatSettings": {
-										"type": "AvroWriteSettings"
+										"type": "AvroWriteSettings",
+										"maxRowsPerFile": 1000000
 									}
 								},
 								"enableStaging": false,
