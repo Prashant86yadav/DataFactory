@@ -48,6 +48,16 @@
 						"type": "Expression"
 					}
 				}
+			},
+			{
+				"name": "Set brpExtractEOY",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractFrom",
+					"value": "[object Object]"
+				}
 			}
 		],
 		"parameters": {
@@ -58,6 +68,9 @@
 		},
 		"variables": {
 			"brpExtractFrom": {
+				"type": "String"
+			},
+			"brpExtractFromEOY": {
 				"type": "String"
 			}
 		},
