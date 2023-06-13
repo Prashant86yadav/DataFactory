@@ -44,7 +44,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@if(\n  less(\n    pipeline().parameters.RerunFromDate\n  , formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n  )\n  , pipeline().parameters.RerunFromDate\n  , formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n)",
+						"value": "formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
 						"type": "Expression"
 					}
 				}
