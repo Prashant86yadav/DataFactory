@@ -78,6 +78,9 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[EOYproc]"
+				},
 				"linkedServiceName": {
 					"referenceName": "LSSQLPOC",
 					"type": "LinkedServiceReference"
