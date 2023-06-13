@@ -1,5 +1,5 @@
 {
-	"name": "Databricks_assessment_debug",
+	"name": "Ingest_Assessment_db",
 	"properties": {
 		"description": "checkin pipeline",
 		"activities": [
