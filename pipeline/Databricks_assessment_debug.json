@@ -185,7 +185,7 @@
 									"parameters": {
 										"ContainerName": "landing",
 										"FolderName": {
-											"value": "@{pipeline().parameters.TableName}/YEAR=@{variables('partitionYEAR')}/MONTH=@{variables('partitionMONTH')}/FROMTO=@{variables('partitionFROM')}_@{variables('partitionTO')}",
+											"value": "raw@{pipeline().parameters.TableName}/YEAR=@{variables('partitionYEAR')}/MONTH=@{variables('partitionMONTH')}/FROMTO=@{variables('partitionFROM')}_@{variables('partitionTO')}",
 											"type": "Expression"
 										},
 										"filename": {
