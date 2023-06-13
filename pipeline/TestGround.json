@@ -84,6 +84,26 @@
 					"referenceName": "LSSQLPOC",
 					"type": "LinkedServiceReference"
 				}
+			},
+			{
+				"name": "Set brpExtractFrom_copy1",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Stored procedure1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "brpExtractFrom",
+					"value": {
+						"value": "@formatDateTime(replace(activity('GET TGT HighWaterMark').output.runOutput,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"parameters": {
