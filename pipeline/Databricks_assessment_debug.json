@@ -101,7 +101,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractTo",
 					"value": {
-						"value": "@if(\n    less(pipeline().parameters.RerunToDate, formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff')),\n    pipeline().parameters.RerunToDate,\n    addDays(formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff'), -10)\n)\n",
+						"value": "@if(\n    less(pipeline().parameters.RerunToDate, formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff')),\n    pipeline().parameters.RerunToDate,\n    addDays(formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark, 'yyyy-MM-dd HH:mm:ss.fff'), -9)\n)\n",
 						"type": "Expression"
 					}
 				}
