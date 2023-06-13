@@ -64,7 +64,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@formatDateTime(replace(activity('Lookup1').output.LastDay,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+						"value": "@formatDateTime(replace(activity('Lookup1').output.firstRow,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
 						"type": "Expression"
 					}
 				}
@@ -107,7 +107,8 @@
 					"dataset": {
 						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": true
 				}
 			}
 		],
