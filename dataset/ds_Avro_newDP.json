@@ -11,13 +11,24 @@
 			},
 			"FolderName": {
 				"type": "string"
+			},
+			"filename": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
 		"type": "Avro",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation"
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@dataset().FolderName",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().ContainerName",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": []
