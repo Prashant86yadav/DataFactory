@@ -9,9 +9,7 @@
 		"type": "Avro",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
-				"folderPath": "rawMSA/rawAssessment",
-				"fileSystem": "landing"
+				"type": "AzureBlobFSLocation"
 			}
 		},
 		"schema": []
