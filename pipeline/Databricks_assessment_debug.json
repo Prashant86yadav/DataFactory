@@ -329,7 +329,7 @@
 			},
 			"TableName": {
 				"type": "string",
-				"defaultValue": "assessment"
+				"defaultValue": "Assessment"
 			},
 			"ColumnList": {
 				"type": "string",
