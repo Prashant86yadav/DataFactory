@@ -181,7 +181,13 @@
 							"outputs": [
 								{
 									"referenceName": "ds_Avro_newDP",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@{pipeline().parameters.TableName}_@{pipeline().RunId}",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						},
