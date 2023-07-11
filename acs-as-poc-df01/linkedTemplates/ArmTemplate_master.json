@@ -63,9 +63,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
 		},
+		"ls_DataLake_DPP_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_DataLake_DPP'"
+		},
 		"ls_SQL_membership_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
+		},
+		"ls_databricksProd_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ls_databricksProd'"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -77,7 +85,7 @@
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
 		},
 		"Canvas REST_properties_typeProperties_url": {
 			"type": "string",
@@ -110,6 +118,14 @@
 		"dewr_ls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"ls_DataLake_DPP_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
+		},
+		"ls_databricksProd_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0524-225117-lltght03"
 		},
 		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
 			"type": "string",
@@ -259,6 +275,22 @@
 			"type": "string",
 			"defaultValue": "dbo"
 		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "OpportunityLineItem"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "OpportunityLineItem"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id ,OpportunityId ,SortOrder ,PricebookEntryId ,Product2Id ,ProductCode ,Name ,CurrencyIsoCode ,Quantity ,Discount ,Subtotal ,TotalPrice, UnitPrice, ListPrice, ServiceDate, HasRevenueSchedule, HasQuantitySchedule, Description, HasSchedule, CanUseQuantitySchedule, CanUseRevenueSchedule, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, LastViewedDate, LastReferencedDate, Assessment__c, BalanceDue__c, Course__c, Data_Migrated_from_XEN__c, EventPricing__c, Event__c, GST__c, Income_Schedule_Start_Date__c, Membership__c, OpportunityNumber__c, Optional__c, Program__c, SponsorshipFutureDate__c, Tax_Code_ID__c, Total_Price_GST__c, Total_Price_Incl_GST__c, Opportunity_Stage__c, Sales_Price_Excl_GST__c, Sales_Price_Override__c, Total_Price_Excl_GST__c, Opportunity_Line_Item_ID__c, Refund_Amount_Excl_GST__c, XenId_OpportunityProduct__c, Accreditation__c, ProductName__c, Membership_Id_18_Digits__c, MembershipBillingGrade__c, AssessmentResult__c, AssessmentStatus__c, AssessmentSubmissionDate__c, AssessmentFinalisedDate__c, AssessmentAppTypeSubType__c, AssessmentApplicantName__c, AssessmentRecordType__c, Opportunity_Related_Program__c, Add_to_FF_Invoice__c, Billing_Grade__c, End_Date__c, Exempt_From_WFD_Validations__c, Is_Closed_Won__c, Product_Family_Value__c, Product_Family__c, Project_Deliverable__c, Project__c, ROI_Budget_Calculation__c, Refund_Amount__c, Tax_Rate__c, Has_Refund_Amount__c, Event_Name__c, Disable_Validation__c"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -325,8 +357,14 @@
 					"dewr_ls_accountKey": {
 						"value": "[parameters('dewr_ls_accountKey')]"
 					},
+					"ls_DataLake_DPP_accountKey": {
+						"value": "[parameters('ls_DataLake_DPP_accountKey')]"
+					},
 					"ls_SQL_membership_connectionString": {
 						"value": "[parameters('ls_SQL_membership_connectionString')]"
+					},
+					"ls_databricksProd_accessToken": {
+						"value": "[parameters('ls_databricksProd_accessToken')]"
 					},
 					"ACSSFPROD_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
@@ -360,6 +398,12 @@
 					},
 					"dewr_ls_properties_typeProperties_url": {
 						"value": "[parameters('dewr_ls_properties_typeProperties_url')]"
+					},
+					"ls_DataLake_DPP_properties_typeProperties_url": {
+						"value": "[parameters('ls_DataLake_DPP_properties_typeProperties_url')]"
+					},
+					"ls_databricksProd_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ls_databricksProd_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},
@@ -401,18 +445,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
-						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate')]"
-					},
-					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
-						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					}
 				}
 			},
@@ -433,6 +465,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
+						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate')]"
+					},
+					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
+						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
+					},
+					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
+						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
@@ -532,6 +576,18 @@
 					},
 					"TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname')]"
 					}
 				}
 			},

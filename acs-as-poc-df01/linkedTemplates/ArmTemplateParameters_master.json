@@ -47,7 +47,13 @@
 		"dewr_ls_accountKey": {
 			"value": ""
 		},
+		"ls_DataLake_DPP_accountKey": {
+			"value": ""
+		},
 		"ls_SQL_membership_connectionString": {
+			"value": ""
+		},
+		"ls_databricksProd_accessToken": {
 			"value": ""
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
@@ -57,7 +63,7 @@
 			"value": "prashant.yadvendra@acs.org.au"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
-			"value": "https://stacspoc01.dfs.core.windows.net/"
+			"value": "https://stacsdpp01.dfs.core.windows.net/"
 		},
 		"Canvas REST_properties_typeProperties_url": {
 			"value": "https://acslearn.instructure.com"
@@ -82,6 +88,12 @@
 		},
 		"dewr_ls_properties_typeProperties_url": {
 			"value": "https://stacspoc01.dfs.core.windows.net/"
+		},
+		"ls_DataLake_DPP_properties_typeProperties_url": {
+			"value": "https://stacsdpp01.dfs.core.windows.net/"
+		},
+		"ls_databricksProd_properties_typeProperties_existingClusterId": {
+			"value": "0524-225117-lltght03"
 		},
 		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
 			"value": "2023-05-01 00:00:00"
@@ -193,6 +205,18 @@
 		},
 		"TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname": {
 			"value": "dbo"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName": {
+			"value": "OpportunityLineItem"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName": {
+			"value": "OpportunityLineItem"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList": {
+			"value": "Id ,OpportunityId ,SortOrder ,PricebookEntryId ,Product2Id ,ProductCode ,Name ,CurrencyIsoCode ,Quantity ,Discount ,Subtotal ,TotalPrice, UnitPrice, ListPrice, ServiceDate, HasRevenueSchedule, HasQuantitySchedule, Description, HasSchedule, CanUseQuantitySchedule, CanUseRevenueSchedule, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, LastViewedDate, LastReferencedDate, Assessment__c, BalanceDue__c, Course__c, Data_Migrated_from_XEN__c, EventPricing__c, Event__c, GST__c, Income_Schedule_Start_Date__c, Membership__c, OpportunityNumber__c, Optional__c, Program__c, SponsorshipFutureDate__c, Tax_Code_ID__c, Total_Price_GST__c, Total_Price_Incl_GST__c, Opportunity_Stage__c, Sales_Price_Excl_GST__c, Sales_Price_Override__c, Total_Price_Excl_GST__c, Opportunity_Line_Item_ID__c, Refund_Amount_Excl_GST__c, XenId_OpportunityProduct__c, Accreditation__c, ProductName__c, Membership_Id_18_Digits__c, MembershipBillingGrade__c, AssessmentResult__c, AssessmentStatus__c, AssessmentSubmissionDate__c, AssessmentFinalisedDate__c, AssessmentAppTypeSubType__c, AssessmentApplicantName__c, AssessmentRecordType__c, Opportunity_Related_Program__c, Add_to_FF_Invoice__c, Billing_Grade__c, End_Date__c, Exempt_From_WFD_Validations__c, Is_Closed_Won__c, Product_Family_Value__c, Product_Family__c, Project_Deliverable__c, Project__c, ROI_Budget_Calculation__c, Refund_Amount__c, Tax_Rate__c, Has_Refund_Amount__c, Event_Name__c, Disable_Validation__c"
+		},
+		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
+			"value": "salesforce"
 		},
 		"containerUri": {
 			"value": ""
