@@ -100,6 +100,18 @@
 					"ColumnList": "Id ,RecordTypeId ,WhoId ,WhatId ,Subject ,ActivityDate ,Status ,Priority ,IsHighPriority ,OwnerId ,Description ,CurrencyIsoCode ,Type ,IsDeleted ,AccountId ,IsClosed ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,IsArchived ,IsVisibleInSelfService ,CallDurationInSeconds ,CallType ,CallDisposition ,CallObject ,ReminderDateTime ,IsReminderSet ,RecurrenceActivityId ,IsRecurrence ,RecurrenceStartDateOnly ,RecurrenceEndDateOnly ,RecurrenceTimeZoneSidKey ,RecurrenceType ,RecurrenceInterval ,RecurrenceDayOfWeekMask ,RecurrenceDayOfMonth ,RecurrenceInstance ,RecurrenceMonthOfYear ,RecurrenceRegeneratedType ,TaskSubtype ,CompletedDateTime ,Data_Migrated_from_XEN__c ,XEN_Activity_Type__c ,XenId_Activities__c ,WFD_Project_Outputs_Activities__c ,Facebook_Message__c ,Interaction_Type__c ,Pendula__Message__c",
 					"schemaname": "dbo"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF OpportunityLineItem Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "OpportunityLineItem",
+					"TargetTableName": "OpportunityLineItem",
+					"ColumnList": "Id ,OpportunityId ,SortOrder ,PricebookEntryId ,Product2Id ,ProductCode ,Name ,CurrencyIsoCode ,Quantity ,Discount ,Subtotal ,TotalPrice, UnitPrice, ListPrice, ServiceDate, HasRevenueSchedule, HasQuantitySchedule, Description, HasSchedule, CanUseQuantitySchedule, CanUseRevenueSchedule, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, LastViewedDate, LastReferencedDate, Assessment__c, BalanceDue__c, Course__c, Data_Migrated_from_XEN__c, EventPricing__c, Event__c, GST__c, Income_Schedule_Start_Date__c, Membership__c, OpportunityNumber__c, Optional__c, Program__c, SponsorshipFutureDate__c, Tax_Code_ID__c, Total_Price_GST__c, Total_Price_Incl_GST__c, Opportunity_Stage__c, Sales_Price_Excl_GST__c, Sales_Price_Override__c, Total_Price_Excl_GST__c, Opportunity_Line_Item_ID__c, Refund_Amount_Excl_GST__c, XenId_OpportunityProduct__c, Accreditation__c, ProductName__c, Membership_Id_18_Digits__c, MembershipBillingGrade__c, AssessmentResult__c, AssessmentStatus__c, AssessmentSubmissionDate__c, AssessmentFinalisedDate__c, AssessmentAppTypeSubType__c, AssessmentApplicantName__c, AssessmentRecordType__c, Opportunity_Related_Program__c, Add_to_FF_Invoice__c, Billing_Grade__c, End_Date__c, Exempt_From_WFD_Validations__c, Is_Closed_Won__c, Product_Family_Value__c, Product_Family__c, Project_Deliverable__c, Project__c, ROI_Budget_Calculation__c, Refund_Amount__c, Tax_Rate__c, Has_Refund_Amount__c, Event_Name__c, Disable_Validation__c",
+					"schemaname": "salesforce"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
