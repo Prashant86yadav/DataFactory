@@ -21,7 +21,7 @@
 				},
 				"fileSystem": "dewr-reports"
 			},
-			"columnDelimiter": "\t",
+			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
