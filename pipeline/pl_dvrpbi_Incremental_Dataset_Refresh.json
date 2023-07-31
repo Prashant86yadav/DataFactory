@@ -1,0 +1,263 @@
+{
+	"name": "pl_dvrpbi_Incremental_Dataset_Refresh",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetTenantIdFromKV",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat('https://',pipeline().globalParameters.dvrKeyVaultDNSName,'.vault.azure.net/secrets/POWERBI-TenantId/', pipeline().globalParameters.dvr_pbi_kv_secretVersion_tenantId,'?api-version=7.0')",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": {
+							"value": "https://vault.azure.net",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "GetApplicationIDFromKV",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat('https://',pipeline().globalParameters.dvrKeyVaultDNSName,'.vault.azure.net/secrets/POWERBI-ApplicationID/',pipeline().globalParameters.dvr_pbi_kv_secretVersion_ApplicationID,'?api-version=7.0')",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "GetApplicationSecretFromKV",
+				"type": "WebActivity",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat(\n  'https://'\n, pipeline().globalParameters.dvrKeyVaultDNSName\n, '.vault.azure.net/secrets/POWERBI-Secret/'\n, pipeline().globalParameters.dvr_pbi_kv_secretVersion_secretID\n, '?api-version=7.0'\n)",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"authentication": {
+						"type": "MSI",
+						"resource": "https://vault.azure.net"
+					}
+				}
+			},
+			{
+				"name": "GetAADToken",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetTenantIdFromKV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "GetApplicationIDFromKV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "GetApplicationSecretFromKV",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@Concat('https://login.microsoftonline.com/', activity('GetTenantIDFromKV').output.value, '/oauth2/token')",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"headers": {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					"body": {
+						"value": "@Concat('grant_type=client_credentials&resource=https://analysis.windows.net/powerbi/api&client_id=', activity('GetApplicationIDFromKV').output.value,'&client_secret=', encodeUriComponent(activity('GetApplicationSecretFromKV').output.value))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "RefreshDataSet",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "FilterDatasetArray",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat('https://api.powerbi.com/v1.0/myorg/groups/',pipeline().globalParameters.dvr_pbi_WorkspaceId,'/datasets/',activity('FilterDatasetArray').output.value[0].id,'/refreshes')",
+						"type": "Expression"
+					},
+					"method": "POST",
+					"headers": {
+						"Authorization": {
+							"value": "@concat(string(activity('GetAADToken').output.token_type),' ', string(activity('GetAADToken').output.access_token))",
+							"type": "Expression"
+						}
+					},
+					"body": {
+						"something": "here"
+					}
+				}
+			},
+			{
+				"name": "GetWorkspaceDatasets",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "GetAADToken",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": true,
+					"secureInput": true
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "@concat('https://api.powerbi.com/v1.0/myorg/groups/',pipeline().globalParameters.dvr_pbi_WorkspaceId,'/datasets/')",
+						"type": "Expression"
+					},
+					"method": "GET",
+					"headers": {
+						"Authorization": {
+							"value": "@concat(string(activity('GetAADToken').output.token_type),' ', string(activity('GetAADToken').output.access_token))",
+							"type": "Expression"
+						}
+					},
+					"body": {
+						"something": "here"
+					}
+				}
+			},
+			{
+				"name": "WorkspaceDatasetArray",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "GetWorkspaceDatasets",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "DatasetJson",
+					"value": {
+						"value": "@activity('GetWorkspaceDatasets').output.value",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FilterDatasetArray",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "WorkspaceDatasetArray",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@variables('DatasetJson')",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@contains(pipeline().parameters.DatasetName, item().name)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"DatasetName": {
+				"type": "string",
+				"defaultValue": "DVR Portal Metrics"
+			}
+		},
+		"variables": {
+			"DatasetJson": {
+				"type": "Array",
+				"defaultValue": []
+			}
+		},
+		"folder": {
+			"name": "DVR Product Dashboard/98 Common/PowerBI"
+		},
+		"annotations": []
+	}
+}
