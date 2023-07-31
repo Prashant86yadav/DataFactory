@@ -1,8 +1,68 @@
 {
-	"name": "pipeline2",
+	"name": "pl_dvrcln_Master",
 	"properties": {
+		"activities": [
+			{
+				"name": "pl_dvrcln_clnCheckin",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_dvrcln_CheckinDaily",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "pl_dvrcln_clnCheckin",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_dvrcln_clnRegistration",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_dvrcln_clnRootLocation",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "pl_dvrcln_clnPoster",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"concurrency": 1,
+		"variables": {
+			"dummy": {
+				"type": "String"
+			}
+		},
 		"folder": {
-			"name": "Interview"
+			"name": "DVR Product Dashboard/30 Clean Data Lake"
 		},
 		"annotations": []
 	}
