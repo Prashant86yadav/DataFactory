@@ -8,12 +8,10 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "DHHS WC All Month Contact Servi",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "File01.xlsx",
-				"folderPath": "test",
-				"container": "adobe-datafeeds"
+				"fileName": "Membership all data 01082023.xlsx",
+				"container": "databrickslanding"
 			},
 			"firstRowAsHeader": true
 		},
