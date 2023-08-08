@@ -8,6 +8,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Report input from SF",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Membership all data 01082023.xlsx",
