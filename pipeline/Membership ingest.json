@@ -16,9 +16,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": "select * from account",
-						"readBehavior": "query"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -468,7 +474,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
+						"referenceName": "TestBlob",
 						"type": "DatasetReference"
 					}
 				],
