@@ -428,7 +428,9 @@
 				"annotations": [],
 				"type": "SalesforceObject",
 				"schema": [],
-				"typeProperties": {}
+				"typeProperties": {
+					"objectApiName": "Experience__c"
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ACSSFPROD')]"
