@@ -214,7 +214,7 @@
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "dbo"
+				"defaultValue": "salesforce"
 			}
 		},
 		"variables": {
