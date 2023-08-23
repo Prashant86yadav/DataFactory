@@ -49,7 +49,11 @@
 				"outputs": [
 					{
 						"referenceName": "SQLTableQ",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "Experience",
+							"schemaname": "salesforce"
+						}
 					}
 				]
 			}
