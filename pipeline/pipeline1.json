@@ -20,6 +20,12 @@
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
+					"sink": {
+						"type": "AzureDatabricksDeltaLakeSink",
+						"importSettings": {
+							"type": "AzureDatabricksDeltaLakeImportCommand"
+						}
+					},
 					"enableStaging": false
 				},
 				"inputs": [
@@ -30,6 +36,12 @@
 							"tablename": "assessment",
 							"schemaname": "dbo"
 						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_deltaLakePremium",
+						"type": "DatasetReference"
 					}
 				]
 			}
