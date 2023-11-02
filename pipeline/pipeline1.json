@@ -21,9 +21,12 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "AzureDatabricksDeltaLakeSink",
-						"importSettings": {
-							"type": "AzureDatabricksDeltaLakeImportCommand"
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": true,
@@ -33,6 +36,14 @@
 							"type": "LinkedServiceReference"
 						},
 						"path": "internal"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
 				"inputs": [
@@ -47,7 +58,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_deltaLakePremium",
+						"referenceName": "ds_parquet",
 						"type": "DatasetReference"
 					}
 				]
