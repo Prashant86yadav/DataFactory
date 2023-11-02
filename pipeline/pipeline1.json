@@ -26,7 +26,7 @@
 							"type": "AzureDatabricksDeltaLakeImportCommand"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": true
 				},
 				"inputs": [
 					{
