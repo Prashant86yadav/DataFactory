@@ -10,8 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "rawAssessment/parquetTest",
-				"fileSystem": "landing"
+				"fileSystem": "external"
 			},
 			"compressionCodec": "snappy"
 		},
