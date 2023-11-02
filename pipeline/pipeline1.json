@@ -3,12 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "GET SRC HighWaterMark",
-				"description": "Find the latest change in the Salesforce table indicated by the parameter",
-				"type": "Lookup",
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "7.00:00:00",
+					"timeout": "0.12:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -17,16 +16,22 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": "select * from user",
-						"readBehavior": "query"
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"dataset": {
-						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "assessment",
+							"schemaname": "dbo"
+						}
+					}
+				]
 			}
 		],
 		"folder": {
