@@ -9,7 +9,7 @@
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
 			"database": "msa",
-			"table": "assessment_history"
+			"table": "assessment"
 		},
 		"schema": []
 	}
