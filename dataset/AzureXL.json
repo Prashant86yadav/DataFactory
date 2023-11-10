@@ -14,7 +14,7 @@
 				"fileName": "cricJObLocation.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:D3611",
+			"range": "A1:D1711",
 			"firstRowAsHeader": true
 		},
 		"schema": [
