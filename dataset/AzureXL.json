@@ -8,12 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "TechSkill.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:D3611",
+			"range": "A1:E18469",
 			"firstRowAsHeader": true
 		},
 		"schema": [
