@@ -8,10 +8,9 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "CriticalJObINdustry",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Final.xlsx",
+				"fileName": "cricJObLocation.xlsx",
 				"container": "dewr-reports"
 			},
 			"range": "A1:D3611",
