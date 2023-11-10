@@ -51,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "criticaljob_location",
+							"tablename": "criticaljob_Industry",
 							"schemaname": "ict"
 						}
 					}
