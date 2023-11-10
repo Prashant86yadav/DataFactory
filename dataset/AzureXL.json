@@ -8,12 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "cricticalJobIndustry",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "cricticalJobIndustry.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:D1711",
+			"range": "A1:D3611",
 			"firstRowAsHeader": true
 		},
 		"schema": [
