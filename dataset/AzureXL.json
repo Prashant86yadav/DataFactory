@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "cricticalJobIndustry.csv",
+				"fileName": "cricticalJobIndustry.xlsx",
 				"container": "dewr-reports"
 			},
 			"range": "A1:D1711",
