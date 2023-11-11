@@ -51,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "criticaltech_skill",
+							"tablename": "criticalsoft_skills",
 							"schemaname": "ict"
 						}
 					}
