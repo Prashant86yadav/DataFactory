@@ -51,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "affected_worker",
+							"tablename": "tecworker_forecast",
 							"schemaname": "ict"
 						}
 					}
