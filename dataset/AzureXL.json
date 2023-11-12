@@ -14,7 +14,7 @@
 				"fileName": "AffectedWorker.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A2:D2098",
+			"range": "A1:D2098",
 			"firstRowAsHeader": true
 		},
 		"schema": [
