@@ -8,10 +8,9 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "AffectedWorker.xlsx",
+				"fileName": "TECHWORKER_FORECAST.xlsx",
 				"container": "dewr-reports"
 			},
 			"range": "A1:D2098",
