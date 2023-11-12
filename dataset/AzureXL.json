@@ -8,12 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "TECHWORKER_FORECAST.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:D2098",
+			"range": "A1:D1072",
 			"firstRowAsHeader": true
 		},
 		"schema": [
