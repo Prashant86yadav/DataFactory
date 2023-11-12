@@ -8,12 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "AffectedWorker.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:C1072",
+			"range": "A1:D2089",
 			"firstRowAsHeader": true
 		},
 		"schema": [
