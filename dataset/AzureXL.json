@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "StudentCompletedOverseas",
+			"sheetName": "StudentEnrollDomes",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "ICT Statistics.xlsx",
