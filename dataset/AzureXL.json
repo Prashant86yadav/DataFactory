@@ -8,13 +8,13 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "IndustryANzscoMaleFemale",
+			"sheetName": "StudentCompleDomestic",
 			"location": {
 				"type": "AzureBlobStorageLocation",
 				"fileName": "ICT Statistics.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:E201",
+			"range": "A1:D568",
 			"firstRowAsHeader": true
 		},
 		"schema": [
