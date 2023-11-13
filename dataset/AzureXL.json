@@ -8,10 +8,10 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
+			"sheetName": "FemalePerc.WorkerIndustry",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "TECHWORKER_FORECAST.xlsx",
+				"fileName": "ICT Statistics.xlsx",
 				"container": "dewr-reports"
 			},
 			"range": "A1:D1072",
