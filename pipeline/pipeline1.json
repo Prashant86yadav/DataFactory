@@ -51,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "StudentCompleteDomestic",
+							"tablename": "StudentCompleteOverseas",
 							"schemaname": "ict"
 						}
 					}
