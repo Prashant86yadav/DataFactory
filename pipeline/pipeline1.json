@@ -51,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "IndustryAnzscoGender",
+							"tablename": "StudentCompleteDomestic",
 							"schemaname": "ict"
 						}
 					}
