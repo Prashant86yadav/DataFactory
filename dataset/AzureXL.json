@@ -14,7 +14,7 @@
 				"fileName": "ICT Statistics.xlsx",
 				"container": "dewr-reports"
 			},
-			"range": "A1:D1072",
+			"range": "A1:E201",
 			"firstRowAsHeader": true
 		},
 		"schema": [
