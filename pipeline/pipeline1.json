@@ -37,7 +37,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_deltaLakePremium",
+						"referenceName": "DeltaLakeDeleteafteruse",
 						"type": "DatasetReference"
 					}
 				]
