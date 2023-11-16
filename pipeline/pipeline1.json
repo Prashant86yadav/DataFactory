@@ -28,7 +28,14 @@
 							"type": "AzureDatabricksDeltaLakeImportCommand"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureDataLakeStorage",
+							"type": "LinkedServiceReference"
+						},
+						"path": "landing"
+					}
 				},
 				"inputs": [
 					{
