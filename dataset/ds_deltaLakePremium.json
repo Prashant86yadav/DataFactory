@@ -2,13 +2,12 @@
 	"name": "ds_deltaLakePremium",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDatabricksPremium",
+			"referenceName": "Ls_ACSDatabricksDeltaLake",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
-			"database": "msa",
 			"table": "assessment"
 		},
 		"schema": []
