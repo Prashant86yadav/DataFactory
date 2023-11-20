@@ -1,9 +1,9 @@
 {
-	"name": "msa_dailyopencases_refresh",
+	"name": "Refresh Open Cases",
 	"properties": {
 		"activities": [
 			{
-				"name": "Refresh View",
+				"name": "Refresh Table",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

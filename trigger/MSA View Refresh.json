@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "msa_dailyopencases_refresh",
+					"referenceName": "Refresh Open Cases",
 					"type": "PipelineReference"
 				}
 			}
