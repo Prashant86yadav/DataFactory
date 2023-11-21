@@ -19,7 +19,7 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
-				"fileSystem": "dewr-reports"
+				"fileSystem": "databricskpremium"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
