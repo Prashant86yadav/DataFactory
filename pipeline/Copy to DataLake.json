@@ -76,7 +76,14 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet Case Finalised Best Notebook"
+				},
+				"linkedServiceName": {
+					"referenceName": "ACS Databricks Premium",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
