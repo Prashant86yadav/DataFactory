@@ -76,11 +76,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
-				"linkedServiceName": {
-					"referenceName": "ls_databricksProd",
-					"type": "LinkedServiceReference"
-				}
+				"userProperties": []
 			}
 		],
 		"folder": {
