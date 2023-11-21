@@ -5,14 +5,7 @@
 			{
 				"name": "StartCluster",
 				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "GetAccessTokenFromKV",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -37,26 +30,6 @@
 						"value": "{\n  \"cluster_id\": \"@{pipeline().parameters.clusterId}\"\n}",
 						"type": "Expression"
 					}
-				}
-			},
-			{
-				"name": "GetAccessTokenFromKV",
-				"type": "WebActivity",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": true,
-					"secureInput": true
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": {
-						"value": "https://@{pipeline().globalParameters.dvrKeyVaultDNSName}.vault.azure.net/secrets/LS-Databricks-AccessToken/@{pipeline().globalParameters.dvrDatabricksAccessToken_KvSecretVersion}?api-version=7.0",
-						"type": "Expression"
-					},
-					"method": "GET"
 				}
 			},
 			{
