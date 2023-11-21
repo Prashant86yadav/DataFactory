@@ -59,7 +59,7 @@
 				]
 			},
 			{
-				"name": "Notebook1",
+				"name": "Prophet Case finalised",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
