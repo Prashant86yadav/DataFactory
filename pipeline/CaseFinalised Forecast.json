@@ -5,7 +5,14 @@
 			{
 				"name": "SQL TO DataLake",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "StartDatabricksCluster",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -83,6 +90,19 @@
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
 					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "StartDatabricksCluster",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "SF Account Refresh",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],
