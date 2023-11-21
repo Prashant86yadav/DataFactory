@@ -85,7 +85,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet New Cases Best Notebook"
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMA Daily OpenCases "
 				},
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
