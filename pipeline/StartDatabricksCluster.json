@@ -86,7 +86,8 @@
 		],
 		"parameters": {
 			"clusterId": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "1010-010936-bskqk28r"
 			}
 		},
 		"variables": {
