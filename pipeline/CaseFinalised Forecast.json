@@ -99,7 +99,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "SF Account Refresh",
+						"referenceName": "StartDatabricksCluster",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
