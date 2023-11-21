@@ -3,18 +3,7 @@
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Started",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "MSA Dumps",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"startdate": "2023-05-01 00:00:00",
-					"enddate": "2023-05-31 00:00:00"
-				}
-			}
-		],
+		"pipelines": [],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
