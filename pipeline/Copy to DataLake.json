@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date \norder by date ",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -50,7 +51,10 @@
 				"outputs": [
 					{
 						"referenceName": "ds_DatabricksPremiumFolder",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "casefinalised"
+						}
 					}
 				]
 			}
