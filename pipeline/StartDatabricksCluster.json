@@ -22,7 +22,7 @@
 					"method": "POST",
 					"headers": {
 						"Authorization": {
-							"value": "Bearer @{activity('GetAccessTokenFromKV').output.value}",
+							"value": "Bearer dapiae199d2cfc48215b4a5031740793f3c5",
 							"type": "Expression"
 						}
 					},
