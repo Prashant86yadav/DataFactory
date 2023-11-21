@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": {
-						"value": "@{pipeline().globalParameters.dvrDatabricksWorkspaceURL}api/2.0/clusters/start",
+						"value": "https://adb-788505602918573.13.azuredatabricks.net/api/2.0/clusters/start",
 						"type": "Expression"
 					},
 					"method": "POST",
