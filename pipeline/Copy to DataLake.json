@@ -49,7 +49,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_dewr_dataLake",
+						"referenceName": "ds_DatabricksPremiumFolder",
 						"type": "DatasetReference"
 					}
 				]
