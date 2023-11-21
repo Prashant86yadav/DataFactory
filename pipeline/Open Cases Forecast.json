@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_InPrep_TobeAllocated] where date > '2018-01-01'\n\ngroup by date \norder by date ",
+						"sqlReaderQuery": "select * from [psas].[opencasesdaily]\nOPTION (MAXRECURSION 32767)",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
