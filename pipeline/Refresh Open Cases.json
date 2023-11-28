@@ -60,6 +60,26 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "ARIMA New Cases",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMA Daily OpenCases "
+				},
+				"linkedServiceName": {
+					"referenceName": "ACS Databricks Premium",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
