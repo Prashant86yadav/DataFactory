@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"ACS Databricks Premium_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ACS Databricks Premium'"
+		},
 		"ACSSFPROD_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
@@ -71,9 +75,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
-		"ls_databricksProd_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'ls_databricksProd'"
+		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1010-010936-bskqk28r"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -122,26 +126,6 @@
 		"ls_DataLake_DPP_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
-		},
-		"ls_databricksProd_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "0524-225117-lltght03"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-05-01 00:00:00"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-05-31 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-05-01 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-05-31 00:00:00"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -313,13 +297,13 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/MSA Dumps')]",
+			"name": "[concat(parameters('factoryName'), '/CSV Uploads')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "RW",
+						"name": "Excel Upload",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -333,32 +317,24 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "\nEXEC received_withdrawn '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
+								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date ",
 								"queryTimeout": "02:00:00",
+								"isolationLevel": "ReadCommitted",
 								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
+								"type": "AzureDatabricksDeltaLakeSink",
+								"importSettings": {
+									"type": "AzureDatabricksDeltaLakeImportCommand"
 								}
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureDataLakeStorage",
+									"type": "LinkedServiceReference"
+								},
+								"path": "landing"
 							}
 						},
 						"inputs": [
@@ -370,296 +346,141 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "recieve_withdrawn"
-								}
-							}
-						]
-					},
-					{
-						"name": "AQF",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "RW",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC AQF '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
+								"referenceName": "DeltaLakeDeleteafteruse",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "AQF"
-								}
-							}
-						]
-					},
-					{
-						"name": "caseload",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "AQF",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC caseload  '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "caseload"
-								}
-							}
-						]
-					},
-					{
-						"name": "Top 10 Countries",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "caseload",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC toptencountry   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "top10countries"
-								}
-							}
-						]
-					},
-					{
-						"name": "Remaining  Countries",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Top 10 Countries",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "\nEXEC remaining   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "remaining"
-								}
 							}
 						]
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"startdate": {
-						"type": "string",
-						"defaultValue": "2023-04-01 00:00:00"
+				"folder": {
+					"name": "ACS/ICT"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/DeltaLakeDeleteafteruse')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Case Finalised Forecast')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "StartDatabricksCluster",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date \norder by date ",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "casefinalised"
+								}
+							}
+						]
 					},
-					"enddate": {
-						"type": "string",
-						"defaultValue": "2023-04-30 00:00:00"
+					{
+						"name": "Prophet Case finalised",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SQL TO DataLake",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet Case Finalised Best Notebook"
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "StartDatabricksCluster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "StartDatabricksCluster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "ACS/MSA"
@@ -668,7 +489,9 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/ds_dewr_dataLake')]"
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]",
+				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]",
+				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]"
 			]
 		},
 		{
@@ -1161,8 +984,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "ACS/Membership"
@@ -1172,6 +994,359 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureXL')]",
 				"[concat(variables('factoryId'), '/datasets/ds_sql_memebershipdb')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/New Cases Forecast')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "StartDatabricksCluster",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_InPrep_TobeAllocated] where date > '2018-01-01'\n\ngroup by date \norder by date ",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "NewCases"
+								}
+							}
+						]
+					},
+					{
+						"name": "Prophet Case finalised",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SQL TO DataLake",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet New Cases Best Notebook"
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "StartDatabricksCluster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "StartDatabricksCluster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]",
+				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]",
+				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Open Cases Forecast')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "StartDatabricksCluster",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from [psas].[opencasesdaily]\nOPTION (MAXRECURSION 32767)",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "NewCases"
+								}
+							}
+						]
+					},
+					{
+						"name": "ARIMA Open Cases",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SQL TO DataLake",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMADaily_OpenCases"
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "StartDatabricksCluster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "StartDatabricksCluster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]",
+				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]",
+				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Refresh Open Cases')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Refresh Table",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from psas.opencasesdaily OPTION (MAXRECURSION 0)",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [psas].[dailyCases]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"parallelCopies": 4,
+							"dataIntegrationUnits": 8,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "opencasesdaily",
+									"schemaname": "psas"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "dailyCases",
+									"schemaname": "psas"
+								}
+							}
+						]
+					},
+					{
+						"name": "ARIMA New Cases",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMA Daily OpenCases "
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]",
+				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]"
 			]
 		},
 		{
@@ -1379,8 +1554,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -1625,8 +1799,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -1868,8 +2041,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -2119,8 +2291,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -2373,8 +2544,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -2613,8 +2783,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -2855,8 +3024,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -3101,8 +3269,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -3344,8 +3511,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -3590,8 +3756,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -3693,8 +3858,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "ACS/Salesforce"
@@ -3776,17 +3940,16 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Account_History__c"
+						"defaultValue": "user"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Account_History__c"
+						"defaultValue": "user_dump"
 					}
 				},
 				"variables": {
@@ -4010,8 +4173,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -4253,8 +4415,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -4499,8 +4660,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -4745,8 +4905,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -4759,7 +4918,7 @@
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": " Id, Username, LastName, FirstName, Name, CompanyName, Division, Department, Title, Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Email, EmailPreferencesAutoBcc, EmailPreferencesAutoBccStayInTouch, EmailPreferencesStayInTouchReminder, SenderEmail, SenderName, Signature, StayInTouchSubject, StayInTouchSignature, StayInTouchNote, Phone, Fax, MobilePhone, Alias, CommunityNickname, BadgeText, IsActive, TimeZoneSidKey, UserRoleId, LocaleSidKey, ReceivesInfoEmails, ReceivesAdminInfoEmails, EmailEncodingKey, DefaultCurrencyIsoCode, CurrencyIsoCode, ProfileId, UserType, LanguageLocaleKey, EmployeeNumber, DelegatedApproverId, ManagerId, LastLoginDate, LastPasswordChangeDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, NumberOfFailedLogins, OfflineTrialExpirationDate, OfflinePdaTrialExpirationDate, UserPermissionsMarketingUser, UserPermissionsOfflineUser, UserPermissionsAvantgoUser, UserPermissionsCallCenterAutoLogin, UserPermissionsSFContentUser, UserPermissionsInteractionUser, UserPermissionsSupportUser, UserPermissionsChatterAnswersUser, ForecastEnabled, UserPreferencesActivityRemindersPopup, UserPreferencesEventRemindersCheckboxDefault, UserPreferencesTaskRemindersCheckboxDefault, UserPreferencesReminderSoundOff, UserPreferencesDisableAllFeedsEmail, UserPreferencesDisableFollowersEmail, UserPreferencesDisableProfilePostEmail, UserPreferencesDisableChangeCommentEmail, UserPreferencesDisableLaterCommentEmail, UserPreferencesDisProfPostCommentEmail, UserPreferencesContentNoEmail, UserPreferencesContentEmailAsAndWhen, UserPreferencesApexPagesDeveloperMode, UserPreferencesReceiveNoNotificationsAsApprover, UserPreferencesReceiveNotificationsAsDelegatedApprover, UserPreferencesHideCSNGetChatterMobileTask, UserPreferencesDisableMentionsPostEmail, UserPreferencesDisMentionsCommentEmail, UserPreferencesHideCSNDesktopTask, UserPreferencesHideChatterOnboardingSplash, UserPreferencesHideSecondChatterOnboardingSplash, UserPreferencesDisCommentAfterLikeEmail, UserPreferencesDisableLikeEmail, UserPreferencesSortFeedByComment, UserPreferencesDisableMessageEmail, UserPreferencesHideLegacyRetirementModal, UserPreferencesDisableBookmarkEmail, UserPreferencesDisableSharePostEmail, UserPreferencesEnableAutoSubForFeeds, UserPreferencesDisableFileShareNotificationsForApi, UserPreferencesShowTitleToExternalUsers, UserPreferencesShowManagerToExternalUsers, UserPreferencesShowEmailToExternalUsers, UserPreferencesShowWorkPhoneToExternalUsers, UserPreferencesShowMobilePhoneToExternalUsers, UserPreferencesShowFaxToExternalUsers, UserPreferencesShowStreetAddressToExternalUsers, UserPreferencesShowCityToExternalUsers, UserPreferencesShowStateToExternalUsers, UserPreferencesShowPostalCodeToExternalUsers, UserPreferencesShowCountryToExternalUsers, UserPreferencesShowProfilePicToGuestUsers, UserPreferencesShowTitleToGuestUsers, UserPreferencesShowCityToGuestUsers, UserPreferencesShowStateToGuestUsers, UserPreferencesShowPostalCodeToGuestUsers, UserPreferencesShowCountryToGuestUsers, UserPreferencesShowForecastingChangeSignals, UserPreferencesHideS1BrowserUI, UserPreferencesDisableEndorsementEmail, UserPreferencesPathAssistantCollapsed, UserPreferencesCacheDiagnostics, UserPreferencesShowEmailToGuestUsers, UserPreferencesShowManagerToGuestUsers, UserPreferencesShowWorkPhoneToGuestUsers, UserPreferencesShowMobilePhoneToGuestUsers, UserPreferencesShowFaxToGuestUsers, UserPreferencesShowStreetAddressToGuestUsers, UserPreferencesLightningExperiencePreferred, UserPreferencesPreviewLightning, UserPreferencesHideEndUserOnboardingAssistantModal, UserPreferencesHideLightningMigrationModal, UserPreferencesHideSfxWelcomeMat, UserPreferencesHideBiggerPhotoCallout, UserPreferencesGlobalNavBarWTShown, UserPreferencesGlobalNavGridMenuWTShown, UserPreferencesCreateLEXAppsWTShown, UserPreferencesFavoritesWTShown, UserPreferencesRecordHomeSectionCollapseWTShown, UserPreferencesRecordHomeReservedWTShown, UserPreferencesFavoritesShowTopFavorites, UserPreferencesExcludeMailAppAttachments, UserPreferencesSuppressTaskSFXReminders, UserPreferencesSuppressEventSFXReminders, UserPreferencesPreviewCustomTheme, UserPreferencesHasCelebrationBadge, UserPreferencesUserDebugModePref, UserPreferencesSRHOverrideActivities, UserPreferencesNewLightningReportRunPageEnabled, UserPreferencesReverseOpenActivitiesView, UserPreferencesHasSentWarningEmail, UserPreferencesNativeEmailClient, UserPreferencesHideBrowseProductRedirectConfirmation, UserPreferencesHideOnlineSalesAppWelcomeMat, ContactId, AccountId, CallCenterId, Extension, PortalRole, IsPortalEnabled, FederationIdentifier, AboutMe, FullPhotoUrl, SmallPhotoUrl, IsExtIndicatorVisible, OutOfOfficeMessage, MediumPhotoUrl, DigestFrequency, DefaultGroupNotificationFrequency, LastViewedDate, LastReferencedDate, BannerPhotoUrl, SmallBannerPhotoUrl, MediumBannerPhotoUrl, IsProfilePhotoActive, IndividualId, XEN_ID__c, AccountID__c, Assessor__c, CMSIntegrationUserEmail__c, MemberAccountId__c, Membership_Number__c, Office_Address_City__c, Office_Address_Country__c, Office_Address_Postal_Code__c, Office_Address_State__c, Office_Address_Street__c, WebsiteRole__c, FullName__c, User_18_Digit_Id__c, Deactivated_Date__c, Purchase_Order_Approver__c, Litmos__Access_Level__c, Litmos__Completed_Percentage__c Litmos__Courses_Assigned__c, Litmos__Courses_Completed__c, Litmos__Deactivate_From_Litmos__c, Litmos__Learning_Paths_Assigned__c, Litmos__Learning_Paths_Completed__c, Litmos__LitmosUserId__c, Litmos__Litmos_Activated__c, Litmos__Litmos_Login_Access__c, Litmos__OriginalId__c, Litmos__Sync_Litmos__c, Litmos__Team_Id__c, Litmos__Total_Sum_Percentages__c, Litmos__Total_User_Program_Results__c, Litmos__User_Id__c, Litmos__lp_Completed_Percentage__c, Litmos__p_Completed_Percentage__c, Access_to_Canvas__c, User_15_Digit_Id__c, Billing_Grade__c, Member_Grade__c, WebRole__c, CardExpiryDate__c, CertifiedToDate__c, ComputerProfStatus__c, IsAustralianUser__c, Is_Litmos__c, Is_New_User__c, MembershipExpiryDate__c, PartiallyCompletedCertID__c, Position_Title__c, Preferred_Name__c, Is_Changed__c, PartiallyCompletedMicroCredentialId__c, Community_Name__c"
+						"defaultValue": " Id, Username, LastName, FirstName, Name, CompanyName, Division, Department, Title, Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Email, EmailPreferencesAutoBcc, EmailPreferencesAutoBccStayInTouch, EmailPreferencesStayInTouchReminder, SenderEmail, SenderName, Signature, StayInTouchSubject, StayInTouchSignature, StayInTouchNote, Phone, Fax, MobilePhone, Alias, CommunityNickname, BadgeText, IsActive, TimeZoneSidKey, UserRoleId, LocaleSidKey, ReceivesInfoEmails, ReceivesAdminInfoEmails, EmailEncodingKey, DefaultCurrencyIsoCode, CurrencyIsoCode, ProfileId, UserType, LanguageLocaleKey, EmployeeNumber, DelegatedApproverId, ManagerId, LastLoginDate, LastPasswordChangeDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, NumberOfFailedLogins, OfflineTrialExpirationDate, OfflinePdaTrialExpirationDate, UserPermissionsMarketingUser, UserPermissionsOfflineUser, UserPermissionsAvantgoUser, UserPermissionsCallCenterAutoLogin, UserPermissionsSFContentUser, UserPermissionsInteractionUser, UserPermissionsSupportUser, UserPermissionsChatterAnswersUser, ForecastEnabled, UserPreferencesActivityRemindersPopup, UserPreferencesEventRemindersCheckboxDefault, UserPreferencesTaskRemindersCheckboxDefault, UserPreferencesReminderSoundOff, UserPreferencesDisableAllFeedsEmail, UserPreferencesDisableFollowersEmail, UserPreferencesDisableProfilePostEmail, UserPreferencesDisableChangeCommentEmail, UserPreferencesDisableLaterCommentEmail, UserPreferencesDisProfPostCommentEmail, UserPreferencesContentNoEmail, UserPreferencesContentEmailAsAndWhen, UserPreferencesApexPagesDeveloperMode, UserPreferencesReceiveNoNotificationsAsApprover, UserPreferencesReceiveNotificationsAsDelegatedApprover, UserPreferencesHideCSNGetChatterMobileTask, UserPreferencesDisableMentionsPostEmail, UserPreferencesDisMentionsCommentEmail, UserPreferencesHideCSNDesktopTask, UserPreferencesHideChatterOnboardingSplash, UserPreferencesHideSecondChatterOnboardingSplash, UserPreferencesDisCommentAfterLikeEmail, UserPreferencesDisableLikeEmail, UserPreferencesSortFeedByComment, UserPreferencesDisableMessageEmail, UserPreferencesHideLegacyRetirementModal, UserPreferencesDisableBookmarkEmail, UserPreferencesDisableSharePostEmail, UserPreferencesEnableAutoSubForFeeds, UserPreferencesDisableFileShareNotificationsForApi, UserPreferencesShowTitleToExternalUsers, UserPreferencesShowManagerToExternalUsers, UserPreferencesShowEmailToExternalUsers, UserPreferencesShowWorkPhoneToExternalUsers, UserPreferencesShowMobilePhoneToExternalUsers, UserPreferencesShowFaxToExternalUsers, UserPreferencesShowStreetAddressToExternalUsers, UserPreferencesShowCityToExternalUsers, UserPreferencesShowStateToExternalUsers, UserPreferencesShowPostalCodeToExternalUsers, UserPreferencesShowCountryToExternalUsers, UserPreferencesShowProfilePicToGuestUsers, UserPreferencesShowTitleToGuestUsers, UserPreferencesShowCityToGuestUsers, UserPreferencesShowStateToGuestUsers, UserPreferencesShowPostalCodeToGuestUsers, UserPreferencesShowCountryToGuestUsers, UserPreferencesHideInvoicesRedirectConfirmation, UserPreferencesHideStatementsRedirectConfirmation, UserPreferencesHideS1BrowserUI, UserPreferencesDisableEndorsementEmail, UserPreferencesPathAssistantCollapsed, UserPreferencesCacheDiagnostics, UserPreferencesShowEmailToGuestUsers, UserPreferencesShowManagerToGuestUsers, UserPreferencesShowWorkPhoneToGuestUsers, UserPreferencesShowMobilePhoneToGuestUsers, UserPreferencesShowFaxToGuestUsers, UserPreferencesShowStreetAddressToGuestUsers, UserPreferencesLightningExperiencePreferred, UserPreferencesPreviewLightning, UserPreferencesHideEndUserOnboardingAssistantModal, UserPreferencesHideLightningMigrationModal, UserPreferencesHideSfxWelcomeMat, UserPreferencesHideBiggerPhotoCallout, UserPreferencesGlobalNavBarWTShown, UserPreferencesGlobalNavGridMenuWTShown, UserPreferencesCreateLEXAppsWTShown, UserPreferencesFavoritesWTShown, UserPreferencesRecordHomeSectionCollapseWTShown, UserPreferencesRecordHomeReservedWTShown, UserPreferencesFavoritesShowTopFavorites, UserPreferencesExcludeMailAppAttachments, UserPreferencesSuppressTaskSFXReminders, UserPreferencesSuppressEventSFXReminders, UserPreferencesPreviewCustomTheme, UserPreferencesHasCelebrationBadge, UserPreferencesUserDebugModePref, UserPreferencesSRHOverrideActivities, UserPreferencesNewLightningReportRunPageEnabled, UserPreferencesNativeEmailClient, UserPreferencesHideBrowseProductRedirectConfirmation, ContactId, AccountId, CallCenterId, Extension, PortalRole, IsPortalEnabled, FederationIdentifier, AboutMe, FullPhotoUrl, SmallPhotoUrl, IsExtIndicatorVisible, OutOfOfficeMessage, MediumPhotoUrl, DigestFrequency, DefaultGroupNotificationFrequency, LastViewedDate, LastReferencedDate, BannerPhotoUrl, SmallBannerPhotoUrl, MediumBannerPhotoUrl, IsProfilePhotoActive, IndividualId, XEN_ID__c, AccountID__c, Assessor__c, CMSIntegrationUserEmail__c, MemberAccountId__c, Membership_Number__c, Office_Address_City__c, Office_Address_Country__c, Office_Address_Postal_Code__c, Office_Address_State__c, Office_Address_Street__c, WebsiteRole__c, FullName__c, User_18_Digit_Id__c, Deactivated_Date__c, Purchase_Order_Approver__c, Litmos__Access_Level__c, Litmos__Completed_Percentage__c, Litmos__Courses_Assigned__c, Litmos__Courses_Completed__c, Litmos__Deactivate_From_Litmos__c, Litmos__Learning_Paths_Assigned__c, Litmos__Learning_Paths_Completed__c, Litmos__LitmosUserId__c, Litmos__Litmos_Activated__c, Litmos__Litmos_Login_Access__c, Litmos__OriginalId__c, Litmos__Sync_Litmos__c, Litmos__Team_Id__c, Litmos__Total_Sum_Percentages__c, Litmos__Total_User_Program_Results__c, Litmos__User_Id__c, Litmos__lp_Completed_Percentage__c, Litmos__p_Completed_Percentage__c, Access_to_Canvas__c, User_15_Digit_Id__c, Billing_Grade__c, Member_Grade__c, WebRole__c, CardExpiryDate__c, CertifiedToDate__c, ComputerProfStatus__c IsAustralianUser__c, Is_Litmos__c, Is_New_User__c, MembershipExpiryDate__c, PartiallyCompletedCertID__c, Position_Title__c, Preferred_Name__c, Is_Changed__c, PartiallyCompletedMicroCredentialId__c, Community_Name__c"
 					},
 					"schemaname": {
 						"type": "string",
@@ -4991,8 +5150,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"parameters": {
 					"SourceTableName": {
@@ -5033,17 +5191,17 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/msa_dailyopencases_refresh')]",
+			"name": "[concat(parameters('factoryName'), '/StartDatabricksCluster')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
-						"type": "Copy",
+						"name": "StartCluster",
+						"type": "WebActivity",
 						"dependsOn": [],
 						"policy": {
-							"timeout": "0.12:00:00",
+							"timeout": "7.00:00:00",
 							"retry": 0,
 							"retryIntervalInSeconds": 30,
 							"secureOutput": false,
@@ -5051,65 +5209,71 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from psas.opencasesdaily OPTION (MAXRECURSION 0)",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
+							"url": {
+								"value": "https://adb-788505602918573.13.azuredatabricks.net/api/2.0/clusters/start",
+								"type": "Expression"
 							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [psas].[dailyCases]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"parallelCopies": 4,
-							"dataIntegrationUnits": 8,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
+							"method": "POST",
+							"headers": {
+								"Authorization": {
+									"value": "Bearer dapiae199d2cfc48215b4a5031740793f3c5",
+									"type": "Expression"
 								}
+							},
+							"body": {
+								"value": "{\n  \"cluster_id\": \"@{pipeline().parameters.clusterId}\"\n}",
+								"type": "Expression"
 							}
-						},
-						"inputs": [
+						}
+					},
+					{
+						"name": "Ignore error",
+						"type": "SetVariable",
+						"dependsOn": [
 							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "opencasesdaily",
-									"schemaname": "psas"
-								}
+								"activity": "StartCluster",
+								"dependencyConditions": [
+									"Failed"
+								]
 							}
 						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "dailyCases",
-									"schemaname": "psas"
-								}
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "error",
+							"value": {
+								"value": "@activity('StartCluster').error.message",
+								"type": "Expression"
 							}
-						]
+						}
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"clusterId": {
+						"type": "string",
+						"defaultValue": "1010-010936-bskqk28r"
+					}
+				},
+				"variables": {
+					"output": {
+						"type": "String"
+					},
+					"error": {
+						"type": "String"
+					}
 				},
 				"folder": {
 					"name": "ACS/MSA"
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_RawAnalyticsDaily_Incre')]",
@@ -13749,8 +13913,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"variables": {
 					"filename": {
@@ -22408,8 +22571,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"variables": {
 					"filename": {
@@ -22807,8 +22969,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "HCO"
@@ -23201,8 +23362,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "HCO"
@@ -23421,8 +23581,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "HCO"
@@ -23627,8 +23786,7 @@
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "HCO"
@@ -23639,6 +23797,83 @@
 				"[concat(variables('factoryId'), '/datasets/TrackingData')]",
 				"[concat(variables('factoryId'), '/linkedServices/LSSQLPOC')]",
 				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test and Delete')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from [psas].[OpenCaseSince2018]\nOPTION (MAXRECURSION 32767)",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "Opencases"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
 			]
 		},
 		{
@@ -23654,7 +23889,7 @@
 				"type": "SalesforceObject",
 				"schema": [],
 				"typeProperties": {
-					"objectApiName": "Experience__c"
+					"objectApiName": "user"
 				}
 			},
 			"dependsOn": [
@@ -27236,8 +27471,8 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "ICT"
+					"schema": "psas",
+					"table": "dailyCases"
 				}
 			},
 			"dependsOn": [
@@ -27256,12 +27491,13 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Report input from SF",
+					"sheetName": "StudentEnrollOver",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Membership all data 01082023.xlsx",
-						"container": "databrickslanding"
+						"fileName": "ICT Statistics.xlsx",
+						"container": "dewr-reports"
 					},
+					"range": "A1:D568",
 					"firstRowAsHeader": true
 				},
 				"schema": [
@@ -27372,6 +27608,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Datafeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DeltaLakeDeleteafteruse')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_ACSDatabricksDeltaLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLakeDataset",
+				"typeProperties": {
+					"database": "msa",
+					"table": "Casefinalsed_Daily"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls_ACSDatabricksDeltaLake')]"
 			]
 		},
 		{
@@ -27524,6 +27781,42 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_DatabricksPremiumFolder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dewr_ls",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"fileSystem": "databricskpremium"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/dewr_ls')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_canvas')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -27553,7 +27846,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_databricksDeltaLake_db')]",
+			"name": "[concat(parameters('factoryName'), '/ds_deltaLakePremium')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -27564,70 +27857,12 @@
 				"annotations": [],
 				"type": "AzureDatabricksDeltaLakeDataset",
 				"typeProperties": {
-					"database": "msa",
-					"table": "assessment_history"
+					"table": "assessment"
 				},
 				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Ls_ACSDatabricksDeltaLake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_deltaLakePremium')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricksPremium",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLakeDataset",
-				"typeProperties": {
-					"database": "msa",
-					"table": "assessment_history"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksPremium')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_dewr_dataLake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dewr_ls",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"filename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().filename",
-							"type": "Expression"
-						},
-						"fileSystem": "dewr-reports"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/dewr_ls')]"
 			]
 		},
 		{
@@ -27664,8 +27899,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "rawAssessment/parquetTest",
-						"fileSystem": "landing"
+						"fileName": "assessment.parquet",
+						"fileSystem": "external"
 					},
 					"compressionCodec": "snappy"
 				},
@@ -27986,6 +28221,24 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ACS Databricks Premium')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('ACS Databricks Premium_accessToken')]"
+					},
+					"existingClusterId": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ACSSFPROD')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -28155,11 +28408,12 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"description": "Connect to Premium Databricks ",
 				"annotations": [],
 				"type": "AzureDatabricksDeltaLake",
 				"typeProperties": {
-					"domain": "https://adb-7757545527689401.1.azuredatabricks.net",
-					"clusterId": "0323-061008-xwb0cb1p",
+					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
+					"clusterId": "1010-010936-bskqk28r",
 					"accessToken": {
 						"type": "SecureString",
 						"value": "[parameters('Ls_ACSDatabricksDeltaLake_accessToken')]"
@@ -28258,68 +28512,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ls_databricksProd')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('ls_databricksProd_accessToken')]"
-					},
-					"existingClusterId": "[parameters('ls_databricksProd_properties_typeProperties_existingClusterId')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MSA DEWR BACKUP')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "MSA Dumps",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"startdate": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate')]",
-							"enddate": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 1,
-						"startTime": "2023-05-30T23:39:00",
-						"timeZone": "AUS Eastern Standard Time",
-						"schedule": {
-							"minutes": [
-								55
-							],
-							"hours": [
-								23
-							],
-							"monthDays": [
-								-1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/MSA Dumps')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/MSA View Refresh')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -28329,7 +28521,7 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "msa_dailyopencases_refresh",
+							"referenceName": "Refresh Open Cases",
 							"type": "PipelineReference"
 						},
 						"parameters": {}
@@ -28354,11 +28546,11 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/msa_dailyopencases_refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/Refresh Open Cases')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/MSA-DEWR')]",
+			"name": "[concat(parameters('factoryName'), '/MSA Weekly')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -28367,38 +28559,51 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "MSA Dumps",
+							"referenceName": "Case Finalised Forecast",
 							"type": "PipelineReference"
 						},
-						"parameters": {
-							"startdate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]",
-							"enddate": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
-						}
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "New Cases Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Open Cases Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Month",
+						"frequency": "Week",
 						"interval": 1,
-						"startTime": "2023-04-30T23:59:00",
-						"timeZone": "E. Australia Standard Time",
+						"startTime": "2023-12-04T04:24:00",
+						"timeZone": "AUS Eastern Standard Time",
 						"schedule": {
 							"minutes": [
-								30
+								0
 							],
 							"hours": [
-								23
+								8
 							],
-							"monthDays": [
-								-1
+							"weekDays": [
+								"Monday"
 							]
 						}
 					}
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/MSA Dumps')]"
+				"[concat(variables('factoryId'), '/pipelines/Case Finalised Forecast')]",
+				"[concat(variables('factoryId'), '/pipelines/New Cases Forecast')]",
+				"[concat(variables('factoryId'), '/pipelines/Open Cases Forecast')]"
 			]
 		},
 		{

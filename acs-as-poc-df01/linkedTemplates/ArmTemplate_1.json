@@ -17,6 +17,32 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ACSDSSFOR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ACSSFPROD",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SalesforceObject",
+				"schema": [],
+				"typeProperties": {
+					"objectApiName": {
+						"value": "@dataset().SourceTableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AnalyticsDatafeed')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3561,8 +3587,8 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "ICT"
+					"schema": "psas",
+					"table": "dailyCases"
 				}
 			},
 			"dependsOn": []
@@ -3579,12 +3605,13 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Report input from SF",
+					"sheetName": "StudentEnrollOver",
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "Membership all data 01082023.xlsx",
-						"container": "databrickslanding"
+						"fileName": "ICT Statistics.xlsx",
+						"container": "dewr-reports"
 					},
+					"range": "A1:D568",
 					"firstRowAsHeader": true
 				},
 				"schema": [
@@ -3688,6 +3715,25 @@
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DeltaLakeDeleteafteruse')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls_ACSDatabricksDeltaLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLakeDataset",
+				"typeProperties": {
+					"database": "msa",
+					"table": "Casefinalsed_Daily"
 				},
 				"schema": []
 			},
@@ -3835,6 +3881,40 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_DatabricksPremiumFolder')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "dewr_ls",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"fileSystem": "databricskpremium"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_canvas')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3862,7 +3942,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_databricksDeltaLake_db')]",
+			"name": "[concat(parameters('factoryName'), '/ds_deltaLakePremium')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3873,61 +3953,7 @@
 				"annotations": [],
 				"type": "AzureDatabricksDeltaLakeDataset",
 				"typeProperties": {
-					"database": "msa",
-					"table": "assessment_history"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_deltaLakePremium')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricksPremium",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLakeDataset",
-				"typeProperties": {
-					"database": "msa",
-					"table": "assessment_history"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_dewr_dataLake')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "dewr_ls",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"filename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().filename",
-							"type": "Expression"
-						},
-						"fileSystem": "dewr-reports"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"table": "assessment"
 				},
 				"schema": []
 			},
@@ -3965,8 +3991,8 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "rawAssessment/parquetTest",
-						"fileSystem": "landing"
+						"fileName": "assessment.parquet",
+						"fileSystem": "external"
 					},
 					"compressionCodec": "snappy"
 				},
@@ -4298,13 +4324,13 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/MSA Dumps')]",
+			"name": "[concat(parameters('factoryName'), '/CSV Uploads')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "RW",
+						"name": "Excel Upload",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -4318,32 +4344,24 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "\nEXEC received_withdrawn '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
+								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date ",
 								"queryTimeout": "02:00:00",
+								"isolationLevel": "ReadCommitted",
 								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
+								"type": "AzureDatabricksDeltaLakeSink",
+								"importSettings": {
+									"type": "AzureDatabricksDeltaLakeImportCommand"
 								}
 							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
+							"enableStaging": true,
+							"stagingSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureDataLakeStorage",
+									"type": "LinkedServiceReference"
+								},
+								"path": "landing"
 							}
 						},
 						"inputs": [
@@ -4355,296 +4373,140 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "recieve_withdrawn"
-								}
-							}
-						]
-					},
-					{
-						"name": "AQF",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "RW",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC AQF '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
+								"referenceName": "DeltaLakeDeleteafteruse",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "AQF"
-								}
-							}
-						]
-					},
-					{
-						"name": "caseload",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "AQF",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC caseload  '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "caseload"
-								}
-							}
-						]
-					},
-					{
-						"name": "Top 10 Countries",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "caseload",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "EXEC toptencountry   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "top10countries"
-								}
-							}
-						]
-					},
-					{
-						"name": "Remaining  Countries",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Top 10 Countries",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "\nEXEC remaining   '@{formatDateTime(pipeline().parameters.startdate, 'yyyy-MM-dd')}',\n                   '@{formatDateTime(pipeline().parameters.enddate, 'yyyy-MM-dd')}'",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".xlsx"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_dewr_dataLake",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "remaining"
-								}
 							}
 						]
 					}
 				],
 				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"elapsedTimeMetric": {}
 				},
-				"parameters": {
-					"startdate": {
-						"type": "string",
-						"defaultValue": "2023-04-01 00:00:00"
+				"folder": {
+					"name": "ACS/ICT"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/DeltaLakeDeleteafteruse')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Case Finalised Forecast')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "StartDatabricksCluster",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date \norder by date ",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "casefinalised"
+								}
+							}
+						]
 					},
-					"enddate": {
-						"type": "string",
-						"defaultValue": "2023-04-30 00:00:00"
+					{
+						"name": "Prophet Case finalised",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SQL TO DataLake",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet Case Finalised Best Notebook"
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "StartDatabricksCluster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "StartDatabricksCluster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
 				},
 				"folder": {
 					"name": "ACS/MSA"
@@ -4653,755 +4515,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/ds_dewr_dataLake')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Membership ingest')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Billing Grade",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Billing Grade",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Branch Group",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Branch Group",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Member Grade",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Member Grade",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Date of Birth",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Date of Birth",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Gender",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Gender",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Certification Group",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Certification Group",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Certification Level",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Certification Level",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PPP",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PPP",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "PPP Account for Current Membership",
-											"type": "String"
-										},
-										"sink": {
-											"name": "PPP Account for Current Membership",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Account 18 Digits ID",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Account 18 Digits ID",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Email",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Email",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Primary Account Type",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Primary Account Type",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Membership Number",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Membership Number",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Membership Status",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Membership Status",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Account Name",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Account Name",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Current Membership Expiry",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Current Membership Expiry",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Joined Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Joined Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "BGG",
-											"type": "String"
-										},
-										"sink": {
-											"name": "BGG",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Branch",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Branch",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Geography",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Geography",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Home Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Home Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Work Country",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Work Country",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Former Billing Grade1",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Former Billing Grade1",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Former Billing Grade2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Former Billing Grade2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Days since Current Membership Expiry",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Days since Current Membership Expiry",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Days Check",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Days Check",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Billing Grade 2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Billing Grade 2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "BGG2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "BGG2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Branch Group 2",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Branch Group 2",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Coment"
-										},
-										"sink": {
-											"name": "Comment"
-										}
-									},
-									{
-										"source": {
-											"name": "New",
-											"type": "String"
-										},
-										"sink": {
-											"name": "New?"
-										}
-									},
-									{
-										"source": {
-											"name": "Status",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Status",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Join Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Join Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "BGG2- OLD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "BGG2- OLD",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Branch Group 2 - OLD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Branch Group 2 - OLD",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "New - OLD",
-											"type": "String"
-										},
-										"sink": {
-											"name": "New - OLD",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Created Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Created Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Deactivated Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Deactivated Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Certification Expiry Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Certification Expiry Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Date Of Commencement",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Date Of Commencement",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Last Modified Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Last Modified Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Billing Grade1 Change Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Billing Grade1 Change Date",
-											"type": "String"
-										}
-									},
-									{
-										"source": {
-											"name": "Billing Grade2 Change Date",
-											"type": "String"
-										},
-										"sink": {
-											"name": "Billing Grade2 Change Date",
-											"type": "String"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureXL",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_sql_memebershipdb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "ACS/Membership"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureXL')]",
-				"[concat(variables('factoryId'), '/datasets/ds_sql_memebershipdb')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SF Account History Refresh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy Salesforce object",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set brpExtractTo",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"id"
-									]
-								},
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "Set  brpExtractFrom",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET TGT HWM  SQL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractFrom",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "GET TGT HWM  SQL",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						}
-					},
-					{
-						"name": "GET SRC HighWaterMark",
-						"description": "Find the latest change in the Salesforce table indicated by the parameter",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Set  brpExtractFrom",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"dataset": {
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Set brpExtractTo",
-						"description": "",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET SRC HighWaterMark",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractTo",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"SourceTableName": {
-						"type": "string",
-						"defaultValue": "Account_History__c"
-					},
-					"TargetTableName": {
-						"type": "string",
-						"defaultValue": "Account_History__c"
-					},
-					"ColumnList": {
-						"type": "string",
-						"defaultValue": "Id ,IsDeleted ,MasterRecordId ,Name ,Type ,RecordTypeId ,ParentId ,BillingStreet ,BillingCity ,BillingState ,BillingPostalCode ,BillingCountry ,BillingLatitude ,BillingLongitude ,BillingGeocodeAccuracy ,ShippingStreet ,ShippingCity ,ShippingState ,ShippingPostalCode ,ShippingCountry ,ShippingLatitude ,ShippingLongitude ,ShippingGeocodeAccuracy ,Phone ,Fax ,AccountNumber ,Website ,PhotoUrl ,Sic ,Industry ,AnnualRevenue ,NumberOfEmployees ,Ownership ,TickerSymbol ,Description ,Rating ,Site ,CurrencyIsoCode ,OwnerId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate ,IsCustomerPortal ,Jigsaw ,JigsawCompanyId ,AccountSource ,SicDesc ,ffbf__AccountParticulars__c ,ffbf__BankBIC__c ,ffbf__PaymentCode__c ,ffbf__PaymentCountryISO__c ,ffbf__PaymentPriority__c ,ffbf__PaymentRoutingMethod__c ,Purchase_Order_Contact__c ,Service_Category__c ,ABN__c ,ANZSCOCode__c ,AccountManager__c ,AccountType__c ,Account_18_Digits_ID__c ,Account_Support__c ,Active_Certification_ID__c ,AdditionalAccountType__c ,AllergyOtherDietaryRequirements__c ,BillingContact__c ,BillingGradeChangeDate__c ,BillingGrade__c ,Billing_Grade1_Change_Date__c ,Billing_Grade2_Change_Date__c ,BoxFolderId__c ,Branch_Newsletters__c ,Branch_Overridden__c ,Branch__c ,Bulk_Upload_PPP_ID__c ,CertificationBadge__c ,CertificationLevel__c ,CommunityUser__c ,Completion_Points_Anzsco__c ,Completion_Points_Bio__c ,Completion_Points_DOB__c ,Completion_Points_Email__c ,Completion_Points_Employer_Name__c ,Completion_Points_Expertise__c ,Completion_Points_FL_Name__c ,Completion_Points_Gender__c ,Completion_Points_H_Address__c ,Completion_Points_Industry__c ,Completion_Points_Languages__c ,Completion_Points_Mobile__c ,Completion_Points_Phone__c ,Completion_Points_Position__c ,Completion_Points_Sec_Email__c ,Completion_Points_Skills__c ,Completion_Points_Specialism__c ,Completion_Points_Sub_Industry__c ,Completion_Points_W_Address__c ,CongaCTCPFormula__c ,CongaCTCPTemplateID__c ,CongaCitySys__c ,CongaCountrySys__c ,CongaMemberCertificate__c ,CongaPostCodeSys__c ,CongaStateSys__c ,CongaStreetSys__c ,ConsultantsDirectory__c ,CreateBoxFolders__c ,Create_User_and_Send_New_Password__c ,CreditCardLast4Digits__c ,CreditCardPaymentToken__c ,CreditCardType__c ,CurrentMembershipExpiry__c ,CurrentYearAmountSpent__c ,Data_Migrated_from_XEN__c ,DateOfBirthText__c ,DateOfBirth__c ,Default_Address__c ,DietaryRequirements__c ,Email__c ,Employer_Name__c ,ExcludeCommercialEmail__c ,ExcludeSMSCommunication__c ,ExcludeThirdPartyMailings__c ,Expertise__c ,Face_to_Face_Interview__c ,Facebook__c ,Former_Billing_Grade1__c ,Former_Billing_Grade2__c ,Gender__c ,Geography__c ,ITWorkforceSize__c ,IndustrySubtype__c ,Membership_Opt_Out__c ,IsLead__c ,KeepCertificationStatusPrivate__c ,KeyContactEmail__c ,KeyContactName__c ,Key_ICT_Skills__c ,Languages__c ,LastContactDate__c ,LinkedIn__c ,LogoImageId__c ,MARARegistrationCode__c ,Manual_Data_Entry__c ,MemberGrade__c ,Member_Role__c ,MembershipDocumentsBoxFolderId__c ,MembershipNumberAutoGen__c ,MembershipNumber__c ,Membership_Status__c ,MigrationAgentPrimaryBusinessName__c ,Mobile__c ,NationalSignificance__c ,New_Membership_Signup_created__c ,PPP__c ,Partial_Copy_of_Person_Bio__c ,PaymentAutoRenew__c ,PaymentFrequency__c ,PaymentMethod__c ,PersonAccountDoNotCall__c ,PersonAccountEmailOptOut__c ,PersonAccountFirstName__c ,PersonAccountJoinedDate__c ,PersonAccountLastName__c ,PersonAccountMiddleName__c ,PersonAccountPositionTitle__c ,PersonAccountPublish__c ,PersonAccountSecondaryEmail__c ,PersonAccountSuffix__c ,PersonBio__c ,PersonImageId__c ,PleaseNote__c ,PreferredContactMethod__c ,PreferredName__c ,ProductArticle__c ,ProfessionalDocumentsBoxFolderId__c ,Professional_Interest__c ,Profile_Completion_Rate__c ,Program_Account_for_Current_Membership__c ,ROIAvailableCurrentFY__c ,ROIAvailableNextFY__c ,ReinvestmentAmount__c ,ReinvestmentRemaining__c ,ReinvestmentSpent__c ,Sister_Society_Member__c ,SkillsAgentIDAssignment__c ,SkillsAgentID__c ,SkillsAgentStatus__c ,SpecialBillingExpiryDate__c ,Specialisms__c ,Title__c ,TotalWorkforceSize__c ,TradingName__c ,Twitter__c ,UENumber__c ,WebsiteRole__c ,WorkHistory__c ,Work_Phone__c ,XEN_User_Type__c ,XenDocumentsBoxFolderId__c ,XenEncryptedPassword__c ,XenId__c ,Skill_Record_Count__c ,Staff_ID__c ,GradingDate__c ,Branch_Newsletters_Change__c ,Credit_Card_Expiry_Date__c ,BPay_CRN__c ,CertificationExpiryDate__c ,Nov_Recurring_Email__c ,Post_Nominals__c ,JoinedLastWeek__c ,Name_With_First_Name_Suffix__c ,Valid_Until_End__c ,CMSJoinNowApplicationType__c ,CmsBoxMembershipFileIdsToMove__c ,CmsDirectDepositBoxDocumentDetails__c ,CmsDirectDepositBoxFileIdsToMove__c ,CmsICTBoxDocumentDetails__c ,CmsICTBoxFileIdsToMove__c ,CmsMembershipBoxDocumentDetails__c ,CmsProfessionBoxFileIdsToMove__c ,CountryOfEducation__c ,CreateUserRecordOnly__c ,DateOfCommencement__c ,DateOfExpectedCompletion__c ,NameOfInstitution__c ,NameOnCreditCard__c ,QualificationName__c ,RememberForFuturePayments__c ,EmployeeId__c ,Identified_for_Merge__c ,Member_Since__c ,JoinedThisMonth__c ,Enrolment_Status__c ,PY_Completion_Date__c ,Provider_Student_Number__c ,VETrack_Number__c ,AccountImage__c ,RecordSource__c ,PostNominalsForCP__c ,AccreditedUniversityFacultySchool__c ,Exclude_from_Email_Communication__c ,SkillsMembershipDuplicateAccount_User__c ,Information_Age__c ,UniqueId__c ,ACS_Newsletter__c ,ACS_Marketing_Communication__c ,SMS_Communications__c ,ThirdParty_Communications__c ,Create_Free_Skills_Membership__c ,SkillsAgentApplication__c ,Number_of_Certifications__c ,Password_Token_Expiry_Date__c ,Password_Token_Used__c ,Password_Token__c ,Days_Until_CC_Expiry__c ,Eligible_for_CC_Expiry_Reminder__c ,Outfit_Certificates_Last_Update__c ,Outfit_Membeship_Cert_Last_Update__c ,Disable_Validation__c ,Short_Name__c ,No_of_Programs_With_Active_Memberships__c ,Total_Active_ROI_Budget__c ,Total_ROI_Balance_Remaining__c ,Total_ROI_Spend__c ,fferpcore__ExemptionCertificate__c ,fferpcore__IsBillingAddressValidated__c ,fferpcore__IsShippingAddressValidated__c ,fferpcore__OutputVatCode__c ,fferpcore__SalesTaxStatus__c ,fferpcore__TaxCode1__c ,fferpcore__TaxCode2__c ,fferpcore__TaxCode3__c ,fferpcore__TaxCountryCode__c ,fferpcore__ValidatedBillingCity__c ,fferpcore__ValidatedBillingCountry__c ,fferpcore__ValidatedBillingPostalCode__c ,fferpcore__ValidatedBillingState__c ,fferpcore__ValidatedBillingStreet__c ,fferpcore__ValidatedShippingCity__c ,fferpcore__ValidatedShippingCountry__c ,fferpcore__ValidatedShippingPostalCode__c ,fferpcore__ValidatedShippingState__c ,fferpcore__ValidatedShippingStreet__c ,fferpcore__VatRegistrationNumber__c ,fferpcore__VatStatus__c ,Facebook_Messenger_Id__c ,Total_Membership_Years__c ,Membership_Balance_Amount__c ,Education_Level__c ,Certificate_Specialism__c ,Is_Active__c ,Elected_Official__c ,Confirmation_of_PSS_Enrollment__c ,Employment_Category__c ,Employment_Type__c ,Higher_Cap__c ,PSS_Insurance_Cover__c ,PSS_Member__c ,Certification_Outfit_Document_Id__c ,Pendula_Test__c ,Current_Membership_Expiry_As_Text__c ,Days_since_Current_Membership_Expiry__c ,Age__c ,Private__c ,Elected_Official_Count__c ,Is_Elected_Official__c ,Member_Tier__c ,Litmos__Active__c ,Litmos__CustomerPriority__c ,Litmos__Litmos_Id__c ,Litmos__NumberofLocations__c ,Litmos__SLAExpirationDate__c ,Litmos__SLASerialNumber__c ,Litmos__SLA__c ,Litmos__UpsellOpportunity__c ,Student_ID__c ,Access_to_Canvas__c ,fferpcore__MaterializedBillingAddressValidated__c ,fferpcore__MaterializedShippingAddressValidated__c ,EU_Applicants_Flag__c ,Is_New_User__c ,Brand__c ,MC_Applicant__c ,Is_Changed__c ,User_Change_Error__c ,PartiallyCompletedMicroCredentialId__c ,Pendula_Resend__c ,Community_Name__c ,HiddenUserLocationState__c ,HiddenFullName__c ,Industry__c"
-					},
-					"schemaname": {
-						"type": "string",
-						"defaultValue": "salesforce"
-					}
-				},
-				"variables": {
-					"brpExtractFrom": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					},
-					"brpExtractTo": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					}
-				},
-				"folder": {
-					"name": "ACS/Salesforce"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
 			]
 		}
 	]

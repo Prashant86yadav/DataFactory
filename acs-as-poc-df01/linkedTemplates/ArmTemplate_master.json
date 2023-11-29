@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"ACS Databricks Premium_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ACS Databricks Premium'"
+		},
 		"ACSSFPROD_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
@@ -71,9 +75,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
-		"ls_databricksProd_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'ls_databricksProd'"
+		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1010-010936-bskqk28r"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -122,26 +126,6 @@
 		"ls_DataLake_DPP_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
-		},
-		"ls_databricksProd_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "0524-225117-lltght03"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-05-01 00:00:00"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-05-31 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"type": "string",
-			"defaultValue": "2023-05-01 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"type": "string",
-			"defaultValue": "2023-05-31 00:00:00"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -334,6 +318,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ACS Databricks Premium_accessToken": {
+						"value": "[parameters('ACS Databricks Premium_accessToken')]"
+					},
 					"ACSSFPROD_password": {
 						"value": "[parameters('ACSSFPROD_password')]"
 					},
@@ -379,8 +366,8 @@
 					"ls_SQL_membership_connectionString": {
 						"value": "[parameters('ls_SQL_membership_connectionString')]"
 					},
-					"ls_databricksProd_accessToken": {
-						"value": "[parameters('ls_databricksProd_accessToken')]"
+					"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
 					},
 					"ACSSFPROD_properties_typeProperties_environmentUrl": {
 						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
@@ -417,9 +404,6 @@
 					},
 					"ls_DataLake_DPP_properties_typeProperties_url": {
 						"value": "[parameters('ls_DataLake_DPP_properties_typeProperties_url')]"
-					},
-					"ls_databricksProd_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('ls_databricksProd_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},
@@ -481,18 +465,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
-						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate')]"
-					},
-					"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
-						"value": "[parameters('MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_startdate')]"
-					},
-					"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-						"value": "[parameters('MSA-DEWR_properties_MSA Dumps_parameters_enddate')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"

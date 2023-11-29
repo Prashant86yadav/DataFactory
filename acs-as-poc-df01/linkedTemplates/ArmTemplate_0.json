@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"ACS Databricks Premium_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'ACS Databricks Premium'"
+		},
 		"ACSSFPROD_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
@@ -67,9 +71,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
-		"ls_databricksProd_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'ls_databricksProd'"
+		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "1010-010936-bskqk28r"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"type": "string",
@@ -118,16 +122,115 @@
 		"ls_DataLake_DPP_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
-		},
-		"ls_databricksProd_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "0524-225117-lltght03"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/StartDatabricksCluster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "StartCluster",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": {
+								"value": "https://adb-788505602918573.13.azuredatabricks.net/api/2.0/clusters/start",
+								"type": "Expression"
+							},
+							"method": "POST",
+							"headers": {
+								"Authorization": {
+									"value": "Bearer dapiae199d2cfc48215b4a5031740793f3c5",
+									"type": "Expression"
+								}
+							},
+							"body": {
+								"value": "{\n  \"cluster_id\": \"@{pipeline().parameters.clusterId}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Ignore error",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "StartCluster",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "error",
+							"value": {
+								"value": "@activity('StartCluster').error.message",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"clusterId": {
+						"type": "string",
+						"defaultValue": "1010-010936-bskqk28r"
+					}
+				},
+				"variables": {
+					"output": {
+						"type": "String"
+					},
+					"error": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "ACS/MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACS Databricks Premium')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('ACS Databricks Premium_accessToken')]"
+					},
+					"existingClusterId": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ACSSFPROD')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -279,11 +382,12 @@
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"description": "Connect to Premium Databricks ",
 				"annotations": [],
 				"type": "AzureDatabricksDeltaLake",
 				"typeProperties": {
-					"domain": "https://adb-7757545527689401.1.azuredatabricks.net",
-					"clusterId": "0323-061008-xwb0cb1p",
+					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
+					"clusterId": "1010-010936-bskqk28r",
 					"accessToken": {
 						"type": "SecureString",
 						"value": "[parameters('Ls_ACSDatabricksDeltaLake_accessToken')]"
@@ -382,24 +486,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ls_databricksProd')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricks",
-				"typeProperties": {
-					"domain": "https://adb-788505602918573.13.azuredatabricks.net",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('ls_databricksProd_accessToken')]"
-					},
-					"existingClusterId": "[parameters('ls_databricksProd_properties_typeProperties_existingClusterId')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureVM-IR')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -429,35 +515,7 @@
 				"type": "SalesforceObject",
 				"schema": [],
 				"typeProperties": {
-					"objectApiName": "Experience__c"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ACSSFPROD')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ACSDSSFOR')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ACSSFPROD",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"SourceTableName": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"schema": [],
-				"typeProperties": {
-					"objectApiName": {
-						"value": "@dataset().SourceTableName",
-						"type": "Expression"
-					}
+					"objectApiName": "user"
 				}
 			},
 			"dependsOn": [

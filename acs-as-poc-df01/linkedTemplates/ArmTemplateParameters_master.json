@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "acs-as-poc-df01"
 		},
+		"ACS Databricks Premium_accessToken": {
+			"value": ""
+		},
 		"ACSSFPROD_password": {
 			"value": ""
 		},
@@ -53,8 +56,8 @@
 		"ls_SQL_membership_connectionString": {
 			"value": ""
 		},
-		"ls_databricksProd_accessToken": {
-			"value": ""
+		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
+			"value": "1010-010936-bskqk28r"
 		},
 		"ACSSFPROD_properties_typeProperties_environmentUrl": {
 			"value": "https://acsau.my.salesforce.com/"
@@ -91,21 +94,6 @@
 		},
 		"ls_DataLake_DPP_properties_typeProperties_url": {
 			"value": "https://stacsdpp01.dfs.core.windows.net/"
-		},
-		"ls_databricksProd_properties_typeProperties_existingClusterId": {
-			"value": "0524-225117-lltght03"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_startdate": {
-			"value": "2023-05-01 00:00:00"
-		},
-		"MSA DEWR BACKUP_properties_MSA Dumps_parameters_enddate": {
-			"value": "2023-05-31 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_startdate": {
-			"value": "2023-05-01 00:00:00"
-		},
-		"MSA-DEWR_properties_MSA Dumps_parameters_enddate": {
-			"value": "2023-05-31 00:00:00"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
