@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ARIMA Open Cases",
+				"name": "Prophet Case finalised",
 				"type": "DatabricksNotebook",
 				"dependsOn": [],
 				"policy": {
