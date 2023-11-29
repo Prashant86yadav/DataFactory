@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMA Daily OpenCases [Backup]"
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMADaily_OpenCases"
 				},
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
