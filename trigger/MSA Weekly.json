@@ -9,6 +9,12 @@
 					"referenceName": "Case Finalised Forecast",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "New Cases Forecast",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
