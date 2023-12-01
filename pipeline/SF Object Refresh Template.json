@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "user"
+				"defaultValue": "PPP_Bulk_Upload_Process__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "user_dump"
+				"defaultValue": "PPP"
 			}
 		},
 		"variables": {
