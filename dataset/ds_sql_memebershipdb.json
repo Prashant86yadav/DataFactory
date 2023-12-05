@@ -261,7 +261,7 @@
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "testAug"
+			"table": "member_dump"
 		}
 	}
 }
