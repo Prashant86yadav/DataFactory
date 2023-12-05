@@ -22,13 +22,9 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
-						},
-						"formatSettings": {
-							"type": "ParquetWriteSettings"
-						}
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
 					},
 					"enableStaging": false,
 					"parallelCopies": 2,
@@ -49,7 +45,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_parquet",
+						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
 					}
 				]
