@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select *  [dbo].[member_dump]",
+						"sqlReaderQuery": "select *  from [dbo].[member_dump]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
