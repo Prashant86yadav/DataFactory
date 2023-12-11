@@ -3587,8 +3587,8 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "psas",
-					"table": "dailyCases"
+					"schema": "membership",
+					"table": "MembersDashboard"
 				}
 			},
 			"dependsOn": []
@@ -4301,7 +4301,7 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "testAug"
+					"table": "member_dump"
 				}
 			},
 			"dependsOn": []
