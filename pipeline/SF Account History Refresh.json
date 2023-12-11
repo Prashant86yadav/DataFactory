@@ -199,7 +199,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "[AccountHistory__c]"
+				"defaultValue": "AccountHistory__c"
 			},
 			"ColumnList": {
 				"type": "string",
