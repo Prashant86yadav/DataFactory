@@ -72,7 +72,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "[salesforce].[AccountHistory__c]"
+				"defaultValue": "AccountHistory__c"
 			}
 		},
 		"variables": {
