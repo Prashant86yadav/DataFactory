@@ -205,7 +205,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "[accounthistory ]"
+				"defaultValue": "[AccountHistory__c]"
 			},
 			"ColumnList": {
 				"type": "string",
