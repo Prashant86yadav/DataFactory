@@ -94,7 +94,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+						"value": "coalesce(\n    formatDateTime(replace(activity('GET TGT HWM SQL').output.firstRow.HighWaterMark, ' ', 'T'), 'yyyy-MM-dd HH:mm:ss.fff'),\n    'brpExtractFrom'\n)\n\n",
 						"type": "Expression"
 					}
 				}
