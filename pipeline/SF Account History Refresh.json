@@ -160,10 +160,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT MAX(createdate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE createdate >= {ts'@{variables('brpExtractFrom')}'}",
-							"type": "Expression"
-						},
 						"readBehavior": "query"
 					},
 					"dataset": {
