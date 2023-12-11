@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "PPP_Bulk_Upload_Process__c"
+				"defaultValue": "Account_History__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "PPP"
+				"defaultValue": "[salesforce].[AccountHistory__c]"
 			}
 		},
 		"variables": {
