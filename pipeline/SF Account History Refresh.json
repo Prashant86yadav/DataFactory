@@ -161,7 +161,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "SELECT MAX(CreatedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE createdate >= {ts'@{variables('brpExtractFrom')}'}",
+							"value": "SELECT MAX(CreatedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE CreatedDate >= {ts'@{variables('brpExtractFrom')}'}",
 							"type": "Expression"
 						},
 						"readBehavior": "query"
