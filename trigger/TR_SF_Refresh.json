@@ -127,7 +127,7 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF Account History Refresh",
+					"referenceName": "SF AccountHistory Refresh",
 					"type": "PipelineReference"
 				},
 				"parameters": {
