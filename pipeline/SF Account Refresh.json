@@ -94,7 +94,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@if(empty(activity('GET TGT HWM  SQL').output.firstRow), \nvariables('brpExtractFrom'), '')",
+						"value": "@if(empty(activity('GET TGT HWM  SQL').output.firstRow), \nvariables('defaultFromvalue'), '')",
 						"type": "Expression"
 					}
 				}
@@ -222,6 +222,10 @@
 				"defaultValue": "1900-12-31 00:00:00"
 			},
 			"brpExtractTo": {
+				"type": "String",
+				"defaultValue": "1900-12-31 00:00:00"
+			},
+			"defaultFromvalue": {
 				"type": "String",
 				"defaultValue": "1900-12-31 00:00:00"
 			}
