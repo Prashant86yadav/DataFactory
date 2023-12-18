@@ -94,7 +94,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@if(empty(activity('GET TGT HWM  SQL').output.firstRow), \nvariables('brpExtractFrom'), activity('GET TGT HWM  SQL').output)",
+						"value": "@if(empty(activity('GET TGT HWM  SQL').output.firstRow), \nvariables('brpExtractFrom'), '')",
 						"type": "Expression"
 					}
 				}
