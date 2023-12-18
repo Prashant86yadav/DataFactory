@@ -25,7 +25,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  id ='0019000001ry9cOAAQ'",
 							"type": "Expression"
 						},
 						"readBehavior": "query"
