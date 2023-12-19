@@ -94,7 +94,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "@if(empty(activity('GET TGT HWM  SQL').output.firstRow), \nvariables('defaultFromvalue'), \nformatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
+						"value": "@if(empty(activity('GET TGT HWM  SQL').output), \n    variables('defaultFromvalue'), \n    formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow, ' ', 'T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
 						"type": "Expression"
 					}
 				}
