@@ -297,7 +297,7 @@
 		},
 		"TR_SF_Refresh_properties_SF AccountHistory Refresh_parameters_TargetTableName": {
 			"type": "string",
-			"defaultValue": "Account_History__c"
+			"defaultValue": "AccountHistory__c"
 		},
 		"TR_SF_Refresh_properties_SF AccountHistory Refresh_parameters_ColumnList": {
 			"type": "string",

@@ -297,7 +297,7 @@
 		},
 		"TR_SF_Refresh_properties_SF AccountHistory Refresh_parameters_TargetTableName": {
 			"type": "string",
-			"defaultValue": "Account_History__c"
+			"defaultValue": "AccountHistory__c"
 		},
 		"TR_SF_Refresh_properties_SF AccountHistory Refresh_parameters_ColumnList": {
 			"type": "string",
@@ -773,7 +773,7 @@
 								"referenceName": "ds_DatabricksPremiumFolder",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "NewCases"
+									"filename": "Opencases"
 								}
 							}
 						]
@@ -833,105 +833,6 @@
 				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]",
 				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]",
 				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Refresh Open Cases')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Refresh Table",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from psas.opencasesdaily OPTION (MAXRECURSION 0)",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [psas].[dailyCases]",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"parallelCopies": 4,
-							"dataIntegrationUnits": 8,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "opencasesdaily",
-									"schemaname": "psas"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "dailyCases",
-									"schemaname": "psas"
-								}
-							}
-						]
-					},
-					{
-						"name": "ARIMA New Cases",
-						"type": "DatabricksNotebook",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/ARIMA Daily OpenCases "
-						},
-						"linkedServiceName": {
-							"referenceName": "ACS Databricks Premium",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "ACS/MSA"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]",
-				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]"
 			]
 		},
 		{
@@ -28335,44 +28236,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MSA View Refresh')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Refresh Open Cases",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-05-03T08:00:00",
-						"timeZone": "AUS Eastern Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								8
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Refresh Open Cases')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/MSA Weekly')]",
