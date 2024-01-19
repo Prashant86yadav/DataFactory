@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Programs__c"
+				"defaultValue": "AccountHistory"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Programs__c"
+				"defaultValue": "AccountHistoryStandard"
 			}
 		},
 		"variables": {
