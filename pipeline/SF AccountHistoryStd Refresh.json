@@ -25,20 +25,14 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate >= {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}",
 							"type": "Expression"
 						},
 						"readBehavior": "query"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true,
-							"keys": [
-								"AccountId"
-							]
-						},
+						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
