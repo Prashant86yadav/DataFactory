@@ -195,11 +195,11 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "AccountHistory__c"
+				"defaultValue": "AccountHistory"
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "AccountHistory__c"
+				"defaultValue": "AccountHistoryStandard"
 			},
 			"ColumnList": {
 				"type": "string",
