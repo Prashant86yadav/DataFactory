@@ -109,7 +109,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT MAX(createddate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+							"value": "SELECT MAX(lastmodifieddate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
