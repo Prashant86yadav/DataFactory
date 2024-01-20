@@ -25,7 +25,7 @@
 					"source": {
 						"type": "SalesforceSource",
 						"query": {
-							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate >= {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}",
+							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate > {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}",
 							"type": "Expression"
 						},
 						"readBehavior": "query"
