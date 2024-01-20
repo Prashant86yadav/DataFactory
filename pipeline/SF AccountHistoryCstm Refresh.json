@@ -36,7 +36,7 @@
 						"upsertSettings": {
 							"useTempDB": false,
 							"keys": [
-								""
+								"Member_Account__c"
 							]
 						},
 						"sqlWriterUseTableLock": false,
