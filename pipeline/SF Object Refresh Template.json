@@ -17,7 +17,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select * from assessment__c\nwhere SubmissionDate__c",
 						"readBehavior": "query"
 					},
 					"sink": {
@@ -73,7 +72,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "AccountHistory_s"
+				"defaultValue": "testanddelete"
 			}
 		},
 		"variables": {
