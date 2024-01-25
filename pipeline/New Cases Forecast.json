@@ -96,6 +96,9 @@
 				"name": "StartDatabricksCluster",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
@@ -107,7 +110,7 @@
 			}
 		],
 		"folder": {
-			"name": "ACS/MSA"
+			"name": "ACS/MSA Forecasting"
 		},
 		"annotations": []
 	}
