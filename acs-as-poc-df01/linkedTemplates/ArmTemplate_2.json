@@ -181,6 +181,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -196,7 +199,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
@@ -303,6 +306,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -318,7 +324,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
@@ -606,7 +612,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": false,
+									"keys": [
+										"Member_Account__c"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -730,7 +742,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT MAX(CreatedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"value": "SELECT MAX(lastmodifieddate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -835,7 +847,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate >= {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}",
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate > {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -899,7 +911,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractFrom",
 							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
 								"type": "Expression"
 							}
 						}
@@ -1014,11 +1026,11 @@
 					},
 					"TargetTableName": {
 						"type": "string",
-						"defaultValue": "AccountHistoryStandard"
+						"defaultValue": "AccountHistory_s"
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
+						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue"
 					},
 					"schemaname": {
 						"type": "string",
@@ -3064,13 +3076,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
+								"query": "select \nId ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue ,NewValue\nfrom AccountHistory\n",
 								"readBehavior": "query"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -3078,6 +3090,107 @@
 							"dataIntegrationUnits": 16,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Field",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Field",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DataType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DataType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OldValue",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OldValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NewValue",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NewValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -3122,7 +3235,11 @@
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "AccountHistoryStandard"
+						"defaultValue": "AccountHistory_s"
+					},
+					"columnlist": {
+						"type": "string",
+						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
 					}
 				},
 				"variables": {

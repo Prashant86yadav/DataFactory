@@ -4494,6 +4494,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -4509,7 +4512,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},

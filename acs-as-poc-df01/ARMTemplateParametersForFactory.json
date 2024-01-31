@@ -229,6 +229,18 @@
 		},
 		"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname": {
 			"value": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName": {
+			"value": "AccountHistory"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName": {
+			"value": "AccountHistory_s"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList": {
+			"value": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname": {
+			"value": "salesforce"
 		}
 	}
 }

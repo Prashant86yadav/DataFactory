@@ -306,6 +306,22 @@
 		"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AccountHistory"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AccountHistory_s"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue"
+		},
+		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
@@ -484,6 +500,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -499,7 +518,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
@@ -682,6 +701,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -697,7 +719,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
@@ -809,6 +831,9 @@
 						"name": "StartDatabricksCluster",
 						"type": "ExecutePipeline",
 						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
@@ -824,7 +849,7 @@
 					"elapsedTimeMetric": {}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
@@ -1120,7 +1145,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": false,
+									"keys": [
+										"Member_Account__c"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -1244,7 +1275,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "SELECT MAX(CreatedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"value": "SELECT MAX(lastmodifieddate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -1352,7 +1383,7 @@
 							"source": {
 								"type": "SalesforceSource",
 								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate >= {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}",
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  createddate > {ts'@{variables('brpExtractFrom')}'} AND\ncreateddate <= {ts'@{variables('brpExtractTo')}'}\n",
 									"type": "Expression"
 								},
 								"readBehavior": "query"
@@ -1416,7 +1447,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractFrom",
 							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
 								"type": "Expression"
 							}
 						}
@@ -1531,11 +1562,11 @@
 					},
 					"TargetTableName": {
 						"type": "string",
-						"defaultValue": "AccountHistoryStandard"
+						"defaultValue": "AccountHistory_s"
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
+						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue"
 					},
 					"schemaname": {
 						"type": "string",
@@ -3611,13 +3642,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceSource",
+								"query": "select \nId ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue ,NewValue\nfrom AccountHistory\n",
 								"readBehavior": "query"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -3625,6 +3656,107 @@
 							"dataIntegrationUnits": 16,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Field",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Field",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DataType",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DataType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OldValue",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OldValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NewValue",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NewValue",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -3669,7 +3801,11 @@
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "AccountHistoryStandard"
+						"defaultValue": "AccountHistory_s"
+					},
+					"columnlist": {
+						"type": "string",
+						"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
 					}
 				},
 				"variables": {
@@ -4929,16 +5065,16 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"url": {
-								"value": "https://adb-788505602918573.13.azuredatabricks.net/api/2.0/clusters/start",
-								"type": "Expression"
-							},
 							"method": "POST",
 							"headers": {
 								"Authorization": {
 									"value": "Bearer dapiae199d2cfc48215b4a5031740793f3c5",
 									"type": "Expression"
 								}
+							},
+							"url": {
+								"value": "https://adb-788505602918573.13.azuredatabricks.net/api/2.0/clusters/start",
+								"type": "Expression"
 							},
 							"body": {
 								"value": "{\n  \"cluster_id\": \"@{pipeline().parameters.clusterId}\"\n}",
@@ -4989,11 +5125,82 @@
 					}
 				},
 				"folder": {
-					"name": "ACS/MSA"
+					"name": "ACS/MSA Forecasting"
 				},
 				"annotations": []
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSFOR",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTableName": "account"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "Employees",
+									"schemaname": "dbo"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSFOR')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_RawAnalyticsDaily_Incre')]",
@@ -23520,83 +23727,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/test and Delete')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SQL TO DataLake",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from [psas].[OpenCaseSince2018]\nOPTION (MAXRECURSION 32767)",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_DatabricksPremiumFolder",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "Opencases"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "ACS/MSA"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ACSDSSF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -23604,6 +23734,16 @@
 				"linkedServiceName": {
 					"referenceName": "ACSSFPROD",
 					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"object1": {
+						"type": "string",
+						"defaultValue": "account"
+					},
+					"object2": {
+						"type": "string",
+						"defaultValue": "assessment"
+					}
 				},
 				"annotations": [],
 				"type": "SalesforceObject",
@@ -28482,6 +28622,18 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccountHistoryStd Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -28505,7 +28657,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF OpportunityLineItem Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Experience Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryCstm Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryCstm Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryStd Refresh')]"
 			]
 		},
 		{
