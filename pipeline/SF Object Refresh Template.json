@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select id, field, oldvalue from AccountHistory\nwhere accountid ='001GB000039w76yYAA'",
+						"query": "select \nId ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue\nfrom AccountHistory\nwhere accountid ='001GB000039w76yYAA'",
 						"readBehavior": "query"
 					},
 					"sink": {
