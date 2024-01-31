@@ -72,7 +72,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "[AccountHistory_s] "
+				"defaultValue": "AccountHistory_s"
 			},
 			"columnlist": {
 				"type": "string",
