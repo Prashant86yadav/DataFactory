@@ -300,7 +300,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
+				"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue"
 			},
 			"schemaname": {
 				"type": "string",
