@@ -68,7 +68,7 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "AccountHistory_s"
+				"defaultValue": "AccountHistory"
 			},
 			"targettable": {
 				"type": "string",
