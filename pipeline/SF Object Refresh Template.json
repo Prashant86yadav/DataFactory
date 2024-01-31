@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select max(createddate) from AccountHistory",
+						"query": "select  from AccountHistory",
 						"readBehavior": "query"
 					},
 					"sink": {
@@ -74,6 +74,10 @@
 			"targettable": {
 				"type": "string",
 				"defaultValue": " [salesforce].[AccountHistory_s] "
+			},
+			"columnlist": {
+				"type": "string",
+				"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
 			}
 		},
 		"variables": {
