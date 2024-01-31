@@ -136,6 +136,18 @@
 					"ColumnList": "Id, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Member_Account__c, Edit_Date__c, Modified_Field_Name__c, New_Value__c, Old_Value__c, User__c",
 					"schemaname": "salesforce"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF AccountHistoryStd Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AccountHistory",
+					"TargetTableName": "AccountHistory_s",
+					"ColumnList": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue, NewValue",
+					"schemaname": "salesforce"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
