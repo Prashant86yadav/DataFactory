@@ -5,6 +5,16 @@
 			"referenceName": "ACSSFPROD",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"object1": {
+				"type": "string",
+				"defaultValue": "account"
+			},
+			"object2": {
+				"type": "string",
+				"defaultValue": "assessment"
+			}
+		},
 		"annotations": [],
 		"type": "SalesforceObject",
 		"schema": [],
