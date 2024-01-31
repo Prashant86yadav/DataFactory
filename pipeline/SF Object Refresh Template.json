@@ -24,7 +24,6 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -73,7 +72,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": " [salesforce].[AccountHistory_s] "
+				"defaultValue": "[AccountHistory_s] "
 			},
 			"columnlist": {
 				"type": "string",
