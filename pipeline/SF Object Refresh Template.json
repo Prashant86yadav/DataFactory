@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select  from AccountHistory",
+						"query": "select  from AccountHistory\nwhere accountid ='001GB000039w76yYAA'",
 						"readBehavior": "query"
 					},
 					"sink": {
