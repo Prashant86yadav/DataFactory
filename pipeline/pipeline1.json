@@ -15,8 +15,18 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"source": {
+						"type": "SalesforceSource",
+						"readBehavior": "query"
+					},
 					"enableStaging": false
-				}
+				},
+				"inputs": [
+					{
+						"referenceName": "ACSDSSFOR",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"annotations": []
