@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
+						"query": "select max(createddate) from AccountHistory",
 						"readBehavior": "query"
 					},
 					"sink": {
