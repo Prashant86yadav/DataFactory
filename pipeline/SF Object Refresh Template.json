@@ -174,10 +174,6 @@
 			"targettable": {
 				"type": "string",
 				"defaultValue": "Account_backup"
-			},
-			"columnlist": {
-				"type": "string",
-				"defaultValue": "Id ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue NewValue"
 			}
 		},
 		"variables": {
