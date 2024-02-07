@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select \n*\nfrom Account\nwhere \nSkillsAgentIDAssignment__c ='420581'",
+						"query": "select SkillsAgentIDAssignment__c \nfrom Account\nwhere \nSkillsAgentIDAssignment__c ='420581'",
 						"readBehavior": "query"
 					},
 					"sink": {
