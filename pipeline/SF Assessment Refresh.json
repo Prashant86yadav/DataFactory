@@ -45,6 +45,3359 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Id",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "OwnerId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "OwnerId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsDeleted",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "IsDeleted",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CurrencyIsoCode",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CurrencyIsoCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RecordTypeId",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecordTypeId",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CreatedDate",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "CreatedById",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CreatedById",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LastModifiedDate",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedById",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LastModifiedById",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SystemModstamp",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "SystemModstamp",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "LastActivityDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LastActivityDate",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "LastViewedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LastViewedDate",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "LastReferencedDate",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "LastReferencedDate",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "ACSMembershipNumberFormula__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ACSMembershipNumberFormula__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ANZSCOCode__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ANZSCOCode__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ActivationDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ActivationDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Active__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Active__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantFirstName__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicantFirstName__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantInterview__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicantInterview__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantName__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicantName__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantPaid__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ApplicantPaid__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantState__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicantState__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantSubmitEmailSent__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ApplicantSubmitEmailSent__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Applicant_Last_Name__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Applicant_Last_Name__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Applicant_Name_Formula__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Applicant_Name_Formula__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Applicant_Title__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Applicant_Title__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Applicant_eligible_for_Senior_Membership__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Applicant_eligible_for_Senior_Membership__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicationStatusIndicator__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicationStatusIndicator__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicationSubtype__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicationSubtype__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicationType__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicationType__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentClosedDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "AssessmentClosedDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentComments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AssessmentComments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "AssessmentDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentDueDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "AssessmentDueDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentPathway__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AssessmentPathway__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessmentResult__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AssessmentResult__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessment_18_Digits_ID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessment_18_Digits_ID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessment_Report_ID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessment_Report_ID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessment_Template_ID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessment_Template_ID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessor1ConflictOfInterest__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessor1ConflictOfInterest__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessor2ConflictofInterest__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessor2ConflictofInterest__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessorReviewComments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AssessorReviewComments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessor_Appeal_Comments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessor_Appeal_Comments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Assessor__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Assessor__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AvgAssessorTimeDays__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "AvgAssessorTimeDays__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "BECEndorsementReason__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BECEndorsementReason__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BECEndorsement__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BECEndorsement__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BFCChair__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BFCChair__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BalanceDue__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "BalanceDue__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "BirthCertificateOrPassportApproved__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "BirthCertificateOrPassportApproved__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "BoxFolderId__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BoxFolderId__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BranchManager__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BranchManager__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CBOKNotes__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CBOKNotes__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CPD_Hours_Percentage_Complete__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CPD_Hours_Percentage_Complete__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "CPD_Hours_Required__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CPD_Hours_Required__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "CPD_Run_Rate_Variance__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CPD_Run_Rate_Variance__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "CPD_Target_Run_Rate__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CPD_Target_Run_Rate__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "CPPathwayScenario__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CPPathwayScenario__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CPPathway__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CPPathway__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CTPathwayScenario__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CTPathwayScenario__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CTPathway__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CTPathway__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CV_Notes__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CV_Notes__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Calculated__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Calculated__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CanUnsuitableBeRectified__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CanUnsuitableBeRectified__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CaseAge__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "CaseAge__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "CaseManager__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CaseManager__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Certificate_Renewed__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Certificate_Renewed__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CertificationExpiryDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CertificationExpiryDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "CertificationPeriod__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CertificationPeriod__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CertificationStatus__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CertificationStatus__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification_Type__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Certification_Type__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Change_Management__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Change_Management__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Citation__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Citation__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CommentsaddedtoUnsuccessfulEmail__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CommentsaddedtoUnsuccessfulEmail__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CompanyorUniversity__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CompanyorUniversity__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CompletedApplicationReceivedDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "CompletedApplicationReceivedDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Conga_Assessment_Report_Download__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Conga_Assessment_Report_Download__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Conga_Next_Action_Merge__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Conga_Next_Action_Merge__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact_Email__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Contact_Email__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Contact__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Contact__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Continuing__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Continuing__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ContributionRecognisedElsewhere__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ContributionRecognisedElsewhere__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ContributionWorthyofRecognition__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ContributionWorthyofRecognition__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CountryOfBirth__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CountryOfBirth__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CountryOfResidence__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CountryOfResidence__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CreateBoxFolder__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "CreateBoxFolder__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CreditCardonFile__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "CreditCardonFile__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CurrentUserCaseManager__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "CurrentUserCaseManager__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Current_Certification__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Current_Certification__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "DIACComments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DIACComments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Data_Information_Management__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Data_Information_Management__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Data_Migrated_from_XEN__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Data_Migrated_from_XEN__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "DateOfBirth__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "DateOfBirth__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "DateOfKnowledgeMet__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "DateOfKnowledgeMet__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Days_Remaining__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Days_Remaining__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Days_Since_Submission_Date__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Days_Since_Submission_Date__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "DeadlineDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "DeadlineDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultEmailAddress__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultEmailAddress__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailAddressCode__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailAddressCode__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailAddressID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailAddressID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailAddressStreet__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailAddressStreet__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailCity__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailCity__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailCountry__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailCountry__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailPostalCode__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailPostalCode__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DefaultMailState__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DefaultMailState__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Education__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Education__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email_Address__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Email_Address__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email_Template__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Email_Template__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Employed_in_ICT_school_research_facility__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Employed_in_ICT_school_research_facility__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "End_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "End_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "ErrorsFoundCount__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ErrorsFoundCount__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Ethics__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Ethics__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ExcelledInWhichRoleArea__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ExcelledInWhichRoleArea__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Experience__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Experience__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FinalReview__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FinalReview__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FinalisedDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "FinalisedDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "FollowUpDueDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "FollowUpDueDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Former_ANZSCO__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Former_ANZSCO__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Former_Application_Sub_Type__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Former_Application_Sub_Type__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Former_Application_Type__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Former_Application_Type__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Former_Assessor_Name__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Former_Assessor_Name__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "FromAssessorDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "FromAssessorDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "FromAssessorNotEdited__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "FromAssessorNotEdited__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Hardware_Software_Fundamentals__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Hardware_Software_Fundamentals__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "HasCMSIntegrationCompleted__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "HasCMSIntegrationCompleted__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Has_10yrs_of_professional_ICT_experience__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Has_10yrs_of_professional_ICT_experience__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Highest_level_of_qualification_achieved__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Highest_level_of_qualification_achieved__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Holds_Masters_by_Research_PhD__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Holds_Masters_by_Research_PhD__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "HonoursandAwards__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "HonoursandAwards__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Human_computer_Interaction__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Human_computer_Interaction__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ICTManagement__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICTManagement__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ICTProblemSolving__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICTProblemSolving__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ICTProfessionalKnowledge__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICTProfessionalKnowledge__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ICT_Problem_Solving__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ICT_Problem_Solving__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IT_Project_Management__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IT_Project_Management__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IT_governance__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IT_governance__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ImpactOnITFieldManagement__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ImpactOnITFieldManagement__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "InPreparation15DayReminderDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "InPreparation15DayReminderDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "InPreparation15DayReminder__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "InPreparation15DayReminder__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "InPreparation25DayReminderDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "InPreparation25DayReminderDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "InPreparation25DayReminder__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "InPreparation25DayReminder__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Internal_Notes__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Internal_Notes__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Interpersonal_Communication__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Interpersonal_Communication__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "IsICTKnowledgeAcceptable__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "IsICTKnowledgeAcceptable__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Keep_Certification_Status_Private__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Keep_Certification_Status_Private__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "LapsedComments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LapsedComments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LapsedFollowUp__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LapsedFollowUp__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LastModifiedUserProfileName__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "LastModifiedUserProfileName__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MCAssessmentOutcome__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MCAssessmentOutcome__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Manual_Data_Entry__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Manual_Data_Entry__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "MeetCBOKRequirements__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "MeetCBOKRequirements__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MembershipExpiry__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "MembershipExpiry__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Mobile__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Mobile__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NFCAssessmentOutcome__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NFCAssessmentOutcome__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nationality__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Nationality__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Networking__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Networking__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Next_Action_Due_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Next_Action_Due_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Next_Action__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Next_Action__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominationSecondedByDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "NominationSecondedByDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "NominationSecondedByEmail__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominationSecondedByEmail__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominationSecondedByPhone__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominationSecondedByPhone__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominationSecondedBy__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominationSecondedBy__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominatorACSMembershipNumber__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominatorACSMembershipNumber__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominatorEmail__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominatorEmail__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominatorName__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominatorName__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "NominatorPhoneNumber__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "NominatorPhoneNumber__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Nominator_Declaration_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Nominator_Declaration_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "NonDecisionReady__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "NonDecisionReady__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "OriginalApplicationReceived__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "OriginalApplicationReceived__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Original_Received_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Original_Received_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Overdrive_Target__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Overdrive_Target__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Passport_Number__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Passport_Number__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Password__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Password__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Payment_Recieved__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Payment_Recieved__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PeriodofMajorContribution__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PeriodofMajorContribution__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PhoneNumber__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PhoneNumber__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PlagiarismDetected__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PlagiarismDetected__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Position_Title_1__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Position_Title_1__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Position_Title_2__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Position_Title_2__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Potential_RMD__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Potential_RMD__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Previous_Certification__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Previous_Certification__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PriorityReason__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PriorityReason__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Priority__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Priority__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProfessionalYearComplete__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProfessionalYearComplete__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Professionalism__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Professionalism__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Programming__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Programming__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectReportUpload__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ProjectReportUpload__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ProjectReportsAttachedAndAcceptable__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProjectReportsAttachedAndAcceptable__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PublicationsandPatents__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PublicationsandPatents__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "QADate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "QADate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "QualityCheckComment__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "QualityCheckComment__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Quality_Check_Status__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Quality_Check_Status__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "REFERENCE_TO_X_EN__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "REFERENCE_TO_X_EN__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RMDCalculationErrorMessages__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RMDCalculationErrorMessages__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RMDLogicUsed__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RMDLogicUsed__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RPLComments__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RPLComments__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Ready_for_Renewal__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Ready_for_Renewal__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ReasonforAppeal__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReasonforAppeal__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReasonforReviewChangeofANZSCO__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReasonforReviewChangeofANZSCO__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReasonforReviewExperience__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReasonforReviewExperience__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReasonforReviewQualification__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReasonforReviewQualification__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReasonforReview__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReasonforReview__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RectifyComment__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RectifyComment__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReferToDIAC__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReferToDIAC__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Company_1__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Company_1__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Company_2__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Company_2__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Email_1__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Email_1__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Email_2__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Email_2__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Name_1__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Name_1__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Name_2__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Name_2__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Phone_1__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Phone_1__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Referee_Phone_2__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Referee_Phone_2__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RelatedAssessment__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RelatedAssessment__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RelatedCertification__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RelatedCertification__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RenewalProcessed__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "RenewalProcessed__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "RequirementsMetDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "RequirementsMetDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "ResultLetterApproved__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "ResultLetterApproved__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Result_Letter_Template__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Result_Letter_Template__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReviewOrAppealEmailTemplate__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReviewOrAppealEmailTemplate__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ReviewOrAppealTemplateID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ReviewOrAppealTemplateID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Review_Unsuitable__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Review_Unsuitable__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "SFIA_Specialism__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SFIA_Specialism__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Security_Management__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Security_Management__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Security_Policy__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Security_Policy__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Service_Management__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Service_Management__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SkillsAgent__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "SkillsAgent__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Societal_Issues_Legal_issues_Privacy__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Societal_Issues_Legal_issues_Privacy__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Status__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Status__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "SubmissionDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "SubmissionDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Suggested_Pathway__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Suggested_Pathway__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Suggested_Type__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Suggested_Type__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Systems_Acquisition__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Systems_Acquisition__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Systems_Development__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Systems_Development__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Target_CPD_Hours__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Target_CPD_Hours__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Teamwork_Concepts_and_Issues__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Teamwork_Concepts_and_Issues__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TechnologyBuilding__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TechnologyBuilding__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TechnologyResources__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TechnologyResources__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAcceptedExperienceYM__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TotalAcceptedExperienceYM__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TotalCPDHours__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TotalCPDHours__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 1,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Total_CPD_Hours_and_Minutes__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Total_CPD_Hours_and_Minutes__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Total_CPD_Minutes_Conversion__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Total_CPD_Minutes_Conversion__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "TypeofCertificationAssessment__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "TypeofCertificationAssessment__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UnsuccessfulNominationCommunication__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UnsuccessfulNominationCommunication__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WhatMakesContributionDistinguished__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WhatMakesContributionDistinguished__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "WithAssessorDate__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "WithAssessorDate__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "X5YearsProfessionalICTExpAtSFIA6__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "X5YearsProfessionalICTExpAtSFIA6__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Years_in_SFIA_Specialism__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Years_in_SFIA_Specialism__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Years_of_experience_in_ICT__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Years_of_experience_in_ICT__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 4
+								}
+							},
+							{
+								"source": {
+									"name": "No_of_Qualification_Accreditation__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "No_of_Qualification_Accreditation__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "TotalAcceptedExperienceDays__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TotalAcceptedExperienceDays__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "TranscriptRollupQualifications__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "TranscriptRollupQualifications__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Certification_Lodged_with_Membership__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Certification_Lodged_with_Membership__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantAttachmentsBoxFolderId__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ApplicantAttachmentsBoxFolderId__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "AssessorAttachmentsBoxFolderId__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AssessorAttachmentsBoxFolderId__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CmsApplicantBoxDocumentDetails__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CmsApplicantBoxDocumentDetails__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CmsBoxApplicantFileIdsToMove__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CmsBoxApplicantFileIdsToMove__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ResultLetterBoxFolderId__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ResultLetterBoxFolderId__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "MonthActivated__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "MonthActivated__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "ExpriyMonth__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "ExpriyMonth__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicationCreatedDateInXenAndSF__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ApplicationCreatedDateInXenAndSF__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Xen_Application_ID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Xen_Application_ID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "PrioriyInformation__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PrioriyInformation__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Certificate_Specialism__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Certificate_Specialism__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RecommendedANZSCO__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecommendedANZSCO__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "RecommendedApplicationType__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RecommendedApplicationType__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "LinkedApplication__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "LinkedApplication__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CaseClosed__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "CaseClosed__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ApplicantDOB__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "ApplicantDOB__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "No_RPL_Document__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "No_RPL_Document__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "RMDFormatted__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RMDFormatted__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DateofKnowledgeMetFormatted__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "DateofKnowledgeMetFormatted__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "BypassValidation__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "BypassValidation__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "CurrentPreviousWeekFinalisedDate__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CurrentPreviousWeekFinalisedDate__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CurrentPreviousMonthFinalisedDate__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CurrentPreviousMonthFinalisedDate__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Related_Certification_Status__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Related_Certification_Status__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Outfit_Assessment_Last_Update__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Outfit_Assessment_Last_Update__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Outfit_Last_Letter_Template__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Outfit_Last_Letter_Template__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Outfit_Letter_Content__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Outfit_Letter_Content__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Email_Correspondence_Sent__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Email_Correspondence_Sent__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification_Expiry_Date_As_Text__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Certification_Expiry_Date_As_Text__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Days_Since_Activation__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Days_Since_Activation__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 0,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Membership_Status__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Membership_Status__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Pendula_Test__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Pendula_Test__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "PlagScan_Doc_Id__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "PlagScan_Doc_Id__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Completion_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Plagiarism_Completion_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "Outfit_Report_Document_Id__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Outfit_Report_Document_Id__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Outfit_Report_Document_Name__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Outfit_Report_Document_Name__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Error__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Plagiarism_Error__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Flag__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Plagiarism_Flag__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Level__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Plagiarism_Level__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Score__c",
+									"type": "Decimal"
+								},
+								"sink": {
+									"name": "Plagiarism_Score__c",
+									"type": "Decimal",
+									"physicalType": "decimal",
+									"scale": 2,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Status__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Plagiarism_Status__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Plagiarism_Submission_Date__c",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "Plagiarism_Submission_Date__c",
+									"type": "DateTime",
+									"physicalType": "datetime2"
+								}
+							},
+							{
+								"source": {
+									"name": "View_in_PlagScan__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "View_in_PlagScan__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Request_Additional_Documents__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Request_Additional_Documents__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Unsuitable_Outcome__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "Unsuitable_Outcome__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductID__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ProductID__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "GTI_Application__c",
+									"type": "Boolean"
+								},
+								"sink": {
+									"name": "GTI_Application__c",
+									"type": "Boolean",
+									"physicalType": "bit"
+								}
+							},
+							{
+								"source": {
+									"name": "Certification_Category__c",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Certification_Category__c",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"sink": {
+									"name": "Ingesteddatetime",
+									"type": "DateTime",
+									"physicalType": "datetime"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
