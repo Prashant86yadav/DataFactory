@@ -17,13 +17,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select \nId ,IsDeleted ,AccountId ,CreatedById ,CreatedDate ,Field ,DataType ,OldValue ,NewValue\nfrom AccountHistory\n",
 						"readBehavior": "query"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -169,11 +169,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "AccountHistory"
+				"defaultValue": "Account"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "AccountHistory_s"
+				"defaultValue": "Account_backup"
 			},
 			"columnlist": {
 				"type": "string",
