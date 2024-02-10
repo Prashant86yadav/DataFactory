@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "update dashboard_category",
+				"name": "update dashboard_category New",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
