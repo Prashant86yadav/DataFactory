@@ -49,7 +49,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "dashboard_",
+							"tablename": "dashboard_category",
 							"schemaname": "membership"
 						}
 					}
