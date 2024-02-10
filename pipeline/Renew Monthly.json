@@ -49,8 +49,8 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "Employees",
-							"schemaname": "dbo"
+							"tablename": "dashboard_",
+							"schemaname": "membership"
 						}
 					}
 				]
