@@ -18,7 +18,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT \n    A.MemberGrade__c AS [Member Grade], \n    A.BillingGrade__c AS [Billing Grade], \n    B.NewMembers AS ID, \n    B.DateStart AS MonthDate, \n    'renewed' AS category\nFROM [membership].[members_new12month_A]('@{pipeline().parameters.month}') B\nINNER JOIN [salesforce].[Account] A ON B.NewMembers = A.id\n",
+							"value": "SELECT \n    A.MemberGrade__c AS [Member Grade], \n    A.BillingGrade__c AS [Billing Grade], \n    B.NewMembers AS ID, \n    B.DateStart AS MonthDate, \n    'renewed' AS category\nFROM [membership].[members_new12month_A]('@{pipeline().parameters.Month}') B\nINNER JOIN [salesforce].[Account] A ON B.NewMembers = A.id\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
