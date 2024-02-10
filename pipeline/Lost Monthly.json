@@ -60,6 +60,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"Month": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ACS/Membership"
 		},
