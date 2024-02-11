@@ -22,6 +22,10 @@
 					"value": "@dataset().filename",
 					"type": "Expression"
 				},
+				"folderPath": {
+					"value": "@dataset().Foldername",
+					"type": "Expression"
+				},
 				"fileSystem": "databricskpremium"
 			},
 			"columnDelimiter": ",",
