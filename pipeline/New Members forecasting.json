@@ -53,7 +53,7 @@
 						"referenceName": "ds_DatabricksPremiumFolder",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "RenewedMemebers",
+							"filename": "NewMembers",
 							"Foldername": "Membership"
 						}
 					}
