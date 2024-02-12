@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from  [membership].[members_renew12month_h]  \n  where\ndateStart >  '2017-12-31'",
+						"sqlReaderQuery": "select * from   [membership].[members_ActivefinancialDaily]  \n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -53,7 +53,7 @@
 						"referenceName": "ds_DatabricksPremiumFolder",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "RenewedMembers",
+							"filename": "ActiveFinancial",
 							"Foldername": "Membership"
 						}
 					}
