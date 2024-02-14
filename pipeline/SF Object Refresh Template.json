@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
+						"query": "select  *\nfrom Account\nwhere \nAzure_ID__c IS NOT NULL ",
 						"readBehavior": "query"
 					},
 					"sink": {
