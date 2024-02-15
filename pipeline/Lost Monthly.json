@@ -69,7 +69,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "'2024-01-31'"
+				"defaultValue": "2024-01-31"
 			}
 		},
 		"folder": {
