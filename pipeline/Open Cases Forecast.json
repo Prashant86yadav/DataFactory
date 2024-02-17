@@ -60,7 +60,11 @@
 						"referenceName": "ds_DatabricksPremiumFolder",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "Opencases"
+							"filename": "Opencases",
+							"Foldername": {
+								"value": "null",
+								"type": "Expression"
+							}
 						}
 					}
 				]

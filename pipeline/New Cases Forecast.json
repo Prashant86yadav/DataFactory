@@ -60,7 +60,8 @@
 						"referenceName": "ds_DatabricksPremiumFolder",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "NewCases"
+							"filename": "NewCases",
+							"Foldername": null
 						}
 					}
 				]
