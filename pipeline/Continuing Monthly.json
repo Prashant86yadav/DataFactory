@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Continuing Monthly",
 	"properties": {
 		"activities": [
 			{
@@ -18,13 +18,33 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "     SELECT Grade__c, MemberBillingGrade__c, accountid,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A]('2024-02-29')  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A]('2024-02-29')  )\n",
+						"sqlReaderQuery": "     SELECT Grade__c, MemberBillingGrade__c, accountid,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](@{pipeline().parameters.Month})  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A](@{pipeline().parameters.Month})  )\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
 					{
 						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
