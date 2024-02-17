@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy Continuing Members",
 				"description": "",
 				"type": "Copy",
 				"dependsOn": [],
@@ -24,7 +24,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='renewed'",
+						"preCopyScript": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='continuing'",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
