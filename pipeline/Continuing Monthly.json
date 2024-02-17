@@ -18,7 +18,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "     SELECT Grade__c, MemberBillingGrade__c, accountid,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](@{pipeline().parameters.Month})  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A](@{pipeline().parameters.Month})  )\n",
+						"sqlReaderQuery": "     SELECT Grade__c as [Member Grade], MemberBillingGrade__c as  [Billing Grade], accountid as ID ,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](@{pipeline().parameters.Month})  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A](@{pipeline().parameters.Month})  )\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
