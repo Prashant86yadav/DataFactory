@@ -209,6 +209,4976 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SF Object Dump_Parquet')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Dump Parquet",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"parallelCopies": 2,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_sql_memebershipdb",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Object Refresh Template')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": "select  Azure_ID__c \nfrom Account\nwhere id ='0019000001ry79OAAQ'\n",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"parallelCopies": 4,
+							"dataIntegrationUnits": 16,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Id",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsDeleted",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsDeleted",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "MasterRecordId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MasterRecordId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Name",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Type",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RecordTypeId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecordTypeId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ParentId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ParentId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingStreet",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingStreet",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingCity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingCity",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingState",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingState",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingPostalCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingPostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingCountry",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingCountry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingLatitude",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "BillingLatitude",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingLongitude",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "BillingLongitude",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingGeocodeAccuracy",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingGeocodeAccuracy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingStreet",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingStreet",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingCity",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingCity",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingState",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingState",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingPostalCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingPostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingCountry",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingCountry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingLatitude",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ShippingLatitude",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingLongitude",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ShippingLongitude",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingGeocodeAccuracy",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ShippingGeocodeAccuracy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Phone",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Phone",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Fax",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Fax",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountNumber",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountNumber",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Website",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Website",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PhotoUrl",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PhotoUrl",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Sic",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Sic",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Industry",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Industry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AnnualRevenue",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "AnnualRevenue",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "NumberOfEmployees",
+											"type": "Int32"
+										},
+										"sink": {
+											"name": "NumberOfEmployees",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Ownership",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Ownership",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TickerSymbol",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TickerSymbol",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Description",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Description",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Rating",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Rating",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrencyIsoCode",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CurrencyIsoCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OwnerId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "OwnerId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CreatedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "CreatedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreatedById",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastModifiedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "LastModifiedById",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LastModifiedById",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SystemModstamp",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SystemModstamp",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "LastActivityDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastActivityDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "LastViewedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastViewedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "LastReferencedDate",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastReferencedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "IsCustomerPortal",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsCustomerPortal",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Jigsaw",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Jigsaw",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JigsawCompanyId",
+											"type": "String"
+										},
+										"sink": {
+											"name": "JigsawCompanyId",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountSource",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountSource",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SicDesc",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SicDesc",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__AccountParticulars__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__AccountParticulars__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__BankBIC__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__BankBIC__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__PaymentCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__PaymentCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__PaymentCountryISO__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__PaymentCountryISO__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__PaymentPriority__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__PaymentPriority__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ffbf__PaymentRoutingMethod__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ffbf__PaymentRoutingMethod__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Purchase_Order_Contact__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Purchase_Order_Contact__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Service_Category__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Service_Category__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ABN__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ABN__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ANZSCOCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ANZSCOCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountManager__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountManager__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountType__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Account_18_Digits_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account_18_Digits_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Account_Support__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Account_Support__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Active_Certification_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Active_Certification_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AdditionalAccountType__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AdditionalAccountType__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AllergyOtherDietaryRequirements__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AllergyOtherDietaryRequirements__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingContact__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingContact__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingGradeChangeDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "BillingGradeChangeDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingGrade__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BillingGrade__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Billing_Grade1_Change_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Billing_Grade1_Change_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Billing_Grade2_Change_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Billing_Grade2_Change_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "BoxFolderId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BoxFolderId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Branch_Newsletters__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Branch_Newsletters__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Branch_Overridden__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Branch_Overridden__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Branch__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Branch__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Bulk_Upload_PPP_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Bulk_Upload_PPP_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertificationBadge__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CertificationBadge__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertificationLevel__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CertificationLevel__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CommunityUser__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CommunityUser__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Anzsco__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Anzsco__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Bio__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Bio__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_DOB__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_DOB__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Email__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Email__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Employer_Name__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Employer_Name__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Expertise__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Expertise__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_FL_Name__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_FL_Name__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Gender__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Gender__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_H_Address__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_H_Address__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Industry__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Industry__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Languages__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Languages__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Mobile__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Mobile__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Phone__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Phone__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Position__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Position__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Sec_Email__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Sec_Email__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Skills__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Skills__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Specialism__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Specialism__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_Sub_Industry__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_Sub_Industry__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Completion_Points_W_Address__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Completion_Points_W_Address__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaCTCPFormula__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaCTCPFormula__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaCTCPTemplateID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaCTCPTemplateID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaCitySys__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaCitySys__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaCountrySys__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaCountrySys__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaMemberCertificate__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaMemberCertificate__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaPostCodeSys__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaPostCodeSys__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaStateSys__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaStateSys__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CongaStreetSys__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CongaStreetSys__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ConsultantsDirectory__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ConsultantsDirectory__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreateBoxFolders__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "CreateBoxFolders__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Create_User_and_Send_New_Password__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Create_User_and_Send_New_Password__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "CreditCardLast4Digits__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreditCardLast4Digits__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreditCardPaymentToken__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreditCardPaymentToken__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreditCardType__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CreditCardType__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrentMembershipExpiry__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CurrentMembershipExpiry__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrentYearAmountSpent__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "CurrentYearAmountSpent__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Data_Migrated_from_XEN__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Data_Migrated_from_XEN__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "DateOfBirthText__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DateOfBirthText__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DateOfBirth__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DateOfBirth__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Default_Address__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Default_Address__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DietaryRequirements__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "DietaryRequirements__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Email__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Email__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Employer_Name__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employer_Name__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ExcludeCommercialEmail__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "ExcludeCommercialEmail__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "ExcludeSMSCommunication__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "ExcludeSMSCommunication__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "ExcludeThirdPartyMailings__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "ExcludeThirdPartyMailings__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Expertise__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Expertise__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Face_to_Face_Interview__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Face_to_Face_Interview__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Facebook__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Facebook__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Former_Billing_Grade1__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Former_Billing_Grade1__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Former_Billing_Grade2__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Former_Billing_Grade2__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Gender__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Gender__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Geography__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Geography__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ITWorkforceSize__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ITWorkforceSize__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "IndustrySubtype__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "IndustrySubtype__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Membership_Opt_Out__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Membership_Opt_Out__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "IsLead__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsLead__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "KeepCertificationStatusPrivate__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "KeepCertificationStatusPrivate__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "KeyContactEmail__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "KeyContactEmail__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "KeyContactName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "KeyContactName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Key_ICT_Skills__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Key_ICT_Skills__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Languages__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Languages__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LastContactDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "LastContactDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "LinkedIn__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LinkedIn__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "LogoImageId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "LogoImageId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MARARegistrationCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MARARegistrationCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Manual_Data_Entry__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Manual_Data_Entry__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "MemberGrade__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MemberGrade__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Role__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Member_Role__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MembershipDocumentsBoxFolderId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MembershipDocumentsBoxFolderId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MembershipNumberAutoGen__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MembershipNumberAutoGen__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MembershipNumber__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MembershipNumber__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Membership_Status__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Membership_Status__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MigrationAgentPrimaryBusinessName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "MigrationAgentPrimaryBusinessName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Mobile__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Mobile__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NationalSignificance__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "NationalSignificance__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "New_Membership_Signup_created__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "New_Membership_Signup_created__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PPP__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PPP__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Partial_Copy_of_Person_Bio__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Partial_Copy_of_Person_Bio__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PaymentAutoRenew__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "PaymentAutoRenew__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PaymentFrequency__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PaymentFrequency__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PaymentMethod__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PaymentMethod__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountDoNotCall__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "PersonAccountDoNotCall__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountEmailOptOut__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "PersonAccountEmailOptOut__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountFirstName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountFirstName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountJoinedDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PersonAccountJoinedDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountLastName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountLastName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountMiddleName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountMiddleName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountPositionTitle__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountPositionTitle__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountPublish__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "PersonAccountPublish__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountSecondaryEmail__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountSecondaryEmail__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountSuffix__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonAccountSuffix__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonBio__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonBio__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonImageId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PersonImageId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PleaseNote__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PleaseNote__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PreferredContactMethod__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PreferredContactMethod__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PreferredName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PreferredName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductArticle__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProductArticle__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ProfessionalDocumentsBoxFolderId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ProfessionalDocumentsBoxFolderId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Professional_Interest__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Professional_Interest__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Profile_Completion_Rate__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Profile_Completion_Rate__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Program_Account_for_Current_Membership__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Program_Account_for_Current_Membership__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ROIAvailableCurrentFY__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ROIAvailableCurrentFY__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ROIAvailableNextFY__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ROIAvailableNextFY__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ReinvestmentAmount__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ReinvestmentAmount__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ReinvestmentRemaining__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ReinvestmentRemaining__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "ReinvestmentSpent__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "ReinvestmentSpent__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Sister_Society_Member__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Sister_Society_Member__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "SkillsAgentIDAssignment__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SkillsAgentIDAssignment__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SkillsAgentID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SkillsAgentID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SkillsAgentStatus__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SkillsAgentStatus__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SpecialBillingExpiryDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "SpecialBillingExpiryDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Specialisms__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Specialisms__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Title__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Title__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "TotalWorkforceSize__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "TotalWorkforceSize__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "TradingName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "TradingName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Twitter__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Twitter__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UENumber__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UENumber__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WebsiteRole__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WebsiteRole__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "WorkHistory__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "WorkHistory__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Work_Phone__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Work_Phone__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "XEN_User_Type__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "XEN_User_Type__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "XenDocumentsBoxFolderId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "XenDocumentsBoxFolderId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "XenEncryptedPassword__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "XenEncryptedPassword__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "XenId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "XenId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Skill_Record_Count__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Skill_Record_Count__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Staff_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Staff_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GradingDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "GradingDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Branch_Newsletters_Change__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Branch_Newsletters_Change__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Credit_Card_Expiry_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Credit_Card_Expiry_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "BPay_CRN__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "BPay_CRN__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertificationExpiryDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "CertificationExpiryDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Nov_Recurring_Email__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Nov_Recurring_Email__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Post_Nominals__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Post_Nominals__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JoinedLastWeek__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "JoinedLastWeek__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Name_With_First_Name_Suffix__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Name_With_First_Name_Suffix__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Valid_Until_End__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Valid_Until_End__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CMSJoinNowApplicationType__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CMSJoinNowApplicationType__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsBoxMembershipFileIdsToMove__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsBoxMembershipFileIdsToMove__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsDirectDepositBoxDocumentDetails__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsDirectDepositBoxDocumentDetails__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsDirectDepositBoxFileIdsToMove__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsDirectDepositBoxFileIdsToMove__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsICTBoxDocumentDetails__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsICTBoxDocumentDetails__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsICTBoxFileIdsToMove__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsICTBoxFileIdsToMove__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsMembershipBoxDocumentDetails__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsMembershipBoxDocumentDetails__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CmsProfessionBoxFileIdsToMove__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CmsProfessionBoxFileIdsToMove__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CountryOfEducation__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CountryOfEducation__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CreateUserRecordOnly__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "CreateUserRecordOnly__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "DateOfCommencement__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DateOfCommencement__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "DateOfExpectedCompletion__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "DateOfExpectedCompletion__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "NameOfInstitution__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NameOfInstitution__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "NameOnCreditCard__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "NameOnCreditCard__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "QualificationName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "QualificationName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RememberForFuturePayments__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "RememberForFuturePayments__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "EmployeeId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "EmployeeId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Identified_for_Merge__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Identified_for_Merge__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Since__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Member_Since__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "JoinedThisMonth__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "JoinedThisMonth__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Enrolment_Status__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Enrolment_Status__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PY_Completion_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "PY_Completion_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Provider_Student_Number__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Provider_Student_Number__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "VETrack_Number__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "VETrack_Number__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountImage__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccountImage__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RecordSource__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "RecordSource__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PostNominalsForCP__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PostNominalsForCP__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccreditedUniversityFacultySchool__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "AccreditedUniversityFacultySchool__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Exclude_from_Email_Communication__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Exclude_from_Email_Communication__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "SkillsMembershipDuplicateAccount_User__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SkillsMembershipDuplicateAccount_User__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Information_Age__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Information_Age__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UniqueId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UniqueId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ACS_Newsletter__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ACS_Newsletter__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ACS_Marketing_Communication__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ACS_Marketing_Communication__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SMS_Communications__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "SMS_Communications__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ThirdParty_Communications__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ThirdParty_Communications__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Create_Free_Skills_Membership__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Create_Free_Skills_Membership__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "SkillsAgentApplication__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "SkillsAgentApplication__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Number_of_Certifications__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Number_of_Certifications__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Password_Token_Expiry_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Password_Token_Expiry_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Password_Token_Used__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Password_Token_Used__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Password_Token__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Password_Token__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Days_Until_CC_Expiry__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Days_Until_CC_Expiry__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Eligible_for_CC_Expiry_Reminder__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Eligible_for_CC_Expiry_Reminder__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Outfit_Certificates_Last_Update__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Outfit_Certificates_Last_Update__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Outfit_Membeship_Cert_Last_Update__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Outfit_Membeship_Cert_Last_Update__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Disable_Validation__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Disable_Validation__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Short_Name__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Short_Name__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "No_of_Programs_With_Active_Memberships__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "No_of_Programs_With_Active_Memberships__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_Active_ROI_Budget__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_Active_ROI_Budget__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_ROI_Balance_Remaining__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_ROI_Balance_Remaining__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_ROI_Spend__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_ROI_Spend__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ExemptionCertificate__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ExemptionCertificate__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__IsBillingAddressValidated__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "fferpcore__IsBillingAddressValidated__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__IsShippingAddressValidated__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "fferpcore__IsShippingAddressValidated__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__OutputVatCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__OutputVatCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__SalesTaxStatus__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__SalesTaxStatus__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__TaxCode1__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__TaxCode1__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__TaxCode2__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__TaxCode2__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__TaxCode3__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__TaxCode3__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__TaxCountryCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__TaxCountryCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedBillingCity__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedBillingCity__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedBillingCountry__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedBillingCountry__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedBillingPostalCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedBillingPostalCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedBillingState__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedBillingState__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedBillingStreet__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedBillingStreet__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedShippingCity__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedShippingCity__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedShippingCountry__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedShippingCountry__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedShippingPostalCode__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedShippingPostalCode__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedShippingState__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedShippingState__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__ValidatedShippingStreet__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__ValidatedShippingStreet__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__VatRegistrationNumber__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__VatRegistrationNumber__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__VatStatus__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fferpcore__VatStatus__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Facebook_Messenger_Id__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Facebook_Messenger_Id__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_Membership_Years__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Total_Membership_Years__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Membership_Balance_Amount__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Membership_Balance_Amount__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Education_Level__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Education_Level__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Certificate_Specialism__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Certificate_Specialism__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Is_Active__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Is_Active__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Elected_Official__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Elected_Official__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Confirmation_of_PSS_Enrollment__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Confirmation_of_PSS_Enrollment__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Employment_Category__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employment_Category__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Employment_Type__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Employment_Type__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Higher_Cap__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Higher_Cap__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PSS_Insurance_Cover__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PSS_Insurance_Cover__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PSS_Member__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PSS_Member__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Certification_Outfit_Document_Id__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Certification_Outfit_Document_Id__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Pendula_Test__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Pendula_Test__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Current_Membership_Expiry_As_Text__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Current_Membership_Expiry_As_Text__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Days_since_Current_Membership_Expiry__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Days_since_Current_Membership_Expiry__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Age__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Age__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Private__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Private__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Elected_Official_Count__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Elected_Official_Count__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Is_Elected_Official__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Is_Elected_Official__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Tier__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Member_Tier__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__Active__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__Active__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__CustomerPriority__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__CustomerPriority__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__Litmos_Id__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__Litmos_Id__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__NumberofLocations__c",
+											"type": "Decimal"
+										},
+										"sink": {
+											"name": "Litmos__NumberofLocations__c",
+											"type": "Decimal",
+											"physicalType": "decimal"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__SLAExpirationDate__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Litmos__SLAExpirationDate__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__SLASerialNumber__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__SLASerialNumber__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__SLA__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__SLA__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Litmos__UpsellOpportunity__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Litmos__UpsellOpportunity__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Student_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Student_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Access_to_Canvas__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Access_to_Canvas__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__MaterializedBillingAddressValidated__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "fferpcore__MaterializedBillingAddressValidated__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "fferpcore__MaterializedShippingAddressValidated__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "fferpcore__MaterializedShippingAddressValidated__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "EU_Applicants_Flag__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "EU_Applicants_Flag__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Is_New_User__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Is_New_User__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Brand__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Brand__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "MC_Applicant__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "MC_Applicant__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Is_Changed__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Is_Changed__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "User_Change_Error__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "User_Change_Error__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PartiallyCompletedMicroCredentialId__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartiallyCompletedMicroCredentialId__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Pendula_Resend__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Pendula_Resend__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Community_Name__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Community_Name__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Account_Deactivated__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Account_Deactivated__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Grade_Pathway__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Member_Grade_Pathway__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "HiddenUserLocationState__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HiddenUserLocationState__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "HiddenFullName__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "HiddenFullName__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Industry__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Industry__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Grade_Review_Date__c",
+											"type": "DateTime"
+										},
+										"sink": {
+											"name": "Member_Grade_Review_Date__c",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Member_Grade_Review__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Member_Grade_Review__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Azure_Email__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Azure_Email__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Azure_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Azure_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "User_ID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "User_ID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertifiedToDate__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "CertifiedToDate__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ComputerProfStatus__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "ComputerProfStatus__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "IsAustralianUser__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "IsAustralianUser__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									},
+									{
+										"source": {
+											"name": "PartiallyCompletedCertID__c",
+											"type": "String"
+										},
+										"sink": {
+											"name": "PartiallyCompletedCertID__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Is_Litmos_User__c",
+											"type": "Boolean"
+										},
+										"sink": {
+											"name": "Is_Litmos_User__c",
+											"type": "Boolean",
+											"physicalType": "bit"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSFOR",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTableName": {
+										"value": "@pipeline().parameters.sourcetable",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.targettable",
+										"type": "Expression"
+									},
+									"schemaname": "salesforce"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"sourcetable": {
+						"type": "string",
+						"defaultValue": "Account"
+					},
+					"targettable": {
+						"type": "string",
+						"defaultValue": "Account_backup"
+					}
+				},
+				"variables": {
+					"HWM": {
+						"type": "String",
+						"defaultValue": "2199-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Opportunity Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Opportunity "
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Opportunity "
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": " Id, IsDeleted, AccountId, RecordTypeId, IsPrivate, Name, Description, StageName, Amount, Probability, ExpectedRevenue, TotalOpportunityQuantity, CloseDate, Type, NextStep, LeadSource, IsClosed, IsWon, ForecastCategory, ForecastCategoryName, CurrencyIsoCode, CampaignId, HasOpportunityLineItem, Pricebook2Id, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, PushCount, LastStageChangeDate, FiscalQuarter, FiscalYear, Fiscal, ContactId, LastViewedDate, LastReferencedDate, ContractId, HasOpenActivity, HasOverdueTask, LastAmountChangedHistoryId, LastCloseDateChangedHistoryId, Brand__c, ACS_Office__c, AccountEmail__c, AccountOwner__c, Automated_Tax_Receipt_Sent__c, Balance__c, BankReference__c, BatchRunDate__c, BoxFolderId__c, CappedOrMembershipBased__c, ChargeDateEmail__c, CongaCitySys__c, CongaCountrySys__c, CongaMembershipSubscriptionRenewal__c, CongaPaymentConfirmationEmailNonCC__c, CongaPostCodeSys__c, CongaStateSys__c, CongaStreetSys__c, CongaTaxInvoiceSaveOnly__c, CongaTaxReceiptAutoEmailNonCC__c, Conga_Email_Sent_From__c, Conga_Skills_Tax_Receipt_Auto_Email__c, CreateBoxFolder__c, CreditController__c, CreditNoteGenerated__c, CreditNoteID__c, Data_Migrated_from_XEN__c, DaysOutstanding__c, EstimatedBudget__c, GenerateCreditNote__c, Grand_Total_of_Non_Optional_Incl_GST__c, ICSFileID__c, Incomplete_Membership__c, Initial_Email_Sent_Non_CC__c, Invoice_Number__c, Invoiced__c, MOUType__c, Manual_Data_Entry__c, MembershipRenewalEmailSent__c, MembershipRenewal__c, Membership_End_Date__c, Membership_Start_Date__c, NeedsApproval__c, NextSteps__c, NumberofMembers__c, OpportunitySource__c, Opportunity_18_Digits_ID__c, Opportunity_ID_Autonumber__c, Opportunity_ID__c, Opportunity_Receipt_Template_ID__c, Oppportunity_Email_Template_ID__c, Oppty_Email_Temp_ID_Non_CC__c, Product_Type__c, Proposal_Template_Generated__c, Proposal_Used__c, Proposal_template_ID__c, Purchase_Order_Number__c, ReEngagementDate__c, ReadyToInvoice__c, ReasonForRefund__c, Reason__c, RefundApprovedDate__c, RefundBankDetails__c, Refund_Amount__c, Related_Contact_Email__c, Related_Contact_First_Name__c, Related_Contact_Title__c, Related_Contact__c, Related_Program__c, ReoccurringPaymentEmailSent__c, Sales_Invoice_ID__c, ScheduledEndDate__c, ScheduledStartDate__c, SolutionInterest__c, Grand_Total_of_Non_Optional_Excl_GST__c, Non_Optional_Grand_Total_GST__c, ProductCount__c, StateAllocationCode__c, Closed_Date_Updated_From_1st_Transaction__c, First_Transaction_Date__c, Canberra__c, Count_Update_Time__c, New_South_Wales__c, Northern_Territory__c, Overseas__c, PPP_Automation_Opp__c, Queensland__c, South_Australia__c, Tasmania__c, Victoria__c, Western_Australia__c, Refund_for_Duplicate_Payment__c, Conga_Membership_and_Certification_Email__c, NoOfMembersOnProgram__c, Approval_Status__c, Product_Family_Approval__c, MonthCreated__c, CloseMonth__c, CreatedInTheLast365Days__c, ClosedIn_the_Last_365_Days__c, Quater_Created__c, EventStartDate__c, Id__c, Parent_Account_Name__c, Parent_Account_Name_Link__c, South_Pacific_Overseas__c, Account_Name__c, Outfit_Membership_Renewal_Last_Update__c, Last_Attachment_Added__c, Send_Membership_Renewal_Email__c, Outfit_Tax_Invoice_Last_Update__c, Outfit_Tax_Invoice_Non_CC_Last_Update__c, Outfit_Tax_Invoice_Receipt_Non_CC_Last_U__c, Application_ID_Pendula__c, Skills_Recipient__c, Outfit_Event_Related_ACS_Office__c, Related_Program_Account_Mismatch__c, Approval_Required__c, Grand_Total_of_Non_WFD_Incl_GST__c, Needs_Approval__c, Payment_Due_Date__c, Program_Id_for_Documents__c, Program_for_Documents__c, Project__c, Reassign_Opportunity__c, Related_Program_End_Date__c, Renewal_Committed__c, Renewal_Started__c, Renewing_Program_Id__c, Send_Inactive_Notification_Date__c, Send_Inactive_Opportunity_Notification__c, Superseded_By__c, Upsell__c, Grand_Total_of_Non_WFD_Excl_GST__c, Membership_Opportunity_Product_Rollup__c, Non_WFD_Grand_Total_GST__c, PPP_Full_Fee_Memberships__c, ROI_Budget__c, WFD_Opportunity_Product_End_Date__c, WFD_Opportunity_Product_Rollup_All__c, WFD_Opportunity_Product_Rollup__c, WFD_Opportunity_Product_Start_Date__c, Pendula_Tax_Receipt_Sent__c, Total_Refund_Amount__c, Count_of_Transactions__c, Sum_of_Transactions__c, Days_Until_Closing__c, Eligible_for_Chatbot__c, October_Membership_Renewal_Communication__c, Outfit_Event_Tax_Invoice_Last_Update__c, Event_Member_Invoice_Payment__c, Outfit_Document_Date__c, Receipt_Outfit_Document_Id__c, Current_Membership_Expiry__c, Current_Membership_Expiry_As_Text__c, Private_Account__c, Outfit_Sales_Order_Document_Id__c, Outfit_Sales_Order_Document_Name__c, Litmos__Competitor_s__c, Litmos__CurrentGenerators__c, Litmos__DeliveryInstallationStatus__c, Litmos__MainCompetitors__c, Litmos__OrderNumber__c, Litmos__TrackingNumber__c, Is_Lead__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF OpportunityLineItem Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforce"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "OpportunityLineItem"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "OpportunityLineItem"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id ,OpportunityId ,SortOrder ,PricebookEntryId ,Product2Id ,ProductCode ,Name ,CurrencyIsoCode ,Quantity ,Discount ,Subtotal ,TotalPrice, UnitPrice, ListPrice, ServiceDate, HasRevenueSchedule, HasQuantitySchedule, Description, HasSchedule, CanUseQuantitySchedule, CanUseRevenueSchedule, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, LastViewedDate, LastReferencedDate, Assessment__c, BalanceDue__c, Course__c, Data_Migrated_from_XEN__c, EventPricing__c, Event__c, GST__c, Income_Schedule_Start_Date__c, Membership__c, OpportunityNumber__c, Optional__c, Program__c, SponsorshipFutureDate__c, Tax_Code_ID__c, Total_Price_GST__c, Total_Price_Incl_GST__c, Opportunity_Stage__c, Sales_Price_Excl_GST__c, Sales_Price_Override__c, Total_Price_Excl_GST__c, Opportunity_Line_Item_ID__c, Refund_Amount_Excl_GST__c, XenId_OpportunityProduct__c, Accreditation__c, ProductName__c, Membership_Id_18_Digits__c, MembershipBillingGrade__c, AssessmentResult__c, AssessmentStatus__c, AssessmentSubmissionDate__c, AssessmentFinalisedDate__c, AssessmentAppTypeSubType__c, AssessmentApplicantName__c, AssessmentRecordType__c, Opportunity_Related_Program__c, Add_to_FF_Invoice__c, Billing_Grade__c, End_Date__c, Exempt_From_WFD_Validations__c, Is_Closed_Won__c, Product_Family_Value__c, Product_Family__c, Project_Deliverable__c, Project__c, ROI_Budget_Calculation__c, Refund_Amount__c, Tax_Rate__c, Has_Refund_Amount__c, Event_Name__c, Disable_Validation__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Qualification History Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Qualification__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id, IsDeleted, Name, CurrencyIsoCode, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Assessment__c, ANZSCO_Code__c, AQFComparability__c, Applicant_Name__c, AssessorNotes__c, AttachedTranscriptAssessor__c, AustralianQualification__c, CEPReference__c, CalculationErrorMessages__c, CloselyRelatedICTUnitCountMajor__c, CloselyRelatedICTUnitCountMinor__c, CloselyRelated__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountString__c, Country__c, CourseAccredited__c, Course__c, Data_Migrated_from_XEN__c, DateAwarded__c, DateOfCommencement__c, DateOfCompletion__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, LastCountsCalculatedOn__c, NormalDurationOfCourse__c, NotACSCourse__c, OASCalculator__c, Potential_RMD_2_or_5_yrs__c, Potential_RMD_4_of_6_yrs__c, Qual_sited_at_Interview__c, QualificationCategory__c, TimeTaken__c, TotalNumberOfUnitsCRPoints__c, TranscriptRollup__c, XEN_Qualification_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, FullOrPartTime__c, RecordLocked__c, XenId_Qualification__c, ResetUnitCounts__c, Calculation_Duration__c, BypassValidation__c, Qualification_18_Digits_ID__c, ApplicantName__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF User Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n[salesforce].[user]",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": " Id, Username, LastName, FirstName, Name, CompanyName, Division, Department, Title, Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Email, EmailPreferencesAutoBcc, EmailPreferencesAutoBccStayInTouch, EmailPreferencesStayInTouchReminder, SenderEmail, SenderName, Signature, StayInTouchSubject, StayInTouchSignature, StayInTouchNote, Phone, Fax, MobilePhone, Alias, CommunityNickname, BadgeText, IsActive, TimeZoneSidKey, UserRoleId, LocaleSidKey, ReceivesInfoEmails, ReceivesAdminInfoEmails, EmailEncodingKey, DefaultCurrencyIsoCode, CurrencyIsoCode, ProfileId, UserType, LanguageLocaleKey, EmployeeNumber, DelegatedApproverId, ManagerId, LastLoginDate, LastPasswordChangeDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, NumberOfFailedLogins, OfflineTrialExpirationDate, OfflinePdaTrialExpirationDate, UserPermissionsMarketingUser, UserPermissionsOfflineUser, UserPermissionsAvantgoUser, UserPermissionsCallCenterAutoLogin, UserPermissionsSFContentUser, UserPermissionsInteractionUser, UserPermissionsSupportUser, UserPermissionsChatterAnswersUser, ForecastEnabled, UserPreferencesActivityRemindersPopup, UserPreferencesEventRemindersCheckboxDefault, UserPreferencesTaskRemindersCheckboxDefault, UserPreferencesReminderSoundOff, UserPreferencesDisableAllFeedsEmail, UserPreferencesDisableFollowersEmail, UserPreferencesDisableProfilePostEmail, UserPreferencesDisableChangeCommentEmail, UserPreferencesDisableLaterCommentEmail, UserPreferencesDisProfPostCommentEmail, UserPreferencesContentNoEmail, UserPreferencesContentEmailAsAndWhen, UserPreferencesApexPagesDeveloperMode, UserPreferencesReceiveNoNotificationsAsApprover, UserPreferencesReceiveNotificationsAsDelegatedApprover, UserPreferencesHideCSNGetChatterMobileTask, UserPreferencesDisableMentionsPostEmail, UserPreferencesDisMentionsCommentEmail, UserPreferencesHideCSNDesktopTask, UserPreferencesHideChatterOnboardingSplash, UserPreferencesHideSecondChatterOnboardingSplash, UserPreferencesDisCommentAfterLikeEmail, UserPreferencesDisableLikeEmail, UserPreferencesSortFeedByComment, UserPreferencesDisableMessageEmail, UserPreferencesHideLegacyRetirementModal, UserPreferencesDisableBookmarkEmail, UserPreferencesDisableSharePostEmail, UserPreferencesEnableAutoSubForFeeds, UserPreferencesDisableFileShareNotificationsForApi, UserPreferencesShowTitleToExternalUsers, UserPreferencesShowManagerToExternalUsers, UserPreferencesShowEmailToExternalUsers, UserPreferencesShowWorkPhoneToExternalUsers, UserPreferencesShowMobilePhoneToExternalUsers, UserPreferencesShowFaxToExternalUsers, UserPreferencesShowStreetAddressToExternalUsers, UserPreferencesShowCityToExternalUsers, UserPreferencesShowStateToExternalUsers, UserPreferencesShowPostalCodeToExternalUsers, UserPreferencesShowCountryToExternalUsers, UserPreferencesShowProfilePicToGuestUsers, UserPreferencesShowTitleToGuestUsers, UserPreferencesShowCityToGuestUsers, UserPreferencesShowStateToGuestUsers, UserPreferencesShowPostalCodeToGuestUsers, UserPreferencesShowCountryToGuestUsers, UserPreferencesHideInvoicesRedirectConfirmation, UserPreferencesHideStatementsRedirectConfirmation, UserPreferencesHideS1BrowserUI, UserPreferencesDisableEndorsementEmail, UserPreferencesPathAssistantCollapsed, UserPreferencesCacheDiagnostics, UserPreferencesShowEmailToGuestUsers, UserPreferencesShowManagerToGuestUsers, UserPreferencesShowWorkPhoneToGuestUsers, UserPreferencesShowMobilePhoneToGuestUsers, UserPreferencesShowFaxToGuestUsers, UserPreferencesShowStreetAddressToGuestUsers, UserPreferencesLightningExperiencePreferred, UserPreferencesPreviewLightning, UserPreferencesHideEndUserOnboardingAssistantModal, UserPreferencesHideLightningMigrationModal, UserPreferencesHideSfxWelcomeMat, UserPreferencesHideBiggerPhotoCallout, UserPreferencesGlobalNavBarWTShown, UserPreferencesGlobalNavGridMenuWTShown, UserPreferencesCreateLEXAppsWTShown, UserPreferencesFavoritesWTShown, UserPreferencesRecordHomeSectionCollapseWTShown, UserPreferencesRecordHomeReservedWTShown, UserPreferencesFavoritesShowTopFavorites, UserPreferencesExcludeMailAppAttachments, UserPreferencesSuppressTaskSFXReminders, UserPreferencesSuppressEventSFXReminders, UserPreferencesPreviewCustomTheme, UserPreferencesHasCelebrationBadge, UserPreferencesUserDebugModePref, UserPreferencesSRHOverrideActivities, UserPreferencesNewLightningReportRunPageEnabled, UserPreferencesNativeEmailClient, UserPreferencesHideBrowseProductRedirectConfirmation, ContactId, AccountId, CallCenterId, Extension, PortalRole, IsPortalEnabled, FederationIdentifier, AboutMe, FullPhotoUrl, SmallPhotoUrl, IsExtIndicatorVisible, OutOfOfficeMessage, MediumPhotoUrl, DigestFrequency, DefaultGroupNotificationFrequency, LastViewedDate, LastReferencedDate, BannerPhotoUrl, SmallBannerPhotoUrl, MediumBannerPhotoUrl, IsProfilePhotoActive, IndividualId, XEN_ID__c, AccountID__c, Assessor__c, CMSIntegrationUserEmail__c, MemberAccountId__c, Membership_Number__c, Office_Address_City__c, Office_Address_Country__c, Office_Address_Postal_Code__c, Office_Address_State__c, Office_Address_Street__c, WebsiteRole__c, FullName__c, User_18_Digit_Id__c, Deactivated_Date__c, Purchase_Order_Approver__c, Litmos__Access_Level__c, Litmos__Completed_Percentage__c, Litmos__Courses_Assigned__c, Litmos__Courses_Completed__c, Litmos__Deactivate_From_Litmos__c, Litmos__Learning_Paths_Assigned__c, Litmos__Learning_Paths_Completed__c, Litmos__LitmosUserId__c, Litmos__Litmos_Activated__c, Litmos__Litmos_Login_Access__c, Litmos__OriginalId__c, Litmos__Sync_Litmos__c, Litmos__Team_Id__c, Litmos__Total_Sum_Percentages__c, Litmos__Total_User_Program_Results__c, Litmos__User_Id__c, Litmos__lp_Completed_Percentage__c, Litmos__p_Completed_Percentage__c, Access_to_Canvas__c, User_15_Digit_Id__c, Billing_Grade__c, Member_Grade__c, WebRole__c, CardExpiryDate__c, CertifiedToDate__c, ComputerProfStatus__c IsAustralianUser__c, Is_Litmos__c, Is_New_User__c, MembershipExpiryDate__c, PartiallyCompletedCertID__c, Position_Title__c, Preferred_Name__c, Is_Changed__c, PartiallyCompletedMicroCredentialId__c, Community_Name__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SF task Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -451,13 +5421,13 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/Unfinancial Numbers Forecast')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "SQL TO DataLake",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -470,15 +5440,21 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SalesforceSource",
-								"readBehavior": "query"
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from [membership].[members_unfinancial_h]  \nwhere dateStart >  '2017-12-31'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
 							},
 							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
 							},
 							"enableStaging": false,
 							"translator": {
@@ -492,20 +5468,18 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "ACSDSSFOR",
+								"referenceName": "AzureSQLSP",
 								"type": "DatasetReference",
-								"parameters": {
-									"SourceTableName": "account"
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "SQLTableQ",
+								"referenceName": "ds_DatabricksPremiumFolder",
 								"type": "DatasetReference",
 								"parameters": {
-									"tablename": "Employees",
-									"schemaname": "dbo"
+									"filename": "Unfinancial",
+									"Foldername": "Membership"
 								}
 							}
 						]
@@ -513,6 +5487,9 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Membership/Forecasting"
 				},
 				"annotations": []
 			},
@@ -19021,6 +23998,242 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/unfinancial Monthly')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "update dashboard_category Unfinancial",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "\nWITH CTE AS (\n    SELECT \n        A.MemberGrade__c AS [Member Grade], \n        A.BillingGrade__c AS [Billing Grade], \n        B.Unfinancial AS ID  , \n\t\tB.DateStart as MonthDate, \n\t\tcategory='Unfinancial'\n\t\t--update the Function here \n    FROM [membership].[members_unfinancial_A](@{pipeline().parameters.Month}) B\n    INNER JOIN [salesforce].[Account] A ON B.Unfinancial = A.id\n),\nCTE1 AS (\n    SELECT \n        CTE.*, \n        CASE    \n            WHEN [Member Grade] IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow') THEN 'Professional'    \n            WHEN [Member Grade] = 'Associate' AND [Billing Grade] IN (    \n                '1 - Continuing', '3 - Full Fee', '5 - Life Member',    \n                '2 - PPP Full Fee', '3 - Full Fee', '17 - PPP MOU2',    \n                '8 - Retired'  \n            ) THEN 'Full Fee Associates'    \n            WHEN [Member Grade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')    \n                AND [Billing Grade] IN (    \n                    '4 - Graduate - 1st Year', '7 - Graduate - 2nd Year',    \n                    '10 - Student - PPP', '11 - Student',    \n                    '15 - Student - ACSF', '16 - Unemployed / On Hiatus'    \n                ) THEN 'Discounted (Full Benefits)'    \n            WHEN [Member Grade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   \n                AND [Billing Grade] IN ('20 - Skills Applicant') THEN 'Skills Applicants'  \n            WHEN [Member Grade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')  \n                AND [Billing Grade] IN ('11 - Complimentary', '12 - Complimentary', '13 - Honoured') THEN 'Complimentary (Full Benefits)'  \n            WHEN [Member Grade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')  \n                AND [Billing Grade] IN ('14 - Student - PYear') THEN 'Professional Year'  \n            WHEN [Member Grade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   \n                AND [Billing Grade] IN (\n                    '18 - Digital Subscriber', '19 - Subscriber - PPP', '18 - Subscriber - PPP'    \n                ) THEN 'Subscribers (Discounted Limited Benefits)'\n            ELSE NULL -- Set Heirarchy to NULL if none of the conditions are met\n        END AS Heirarchy\n    FROM CTE\n), \nCTE2 \nAs (\n\nSELECT *, \n    CASE  \n        WHEN [Heirarchy] = 'Professional' AND [Billing Grade] NOT IN ('5 - Life Member', '13 - Honoured', '1 - Continuing', '8 - Retired', '3 - Full Fee', '2 - PPP Full Fee', '17 - PPP MOU2', '16 - PPP MOU2') \n\t\tTHEN 'Member, Senior Member, Fellow'  \n   \n        WHEN [Heirarchy] = 'Professional' AND [Billing Grade] IN ('5 - Life Member', '13 - Honoured', '1 - Continuing') THEN 'Life Members, Hon Members'        \n        WHEN [Heirarchy] = 'Professional' AND [Billing Grade] = '3 - Full Fee' THEN 'Full Fee (Individual)'        \n        WHEN [Heirarchy] = 'Professional' AND [Billing Grade] IN ('2 - PPP Full Fee', '17 - PPP MOU2', '16 - PPP MOU2') THEN 'Full Fee (PPP)'        \n        WHEN [Heirarchy] = 'Professional' AND [Billing Grade] = '8 - Retired' THEN 'Retired'        \n  \n            \n        WHEN [Heirarchy] = 'Full Fee Associates' AND [Billing Grade] IN ('3 - Full Fee', '5 - Life Member', '1 - Continuing') THEN 'Full Fee Associates (Individual)'        \n        WHEN [Heirarchy] = 'Full Fee Associates' AND [Billing Grade] IN ('2 - PPP Full Fee', '17 - PPP MOU2', '16 - PPP MOU2') THEN 'Full Fee Associates (PPP)'        \n       WHEN [Heirarchy] = 'Full Fee Associates' AND [Billing Grade] = '8 - Retired' THEN 'Retired'     \n              \n        WHEN [Heirarchy] = 'Discounted\u000b(Full Benefits)' AND [Billing Grade] IN ('10 - Student - PPP', '11 - Student', '15 - Student - ACSF') THEN 'Students'        \n        WHEN [Heirarchy] = 'Discounted\u000b(Full Benefits)' AND [Billing Grade] IN ('4 - Graduate - 1st Year', '7 - Graduate - 2nd Year') THEN 'Graduate'        \n        WHEN [Heirarchy] = 'Discounted\u000b(Full Benefits)' AND [Billing Grade] = '16 - Unemployed / On Hiatus' THEN 'Unemployed'   \n  \n            \n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)' AND [Billing Grade] NOT IN ('19 - Subscriber - PPP', '18 - Subscriber - PPP') THEN 'Individuals'        \n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)' AND [Billing Grade] IN ('19 - Subscriber - PPP', '18 - Subscriber - PPP') THEN 'PPP'        \n        WHEN [Heirarchy] = 'Professional Year' THEN 'Professional Year'        \n        WHEN [Heirarchy] = 'Complimentary (Full Benefits)' THEN 'Complimentary'        \n        --WHEN [BGG] = 'Overseas' AND [Heirarchy] != 'Professional' THEN 'Skills Applicants'        \n        WHEN [Heirarchy] = 'Skills Applicants' THEN 'Skills Applicants'        \n        --WHEN ([subsegments] = 'Full Fee Associates (PPP)' OR [subsegments] = 'Full Fee Associates (Individual)') THEN 'Full Fee Associates'      \n    END as subsegments\nFROM CTE1)\nselect * from CTE2\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='Unfinancial'",
+									"type": "Expression"
+								},
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "dashboard_category",
+									"schemaname": "membership"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Month": {
+						"type": "string",
+						"defaultValue": "'2024-01-31'"
+					}
+				},
+				"folder": {
+					"name": "ACS/Membership/Monthly"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/unfinancial')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from  [membership].[members_renew12month_h]  \n  where\ndateStart >  '2017-12-31'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "RenewedMembers",
+									"Foldername": "Membership"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Membership/Forecasting"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Continuing Monthly')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Continuing Members",
+						"description": "",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "     SELECT Grade__c as [Member Grade], MemberBillingGrade__c as  [Billing Grade], accountid as ID ,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](@{pipeline().parameters.Month})  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A](@{pipeline().parameters.Month})  )\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='continuing'",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "dashboard_category",
+									"schemaname": "membership"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"Month": {
+						"type": "string",
+						"defaultValue": "'2024-01-31'"
+					}
+				},
+				"folder": {
+					"name": "ACS/Membership/Monthly"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MSA Weekly')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -19292,7 +24505,9 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF OpportunityLineItem Refresh')]"
 			]
 		}
 	]

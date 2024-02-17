@@ -3892,6 +3892,9 @@
 				"parameters": {
 					"filename": {
 						"type": "string"
+					},
+					"Foldername": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -3901,6 +3904,10 @@
 						"type": "AzureBlobFSLocation",
 						"fileName": {
 							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().Foldername",
 							"type": "Expression"
 						},
 						"fileSystem": "databricskpremium"
@@ -4324,6 +4331,84 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Active Financial Forecast')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "SQL TO DataLake",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select * from   [membership].[members_ActivefinancialDaily]  \nOPTION (MAXRECURSION 0)",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSQLSP",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_DatabricksPremiumFolder",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "ActiveFinancial",
+									"Foldername": "Membership"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Membership/Forecasting"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CSV Uploads')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4391,134 +4476,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
 				"[concat(variables('factoryId'), '/datasets/DeltaLakeDeleteafteruse')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Case Finalised Forecast')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "SQL TO DataLake",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "StartDatabricksCluster",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select date, count(*) as total  from [psas].[V_MetricLC_FromAssessor_CaseFinalised] where date > '2018-01-01'\ngroup by date \norder by date ",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "ds_DatabricksPremiumFolder",
-								"type": "DatasetReference",
-								"parameters": {
-									"filename": "casefinalised"
-								}
-							}
-						]
-					},
-					{
-						"name": "Prophet Case finalised",
-						"type": "DatabricksNotebook",
-						"dependsOn": [
-							{
-								"activity": "SQL TO DataLake",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Prophet Case Finalised Best Notebook"
-						},
-						"linkedServiceName": {
-							"referenceName": "ACS Databricks Premium",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "StartDatabricksCluster",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "StartDatabricksCluster",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "ACS/MSA Forecasting"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
 			]
 		}
 	]
