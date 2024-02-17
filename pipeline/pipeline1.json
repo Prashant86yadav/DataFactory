@@ -1,6 +1,43 @@
 {
 	"name": "pipeline1",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"description": "",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "     SELECT Grade__c, MemberBillingGrade__c, accountid,EOMONTH(GETDATE())  as MonthDate, Heirarchy =NULL,   subsegments = NULL\n  ,   category='continuing'  from [salesforce].[Contract]    where  currentmembership__c =1\n    and  Status IN ('Active Financial') \tand accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A]('2024-02-29')  )\n   and accountid not in  ( select Newmembers from   [membership].[members_new12month_A]('2024-02-29')  )\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"Month": {
+				"type": "string",
+				"defaultValue": "'2024-02-29'"
+			}
+		},
 		"folder": {
 			"name": "ACS/Membership/Monthly"
 		},
