@@ -42,12 +42,8 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SQLTableQ",
-						"type": "DatasetReference",
-						"parameters": {
-							"tablename": "Mem_dashboard01",
-							"schemaname": "membership"
-						}
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
