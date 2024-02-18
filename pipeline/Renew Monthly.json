@@ -26,10 +26,6 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": {
-							"value": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='renewed'",
-							"type": "Expression"
-						},
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -65,7 +61,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "'2024-01-31'"
+				"defaultValue": "'2024-02-29'"
 			}
 		},
 		"folder": {
