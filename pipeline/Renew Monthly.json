@@ -26,6 +26,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "delete from  [membership].[Mem_dashboard01] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='Renewed'\n",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
