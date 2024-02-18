@@ -26,10 +26,6 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": {
-							"value": "delete from  [membership].[dashboard_category] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='Unfinancial'",
-							"type": "Expression"
-						},
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -55,7 +51,7 @@
 						"referenceName": "SQLTableQ",
 						"type": "DatasetReference",
 						"parameters": {
-							"tablename": "dashboard_category",
+							"tablename": "Mem_dashboard01",
 							"schemaname": "membership"
 						}
 					}
