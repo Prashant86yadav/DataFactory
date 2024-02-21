@@ -7,126 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"ACS Databricks Premium_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'ACS Databricks Premium'"
-		},
-		"ACSSFPROD_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'ACSSFPROD'"
-		},
-		"ACSSFPROD_securityToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
-		},
-		"AzureDataLakeStorage_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
-		},
-		"AzureDatabricksPremium_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksPremium'"
-		},
-		"AzureMember_ls_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'AzureMember_ls'"
-		},
-		"Canvas REST_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Canvas REST'"
-		},
-		"Datafeeds_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Datafeeds'"
-		},
-		"LSSQLPOC_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LSSQLPOC'"
-		},
-		"LS_AZST_BlobLanding_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'LS_AZST_BlobLanding'"
-		},
-		"Ls_ACSDatabricksDeltaLake_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Ls_ACSDatabricksDeltaLake'"
-		},
-		"Ls_AzurePOCDatabricks_accessToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'Ls_AzurePOCDatabricks'"
-		},
-		"SalesforceACSProd_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SalesforceACSProd'"
-		},
-		"SalesforceACSProd_securityToken": {
-			"type": "secureString",
-			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
-		},
-		"dewr_ls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
-		},
-		"ls_DataLake_DPP_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ls_DataLake_DPP'"
-		},
-		"ls_SQL_membership_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
-		},
-		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "1010-010936-bskqk28r"
-		},
-		"ACSSFPROD_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://acsau.my.salesforce.com/"
-		},
-		"ACSSFPROD_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra@acs.org.au"
-		},
-		"AzureDataLakeStorage_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
-		},
-		"Canvas REST_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://acslearn.instructure.com"
-		},
-		"Canvas REST_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra"
-		},
-		"GoogleRestAPI_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
-		},
-		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
-			"type": "string",
-			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
-		},
-		"Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId": {
-			"type": "string",
-			"defaultValue": "0323-061008-xwb0cb1p"
-		},
-		"SalesforceACSProd_properties_typeProperties_environmentUrl": {
-			"type": "string",
-			"defaultValue": "https://acsau.my.salesforce.com/"
-		},
-		"SalesforceACSProd_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "prashant.yadvendra@acs.org.au"
-		},
-		"dewr_ls_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacspoc01.dfs.core.windows.net/"
-		},
-		"ls_DataLake_DPP_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
-		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -322,14 +202,6 @@
 		"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
-		},
-		"containerUri": {
-			"type": "string",
-			"metadata": "URI to storage account containing linked ARM templates"
-		},
-		"containerSasToken": {
-			"type": "string",
-			"metadata": "Sas token to storage account containing linked ARM templates"
 		}
 	},
 	"variables": {
@@ -337,339 +209,170 @@
 	},
 	"resources": [
 		{
-			"name": "acs-as-poc-df01_ArmTemplate_0",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"name": "[concat(parameters('factoryName'), '/TR_SF_Refresh')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
 			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
+						}
 					},
-					"ACS Databricks Premium_accessToken": {
-						"value": "[parameters('ACS Databricks Premium_accessToken')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Account Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
+						}
 					},
-					"ACSSFPROD_password": {
-						"value": "[parameters('ACSSFPROD_password')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Contract Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
+						}
 					},
-					"ACSSFPROD_securityToken": {
-						"value": "[parameters('ACSSFPROD_securityToken')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Assessment History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
+						}
 					},
-					"AzureDataLakeStorage_accountKey": {
-						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccreditedCourse__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
+						}
 					},
-					"AzureDatabricksPremium_accessToken": {
-						"value": "[parameters('AzureDatabricksPremium_accessToken')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Accreditation Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]",
+							"brpExtractFrom": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]",
+							"brpExtractTo": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
+						}
 					},
-					"AzureMember_ls_connectionString": {
-						"value": "[parameters('AzureMember_ls_connectionString')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Qualification History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
+						}
 					},
-					"Canvas REST_password": {
-						"value": "[parameters('Canvas REST_password')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF task Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname')]"
+						}
 					},
-					"Datafeeds_connectionString": {
-						"value": "[parameters('Datafeeds_connectionString')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF OpportunityLineItem Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname')]"
+						}
 					},
-					"LSSQLPOC_connectionString": {
-						"value": "[parameters('LSSQLPOC_connectionString')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF Experience Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_schemaname')]"
+						}
 					},
-					"Ls_ACSDatabricksDeltaLake_accessToken": {
-						"value": "[parameters('Ls_ACSDatabricksDeltaLake_accessToken')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccountHistoryCstm Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname')]"
+						}
 					},
-					"Ls_AzurePOCDatabricks_accessToken": {
-						"value": "[parameters('Ls_AzurePOCDatabricks_accessToken')]"
-					},
-					"SalesforceACSProd_password": {
-						"value": "[parameters('SalesforceACSProd_password')]"
-					},
-					"SalesforceACSProd_securityToken": {
-						"value": "[parameters('SalesforceACSProd_securityToken')]"
-					},
-					"dewr_ls_accountKey": {
-						"value": "[parameters('dewr_ls_accountKey')]"
-					},
-					"ls_DataLake_DPP_accountKey": {
-						"value": "[parameters('ls_DataLake_DPP_accountKey')]"
-					},
-					"ls_SQL_membership_connectionString": {
-						"value": "[parameters('ls_SQL_membership_connectionString')]"
-					},
-					"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
-					},
-					"ACSSFPROD_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('ACSSFPROD_properties_typeProperties_environmentUrl')]"
-					},
-					"ACSSFPROD_properties_typeProperties_username": {
-						"value": "[parameters('ACSSFPROD_properties_typeProperties_username')]"
-					},
-					"AzureDataLakeStorage_properties_typeProperties_url": {
-						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
-					},
-					"Canvas REST_properties_typeProperties_url": {
-						"value": "[parameters('Canvas REST_properties_typeProperties_url')]"
-					},
-					"Canvas REST_properties_typeProperties_userName": {
-						"value": "[parameters('Canvas REST_properties_typeProperties_userName')]"
-					},
-					"GoogleRestAPI_properties_typeProperties_url": {
-						"value": "[parameters('GoogleRestAPI_properties_typeProperties_url')]"
-					},
-					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
-						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
-					},
-					"Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId": {
-						"value": "[parameters('Ls_AzurePOCDatabricks_properties_typeProperties_existingClusterId')]"
-					},
-					"SalesforceACSProd_properties_typeProperties_environmentUrl": {
-						"value": "[parameters('SalesforceACSProd_properties_typeProperties_environmentUrl')]"
-					},
-					"SalesforceACSProd_properties_typeProperties_username": {
-						"value": "[parameters('SalesforceACSProd_properties_typeProperties_username')]"
-					},
-					"dewr_ls_properties_typeProperties_url": {
-						"value": "[parameters('dewr_ls_properties_typeProperties_url')]"
-					},
-					"ls_DataLake_DPP_properties_typeProperties_url": {
-						"value": "[parameters('ls_DataLake_DPP_properties_typeProperties_url')]"
+					{
+						"pipelineReference": {
+							"referenceName": "SF AccountHistoryStd Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 12,
+						"startTime": "2022-12-24T00:00:00",
+						"timeZone": "AUS Eastern Standard Time"
 					}
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					},
-					"LS_AZST_BlobLanding_connectionString": {
-						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_0')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_2",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_1')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_3",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_2')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_4",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Contract Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment History Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractFrom')]"
-					},
-					"TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccreditedCourse__c Refresh_parameters_brpExtractTo')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractFrom')]"
-					},
-					"TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Accreditation Refresh_parameters_brpExtractTo')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Qualification History Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF task Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF Experience Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Experience Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF Experience Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF Experience Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryStd Refresh_parameters_schemaname')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_3')]"
-			]
 		}
 	]
 }
