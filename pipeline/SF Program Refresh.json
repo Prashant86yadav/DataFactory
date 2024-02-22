@@ -23,10 +23,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "SalesforceSource",
+						"readBehavior": "query"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -52,8 +50,12 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AzureSQLSP",
-						"type": "DatasetReference"
+						"referenceName": "ACSDSSF",
+						"type": "DatasetReference",
+						"parameters": {
+							"object1": "account",
+							"object2": "assessment"
+						}
 					}
 				],
 				"outputs": [
