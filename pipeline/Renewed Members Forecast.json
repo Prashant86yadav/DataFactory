@@ -83,7 +83,7 @@
 				}
 			},
 			{
-				"name": "Prophet  NewMembers forecast",
+				"name": "Prophet  Renewed forecast",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -102,7 +102,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/New Members Forecast"
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Renew members Forecast"
 				},
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
