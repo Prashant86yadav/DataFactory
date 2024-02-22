@@ -1,0 +1,25 @@
+{
+	"name": "Membership Daily",
+	"properties": {
+		"description": "Membership Pipelines will be Triggered everyday at 6 AM ",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Active Financial Forecast",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 15,
+				"startTime": "2024-02-22T23:20:00",
+				"timeZone": "AUS Eastern Standard Time"
+			}
+		}
+	}
+}
