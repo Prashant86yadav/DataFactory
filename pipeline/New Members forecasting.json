@@ -5,7 +5,14 @@
 			{
 				"name": "SQL TO DataLake",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "StartDatabricksCluster",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -58,6 +65,49 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "StartDatabricksCluster",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "StartDatabricksCluster",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Prophet Lost Members forecast",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "SQL TO DataLake",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Lost Member Forecast"
+				},
+				"linkedServiceName": {
+					"referenceName": "ACS Databricks Premium",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
