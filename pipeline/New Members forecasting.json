@@ -83,7 +83,7 @@
 				}
 			},
 			{
-				"name": "Prophet Lost Members forecast",
+				"name": "Prophet  NewMembers forecast",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
@@ -102,7 +102,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Lost Member Forecast"
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/New Members Forecast"
 				},
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
