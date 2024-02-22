@@ -326,6 +326,22 @@
 		"TR_SF_Refresh_properties_SF Account Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Programs__c"
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Programs__c"
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": " Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate, Account__c, BatchDate__c, BatchProcessed__c, Capacity__c, CappedOrMembershipBased__c, DateFilter__c, Description__c, EndDate__c, MOUType__c, MembershipsAllocated__c, MembershipsRemaining__c, PPPRegistrationLink__c, Program_18_Digits_ID__c, StartDate__c, TotalMemberships__c, Account_18_Digit_ID__c, PPP_MOU1_Link__c, PPP_MOU2_Link__c, PPP_Friendly_Link__c, AccountOwnerId__c, DaysRemaining__c, IsCloned__c, PreviousProgram__c, Subscriber__c, IsOverseasSubscriber__c, Count_ACS_Event_Hours__c, Count_Other_Hours__c, Count_PD_Video_Hours__c, Create_Validation_Task__c, End_Date_Within_90_Days__c, Has_Paid__c, Inactive__c, Include_in_ROI_Rollup__c, Is_Current__c, KeyContactEmail__c, KeyContactName__c, Last_Task_Review_Date__c, Membership_Remaining_Upsell_Formula__c, Num_Members_Certified__c, Num_Members_Logged_In__c, Num_Members_with_CPD_Hour_s__c, Originating_Opportunity__c, Over_Capacity_Email_Sent__c, Over_Capacity__c, PPP_Registration_Full_URL__c, PPP_Registration_Link__c, Payment_Due_Date__c, Percent_Members_Certified__c, Percent_Members_Logged_In__c, Percent_Members_with_CPD_Hours__c, ROI_Balance_Remaining__c, ROI_Budget__c, Renewal_Opportunity__c, Send_Registration_URL__c, Student_Group__c, Total_ACS_Events_Hours__c, Total_Active_Memberships__c, Total_Balance__c, Total_CPD_Hours__c, Total_Charge_Amount__c, Total_Count_CPD_Hours__c, Total_Other_Hours__c, Total_PD_Video_Hours__c, Total_Transactions_Amount__c, ROI_Spend__c\n \n "
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
@@ -37509,6 +37525,18 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Program Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -37533,7 +37561,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF Experience Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryCstm Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryStd Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Program Refresh')]"
 			]
 		},
 		{
@@ -37552,6 +37581,251 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Program Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {
+									"object1": "account",
+									"object2": "assessment"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforce"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {
+									"object1": "account",
+									"object2": "assessment"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Programs__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Programs__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": " Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate, Account__c, BatchDate__c, BatchProcessed__c, Capacity__c, CappedOrMembershipBased__c, DateFilter__c, Description__c, EndDate__c, MOUType__c, MembershipsAllocated__c, MembershipsRemaining__c, PPPRegistrationLink__c, Program_18_Digits_ID__c, StartDate__c, TotalMemberships__c, Account_18_Digit_ID__c, PPP_MOU1_Link__c, PPP_MOU2_Link__c, PPP_Friendly_Link__c, AccountOwnerId__c, DaysRemaining__c, IsCloned__c, PreviousProgram__c, Subscriber__c, IsOverseasSubscriber__c, Count_ACS_Event_Hours__c, Count_Other_Hours__c, Count_PD_Video_Hours__c, Create_Validation_Task__c, End_Date_Within_90_Days__c, Has_Paid__c, Inactive__c, Include_in_ROI_Rollup__c, Is_Current__c, KeyContactEmail__c, KeyContactName__c, Last_Task_Review_Date__c, Membership_Remaining_Upsell_Formula__c, Num_Members_Certified__c, Num_Members_Logged_In__c, Num_Members_with_CPD_Hour_s__c, Originating_Opportunity__c, Over_Capacity_Email_Sent__c, Over_Capacity__c, PPP_Registration_Full_URL__c, PPP_Registration_Link__c, Payment_Due_Date__c, Percent_Members_Certified__c, Percent_Members_Logged_In__c, Percent_Members_with_CPD_Hours__c, ROI_Balance_Remaining__c, ROI_Budget__c, Renewal_Opportunity__c, Send_Registration_URL__c, Student_Group__c, Total_ACS_Events_Hours__c, Total_Active_Memberships__c, Total_Balance__c, Total_CPD_Hours__c, Total_Charge_Amount__c, Total_Count_CPD_Hours__c, Total_Other_Hours__c, Total_PD_Video_Hours__c, Total_Transactions_Amount__c, ROI_Spend__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforce"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
 		}
 	]
 }

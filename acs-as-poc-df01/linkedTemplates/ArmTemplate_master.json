@@ -327,6 +327,22 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Programs__c"
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Programs__c"
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": " Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate, Account__c, BatchDate__c, BatchProcessed__c, Capacity__c, CappedOrMembershipBased__c, DateFilter__c, Description__c, EndDate__c, MOUType__c, MembershipsAllocated__c, MembershipsRemaining__c, PPPRegistrationLink__c, Program_18_Digits_ID__c, StartDate__c, TotalMemberships__c, Account_18_Digit_ID__c, PPP_MOU1_Link__c, PPP_MOU2_Link__c, PPP_Friendly_Link__c, AccountOwnerId__c, DaysRemaining__c, IsCloned__c, PreviousProgram__c, Subscriber__c, IsOverseasSubscriber__c, Count_ACS_Event_Hours__c, Count_Other_Hours__c, Count_PD_Video_Hours__c, Create_Validation_Task__c, End_Date_Within_90_Days__c, Has_Paid__c, Inactive__c, Include_in_ROI_Rollup__c, Is_Current__c, KeyContactEmail__c, KeyContactName__c, Last_Task_Review_Date__c, Membership_Remaining_Upsell_Formula__c, Num_Members_Certified__c, Num_Members_Logged_In__c, Num_Members_with_CPD_Hour_s__c, Originating_Opportunity__c, Over_Capacity_Email_Sent__c, Over_Capacity__c, PPP_Registration_Full_URL__c, PPP_Registration_Link__c, Payment_Due_Date__c, Percent_Members_Certified__c, Percent_Members_Logged_In__c, Percent_Members_with_CPD_Hours__c, ROI_Balance_Remaining__c, ROI_Budget__c, Renewal_Opportunity__c, Send_Registration_URL__c, Student_Group__c, Total_ACS_Events_Hours__c, Total_Active_Memberships__c, Total_Balance__c, Total_CPD_Hours__c, Total_Charge_Amount__c, Total_Count_CPD_Hours__c, Total_Other_Hours__c, Total_PD_Video_Hours__c, Total_Transactions_Amount__c, ROI_Spend__c\n \n "
+		},
+		"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -671,6 +687,18 @@
 					},
 					"TR_SF_Refresh_properties_SF Account Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Account Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF Program Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF Program Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname')]"
 					}
 				}
 			},
