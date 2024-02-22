@@ -202,11 +202,11 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "Contract"
+				"defaultValue": "Programs__c"
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "contract"
+				"defaultValue": "Programs__c"
 			},
 			"ColumnList": {
 				"type": "string",
