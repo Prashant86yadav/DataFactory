@@ -23,12 +23,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": {
-							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-							"type": "Expression"
-						},
-						"readBehavior": "query"
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -54,7 +51,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
+						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
 					}
 				],
@@ -210,7 +207,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": " Id ,AccountId ,CurrencyIsoCode ,OwnerExpirationNotice ,StartDate ,EndDate, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ContractTerm, OwnerId, Status, CompanySignedId, CompanySignedDate, CustomerSignedId, CustomerSignedTitle, CustomerSignedDate, SpecialTerms, ActivatedById, ActivatedDate, StatusCode, Description, RecordTypeId, Name, IsDeleted, ContractNumber, LastApprovedDate, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, BatchRunDate__c, BulkUploadedPPPMember__c, Created_by_PPP_Bulk_Upload__c, CurrentMembership__c, CurrentMonthYear__c, Data_Migrated_from_XEN__c, DaysSinceStartDate__c, ExpiryCaseCreated__c, Grade__c, IndividualMovedtoPPP__c, Location__c, LodgedWithCertificationApplication__c, MOUType__c, Manual_Data_Entry__c, MemberBillingGrade__c, MembershipExpiry__c, MembershipID__c, Membership_18_Digits_ID__c, Membership_End_Date_12months__c, Membership_End_Date_1Day__c, Membership_End_Date_3months__c, Membership_Start_Date_Was_Null__c, New__c, Non_Financed_Flag__c, PPPKeyContactEmail__c, PPPKeyContactName__c, PPPMOU1Approved__c, PPPName__c, PPP__c, PreferredName__c, PreviousMembership__c, Program__c, RelatedAccountEmail__c, RenewalProcessed__c, Sister_Society_Member_Grade__c, Sister_Society_Membership_Expiry_Date__c, Sister_Society_Membership_Number__c, Sister_Society_Name__c, StartDatePlus12Months__c, SubscriptionNoticeSent__c, UpdatedViaFlow__c, WelcomeEmailSent__c, ZeroCostMembership__c, Termination_Reason__c, Grading_Date__c, Date_Resigned__c, PPP_Account_Name__c, Bulk_PPP_Renewed_as_Active__c, Re_Order_Cards__c, Re_Order_Cards_Date__c, Re_Order_Last_week__c, SkillsMembershipAgent__c, PY_Second_Year_Email_Sent__c, Membership_Expiry_Discrepancy__c, Detach_from_PPP__c, Membership_Expiry_Within_30_days__c, SkillsMembershipApplicationOrigin__c, SkillsMembershipDuplicateAccountUser__c, SkillsMembershipOptOut__c, Zipline_Mobile__c, Approval_URL_Link__c, Approval_URL__c, Certification_Level__c, Detached__c, For_Renewal__c, Last_Login_Date__c, MOU_Type__c, Product_Selected__c, Pendula_Test__c, Membership_Expiry_Date_As_Text__c, COVID_19__c"
+				"defaultValue": " Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate ,LastViewedDate ,LastReferencedDate, Account__c, BatchDate__c, BatchProcessed__c, Capacity__c, CappedOrMembershipBased__c, DateFilter__c, Description__c, EndDate__c, MOUType__c, MembershipsAllocated__c, MembershipsRemaining__c, PPPRegistrationLink__c, Program_18_Digits_ID__c, StartDate__c, TotalMemberships__c, Account_18_Digit_ID__c, PPP_MOU1_Link__c, PPP_MOU2_Link__c, PPP_Friendly_Link__c, AccountOwnerId__c, DaysRemaining__c, IsCloned__c, PreviousProgram__c, Subscriber__c, IsOverseasSubscriber__c, Count_ACS_Event_Hours__c, Count_Other_Hours__c, Count_PD_Video_Hours__c, Create_Validation_Task__c, End_Date_Within_90_Days__c, Has_Paid__c, Inactive__c, Include_in_ROI_Rollup__c, Is_Current__c, KeyContactEmail__c, KeyContactName__c, Last_Task_Review_Date__c, Membership_Remaining_Upsell_Formula__c, Num_Members_Certified__c, Num_Members_Logged_In__c, Num_Members_with_CPD_Hour_s__c, Originating_Opportunity__c, Over_Capacity_Email_Sent__c, Over_Capacity__c, PPP_Registration_Full_URL__c, PPP_Registration_Link__c, Payment_Due_Date__c, Percent_Members_Certified__c, Percent_Members_Logged_In__c, Percent_Members_with_CPD_Hours__c, ROI_Balance_Remaining__c, ROI_Budget__c, Renewal_Opportunity__c, Send_Registration_URL__c, Student_Group__c, Total_ACS_Events_Hours__c, Total_Active_Memberships__c, Total_Balance__c, Total_CPD_Hours__c, Total_Charge_Amount__c, Total_Count_CPD_Hours__c, Total_Other_Hours__c, Total_PD_Video_Hours__c, Total_Transactions_Amount__c, ROI_Spend__c"
 			},
 			"schemaname": {
 				"type": "string",
