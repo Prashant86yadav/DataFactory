@@ -28,6 +28,12 @@
 					"referenceName": "Renewed Members Forecast",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Unfinancial Numbers Forecast",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
