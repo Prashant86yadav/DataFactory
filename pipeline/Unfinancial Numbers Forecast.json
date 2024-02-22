@@ -102,7 +102,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Renew members Forecast"
+					"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Unfinancial Members forecast"
 				},
 				"linkedServiceName": {
 					"referenceName": "ACS Databricks Premium",
