@@ -67,7 +67,7 @@
 				]
 			},
 			{
-				"name": "Prophet Case finalised",
+				"name": "Prophet Lost Members forecast",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
