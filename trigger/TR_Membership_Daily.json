@@ -1,5 +1,5 @@
 {
-	"name": "Membership Daily",
+	"name": "TR_Membership_Daily",
 	"properties": {
 		"description": "Membership Pipelines will be Triggered everyday at 6 AM ",
 		"annotations": [],
@@ -8,6 +8,12 @@
 			{
 				"pipelineReference": {
 					"referenceName": "Active Financial Forecast",
+					"type": "PipelineReference"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Lost Members Forecasting",
 					"type": "PipelineReference"
 				}
 			}
