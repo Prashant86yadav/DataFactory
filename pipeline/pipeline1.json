@@ -20,6 +20,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"month": {
+				"type": "string",
+				"defaultValue": "test"
+			}
+		},
 		"variables": {
 			"test": {
 				"type": "String"
