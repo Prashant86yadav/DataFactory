@@ -95,6 +95,9 @@
 		"ls_DataLake_DPP_properties_typeProperties_url": {
 			"value": "https://stacsdpp01.dfs.core.windows.net/"
 		},
+		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
+			"value": "'2024-02-29'"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
 		},

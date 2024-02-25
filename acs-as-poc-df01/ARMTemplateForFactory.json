@@ -127,6 +127,10 @@
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
 		},
+		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
+			"type": "string",
+			"defaultValue": "'2024-02-29'"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -14259,7 +14263,14 @@
 					{
 						"name": "SQL TO DataLake",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "StartDatabricksCluster",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -14313,6 +14324,50 @@
 								}
 							}
 						]
+					},
+					{
+						"name": "StartDatabricksCluster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "StartDatabricksCluster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Prophet  Renewed forecast",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "SQL TO DataLake",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/prashant.yadvendra@acs.org.au/Machine Learning ACS/Forecasting Membership/Unfinancial Members forecast"
+						},
+						"linkedServiceName": {
+							"referenceName": "ACS Databricks Premium",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -14325,7 +14380,9 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
-				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]"
+				"[concat(variables('factoryId'), '/datasets/ds_DatabricksPremiumFolder')]",
+				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]",
+				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]"
 			]
 		},
 		{
@@ -37699,6 +37756,87 @@
 				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/TR_Membership_Daily')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Membership Pipelines will be Triggered everyday at 6 AM ",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Active Financial Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Lost Members Forecasting",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "New Members forecasting",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Renewed Members Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Unfinancial Numbers Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "New Monthly",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"Month": "[parameters('TR_Membership_Daily_properties_New Monthly_parameters_Month')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2024-02-22T23:20:00",
+						"timeZone": "AUS Eastern Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								6
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Active Financial Forecast')]",
+				"[concat(variables('factoryId'), '/pipelines/Lost Members Forecasting')]",
+				"[concat(variables('factoryId'), '/pipelines/New Members forecasting')]",
+				"[concat(variables('factoryId'), '/pipelines/Renewed Members Forecast')]",
+				"[concat(variables('factoryId'), '/pipelines/Unfinancial Numbers Forecast')]",
+				"[concat(variables('factoryId'), '/pipelines/New Monthly')]"
 			]
 		},
 		{
