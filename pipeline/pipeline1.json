@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -13,22 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from \n[membership].[Mem_dashboard01]\nwhere monthdate = '@{pipeline().parameters.CurrentDate}'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "AzureSQLSP",
-						"type": "DatasetReference"
-					}
-				]
+				"userProperties": []
 			}
 		],
 		"parameters": {
