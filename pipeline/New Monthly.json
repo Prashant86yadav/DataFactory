@@ -5,7 +5,14 @@
 			{
 				"name": "update dashboard_category New",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set monthdate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -60,6 +67,16 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Set monthdate",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": []
 			}
 		],
 		"parameters": {
@@ -69,7 +86,7 @@
 			}
 		},
 		"variables": {
-			"test": {
+			"month": {
 				"type": "String"
 			}
 		},
