@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from \n[membership].[Mem_dashboard01]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
