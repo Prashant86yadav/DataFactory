@@ -14,18 +14,12 @@
 				"typeProperties": {
 					"variableName": "test",
 					"value": {
-						"value": "@{dayOfMonth(utcNow())}",
+						"value": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}\n",
 						"type": "Expression"
 					}
 				}
 			}
 		],
-		"parameters": {
-			"CurrentDate": {
-				"type": "string",
-				"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
-			}
-		},
 		"variables": {
 			"test": {
 				"type": "String"
