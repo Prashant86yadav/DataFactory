@@ -31,6 +31,12 @@
 				]
 			}
 		],
+		"parameters": {
+			"CurrentDate": {
+				"type": "string",
+				"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
+			}
+		},
 		"folder": {
 			"name": "ACS/Membership/Monthly"
 		},
