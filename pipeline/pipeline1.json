@@ -3,23 +3,29 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup1",
-				"type": "Lookup",
+				"name": "Set variable1",
+				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "test",
+					"value": ""
+				}
 			}
 		],
 		"parameters": {
 			"CurrentDate": {
 				"type": "string",
 				"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
+			}
+		},
+		"variables": {
+			"test": {
+				"type": "String"
 			}
 		},
 		"folder": {
