@@ -41,7 +41,7 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"Month": "'2024-02-29'"
+					"Month": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
 				}
 			}
 		],
