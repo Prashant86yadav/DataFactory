@@ -68,6 +68,11 @@
 				"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
 			}
 		},
+		"variables": {
+			"test": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "ACS/Membership/Monthly"
 		},
