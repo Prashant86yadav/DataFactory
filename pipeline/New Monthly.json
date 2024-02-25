@@ -65,7 +65,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
+				"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
 			}
 		},
 		"folder": {
