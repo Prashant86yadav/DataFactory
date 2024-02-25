@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set monthdate",
+						"activity": "Set Month Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -69,7 +69,7 @@
 				]
 			},
 			{
-				"name": "Set monthdate",
+				"name": "Set Month Date",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
