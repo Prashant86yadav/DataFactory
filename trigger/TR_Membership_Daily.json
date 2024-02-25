@@ -34,6 +34,15 @@
 					"referenceName": "Unfinancial Numbers Forecast",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "New Monthly",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"Month": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
