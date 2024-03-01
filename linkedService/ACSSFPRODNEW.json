@@ -7,9 +7,9 @@
 		"typeProperties": {
 			"environmentUrl": "https://australiancomputersociety.my.salesforce.com",
 			"clientId": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP",
-			"apiVersion": "51.0",
+			"apiVersion": "54.0",
 			"authenticationType": "OAuth2ClientCredential",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBFNTExNTAyLUU1ODgtNDJEMC1BMUQzLTUxREI5ODRFODg2OF9lNGVmYjNkYi02ODkzLTQ1ZjEtODMxYS0yZDgwYjU5NjU3NzkiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBFNTExNTAyLUU1ODgtNDJEMC1BMUQzLTUxREI5ODRFODg2OF8xN2I5NjlhMi00OGVhLTRjOTUtOWE3ZC0zN2RhZmNhZWM1MGUiDQp9"
 		}
 	}
 }
