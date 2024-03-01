@@ -1,0 +1,12 @@
+{
+	"name": "SalesforceMSANew",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ACSSFPRODNEW",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SalesforceV2Object",
+		"schema": []
+	}
+}
