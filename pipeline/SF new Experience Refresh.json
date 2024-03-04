@@ -128,7 +128,7 @@
 								"value": "@pipeline().parameters.TargetTableName",
 								"type": "Expression"
 							},
-							"schemaname": "dbo"
+							"schemaname": "salesforcenew"
 						}
 					}
 				}
