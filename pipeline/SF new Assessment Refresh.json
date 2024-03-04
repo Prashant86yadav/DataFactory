@@ -1,5 +1,5 @@
 {
-	"name": "SF AssessmentRefresh",
+	"name": "SF new Assessment Refresh",
 	"properties": {
 		"activities": [
 			{
@@ -23,12 +23,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": {
-							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-							"type": "Expression"
-						},
-						"readBehavior": "query"
+						"type": "SalesforceV2Source",
+						"includeDeletedObjects": false
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -54,10 +50,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
+						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"object2": "assessment"
+							"SourceTable": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -70,7 +69,7 @@
 								"value": "@pipeline().parameters.TargetTableName",
 								"type": "Expression"
 							},
-							"schemaname": "dbo"
+							"schemaname": "salesforcenew"
 						}
 					}
 				]
@@ -165,7 +164,11 @@
 					},
 					"dataset": {
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"object1": "account",
+							"object2": "assessment"
+						}
 					}
 				}
 			},
