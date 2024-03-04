@@ -128,7 +128,10 @@
 								"value": "@pipeline().parameters.TargetTableName",
 								"type": "Expression"
 							},
-							"schemaname": "salesforcenew"
+							"schemaname": {
+								"value": "@pipeline().parameters.schemaname",
+								"type": "Expression"
+							}
 						}
 					}
 				}
@@ -210,6 +213,10 @@
 			"ColumnList": {
 				"type": "string",
 				"defaultValue": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DoYouHaveARegisteredBusiness__c, EmploymentOccupationEndDate__c, EmploymentOccupationOngoing__c, EmploymentOccupationStartDate__c, ExperienceAccepted__c, ExperienceComments__c, ExperienceStatus__c, HoursWorkedPerWeek__c, LocationOfEmploymentOccupation__c, NatureOfWorkExperience__c, PositionOccupationOrRoleTitle__c, CountableExperienceDays__c, CountableExperienceMonths__c, CountableExperienceYears__c, CountableExperience__c, ReasonExperienceNotAccepted__c, TotalExperience__c"
+			},
+			"schemaname": {
+				"type": "string",
+				"defaultValue": "salesforcenew"
 			}
 		},
 		"variables": {
