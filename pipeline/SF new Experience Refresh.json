@@ -159,7 +159,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}",
+						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM Experience__c",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
