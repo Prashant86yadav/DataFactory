@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT MAX(LASTMODIFIEDDATE) AS TAB FROM ASSESSMENT__c\n",
+						"SOQLQuery": "SELECT max(LASTMODIFIEDDATE) a FROM ASSESSMENT__c ;\n",
 						"includeDeletedObjects": false
 					},
 					"sink": {
