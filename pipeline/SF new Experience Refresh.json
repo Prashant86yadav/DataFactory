@@ -159,14 +159,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"SourceTable": "Experience__c"
+							"SourceTable": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				}
