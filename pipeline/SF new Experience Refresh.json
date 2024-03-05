@@ -159,7 +159,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT MAX(LastModifiedDate)\nFROM Experience__c",
+						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS \nFROM Experience__c",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
