@@ -14,6 +14,9 @@
 		"ACSSFPROD_securityToken": {
 			"value": ""
 		},
+		"ACSSFPRODNEW_clientSecret": {
+			"value": ""
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"value": ""
 		},
@@ -65,6 +68,12 @@
 		"ACSSFPROD_properties_typeProperties_username": {
 			"value": "prashant.yadvendra@acs.org.au"
 		},
+		"ACSSFPRODNEW_properties_typeProperties_environmentUrl": {
+			"value": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"ACSSFPRODNEW_properties_typeProperties_clientId": {
+			"value": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"value": "https://stacsdpp01.dfs.core.windows.net/"
 		},
@@ -96,7 +105,7 @@
 			"value": "https://stacsdpp01.dfs.core.windows.net/"
 		},
 		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
-			"value": "'2024-02-29'"
+			"value": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
@@ -259,6 +268,15 @@
 		},
 		"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
 			"value": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName": {
+			"value": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName": {
+			"value": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
+			"value": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
 		},
 		"containerUri": {
 			"value": ""

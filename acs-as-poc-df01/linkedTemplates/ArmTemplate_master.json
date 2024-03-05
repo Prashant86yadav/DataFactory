@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
 		},
+		"ACSSFPRODNEW_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'ACSSFPRODNEW'"
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -87,6 +91,14 @@
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
 		},
+		"ACSSFPRODNEW_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"ACSSFPRODNEW_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
@@ -129,7 +141,7 @@
 		},
 		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
 			"type": "string",
-			"defaultValue": "'2024-02-29'"
+			"defaultValue": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -347,6 +359,18 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -382,6 +406,9 @@
 					},
 					"ACSSFPROD_securityToken": {
 						"value": "[parameters('ACSSFPROD_securityToken')]"
+					},
+					"ACSSFPRODNEW_clientSecret": {
+						"value": "[parameters('ACSSFPRODNEW_clientSecret')]"
 					},
 					"AzureDataLakeStorage_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage_accountKey')]"
@@ -431,6 +458,12 @@
 					"ACSSFPROD_properties_typeProperties_username": {
 						"value": "[parameters('ACSSFPROD_properties_typeProperties_username')]"
 					},
+					"ACSSFPRODNEW_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('ACSSFPRODNEW_properties_typeProperties_environmentUrl')]"
+					},
+					"ACSSFPRODNEW_properties_typeProperties_clientId": {
+						"value": "[parameters('ACSSFPRODNEW_properties_typeProperties_clientId')]"
+					},
 					"AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage_properties_typeProperties_url')]"
 					},
@@ -478,9 +511,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"LS_AZST_BlobLanding_connectionString": {
-						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					}
 				}
 			},
@@ -501,6 +531,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_AZST_BlobLanding_connectionString": {
+						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					}
 				}
 			},
@@ -706,6 +739,15 @@
 					},
 					"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList')]"
 					}
 				}
 			},

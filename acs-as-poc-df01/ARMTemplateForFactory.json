@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
 		},
+		"ACSSFPRODNEW_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'ACSSFPRODNEW'"
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -87,6 +91,14 @@
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
 		},
+		"ACSSFPRODNEW_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"ACSSFPRODNEW_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
+		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
@@ -129,7 +141,7 @@
 		},
 		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
 			"type": "string",
-			"defaultValue": "'2024-02-29'"
+			"defaultValue": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
 		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
@@ -346,6 +358,18 @@
 		"TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
 		}
 	},
 	"variables": {
@@ -1801,7 +1825,12 @@
 				"parameters": {
 					"Month": {
 						"type": "string",
-						"defaultValue": "'2024-02-29'"
+						"defaultValue": "@{formatDateTime(utcnow(), 'yyyy-MM-dd')}"
+					}
+				},
+				"variables": {
+					"month": {
+						"type": "String"
 					}
 				},
 				"folder": {
@@ -13925,6 +13954,604 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SF new Assessment Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTable": {
+										"value": "@pipeline().parameters.SourceTableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {
+									"object1": "account",
+									"object2": "assessment"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "assessment__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "assessment"
+					},
+					"ColumnList": {
+						"type": "string"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SalesforceMSANew')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]",
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF new Experience Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTable": {
+										"value": "@pipeline().parameters.SourceTableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"query": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+									"type": "Expression"
+								},
+								"readBehavior": "query"
+							},
+							"dataset": {
+								"referenceName": "ACSDSSF",
+								"type": "DatasetReference",
+								"parameters": {
+									"object1": "account",
+									"object2": "assessment"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "Experience__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "Experience__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DoYouHaveARegisteredBusiness__c, EmploymentOccupationEndDate__c, EmploymentOccupationOngoing__c, EmploymentOccupationStartDate__c, ExperienceAccepted__c, ExperienceComments__c, ExperienceStatus__c, HoursWorkedPerWeek__c, LocationOfEmploymentOccupation__c, NatureOfWorkExperience__c, PositionOccupationOrRoleTitle__c, CountableExperienceDays__c, CountableExperienceMonths__c, CountableExperienceYears__c, CountableExperience__c, ReasonExperienceNotAccepted__c, TotalExperience__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SalesforceMSANew')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]",
+				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF new ObjectRefreshTemplate')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"parallelCopies": 4,
+							"dataIntegrationUnits": 16,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTable": {
+										"value": "@pipeline().parameters.sourcetable",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.targettable",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"sourcetable": {
+						"type": "string",
+						"defaultValue": "Experience__c"
+					},
+					"targettable": {
+						"type": "string",
+						"defaultValue": "Experience__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"HWM": {
+						"type": "String",
+						"defaultValue": "2199-12-31 00:00:00"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SalesforceMSANew')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SF task Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -14384,6 +15011,51 @@
 				"[concat(variables('factoryId'), '/pipelines/StartDatabricksCluster')]",
 				"[concat(variables('factoryId'), '/linkedServices/ACS Databricks Premium')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "test",
+							"value": {
+								"value": "@{formatDateTime(convertTimeZone(utcnow(), 'UTC', 'AUS Eastern Standard Time')\n, 'yyyy-MM-dd')}\n",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"month": {
+						"type": "string",
+						"defaultValue": "test"
+					}
+				},
+				"variables": {
+					"test": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "ACS/Membership/Monthly"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_RawAnalyticsDaily_Incre')]",
@@ -36801,6 +37473,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SalesforceMSANew')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ACSSFPRODNEW",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"SourceTable": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "SalesforceV2Object",
+				"schema": [],
+				"typeProperties": {
+					"objectApiName": {
+						"value": "@{dataset().SourceTable}",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ACSSFPRODNEW')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TestBlob')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -37393,6 +38093,26 @@
 						"value": "[parameters('ACSSFPROD_securityToken')]"
 					},
 					"apiVersion": "51.0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACSSFPRODNEW')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SalesforceV2",
+				"typeProperties": {
+					"environmentUrl": "[parameters('ACSSFPRODNEW_properties_typeProperties_environmentUrl')]",
+					"clientId": "[parameters('ACSSFPRODNEW_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('ACSSFPRODNEW_clientSecret')]"
+					},
+					"apiVersion": "54.0",
+					"authenticationType": "OAuth2ClientCredential"
 				}
 			},
 			"dependsOn": []
@@ -38004,6 +38724,17 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Program Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Experience Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -38029,7 +38760,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryCstm Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryStd Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Program Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF Program Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new Experience Refresh')]"
 			]
 		},
 		{

@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'ACSSFPROD'"
 		},
+		"ACSSFPRODNEW_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'ACSSFPRODNEW'"
+		},
 		"AzureDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage'"
@@ -82,6 +86,14 @@
 		"ACSSFPROD_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
+		},
+		"ACSSFPRODNEW_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"ACSSFPRODNEW_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
 		},
 		"AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -214,6 +226,51 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Set variable1",
+						"type": "SetVariable",
+						"dependsOn": [],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "test",
+							"value": {
+								"value": "@{formatDateTime(convertTimeZone(utcnow(), 'UTC', 'AUS Eastern Standard Time')\n, 'yyyy-MM-dd')}\n",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"month": {
+						"type": "string",
+						"defaultValue": "test"
+					}
+				},
+				"variables": {
+					"test": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "ACS/Membership/Monthly"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ACS Databricks Premium')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -250,6 +307,26 @@
 						"value": "[parameters('ACSSFPROD_securityToken')]"
 					},
 					"apiVersion": "51.0"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ACSSFPRODNEW')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SalesforceV2",
+				"typeProperties": {
+					"environmentUrl": "[parameters('ACSSFPRODNEW_properties_typeProperties_environmentUrl')]",
+					"clientId": "[parameters('ACSSFPRODNEW_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('ACSSFPRODNEW_clientSecret')]"
+					},
+					"apiVersion": "54.0",
+					"authenticationType": "OAuth2ClientCredential"
 				}
 			},
 			"dependsOn": []
@@ -494,43 +571,6 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/default')]",
-			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
-			"apiVersion": "2018-06-01",
-			"properties": {},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ACSDSSF')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ACSSFPROD",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"object1": {
-						"type": "string",
-						"defaultValue": "account"
-					},
-					"object2": {
-						"type": "string",
-						"defaultValue": "assessment"
-					}
-				},
-				"annotations": [],
-				"type": "SalesforceObject",
-				"schema": [],
-				"typeProperties": {
-					"objectApiName": "user"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ACSSFPROD')]"
-			]
 		}
 	]
 }
