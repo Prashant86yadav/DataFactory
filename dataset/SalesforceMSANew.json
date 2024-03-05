@@ -12,12 +12,6 @@
 		},
 		"annotations": [],
 		"type": "SalesforceV2Object",
-		"schema": [],
-		"typeProperties": {
-			"objectApiName": {
-				"value": "@{dataset().SourceTable}",
-				"type": "Expression"
-			}
-		}
+		"schema": []
 	}
 }
