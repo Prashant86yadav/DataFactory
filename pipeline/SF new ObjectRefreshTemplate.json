@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "select  count(lastmodifieddate) AS total from Experience__c\n",
+						"SOQLQuery": "select  count(lastmodifieddate) as total from Experience__c\n",
 						"includeDeletedObjects": false
 					},
 					"sink": {
