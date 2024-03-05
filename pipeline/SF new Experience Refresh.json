@@ -158,20 +158,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"query": {
-							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-							"type": "Expression"
-						},
-						"readBehavior": "query"
+						"type": "SalesforceV2Source",
+						"SOQLQuery": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
+						"includeDeletedObjects": false
 					},
 					"dataset": {
-						"referenceName": "ACSDSSF",
-						"type": "DatasetReference",
-						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
-						}
+						"referenceName": "SalesforceMSANew",
+						"type": "DatasetReference"
 					}
 				}
 			},
