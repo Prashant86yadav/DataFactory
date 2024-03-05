@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"SOQLQuery": "SELECT LASTMODIFIEDDATE FROM ASSESSMENT__C",
 						"includeDeletedObjects": false
 					},
 					"sink": {
@@ -41,13 +42,7 @@
 				"inputs": [
 					{
 						"referenceName": "SalesforceMSANew",
-						"type": "DatasetReference",
-						"parameters": {
-							"SourceTable": {
-								"value": "@pipeline().parameters.sourcetable",
-								"type": "Expression"
-							}
-						}
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
