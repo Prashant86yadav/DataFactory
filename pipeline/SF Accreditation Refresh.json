@@ -165,7 +165,11 @@
 					},
 					"dataset": {
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"object1": "account",
+							"object2": "assessment"
+						}
 					}
 				}
 			},
