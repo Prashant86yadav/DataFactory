@@ -5,8 +5,17 @@
 			"referenceName": "ACSSFPRODNEW",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"sourcetable": {
+				"type": "string",
+				"defaultValue": "assessment__c"
+			}
+		},
 		"annotations": [],
 		"type": "SalesforceV2Object",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"objectApiName": "assessment"
+		}
 	}
 }
