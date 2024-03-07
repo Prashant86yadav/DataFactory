@@ -17,10 +17,25 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "{ts'@{variables('brpExtractFrom')}'}",
+						"SOQLQuery": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >=  {ts'@{variables('brpExtractFrom')}'}\norder by LastModifiedDate desc\nLIMIT 1",
 						"includeDeletedObjects": false
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -29,6 +44,12 @@
 						"parameters": {
 							"sourcetable": "assessment__c"
 						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
 					}
 				]
 			}
