@@ -154,7 +154,7 @@
 					"source": {
 						"type": "SalesforceV2Source",
 						"SOQLQuery": {
-							"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= variables('brpExtractFrom')\norder by desc\nLIMIT 1",
+							"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= 1900-12-31T00:00:00Z\norder by LastModifiedDate desc\nLIMIT 1",
 							"type": "Expression"
 						},
 						"includeDeletedObjects": false
