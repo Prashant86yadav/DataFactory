@@ -3,8 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
+				"name": "Lookup1",
+				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -17,57 +17,17 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": {
-							"value": "SELECT lastmodifieddate \nFROM assessment__C\nWHERE lastmodifieddate >= @{variables('brpExtractFrom')} \norder by lastmodifieddate desc\nLIMIT 1",
-							"type": "Expression"
-						},
+						"SOQLQuery": "SELECT lastmodifieddate \nFROM assessment__C\nWHERE lastmodifieddate >= @{variables('brpExtractFrom')} \norder by lastmodifieddate desc\nLIMIT 1",
 						"includeDeletedObjects": false
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
+					"dataset": {
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
 							"sourcetable": "assessment__c"
 						}
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSQLSP",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "Lookup1",
-				"type": "Lookup",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": []
+				}
 			}
 		],
 		"variables": {
