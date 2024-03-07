@@ -96,7 +96,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractFrom",
 					"value": {
-						"value": "{ts'@activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark}",
+						"value": "@activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark",
 						"type": "Expression"
 					}
 				}
