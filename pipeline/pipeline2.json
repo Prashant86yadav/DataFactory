@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >=  {ts'@{variables('brpExtractFrom')}'}\norder by LastModifiedDate desc\nLIMIT 1",
+						"SOQLQuery": "\nSELECT LastModifiedDate\nFROM assessment__C\nWHERE LastModifiedDate >=  {ts'@{variables('brpExtractFrom')}'}\norder by LastModifiedDate desc\nLIMIT 1",
 						"includeDeletedObjects": false
 					},
 					"sink": {
