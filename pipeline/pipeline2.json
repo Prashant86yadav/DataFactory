@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT lastmodifieddate \nFROM assessment__C\nWHERE lastmodifieddate >= {ts'@{variables('brpExtractFrom')} '}\norder by lastmodifieddate desc\nLIMIT 1",
+						"SOQLQuery": "SELECT lastmodifieddate \nFROM assessment__C\nWHERE lastmodifieddate >= 2024-03-04T04:36:05Z\norder by lastmodifieddate desc\nLIMIT 1",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
