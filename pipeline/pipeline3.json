@@ -17,18 +17,15 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
+						"query": "select max(lastmodifieddate) from assessment__c \n",
 						"readBehavior": "query"
 					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
-						"type": "DatasetReference",
-						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
-						}
+						"referenceName": "ACSDSSFOR",
+						"type": "DatasetReference"
 					}
 				]
 			}
