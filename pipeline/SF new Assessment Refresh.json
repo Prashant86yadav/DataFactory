@@ -201,7 +201,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "assessment"
+				"defaultValue": "assessment__c"
 			},
 			"ColumnList": {
 				"type": "string"
