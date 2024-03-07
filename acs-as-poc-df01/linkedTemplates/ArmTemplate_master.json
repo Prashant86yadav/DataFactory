@@ -139,10 +139,6 @@
 			"type": "string",
 			"defaultValue": "https://stacsdpp01.dfs.core.windows.net/"
 		},
-		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
-			"type": "string",
-			"defaultValue": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
-		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -574,9 +570,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
-						"value": "[parameters('TR_Membership_Daily_properties_New Monthly_parameters_Month')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"

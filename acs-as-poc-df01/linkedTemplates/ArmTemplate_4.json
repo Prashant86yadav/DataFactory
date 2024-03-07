@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
-		"TR_Membership_Daily_properties_New Monthly_parameters_Month": {
-			"type": "string",
-			"defaultValue": "@formatDateTime(utcnow(), 'yyyy-MM-dd')"
-		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -1281,15 +1277,6 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "New Monthly",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"Month": "[parameters('TR_Membership_Daily_properties_New Monthly_parameters_Month')]"
-						}
 					}
 				],
 				"type": "ScheduleTrigger",

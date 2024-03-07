@@ -6485,12 +6485,7 @@
 							{
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
-								"parameters": {
-									"SourceTable": {
-										"value": "@pipeline().parameters.SourceTableName",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -6727,12 +6722,7 @@
 							{
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
-								"parameters": {
-									"SourceTable": {
-										"value": "@pipeline().parameters.SourceTableName",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [
@@ -6833,20 +6823,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
+								"type": "SalesforceV2Source",
+								"SOQLQuery": "SELECT MAX(LastModifiedDate) AS \nFROM Experience__c",
+								"includeDeletedObjects": false
 							},
 							"dataset": {
-								"referenceName": "ACSDSSF",
+								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
-								"parameters": {
-									"object1": "account",
-									"object2": "assessment"
-								}
+								"parameters": {}
 							}
 						}
 					},
@@ -6935,6 +6919,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceV2Source",
+								"SOQLQuery": "select  lastmodifieddate as tot  from Experience__c\n",
 								"includeDeletedObjects": false
 							},
 							"sink": {
@@ -6960,12 +6945,7 @@
 							{
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
-								"parameters": {
-									"SourceTable": {
-										"value": "@pipeline().parameters.sourcetable",
-										"type": "Expression"
-									}
-								}
+								"parameters": {}
 							}
 						],
 						"outputs": [

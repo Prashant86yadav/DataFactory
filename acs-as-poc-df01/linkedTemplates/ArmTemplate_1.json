@@ -3818,8 +3818,9 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"SourceTable": {
-						"type": "string"
+					"sourcetable": {
+						"type": "string",
+						"defaultValue": "assessment__c"
 					}
 				},
 				"annotations": [],
@@ -3827,7 +3828,7 @@
 				"schema": [],
 				"typeProperties": {
 					"objectApiName": {
-						"value": "@{dataset().SourceTable}",
+						"value": "@{dataset().sourcetable}",
 						"type": "Expression"
 					}
 				}
