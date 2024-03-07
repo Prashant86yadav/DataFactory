@@ -52,7 +52,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
+							"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n\t[salesforcenew].[Assessment__c]\n\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -63,11 +63,11 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"tablename": {
-								"value": "@pipeline().parameters.TargetTableName",
+								"value": "Assessment__c",
 								"type": "Expression"
 							},
 							"schemaname": {
-								"value": "@pipeline().parameters.schemaname",
+								"value": "salesforcenew",
 								"type": "Expression"
 							}
 						}
