@@ -158,7 +158,10 @@
 					},
 					"dataset": {
 						"referenceName": "SalesforceMSANew",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcetable": "assessment__c"
+						}
 					}
 				}
 			},
