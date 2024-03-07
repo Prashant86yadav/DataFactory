@@ -15,7 +15,10 @@
 		"type": "SalesforceV2Object",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "assessment"
+			"objectApiName": {
+				"value": "@{dataset().sourcetable}",
+				"type": "Expression"
+			}
 		}
 	}
 }
