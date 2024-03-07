@@ -153,6 +153,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"SOQLQuery": {
+							"value": "@pipeline().parameters.SourceTableName",
+							"type": "Expression"
+						},
 						"includeDeletedObjects": false
 					},
 					"dataset": {
