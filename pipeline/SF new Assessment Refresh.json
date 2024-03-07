@@ -154,7 +154,7 @@
 					"source": {
 						"type": "SalesforceV2Source",
 						"SOQLQuery": {
-							"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}\norder by desc\nLIMIT 1",
+							"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= variables('brpExtractFrom')\norder by desc\nLIMIT 1",
 							"type": "Expression"
 						},
 						"includeDeletedObjects": false
@@ -217,7 +217,8 @@
 				"defaultValue": "1900-12-31T00:00:00Z"
 			},
 			"brpExtractTo": {
-				"type": "String"
+				"type": "String",
+				"defaultValue": "1900-12-31 00:00:00"
 			}
 		},
 		"folder": {
