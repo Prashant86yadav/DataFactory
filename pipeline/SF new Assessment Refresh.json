@@ -153,7 +153,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT LastModifiedDate\nFROM \nWHERE LastModifiedDate >= 1900-12-31T00:00:00Z\nORDER BY LastModifiedDate DESC\nLIMIT 1\n",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
