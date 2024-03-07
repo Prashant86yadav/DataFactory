@@ -153,7 +153,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT Lastmodifieddate AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}\norder by Lastmodifieddate \ndesc \nLimit 1 ",
+						"SOQLQuery": "SELECT Lastmodifieddate \nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}\norder by Lastmodifieddate \ndesc \nLimit 1 ",
 						"includeDeletedObjects": false
 					},
 					"dataset": {
