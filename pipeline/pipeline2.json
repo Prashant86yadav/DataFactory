@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "SELECT lastmodifieddate\nFROM assessment__c\nORDER BY lastmodifieddate DESC\nLIMIT 10\n",
+						"SOQLQuery": "SELECT lastmodifieddate\nFROM assessment__c\nORDER BY lastmodifieddate DESC\nLIMIT 1\n",
 						"includeDeletedObjects": false
 					},
 					"enableStaging": false
