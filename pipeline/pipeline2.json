@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"SOQLQuery": "select lastmodifieddate , max(lastmodifieddate) from assessment__c \n",
+						"SOQLQuery": "select lastmodifieddate from assessment__c \n",
 						"includeDeletedObjects": true
 					},
 					"enableStaging": false
