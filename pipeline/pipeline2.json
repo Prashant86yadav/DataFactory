@@ -25,7 +25,7 @@
 					"source": {
 						"type": "SalesforceV2Source",
 						"SOQLQuery": {
-							"value": "SELECT lastmodifieddate FROM assessment__C  WHERE lastmodifieddate >= @{variables('brpExtractFrom')} order by lastmodifieddate desc\nLIMIT 1",
+							"value": "select LastModifiedDate from [salesforcenew].[Assessment__c]",
 							"type": "Expression"
 						},
 						"includeDeletedObjects": false
