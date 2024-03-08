@@ -25,7 +25,7 @@
 					"source": {
 						"type": "SalesforceV2Source",
 						"SOQLQuery": {
-							"value": "select LastModifiedDate from Assessment__c",
+							"value": "select LastModifiedDate from Assessment__c\norder by desc \nlimit1",
 							"type": "Expression"
 						},
 						"includeDeletedObjects": false
