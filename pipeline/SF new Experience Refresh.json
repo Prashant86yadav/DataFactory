@@ -185,7 +185,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractTo",
 					"value": {
-						"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+						"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
 						"type": "Expression"
 					}
 				}
