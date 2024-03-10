@@ -70,7 +70,7 @@
 								"value": "@pipeline().parameters.TargetTableName",
 								"type": "Expression"
 							},
-							"schemaname": "salesforcenew"
+							"schemaname": "[salesforcenew]"
 						}
 					}
 				]
