@@ -24,6 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"SOQLQuery": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
 						"includeDeletedObjects": false
 					},
 					"sink": {
@@ -51,7 +52,10 @@
 				"inputs": [
 					{
 						"referenceName": "SalesforceMSANew",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcetable": "assessment__c"
+						}
 					}
 				],
 				"outputs": [
@@ -188,7 +192,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractTo",
 					"value": {
-						"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+						"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
 						"type": "Expression"
 					}
 				}
