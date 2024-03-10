@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Assessment Anzco"
+							"sourcetable": "AssessmentANZSCO__c"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "IdentityVerification__c"
+				"defaultValue": "AssessmentANZSCO__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "IdentityVerification__c"
+				"defaultValue": "AssessmentANZSCO__c"
 			},
 			"schemaname": {
 				"type": "string",
