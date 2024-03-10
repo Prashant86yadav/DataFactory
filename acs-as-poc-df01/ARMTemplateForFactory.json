@@ -14226,6 +14226,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
+									"type": "Expression"
+								},
 								"includeDeletedObjects": false
 							},
 							"sink": {
@@ -14254,7 +14258,9 @@
 							{
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"sourcetable": "Experience__c"
+								}
 							}
 						],
 						"outputs": [
@@ -14290,7 +14296,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractFrom",
 							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))\n",
 								"type": "Expression"
 							}
 						}
@@ -14311,7 +14317,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -14356,7 +14362,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SalesforceV2Source",
-								"SOQLQuery": "SELECT MAX(LastModifiedDate) AS \nFROM Experience__c",
+								"SOQLQuery": {
+									"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+									"type": "Expression"
+								},
 								"includeDeletedObjects": false
 							},
 							"dataset": {
@@ -14388,7 +14397,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractTo",
 							"value": {
-								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
+								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
 								"type": "Expression"
 							}
 						}
