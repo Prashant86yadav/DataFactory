@@ -212,7 +212,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, IsDeleted, MasterRecordId, CaseNumber, ContactId, AccountId, ParentId, SuppliedName, SuppliedEmail, SuppliedPhone, SuppliedCompany, Type, RecordTypeId, Status, Reason, Origin, Language, Subject, Priority, Description, IsClosed, ClosedDate, IsEscalated, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById,, SystemModstamp ContactPhone, ContactMobile, ContactEmail, ContactFax, Comments, LastViewedDate, LastReferencedDate, Assessment__c, Deadline_Within__c, Lead__c, Topic__c"
+				"defaultValue": "Id, IsDeleted, MasterRecordId, CaseNumber, ContactId, AccountId, ParentId, SuppliedName, SuppliedEmail, SuppliedPhone, SuppliedCompany, Type, RecordTypeId, Status, Reason, Origin, Language, Subject, Priority, Description, IsClosed, ClosedDate, IsEscalated, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ContactPhone, ContactMobile, ContactEmail, ContactFax, Comments, LastViewedDate, LastReferencedDate, Assessment__c, Deadline_Within__c, Lead__c, Topic__c"
 			},
 			"schemaname": {
 				"type": "string",
