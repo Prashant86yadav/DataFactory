@@ -57,7 +57,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Experience__c"
+							"sourcetable": "contact"
 						}
 					}
 				],
