@@ -297,7 +297,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "assessment__c"
+							"sourcetable": "Experience__c"
 						}
 					}
 				],
