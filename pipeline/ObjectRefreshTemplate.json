@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Contact"
+							"sourcetable": "Account"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Contact"
+				"defaultValue": "Account"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Contact"
+				"defaultValue": "Account"
 			},
 			"schemaname": {
 				"type": "string",
