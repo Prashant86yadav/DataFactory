@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "IdentityVerification__c"
+							"sourcetable": "Assessment Anzco"
 						}
 					}
 				],
