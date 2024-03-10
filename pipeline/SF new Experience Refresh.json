@@ -24,6 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"SOQLQuery": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
 						"includeDeletedObjects": false
 					},
 					"sink": {
