@@ -208,7 +208,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "case"
+				"defaultValue": "[case]"
 			},
 			"ColumnList": {
 				"type": "string",
@@ -216,7 +216,7 @@
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "salesforcenew"
+				"defaultValue": "[salesforcenew]"
 			}
 		},
 		"variables": {
