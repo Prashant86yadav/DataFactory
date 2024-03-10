@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "case"
+							"sourcetable": "Qualification__c"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "case"
+				"defaultValue": "Qualification__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "case_c"
+				"defaultValue": "Qualification__c"
 			},
 			"schemaname": {
 				"type": "string",
