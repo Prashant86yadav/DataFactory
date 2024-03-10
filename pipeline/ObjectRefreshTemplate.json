@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Experience__c"
+							"sourcetable": "Contact"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Experience__c"
+				"defaultValue": "Contact"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Experience__c"
+				"defaultValue": "Contact"
 			},
 			"schemaname": {
 				"type": "string",
