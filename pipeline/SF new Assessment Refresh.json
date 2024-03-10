@@ -187,10 +187,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "brpExtractTo",
-					"value": {
-						"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.lastmodifieddate,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
-						"type": "Expression"
-					}
+					"value": "[object Object]"
 				}
 			}
 		],
