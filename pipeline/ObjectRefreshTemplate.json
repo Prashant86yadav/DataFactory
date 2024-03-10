@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Comments__c"
+							"sourcetable": "IdentityVerification__c"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Identification__c"
+				"defaultValue": "IdentityVerification__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Identification__c"
+				"defaultValue": "IdentityVerification__c"
 			},
 			"schemaname": {
 				"type": "string",
