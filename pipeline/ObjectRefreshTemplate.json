@@ -72,7 +72,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "case"
+				"defaultValue": "case_c"
 			},
 			"schemaname": {
 				"type": "string",

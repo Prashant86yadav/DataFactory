@@ -208,7 +208,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "case"
+				"defaultValue": "case_c"
 			},
 			"ColumnList": {
 				"type": "string",
