@@ -187,7 +187,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "brpExtractTo",
-					"value": "[object Object]"
+					"value": {
+						"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+						"type": "Expression"
+					}
 				}
 			}
 		],
