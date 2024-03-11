@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Lead"
+				"defaultValue": "Comments__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Lead"
+				"defaultValue": "Comments__c"
 			},
 			"schemaname": {
 				"type": "string",
