@@ -218,7 +218,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, IsDeleted Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Experience__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName_c__c"
+				"defaultValue": "Id, IsDeleted Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Experience__c, assessmentANZSCO__c, CloselyRelated__c, ANZSCOName_c__c"
 			},
 			"schemaname": {
 				"type": "string",
