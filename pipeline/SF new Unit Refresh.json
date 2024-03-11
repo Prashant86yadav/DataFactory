@@ -163,6 +163,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"SOQLQuery": {
+							"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+							"type": "Expression"
+						},
 						"includeDeletedObjects": false
 					},
 					"dataset": {
