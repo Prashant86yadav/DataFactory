@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Skill__c"
+				"defaultValue": "AccountContactRelation"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Skill__c"
+				"defaultValue": "AccountContactRelation"
 			},
 			"schemaname": {
 				"type": "string",
