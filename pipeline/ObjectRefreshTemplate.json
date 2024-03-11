@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Comments__c"
+				"defaultValue": "Assessment_Comment__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Comments__c"
+				"defaultValue": "Assessment_Comment__c"
 			},
 			"schemaname": {
 				"type": "string",
