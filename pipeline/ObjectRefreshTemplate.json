@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "ANZSCOSkill__c"
+				"defaultValue": "Skill__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "ANZSCOSkill__c"
+				"defaultValue": "Skill__c"
 			},
 			"schemaname": {
 				"type": "string",
