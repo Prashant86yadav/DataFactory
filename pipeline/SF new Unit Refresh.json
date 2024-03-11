@@ -228,11 +228,11 @@
 		"variables": {
 			"brpExtractFrom": {
 				"type": "String",
-				"defaultValue": "1900-12-31 00:00:00"
+				"defaultValue": "1900-12-31T00:00:00Z"
 			},
 			"brpExtractTo": {
 				"type": "String",
-				"defaultValue": "1900-12-31 00:00:00"
+				"defaultValue": "1900-12-31T00:00:00Z"
 			}
 		},
 		"folder": {
