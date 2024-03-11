@@ -1,5 +1,5 @@
 {
-	"name": "SF new lead Refresh_copy1",
+	"name": "SF new AssessmentANZSCOSkill Refresh",
 	"properties": {
 		"activities": [
 			{
@@ -210,15 +210,15 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "lead"
+				"defaultValue": "AssessmentANZSCOSkill__c"
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "lead"
+				"defaultValue": "AssessmentANZSCOSkill__c"
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, AssessmentANZSCO__c, AssessmentSkill__c, AssessorComments__c, AssessorSelectedLevel__c, AssessorSelected__c, SkillName__c"
+				"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, aasessorSelected__c, SkillName__c"
 			},
 			"schemaname": {
 				"type": "string",
