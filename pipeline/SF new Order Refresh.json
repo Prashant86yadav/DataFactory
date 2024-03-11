@@ -208,7 +208,7 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "order"
+				"defaultValue": "order_c"
 			},
 			"ColumnList": {
 				"type": "string",
