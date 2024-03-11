@@ -218,7 +218,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, aasessorSelected__c, SkillName__c"
+				"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, assessorSelected__c, SkillName__c"
 			},
 			"schemaname": {
 				"type": "string",
