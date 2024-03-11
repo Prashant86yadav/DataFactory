@@ -43,7 +43,7 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "Order"
+							"sourcetable": "OrderItem"
 						}
 					}
 				],
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Order"
+				"defaultValue": "OrderItem"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Order_c"
+				"defaultValue": "OrderItem"
 			},
 			"schemaname": {
 				"type": "string",
