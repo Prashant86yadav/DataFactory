@@ -201,7 +201,7 @@
 				"typeProperties": {
 					"variableName": "brpExtractTo",
 					"value": {
-						"value": "\t@if(equals(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate,null),variables('brpExtractFrom') ,\n\tformatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
+						"value": "@if(equals(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate,null),variables('brpExtractFrom') ,\n\tformatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
 						"type": "Expression"
 					}
 				}
