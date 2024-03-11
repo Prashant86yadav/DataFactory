@@ -57,7 +57,10 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "order"
+							"sourcetable": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -204,7 +207,7 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "order"
+				"defaultValue": "orderitem"
 			},
 			"TargetTableName": {
 				"type": "string",
