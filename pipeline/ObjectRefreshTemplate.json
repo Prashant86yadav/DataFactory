@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Experience_Assessment_ANZSCO__c"
+				"defaultValue": "AssessmentSkill__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Experience_Assessment_ANZSCO__c"
+				"defaultValue": "AssessmentSkill__c"
 			},
 			"schemaname": {
 				"type": "string",
