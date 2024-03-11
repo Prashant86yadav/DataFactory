@@ -208,11 +208,11 @@
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "order_c"
+				"defaultValue": "orderitem"
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, OwnerId, ContractId, AccountId, Pricebook2Id, OriginalOrderId, EffectiveDate, EndDate, IsReductionOrder, Status, Description, CustomerAuthorizedById, CompanyAuthorizedById, Type, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ActivatedDate, ActivatedById, StatusCode, OrderNumber, TotalAmount, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, IsDeleted, SystemModstamp, LastViewedDate, LastReferencedDate, AccountName__c, AssessmentId__c, Email__c"
+				"defaultValue": "Id, Product2Id, IsDeleted, OrderId, PricebookEntryId, OriginalOrderItemId, AvailableQuantity, Quantity, UnitPrice, ListPrice, TotalPrice, ServiceDate, EndDate, Description, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, OrderItemNumber"
 			},
 			"schemaname": {
 				"type": "string",
