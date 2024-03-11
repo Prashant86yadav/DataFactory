@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Unit__c"
+				"defaultValue": "ANZSCOGroup__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Unit__c"
+				"defaultValue": "ANZSCOGroup__c"
 			},
 			"schemaname": {
 				"type": "string",
