@@ -43,7 +43,10 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "OrderItem"
+							"sourcetable": {
+								"value": "@pipeline().parameters.sourcetable",
+								"type": "Expression"
+							}
 						}
 					}
 				],
