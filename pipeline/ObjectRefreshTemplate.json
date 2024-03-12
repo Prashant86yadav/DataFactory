@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "ANZSCOGroup__c"
+				"defaultValue": "Assessment_history"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "ANZSCOGroup__c"
+				"defaultValue": "Assessment_history"
 			},
 			"schemaname": {
 				"type": "string",
