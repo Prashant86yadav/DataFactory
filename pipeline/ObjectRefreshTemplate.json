@@ -71,11 +71,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Assessment_history"
+				"defaultValue": "Assessment__History"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Assessment_history"
+				"defaultValue": "Assessment__History"
 			},
 			"schemaname": {
 				"type": "string",
