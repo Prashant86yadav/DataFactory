@@ -322,6 +322,18 @@
 					"ColumnList": "Id, IsDeleted, MasterRecordId, AccountId, IsPersonAccount, LastName, FirstName, Salutation, MiddleName, Name, RecordTypeId, OtherStreet, OtherCity, OtherState, OtherPostalCode, OtherCountry, OtherLatitude, OtherLongitude, OtherGeocodeAccuracy, MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry, MailingLatitude, MailingLongitude, MailingGeocodeAccuracy, Phone, Fax, MobilePhone, HomePhone, OtherPhone, AssistantPhone, ReportsToId, Email, Title, Department, AssistantName, LeadSource, Birthdate, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastCURequestDate, LastCUUpdateDate, LastViewedDate, LastReferencedDate, EmailBouncedReason, EmailBouncedDate, IsEmailBounced, PhotoUrl, Jigsaw, JigsawContactId, IndividualId, WebRoles__c, MARANumber__c, AzureId__c, OldOrgContactID__c, OldOrgSkillAgentId__c, SkillAgentId__c, AgentId__c, UnreadMessageCountbyAgent__c, UnreadMessageCountbyApplicant__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Experience_Assessment_ANZSCO__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Experience_Assessment_ANZSCO__c",
+					"TargetTableName": "Experience_Assessment_ANZSCO__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Experience__c, assessmentANZSCO__c, CloselyRelated__c, ANZSCOName_c__c ",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
