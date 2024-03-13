@@ -214,6 +214,18 @@
 					"ColumnList": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new ANZSCOGroup__c refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "ANZSCOGroup__c",
+					"TargetTableName": "ANZSCOGroup__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Code__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
