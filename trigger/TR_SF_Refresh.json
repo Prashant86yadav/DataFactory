@@ -238,6 +238,18 @@
 					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, ANZSCO__c, Skill__c, MinimumSkillLevel__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Assessment_Comment__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Assessment_Comment__c",
+					"TargetTableName": "Assessment_Comment__c",
+					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Contact__c, Assessment__c, Qualification__c, ApplicantResponse__c, AzureId__c, Case__c, DeadlineDate__c, DocumentType__c, Experience__c, Message__c, NotificationType__c, ReadByAgent__c, ReadByApplicant__c, Reason__c, ResultLetterFileId__c, Sender__c, Status__c, Subject__c, SupportingInfo__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
