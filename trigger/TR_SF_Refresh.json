@@ -178,6 +178,246 @@
 					"referenceName": "Dummy Test",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "QualificationAssessmentANZSCO__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "QualificationAssessmentANZSCO__c",
+					"TargetTableName": "QualificationAssessmentANZSCO__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Account Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Account",
+					"TargetTableName": "Account",
+					"ColumnList": "Id, IsDeleted, MasterRecordId, Name, LastName, FirstName, Salutation, MiddleName, Type, RecordTypeId, ParentId,      BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude,      BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry,      ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, Phone, Fax, Website, PhotoUrl, Industry,      AnnualRevenue, NumberOfEmployees, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate,      LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, PersonContactId,      IsPersonAccount, PersonMailingStreet, PersonMailingCity, PersonMailingState, PersonMailingPostalCode,      PersonMailingCountry, PersonMailingLatitude, PersonMailingLongitude, PersonMailingGeocodeAccuracy,      PersonOtherStreet, PersonOtherCity, PersonOtherState, PersonOtherPostalCode, PersonOtherCountry,      PersonOtherLatitude, PersonOtherLongitude, PersonOtherGeocodeAccuracy, PersonMobilePhone, PersonHomePhone,      PersonOtherPhone, PersonAssistantPhone, PersonEmail, PersonTitle, PersonDepartment, PersonAssistantName,      PersonLeadSource, PersonBirthdate, PersonLastCURequestDate, PersonLastCUUpdateDate, PersonEmailBouncedReason,      PersonEmailBouncedDate, PersonIndividualId, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, BillingGrade__c,      CountryOfBirth__c, Gender__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c,      PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c,      VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebRoles__c, AzureId__c, BoxFolderId__c,      BusinessName__c, ConsentDateTimeofInitiatingAgent__c, Create_Free_Skills_Membership__c, DateOfBirth__c,      HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, OldSalesforceRecordId__c, PassportNumber__c,      PreferredName__c, ABN__c, WebRoles__pc, MARANumber__pc, AzureId__pc, OldOrgContactID__pc, OldOrgSkillAgentId__pc,      SkillAgentId__pc, AgentId__pc, UnreadMessageCountbyAgent__pc, UnreadMessageCountbyApplicant__pc",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new AccountContactRelation Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "\nAccountContactRelation",
+					"TargetTableName": "\nAccountContactRelation",
+					"ColumnList": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new ANZSCOGroup__c refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "ANZSCOGroup__c",
+					"TargetTableName": "ANZSCOGroup__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Code__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new ANZSCOSkill__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "ANZSCOSkill__c",
+					"TargetTableName": "ANZSCOSkill__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, ANZSCO__c, Skill__c, MinimumSkillLevel__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Assessment_Comment__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Assessment_Comment__c",
+					"TargetTableName": "Assessment_Comment__c",
+					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Contact__c, Assessment__c, Qualification__c, ApplicantResponse__c, AzureId__c, Case__c, DeadlineDate__c, DocumentType__c, Experience__c, Message__c, NotificationType__c, ReadByAgent__c, ReadByApplicant__c, Reason__c, ResultLetterFileId__c, Sender__c, Status__c, Subject__c, SupportingInfo__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Assessment Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "assessment__c",
+					"TargetTableName": "assessment__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, AssessmentOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationVerdict__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c\n",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new AssessmentANZSCO__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AssessmentANZSCO__c",
+					"TargetTableName": "AssessmentANZSCO__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ANZSCO__c, Assessment__c, ANZSCOOutcome__c, CurrentAttemptCount__c, DateOfKnowledgeMet__c, EAANoText__c, EAAYesText__c, ExternalId__c, GenerateOutcomeLetterConga__c, IsChosen__c, QAANoText__c, QAAYesText__c, RMDLogic__c, RPLQualificationText__c, RequirementMetDate__c, ResultLetterFileId__c, ResultLetterFileName__c, ANZSCOforUnitCountText__c, AnzscoName__c, AssessmentName__c, Conga_Trigger_Generate_Suitable_Letters__c, SuitableTemplateId__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new AssessmentANZSCOSkill Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AssessmentANZSCOSkill__c",
+					"TargetTableName": "AssessmentANZSCOSkill__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, assessorSelected__c, SkillName__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new AssessmentSkill__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AssessmentSkill__c",
+					"TargetTableName": "AssessmentSkill__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, Skill__c, ApplicantSelectedLevel__c, ApplicantSelected__c, AttemptNumber__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Case Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "case",
+					"TargetTableName": "case_c",
+					"ColumnList": "Id, IsDeleted, MasterRecordId, CaseNumber, ContactId, AccountId, ParentId, SuppliedName, SuppliedEmail, SuppliedPhone, SuppliedCompany, Type, RecordTypeId, Status, Reason, Origin, Language, Subject, Priority, Description, IsClosed, ClosedDate, IsEscalated, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ContactPhone, ContactMobile, ContactEmail, ContactFax, Comments, LastViewedDate, LastReferencedDate, Assessment__c, Deadline_Within__c, Lead__c, Topic__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Contact Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Contact",
+					"TargetTableName": "Contact",
+					"ColumnList": "Id, IsDeleted, MasterRecordId, AccountId, IsPersonAccount, LastName, FirstName, Salutation, MiddleName, Name, RecordTypeId, OtherStreet, OtherCity, OtherState, OtherPostalCode, OtherCountry, OtherLatitude, OtherLongitude, OtherGeocodeAccuracy, MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry, MailingLatitude, MailingLongitude, MailingGeocodeAccuracy, Phone, Fax, MobilePhone, HomePhone, OtherPhone, AssistantPhone, ReportsToId, Email, Title, Department, AssistantName, LeadSource, Birthdate, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastCURequestDate, LastCUUpdateDate, LastViewedDate, LastReferencedDate, EmailBouncedReason, EmailBouncedDate, IsEmailBounced, PhotoUrl, Jigsaw, JigsawContactId, IndividualId, WebRoles__c, MARANumber__c, AzureId__c, OldOrgContactID__c, OldOrgSkillAgentId__c, SkillAgentId__c, AgentId__c, UnreadMessageCountbyAgent__c, UnreadMessageCountbyApplicant__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Experience_Assessment_ANZSCO__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Experience_Assessment_ANZSCO__c",
+					"TargetTableName": "Experience_Assessment_ANZSCO__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Experience__c, assessmentANZSCO__c, CloselyRelated__c, ANZSCOName_c__c ",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new IdentityVerification Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "IdentityVerification__c",
+					"TargetTableName": "IdentityVerification__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Applicant__c, IdVerificationResult__c, Lead__c, PassportCountryofIssue__c, PassportExpiryDate__c, PassportNumber__c, SecondaryIDDocumentType__c, SecondaryIDFirstName__c, SecondaryIDFullName__c, SecondaryIDLastName__c, SecondaryIDMiddleName__c, TransactionCompletionDate__c, TransactionID__c, TransactionStatus__c, VerifiedDateofBirth__c, VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, createdAt__c, PassportExpired__c, Citizenship_Number__c, Computerised_National_Identity_Card__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new lead Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "lead",
+					"TargetTableName": "lead",
+					"ColumnList": "Id, IsDeleted, MasterRecordId, LastName, FirstName, Salutation, MiddleName, Name, RecordTypeId, Title, Company, Street, City, State, PostalCode, Country, Latitude, Longitude, GeocodeAccuracy, Phone, Email, Website, PhotoUrl, Description, LeadSource, Status, Industry, Rating, AnnualRevenue, NumberOfEmployees, OwnerId, IsConverted, ConvertedDate, ConvertedAccountId, ConvertedContactId, ConvertedOpportunityId, IsUnreadByOwner, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Jigsaw, JigsawContactId, EmailBouncedReason, EmailBouncedDate, IndividualId, CountryOfBirth__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c, PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c, VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebsiteRole__c, AzureId__c, ConsentDateTimeofInitiatingAgent__c, DateOfBirth__c, HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, PassportNumber__c, PreferredName__c\n",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Order product refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "orderitem",
+					"TargetTableName": "orderitem",
+					"ColumnList": "Id, Product2Id, IsDeleted, OrderId, PricebookEntryId, OriginalOrderItemId, AvailableQuantity, Quantity, UnitPrice, ListPrice, TotalPrice, ServiceDate, EndDate, Description, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, OrderItemNumber",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Order Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "order",
+					"TargetTableName": "order_c",
+					"ColumnList": "Id, OwnerId, ContractId, AccountId, Pricebook2Id, OriginalOrderId, EffectiveDate, EndDate, IsReductionOrder, Status, Description, CustomerAuthorizedById, CompanyAuthorizedById, Type, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ActivatedDate, ActivatedById, StatusCode, OrderNumber, TotalAmount, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, IsDeleted, SystemModstamp, LastViewedDate, LastReferencedDate, AccountName__c, AssessmentId__c, Email__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Qualification Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Qualification__c",
+					"TargetTableName": "Qualification__c",
+					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Assessment__c, AQFComparability__c, CEPPortalLink__c, CEPReference__c, CalculationDuration__c, CloselyRelatedMajor__c, CloselyRelatedMinor__c, CompletionDate__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountryOfStudy__c, CourseDuration__c, CourseLoad__c, CreditPointsAwarded__c, DetailsOnResultLetter__c, FulltimeOrParttime__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, IsAffiliatedtoAustralianUniversity__c, IsthisAResearchBasedQualification__c, NotAssessed__c, PotentialRDM4Of6Yrs__c, PotentialRMD2Or5Yrs__c, QualificationCategory__c, QualificationStatus__c, ReasonsAQFNotRecognised__c, ShowRichText__c, TotalNumberOfUnit__c, UnitCountErrors__c, Unit_Count_Text_Long__c, AustralianQualification__c, ReasonsAQFNotRecognisedText__c, RejectedQualificationReasons__c, UnitCountText__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Skill__c  Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Skill__c",
+					"TargetTableName": "Skill__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, SkillCode__c, SkillLevels__c",
+					"schemaname": "salesforcenew"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new SupportingInfo__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "SupportingInfo__c",
+					"TargetTableName": "SupportingInfo__c",
+					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DetailsonResultLetter__c, ExperienceForProject1__c, ExperienceForProject2__c, Plagiarism_Detected__c, RPLAccepted__c, RPLOutcome__c, RPLRejectionReason__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
