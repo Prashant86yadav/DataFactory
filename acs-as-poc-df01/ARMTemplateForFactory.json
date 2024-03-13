@@ -43848,6 +43848,13 @@
 							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName')]",
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Dummy Test",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -43874,7 +43881,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryStd Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Program Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF new Experience Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new Experience Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/Dummy Test')]"
 			]
 		},
 		{

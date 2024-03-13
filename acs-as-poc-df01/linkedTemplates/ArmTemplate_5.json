@@ -1864,6 +1864,13 @@
 							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_TargetTableName')]",
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Dummy Test",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
