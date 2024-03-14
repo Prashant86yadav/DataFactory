@@ -24,7 +24,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select * from  [membership].[members_renew12month_h]  \n  where\ndateStart >  '2017-12-31'",
+						"sqlReaderQuery": "select * from  [membership].[members_new12month_h]\n  where\ndateStart >  '2017-12-31'",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
