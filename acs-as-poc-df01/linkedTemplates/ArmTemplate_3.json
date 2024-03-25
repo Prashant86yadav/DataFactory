@@ -8159,7 +8159,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SF new Assessment Refresh')]",
+			"name": "[concat(parameters('factoryName'), '/SF new Assessment History Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -8187,7 +8187,7 @@
 							"source": {
 								"type": "SalesforceV2Source",
 								"SOQLQuery": {
-									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
+									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  CreatedDate >= @{variables('brpExtractFrom')} AND\nCreatedDate <= @{variables('brpExtractTo')}\n\n\n",
 									"type": "Expression"
 								},
 								"includeDeletedObjects": false
@@ -8219,7 +8219,7 @@
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
 								"parameters": {
-									"sourcetable": "assessment__c"
+									"sourcetable": "Assessment__History"
 								}
 							}
 						],
@@ -8256,7 +8256,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractFrom",
 							"value": {
-								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))\n",
 								"type": "Expression"
 							}
 						}
@@ -8277,7 +8277,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
+									"value": "SELECT MAX(createddate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -8291,10 +8291,7 @@
 										"value": "@pipeline().parameters.TargetTableName",
 										"type": "Expression"
 									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
+									"schemaname": "salesforcenew"
 								}
 							}
 						}
@@ -8323,7 +8320,7 @@
 							"source": {
 								"type": "SalesforceV2Source",
 								"SOQLQuery": {
-									"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+									"value": "SELECT createddate \nFROM @{pipeline().parameters.SourceTableName}\nWHERE createddate >= @{variables('brpExtractFrom')}\norder by createddate desc \nlimit 1",
 									"type": "Expression"
 								},
 								"includeDeletedObjects": false
@@ -8332,7 +8329,7 @@
 								"referenceName": "SalesforceMSANew",
 								"type": "DatasetReference",
 								"parameters": {
-									"sourcetable": "assessment__c"
+									"sourcetable": "Assessment__History"
 								}
 							}
 						}
@@ -8357,7 +8354,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractTo",
 							"value": {
-								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.createddate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
 								"type": "Expression"
 							}
 						}
@@ -8369,15 +8366,15 @@
 				"parameters": {
 					"SourceTableName": {
 						"type": "string",
-						"defaultValue": "assessment__c"
+						"defaultValue": "Assessment__History"
 					},
 					"TargetTableName": {
 						"type": "string",
-						"defaultValue": "assessment__c"
+						"defaultValue": "Assessment__History"
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": " Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, AssessmentOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationVerdict__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c"
+						"defaultValue": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
 					},
 					"schemaname": {
 						"type": "string",
@@ -8387,11 +8384,11 @@
 				"variables": {
 					"brpExtractFrom": {
 						"type": "String",
-						"defaultValue": "1900-12-31T00:00:00Z"
+						"defaultValue": "1900-12-31 00:00:00"
 					},
 					"brpExtractTo": {
 						"type": "String",
-						"defaultValue": "1900-12-31T00:00:00Z"
+						"defaultValue": "1900-12-31 00:00:00"
 					}
 				},
 				"folder": {

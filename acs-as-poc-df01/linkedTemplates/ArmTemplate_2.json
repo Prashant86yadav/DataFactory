@@ -1399,7 +1399,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from  [membership].[members_renew12month_h]  \n  where\ndateStart >  '2017-12-31'",
+								"sqlReaderQuery": "select * from  [membership].[members_new12month_h]\n  where\ndateStart >  '2017-12-31'",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -1663,11 +1663,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Assessment__History"
+						"defaultValue": "user"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Assessment__History"
+						"defaultValue": "user"
 					},
 					"schemaname": {
 						"type": "string",
@@ -6201,7 +6201,7 @@
 						"typeProperties": {
 							"variableName": "brpExtractFrom",
 							"value": {
-								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fffZ'))",
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
 								"type": "Expression"
 							}
 						}
@@ -6276,7 +6276,10 @@
 							"dataset": {
 								"referenceName": "ACSDSSF",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"object1": "account",
+									"object2": "assessment"
+								}
 							}
 						}
 					},
