@@ -65,7 +65,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "'2024-02-29'"
+				"defaultValue": "'2024-03-31'"
 			}
 		},
 		"variables": {
