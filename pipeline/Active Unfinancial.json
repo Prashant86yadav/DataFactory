@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy Continuing Members",
+				"name": "Copy Active Unfinacial Members",
 				"description": "",
 				"type": "Copy",
 				"dependsOn": [],
