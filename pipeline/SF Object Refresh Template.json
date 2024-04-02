@@ -17,7 +17,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "select  Azure_ID__c \nfrom Account\nwhere id ='0019000001ry79OAAQ'\n",
 						"readBehavior": "query"
 					},
 					"sink": {
