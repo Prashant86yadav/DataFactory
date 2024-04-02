@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "PPP__c"
+				"defaultValue": "Litmos__AccountProgramResult__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "PPP__c"
+				"defaultValue": "Litmos__AccountProgramResult__c"
 			}
 		},
 		"variables": {
