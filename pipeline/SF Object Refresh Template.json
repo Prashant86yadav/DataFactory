@@ -3910,11 +3910,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Account"
+				"defaultValue": "PPP__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Account_backup"
+				"defaultValue": "PPP__c"
 			}
 		},
 		"variables": {
