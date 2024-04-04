@@ -16,19 +16,36 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SalesforceSource",
-						"readBehavior": "query"
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from \t[dbo].[member_dump]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSF",
-						"type": "DatasetReference",
-						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
-						}
+						"referenceName": "ds_sql_memebershipdb",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
 					}
 				]
 			}
