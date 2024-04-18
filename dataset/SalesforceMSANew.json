@@ -8,7 +8,7 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "assessment__c"
+				"defaultValue": "Qualification__History"
 			}
 		},
 		"annotations": [],
