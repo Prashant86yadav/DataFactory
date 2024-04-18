@@ -15,10 +15,7 @@
 		"type": "SalesforceV2Object",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": {
-				"value": "@{dataset().sourcetable}",
-				"type": "Expression"
-			}
+			"objectApiName": "Qualification__History"
 		}
 	}
 }
