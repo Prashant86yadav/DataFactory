@@ -41,7 +41,10 @@
 				"inputs": [
 					{
 						"referenceName": "SalesforceMSANew",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcetable": "@pipeline().parameters.sourcetable"
+						}
 					}
 				],
 				"outputs": [
