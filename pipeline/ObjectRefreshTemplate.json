@@ -70,11 +70,12 @@
 		],
 		"parameters": {
 			"sourcetable": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Qualification_History"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "user"
+				"defaultValue": "Qualification_History"
 			},
 			"schemaname": {
 				"type": "string",
