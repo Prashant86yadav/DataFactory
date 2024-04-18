@@ -70,8 +70,7 @@
 		],
 		"parameters": {
 			"sourcetable": {
-				"type": "string",
-				"defaultValue": "user"
+				"type": "string"
 			},
 			"targettable": {
 				"type": "string",
