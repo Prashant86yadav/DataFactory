@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Qualification_History"
+				"defaultValue": "Experience_History"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Qualification_History"
+				"defaultValue": "Experience_History"
 			},
 			"schemaname": {
 				"type": "string",
