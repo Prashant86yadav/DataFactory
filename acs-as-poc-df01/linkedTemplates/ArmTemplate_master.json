@@ -859,6 +859,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"LS_AZST_BlobLanding_connectionString": {
+						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					}
 				}
 			},
@@ -879,9 +882,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"LS_AZST_BlobLanding_connectionString": {
-						"value": "[parameters('LS_AZST_BlobLanding_connectionString')]"
 					}
 				}
 			},

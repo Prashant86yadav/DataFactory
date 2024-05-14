@@ -226,51 +226,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Set variable1",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "test",
-							"value": {
-								"value": "@{formatDateTime(convertTimeZone(utcnow(), 'UTC', 'AUS Eastern Standard Time')\n, 'yyyy-MM-dd')}\n",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"month": {
-						"type": "string",
-						"defaultValue": "test"
-					}
-				},
-				"variables": {
-					"test": {
-						"type": "String"
-					}
-				},
-				"folder": {
-					"name": "ACS/Membership/Monthly"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ACS Databricks Premium')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -570,6 +525,13 @@
 				"type": "SelfHosted",
 				"typeProperties": {}
 			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/default')]",
+			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
+			"apiVersion": "2018-06-01",
+			"properties": {},
 			"dependsOn": []
 		}
 	]
