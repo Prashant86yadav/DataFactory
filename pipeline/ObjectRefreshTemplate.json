@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Product2"
+				"defaultValue": "orderitem"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Product2"
+				"defaultValue": "orderitem"
 			},
 			"schemaname": {
 				"type": "string",
