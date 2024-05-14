@@ -204,15 +204,15 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "order"
+				"defaultValue": "Product2"
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "order_c"
+				"defaultValue": "Product2"
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate StockKeepingUnit "
+				"defaultValue": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate ,StockKeepingUnit "
 			},
 			"schemaname": {
 				"type": "string",
