@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Litmos__AccountProgramResult__c"
+				"defaultValue": "Campaign  "
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Litmos__AccountProgramResult__c"
+				"defaultValue": "Campaign  "
 			}
 		},
 		"variables": {
