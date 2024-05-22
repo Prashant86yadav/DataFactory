@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "CampaignMember"
+				"defaultValue": "EventSponsor__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "CampaignMember"
+				"defaultValue": "EventSponsor__c"
 			}
 		},
 		"variables": {
