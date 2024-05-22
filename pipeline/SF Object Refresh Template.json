@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Campaign  "
+				"defaultValue": "Campaign"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Campaign  "
+				"defaultValue": "Campaign"
 			}
 		},
 		"variables": {
