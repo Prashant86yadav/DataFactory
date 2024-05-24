@@ -158,7 +158,7 @@
 					"source": {
 						"type": "SalesforceV2Source",
 						"SOQLQuery": {
-							"value": "SELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere createddate >= @{variables('brpExtractFrom')}\norder by createddate desc \nlimit 1",
+							"value": "SELECT createddate\nFROM @{pipeline().parameters.SourceTableName}\nwhere createddate >= @{variables('brpExtractFrom')}\norder by createddate desc \nlimit 1",
 							"type": "Expression"
 						},
 						"includeDeletedObjects": false
