@@ -367,22 +367,6 @@
 			"type": "string",
 			"defaultValue": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
 		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "QualificationAssessmentANZSCO__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "QualificationAssessmentANZSCO__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"TR_SF_Refresh_properties_SF new Account Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "Account"
@@ -716,6 +700,38 @@
 			"defaultValue": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
 		},
 		"TR_SF_Refresh_properties_SF new Assessment History Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Product2"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Product2"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate ,StockKeepingUnit "
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
@@ -1114,18 +1130,6 @@
 					"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList')]"
 					},
-					"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
-					},
 					"TR_SF_Refresh_properties_SF new Account Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Account Refresh_parameters_SourceTableName')]"
 					},
@@ -1377,6 +1381,30 @@
 					},
 					"TR_SF_Refresh_properties_SF new Assessment History Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment History Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF new Product Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Product Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Product Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Product Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Product Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Product Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF new Product Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Product Refresh_parameters_schemaname')]"
+					},
+					"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName')]"
+					},
+					"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]"
+					},
+					"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]"
+					},
+					"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
 					}
 				}
 			},

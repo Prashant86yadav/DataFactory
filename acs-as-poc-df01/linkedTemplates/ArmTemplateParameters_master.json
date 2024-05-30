@@ -275,18 +275,6 @@
 		"TR_SF_Refresh_properties_SF new Experience Refresh_parameters_ColumnList": {
 			"value": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
 		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
-			"value": "QualificationAssessmentANZSCO__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
-			"value": "QualificationAssessmentANZSCO__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
-			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
-		},
-		"TR_SF_Refresh_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
-			"value": "salesforcenew"
-		},
 		"TR_SF_Refresh_properties_SF new Account Refresh_parameters_SourceTableName": {
 			"value": "Account"
 		},
@@ -537,6 +525,30 @@
 			"value": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
 		},
 		"TR_SF_Refresh_properties_SF new Assessment History Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_SourceTableName": {
+			"value": "Product2"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_TargetTableName": {
+			"value": "Product2"
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_ColumnList": {
+			"value": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate ,StockKeepingUnit "
+		},
+		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"value": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"value": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
 			"value": "salesforcenew"
 		},
 		"containerUri": {

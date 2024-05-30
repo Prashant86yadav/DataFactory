@@ -1639,11 +1639,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "orderitem"
+						"defaultValue": "CampaignMember"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "orderitem"
+						"defaultValue": "Campaignmember"
 					},
 					"schemaname": {
 						"type": "string",

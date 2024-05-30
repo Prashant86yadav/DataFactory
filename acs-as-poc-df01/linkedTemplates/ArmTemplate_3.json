@@ -1846,11 +1846,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Litmos__AccountProgramResult__c"
+						"defaultValue": "EventSponsor__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Litmos__AccountProgramResult__c"
+						"defaultValue": "EventSponsor__c"
 					}
 				},
 				"variables": {
@@ -3803,11 +3803,11 @@
 				"variables": {
 					"brpExtractFrom": {
 						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
+						"defaultValue": "1900-12-31T00:00:00Z"
 					},
 					"brpExtractTo": {
 						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
+						"defaultValue": "1900-12-31T00:00:00Z"
 					}
 				},
 				"folder": {
@@ -4228,7 +4228,7 @@
 							"source": {
 								"type": "SalesforceV2Source",
 								"SOQLQuery": {
-									"value": "SELECT createddate \nFROM @{pipeline().parameters.SourceTableName}\nWHERE createddate >= @{variables('brpExtractFrom')}\norder by createddate desc \nlimit 1",
+									"value": "SELECT createddate\nFROM @{pipeline().parameters.SourceTableName}\nwhere createddate >= @{variables('brpExtractFrom')}\norder by createddate desc \nlimit 1",
 									"type": "Expression"
 								},
 								"includeDeletedObjects": false
@@ -4292,11 +4292,11 @@
 				"variables": {
 					"brpExtractFrom": {
 						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
+						"defaultValue": "1900-12-31T00:00:00Z"
 					},
 					"brpExtractTo": {
 						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
+						"defaultValue": "1900-12-31T00:00:00Z"
 					}
 				},
 				"folder": {
