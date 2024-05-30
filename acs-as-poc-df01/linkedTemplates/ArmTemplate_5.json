@@ -7,6 +7,38 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "acs-as-poc-df01"
 		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "QualificationAssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
+		},
+		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Account"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Account"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, MasterRecordId, Name, LastName, FirstName, Salutation, MiddleName, Type, RecordTypeId, ParentId,      BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude,      BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry,      ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, Phone, Fax, Website, PhotoUrl, Industry,      AnnualRevenue, NumberOfEmployees, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate,      LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, PersonContactId,      IsPersonAccount, PersonMailingStreet, PersonMailingCity, PersonMailingState, PersonMailingPostalCode,      PersonMailingCountry, PersonMailingLatitude, PersonMailingLongitude, PersonMailingGeocodeAccuracy,      PersonOtherStreet, PersonOtherCity, PersonOtherState, PersonOtherPostalCode, PersonOtherCountry,      PersonOtherLatitude, PersonOtherLongitude, PersonOtherGeocodeAccuracy, PersonMobilePhone, PersonHomePhone,      PersonOtherPhone, PersonAssistantPhone, PersonEmail, PersonTitle, PersonDepartment, PersonAssistantName,      PersonLeadSource, PersonBirthdate, PersonLastCURequestDate, PersonLastCUUpdateDate, PersonEmailBouncedReason,      PersonEmailBouncedDate, PersonIndividualId, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, BillingGrade__c,      CountryOfBirth__c, Gender__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c,      PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c,      VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebRoles__c, AzureId__c, BoxFolderId__c,      BusinessName__c, ConsentDateTimeofInitiatingAgent__c, Create_Free_Skills_Membership__c, DateOfBirth__c,      HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, OldSalesforceRecordId__c, PassportNumber__c,      PreferredName__c, ABN__c, WebRoles__pc, MARANumber__pc, AzureId__pc, OldOrgContactID__pc, OldOrgSkillAgentId__pc,      SkillAgentId__pc, AgentId__pc, UnreadMessageCountbyAgent__pc, UnreadMessageCountbyApplicant__pc"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -584,22 +616,6 @@
 			"defaultValue": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate ,StockKeepingUnit "
 		},
 		"TR_SF_Refresh_properties_SF new Product Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
-		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "QualificationAssessmentANZSCO__c"
-		},
-		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "QualificationAssessmentANZSCO__c"
-		},
-		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Qualification__c, AssessmentANZSCO__c, CloselyRelated__c, ANZSCOName__c, CalculatedX__c"
-		},
-		"NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		}
@@ -19752,6 +19768,51 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/NewSFRefresh_Hourly')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "QualificationAssessmentANZSCO__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Account Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 60,
+						"startTime": "2024-05-30T23:23:00",
+						"timeZone": "AUS Eastern Standard Time"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -20342,39 +20403,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NewSFRefresh_Hourly')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "QualificationAssessmentANZSCO__c Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_QualificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 60,
-						"startTime": "2024-05-30T23:23:00",
-						"timeZone": "AUS Eastern Standard Time"
-					}
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
