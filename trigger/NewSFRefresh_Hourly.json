@@ -111,6 +111,18 @@
 					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ANZSCO__c, Assessment__c, ANZSCOOutcome__c, CurrentAttemptCount__c, DateOfKnowledgeMet__c, EAANoText__c, EAAYesText__c, ExternalId__c, GenerateOutcomeLetterConga__c, IsChosen__c, QAANoText__c, QAAYesText__c, RMDLogic__c, RPLQualificationText__c, RequirementMetDate__c, ResultLetterFileId__c, ResultLetterFileName__c, ANZSCOforUnitCountText__c, AnzscoName__c, AssessmentName__c, Conga_Trigger_Generate_Suitable_Letters__c, SuitableTemplateId__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new AssessmentANZSCOSkill Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "AssessmentANZSCOSkill__c",
+					"TargetTableName": "AssessmentANZSCOSkill__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, assessorSelected__c, SkillName__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
