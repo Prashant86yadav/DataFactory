@@ -75,6 +75,18 @@
 					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Contact__c, Assessment__c, Qualification__c, ApplicantResponse__c, AzureId__c, Case__c, DeadlineDate__c, DocumentType__c, Experience__c, Message__c, NotificationType__c, ReadByAgent__c, ReadByApplicant__c, Reason__c, ResultLetterFileId__c, Sender__c, Status__c, Subject__c, SupportingInfo__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Assessment History Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Assessment__History",
+					"TargetTableName": "Assessment__History",
+					"ColumnList": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
