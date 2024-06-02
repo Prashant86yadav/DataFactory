@@ -51,6 +51,18 @@
 					"ColumnList": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Code__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new ANZSCOSkill__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "ANZSCOSkill__c",
+					"TargetTableName": "ANZSCOSkill__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, ANZSCO__c, Skill__c, MinimumSkillLevel__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
