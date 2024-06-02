@@ -39,6 +39,166 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AccountContactRelation"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AccountContactRelation"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "ANZSCOGroup__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "ANZSCOGroup__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Code__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "ANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "ANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, ANZSCO__c, Skill__c, MinimumSkillLevel__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Assessment_Comment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Assessment_Comment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Contact__c, Assessment__c, Qualification__c, ApplicantResponse__c, AzureId__c, Case__c, DeadlineDate__c, DocumentType__c, Experience__c, Message__c, NotificationType__c, ReadByAgent__c, ReadByApplicant__c, Reason__c, ResultLetterFileId__c, Sender__c, Status__c, Subject__c, SupportingInfo__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Assessment__History"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Assessment__History"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, AssessmentOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationVerdict__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ANZSCO__c, Assessment__c, ANZSCOOutcome__c, CurrentAttemptCount__c, DateOfKnowledgeMet__c, EAANoText__c, EAAYesText__c, ExternalId__c, GenerateOutcomeLetterConga__c, IsChosen__c, QAANoText__c, QAAYesText__c, RMDLogic__c, RPLQualificationText__c, RequirementMetDate__c, ResultLetterFileId__c, ResultLetterFileName__c, ANZSCOforUnitCountText__c, AnzscoName__c, AssessmentName__c, Conga_Trigger_Generate_Suitable_Letters__c, SuitableTemplateId__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, assessorSelected__c, SkillName__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AssessmentSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, Skill__c, ApplicantSelectedLevel__c, ApplicantSelected__c, AttemptNumber__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "case"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "case_c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, MasterRecordId, CaseNumber, ContactId, AccountId, ParentId, SuppliedName, SuppliedEmail, SuppliedPhone, SuppliedCompany, Type, RecordTypeId, Status, Reason, Origin, Language, Subject, Priority, Description, IsClosed, ClosedDate, IsEscalated, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ContactPhone, ContactMobile, ContactEmail, ContactFax, Comments, LastViewedDate, LastReferencedDate, Assessment__c, Deadline_Within__c, Lead__c, Topic__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -624,248 +784,6 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/SF task Refresh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy Salesforce object",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set brpExtractTo",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"id"
-									]
-								},
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "Set  brpExtractFrom",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET TGT HWM  SQL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractFrom",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')\n\n",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "GET TGT HWM  SQL",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n[salesforce].[user]",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						}
-					},
-					{
-						"name": "GET SRC HighWaterMark",
-						"description": "Find the latest change in the Salesforce table indicated by the parameter",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Set  brpExtractFrom",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"dataset": {
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						}
-					},
-					{
-						"name": "Set brpExtractTo",
-						"description": "",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET SRC HighWaterMark",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractTo",
-							"value": {
-								"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"SourceTableName": {
-						"type": "string",
-						"defaultValue": "task"
-					},
-					"TargetTableName": {
-						"type": "string",
-						"defaultValue": "task"
-					},
-					"ColumnList": {
-						"type": "string",
-						"defaultValue": "Id ,RecordTypeId ,WhoId ,WhatId ,Subject ,ActivityDate ,Status ,Priority ,IsHighPriority ,OwnerId ,Description ,CurrencyIsoCode ,Type ,IsDeleted ,AccountId ,IsClosed ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,IsArchived ,IsVisibleInSelfService ,CallDurationInSeconds ,CallType ,CallDisposition ,CallObject ,ReminderDateTime ,IsReminderSet ,RecurrenceActivityId ,IsRecurrence ,RecurrenceStartDateOnly ,RecurrenceEndDateOnly ,RecurrenceTimeZoneSidKey ,RecurrenceType ,RecurrenceInterval ,RecurrenceDayOfWeekMask ,RecurrenceDayOfMonth ,RecurrenceInstance ,RecurrenceMonthOfYear ,RecurrenceRegeneratedType ,TaskSubtype ,CompletedDateTime ,Data_Migrated_from_XEN__c ,XEN_Activity_Type__c ,XenId_Activities__c ,WFD_Project_Outputs_Activities__c ,Facebook_Message__c ,Interaction_Type__c ,Pendula__Message__c"
-					},
-					"schemaname": {
-						"type": "string",
-						"defaultValue": "dbo"
-					}
-				},
-				"variables": {
-					"brpExtractFrom": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					},
-					"brpExtractTo": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					}
-				},
-				"folder": {
-					"name": "ACS/Salesforce"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Unfinancial Numbers Forecast')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -19798,6 +19716,126 @@
 							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new AccountContactRelation Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new ANZSCOGroup__c refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new ANZSCOSkill__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Assessment_Comment__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Assessment History Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Assessment Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new AssessmentANZSCO__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new AssessmentANZSCOSkill Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new AssessmentSkill__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new Case Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_schemaname')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -20400,9 +20438,7 @@
 					}
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]"
-			]
+			"dependsOn": []
 		}
 	]
 }

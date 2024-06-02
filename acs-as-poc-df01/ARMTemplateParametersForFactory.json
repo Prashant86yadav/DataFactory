@@ -128,6 +128,126 @@
 		"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname": {
 			"value": "salesforcenew"
 		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
+			"value": "AccountContactRelation"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
+			"value": "AccountContactRelation"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
+			"value": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
+			"value": "ANZSCOGroup__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_TargetTableName": {
+			"value": "ANZSCOGroup__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_ColumnList": {
+			"value": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Code__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_SourceTableName": {
+			"value": "ANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_TargetTableName": {
+			"value": "ANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, ANZSCO__c, Skill__c, MinimumSkillLevel__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new ANZSCOSkill__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_SourceTableName": {
+			"value": "Assessment_Comment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_TargetTableName": {
+			"value": "Assessment_Comment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Contact__c, Assessment__c, Qualification__c, ApplicantResponse__c, AzureId__c, Case__c, DeadlineDate__c, DocumentType__c, Experience__c, Message__c, NotificationType__c, ReadByAgent__c, ReadByApplicant__c, Reason__c, ResultLetterFileId__c, Sender__c, Status__c, Subject__c, SupportingInfo__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment_Comment__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_SourceTableName": {
+			"value": "Assessment__History"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_TargetTableName": {
+			"value": "Assessment__History"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+			"value": "assessment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+			"value": "assessment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
+			"value": "Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, AssessmentOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationVerdict__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"value": "AssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"value": "AssessmentANZSCO__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ANZSCO__c, Assessment__c, ANZSCOOutcome__c, CurrentAttemptCount__c, DateOfKnowledgeMet__c, EAANoText__c, EAAYesText__c, ExternalId__c, GenerateOutcomeLetterConga__c, IsChosen__c, QAANoText__c, QAAYesText__c, RMDLogic__c, RPLQualificationText__c, RequirementMetDate__c, ResultLetterFileId__c, ResultLetterFileName__c, ANZSCOforUnitCountText__c, AnzscoName__c, AssessmentName__c, Conga_Trigger_Generate_Suitable_Letters__c, SuitableTemplateId__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_SourceTableName": {
+			"value": "AssessmentANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_TargetTableName": {
+			"value": "AssessmentANZSCOSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Experience__c, ApplicantSelectedLevel__c, ApplicantSelected__c, assessmentANZSCO__c, assessmentSkill__c, assessorComments__c, assessorSelectedLevel__c, assessorSelected__c, SkillName__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCOSkill Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_SourceTableName": {
+			"value": "AssessmentSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_TargetTableName": {
+			"value": "AssessmentSkill__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, Skill__c, ApplicantSelectedLevel__c, ApplicantSelected__c, AttemptNumber__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new AssessmentSkill__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_SourceTableName": {
+			"value": "case"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_TargetTableName": {
+			"value": "case_c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_ColumnList": {
+			"value": "Id, IsDeleted, MasterRecordId, CaseNumber, ContactId, AccountId, ParentId, SuppliedName, SuppliedEmail, SuppliedPhone, SuppliedCompany, Type, RecordTypeId, Status, Reason, Origin, Language, Subject, Priority, Description, IsClosed, ClosedDate, IsEscalated, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, ContactPhone, ContactMobile, ContactEmail, ContactFax, Comments, LastViewedDate, LastReferencedDate, Assessment__c, Deadline_Within__c, Lead__c, Topic__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Case Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"value": "assessment__c"
 		},
