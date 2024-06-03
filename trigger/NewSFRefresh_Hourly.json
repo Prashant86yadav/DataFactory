@@ -2,7 +2,7 @@
 	"name": "NewSFRefresh_Hourly",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Started",
+		"runtimeState": "Stopped",
 		"pipelines": [
 			{
 				"pipelineReference": {
