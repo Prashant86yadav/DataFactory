@@ -449,7 +449,7 @@
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Hour",
-				"interval": 12,
+				"interval": 1,
 				"startTime": "2022-12-24T00:00:00",
 				"timeZone": "AUS Eastern Standard Time"
 			}
