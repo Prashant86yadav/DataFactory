@@ -262,7 +262,10 @@
 					"type": "PipelineReference"
 				},
 				"parameters": {
-					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Assessment__c, AQFComparability__c, CEPPortalLink__c, CEPReference__c, CalculationDuration__c, CloselyRelatedMajor__c, CloselyRelatedMinor__c, CompletionDate__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountryOfStudy__c, CourseDuration__c, CourseLoad__c, CreditPointsAwarded__c, DetailsOnResultLetter__c, FulltimeOrParttime__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, IsAffiliatedtoAustralianUniversity__c, IsthisAResearchBasedQualification__c, NotAssessed__c, PotentialRDM4Of6Yrs__c, PotentialRMD2Or5Yrs__c, QualificationCategory__c, QualificationStatus__c, ReasonsAQFNotRecognised__c, ShowRichText__c, TotalNumberOfUnit__c, UnitCountErrors__c, Unit_Count_Text_Long__c, AustralianQualification__c, ReasonsAQFNotRecognisedText__c, RejectedQualificationReasons__c, UnitCountText__c"
+					"SourceTableName": "Qualification__c",
+					"TargetTableName": "Qualification__c",
+					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, Assessment__c, AQFComparability__c, CEPPortalLink__c, CEPReference__c, CalculationDuration__c, CloselyRelatedMajor__c, CloselyRelatedMinor__c, CompletionDate__c, CoreUnitsMajor__c, CoreUnitsMinor__c, CountryOfStudy__c, CourseDuration__c, CourseLoad__c, CreditPointsAwarded__c, DetailsOnResultLetter__c, FulltimeOrParttime__c, ICTContent__c, ICTUnitCountMajor__c, ICTUnitCountMinor__c, Institution__c, IsAffiliatedtoAustralianUniversity__c, IsthisAResearchBasedQualification__c, NotAssessed__c, PotentialRDM4Of6Yrs__c, PotentialRMD2Or5Yrs__c, QualificationCategory__c, QualificationStatus__c, ReasonsAQFNotRecognised__c, ShowRichText__c, TotalNumberOfUnit__c, UnitCountErrors__c, Unit_Count_Text_Long__c, AustralianQualification__c, ReasonsAQFNotRecognisedText__c, RejectedQualificationReasons__c, UnitCountText__c",
+					"schemaname": "salesforcenew"
 				}
 			}
 		],
