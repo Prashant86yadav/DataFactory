@@ -291,6 +291,18 @@
 					"ColumnList": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DetailsonResultLetter__c, ExperienceForProject1__c, ExperienceForProject2__c, Plagiarism_Detected__c, RPLAccepted__c, RPLOutcome__c, RPLRejectionReason__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Unit Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Unit__c",
+					"TargetTableName": "Unit__c",
+					"ColumnList": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Qualification__c, CloselyRelatedANZSCOgroups__c, CoreUnitANZSCOGroup__c, GradeAchieved__c, ICT__c, Pass__c, SubmittedBy__c, UnitCredits__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
