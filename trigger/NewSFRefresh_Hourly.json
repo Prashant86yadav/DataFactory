@@ -231,6 +231,18 @@
 					"ColumnList": "\nId, OwnerId, ContractId, AccountId, Pricebook2Id, OriginalOrderId, EffectiveDate, EndDate, IsReductionOrder, Status, Description, CustomerAuthorizedById, CompanyAuthorizedById, Type, BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude, BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry, ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, ActivatedDate, ActivatedById, StatusCode, OrderNumber, TotalAmount, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, IsDeleted, SystemModstamp, LastViewedDate, LastReferencedDate, AccountName__c, AssessmentId__c, Email__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Product Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "product2",
+					"TargetTableName": "product2",
+					"ColumnList": "   Id ,Name ,ProductCode ,Description ,IsActive ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,Family ,ExternalDataSourceId ,ExternalId ,DisplayUrl ,QuantityUnitOfMeasure ,IsDeleted ,IsArchived ,LastViewedDate ,LastReferencedDate ,StockKeepingUnit ",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
