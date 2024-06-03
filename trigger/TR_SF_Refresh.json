@@ -170,7 +170,8 @@
 				"parameters": {
 					"SourceTableName": "Experience__c",
 					"TargetTableName": "Experience__c",
-					"ColumnList": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c"
+					"ColumnList": "Id,\nIsDeleted,\nName,\nRecordTypeId,\nCreatedDate,\nCreatedById,\nLastModifiedDate,\nLastModifiedById,\nSystemModstamp,\nAssessment__c,\nDoYouHaveARegisteredBusiness__c,\nEmploymentOccupationEndDate__c,\nEmploymentOccupationOngoing__c,\nEmploymentOccupationStartDate__c,\nExperienceAccepted__c,\nExperienceComments__c,\nExperienceStatus__c,\nHoursWorkedPerWeek__c,\nLocationOfEmploymentOccupation__c,\nNatureOfWorkExperience__c,\nPositionOccupationOrRoleTitle__c,\nCountableExperienceDays__c,\nCountableExperienceMonths__c,\nCountableExperienceYears__c,\nCountableExperience__c,\nReasonExperienceNotAccepted__c,\nTotalExperience__c",
+					"schemaname": "salesforcenew"
 				}
 			},
 			{
