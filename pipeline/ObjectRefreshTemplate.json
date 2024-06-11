@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "CampaignMember"
+				"defaultValue": "account"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Campaignmember"
+				"defaultValue": "account"
 			},
 			"schemaname": {
 				"type": "string",
