@@ -211,8 +211,7 @@
 				},
 				"parameters": {
 					"month": {
-						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -1214,7 +1213,7 @@
 				"parameters": {
 					"Month": {
 						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"defaultValue": "'2024-05-31'"
 					}
 				},
 				"folder": {
@@ -1639,11 +1638,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "CampaignMember"
+						"defaultValue": "account"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Campaignmember"
+						"defaultValue": "account"
 					},
 					"schemaname": {
 						"type": "string",
@@ -2114,7 +2113,7 @@
 				"parameters": {
 					"Month": {
 						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"defaultValue": "''"
 					}
 				},
 				"folder": {

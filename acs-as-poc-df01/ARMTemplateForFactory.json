@@ -691,19 +691,19 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
-		"TR_SF_Refresh_properties_SF Experience Refresh_parameters_SourceTableName": {
+		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "Experience__c"
 		},
-		"TR_SF_Refresh_properties_SF Experience Refresh_parameters_TargetTableName": {
+		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_TargetTableName": {
 			"type": "string",
 			"defaultValue": "Experience"
 		},
-		"TR_SF_Refresh_properties_SF Experience Refresh_parameters_ColumnList": {
+		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_ColumnList": {
 			"type": "string",
 			"defaultValue": "Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate, Assessment__c, ANZSCO_Code__c, Applicant_Name__c, CongaRefMark__c, CountableExperience__c, Country__c, Data_Migrated_from_XEN__c, ExperienceAccepted__c, ExperienceCommentTimestamp__c, Experience_Comments__c, FinishDate__c, NumberOfDaysExperience__c, PositionTitle__c, ProfessionalYearComplete__c, ReasonExperienceNotAccepted__c, SFIACode__c, SFIALevel__c, Secondary_SFIA_Level__c, Secondary_SFIA_Skill__c, StartDate__c, Third_SFIA_Level__c, Third_SFIA_Skill__c, TotalYears__c, XEN_Company_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, RecordLocked__c, XenId_Experience__c, BypassValidation__c, CountableExperienceMonths__c, CountableExperienceYears__c, ApplicantName__c, SubmissionDate__c, CloneFromApplicantAttachmentsBoxFolderId__c, CloneFromAssessorAttachmentsBoxFolderId__c, CloneFromBoxFolderId__c "
 		},
-		"TR_SF_Refresh_properties_SF Experience Refresh_parameters_schemaname": {
+		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
@@ -1348,8 +1348,7 @@
 				},
 				"parameters": {
 					"month": {
-						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"type": "string"
 					}
 				},
 				"folder": {
@@ -2374,7 +2373,7 @@
 				"parameters": {
 					"Month": {
 						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"defaultValue": "'2024-05-31'"
 					}
 				},
 				"folder": {
@@ -2815,11 +2814,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "CampaignMember"
+						"defaultValue": "account"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Campaignmember"
+						"defaultValue": "account"
 					},
 					"schemaname": {
 						"type": "string",
@@ -3301,7 +3300,7 @@
 				"parameters": {
 					"Month": {
 						"type": "string",
-						"defaultValue": "'2024-04-30'"
+						"defaultValue": "''"
 					}
 				},
 				"folder": {
@@ -9730,7 +9729,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SF Experience Refresh')]",
+			"name": "[concat(parameters('factoryName'), '/SF CampaignRefresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -9939,15 +9938,15 @@
 				"parameters": {
 					"SourceTableName": {
 						"type": "string",
-						"defaultValue": "Experience__c"
+						"defaultValue": "Campaign"
 					},
 					"TargetTableName": {
 						"type": "string",
-						"defaultValue": "experience"
+						"defaultValue": "Campaign"
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": "Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate, Assessment__c, ANZSCO_Code__c, Applicant_Name__c, CongaRefMark__c, CountableExperience__c, Country__c, Data_Migrated_from_XEN__c, ExperienceAccepted__c, ExperienceCommentTimestamp__c, Experience_Comments__c, FinishDate__c, NumberOfDaysExperience__c, PositionTitle__c, ProfessionalYearComplete__c, ReasonExperienceNotAccepted__c, SFIACode__c, SFIALevel__c, Secondary_SFIA_Level__c, Secondary_SFIA_Skill__c, StartDate__c, Third_SFIA_Level__c, Third_SFIA_Skill__c, TotalYears__c, XEN_Company_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, RecordLocked__c, XenId_Experience__c, BypassValidation__c, CountableExperienceMonths__c, CountableExperienceYears__c, ApplicantName__c, SubmissionDate__c, CloneFromApplicantAttachmentsBoxFolderId__c, CloneFromAssessorAttachmentsBoxFolderId__c, CloneFromBoxFolderId__c "
+						"defaultValue": "Id, IsDeleted, Name, ParentId, Type, Status, StartDate, EndDate, CurrencyIsoCode, ExpectedRevenue, BudgetedCost, ActualCost, ExpectedResponse, NumberSent, IsActive, Description, NumberOfLeads, NumberOfConvertedLeads, NumberOfContacts, NumberOfResponses, NumberOfOpportunities, NumberOfWonOpportunities, AmountAllOpportunities, AmountWonOpportunities, HierarchyNumberOfLeads, HierarchyNumberOfConvertedLeads, HierarchyNumberOfContacts, HierarchyNumberOfResponses, HierarchyNumberOfOpportunities, HierarchyNumberOfWonOpportunities, HierarchyAmountAllOpportunities, HierarchyAmountWonOpportunities, HierarchyNumberSent, HierarchyExpectedRevenue, HierarchyBudgetedCost, HierarchyActualCost, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, CampaignMemberRecordTypeId, ActivationDate__c, AvailableCapacity__c, AvailableWaitlistCapacity__c, BatchRunDate__c, BranchEmail__c, BranchName__c, BudgetApproved__c, BusinessCaseApproved__c, CPDEvent__c, CPDHours__c, CancellationReason__c, Capacity_Filled__c, Capacity__c, CongaACSLogoURL1__c, CongaACSLogoURL__c, CongaFacebookURL__c, CongaLocationIconURL__c, CongaTimeIconURL__c, CongaTwitterURL__c, Conga_LinkedIn_URL__c, DeliveryMethod__c, DetailedDescription__c, DoNotPublishOnline__c, DoNotRegisterOnline__c, EndDateAndTime__c, EventBudget__c, EventCity__c, EventLocationURL__c, EventOwner__c, EventState__c, EventType__c, EventVenue__c, Event_Label_ID__c, Event_Label__c, Event_Location_Conga_URL__c, ExternalURL__c, ICSLocationForCalendar__c, ICS_File_ID__c, Level_Room__c, Location_del__c, MemberOnlyEvent__c, NationalEventOfSignificance__c, PortalImageId__c, Postcode__c, PostponeReason__c, RegistrationEndDateAndTime__c, Related_ACS_Office__c, SFIASkillLevel__c, SFIA_Category__c, SFIA_Skill__c, SFIA_Subcategory__c, StartDateAndTime__c, StreetAddress__c, TermsAndConditions__c, TitleInPortal__c, Topics__c, WaitlistCapacity__c, Waitlist_Capacity_Filled__c, ActualTotalEventExpenditure__c, ActualTotalEventIncome__c, AttendeeCount__c, BookingAdditionsAvailableCount__c GroupBookingAvailableSum__c, No_of_People_Attended__c, No_of_People_Cancelled__c, No_of_People_No_Show__c, No_of_People_Registered__c, No_of_People_in_Wait_List__c, NumberOfWaitlisted__c, Country__c, NonMemberProduct__c, MemeberProduct__c, Timezone__c, EventImage__c, Campaign18DigitsId__c, AttendeesinclGroupBookings__c, EventEndTime__c, EventStartTime__c, EventTimezoneId__c, Objective__c, XENEventId__c, Detailed_Description_Text_Only__c, Dimension1_List__c, Dimension2_List__c, Dimension3_List__c, AutoCloseRegistration__c, ROI_Account__c, ROI_Amount__c, Total_Price__c, Virtual__c, Virtual_Event_Reminder_Send_Date__c, Event_Web_URL__c, Event_Web_URL_Display__c, Event_States__c, Excluded_Billing_Grades__c, Invoice_Payment_Expiry__c, Max_Tickets_Per_Account__c, Registration_End_Date_is_Reached__c, Invoice_Payment_Expiry_Formatted__c, Label_Outfit_Document_Id__c, Event_Survey_Link__c, Event_Presentation_Link__c, Micro_Tribe__c, Primary_Competency_Framework__c, Primary_Competency_Full_Label__c, Primary_Competency_Label__c, Primary_Competency_Updated_from_Child__c, Primary_Competency__c, Micro_Tribe_Label__c, Virtual_Event_Time_Zone__c"
 					},
 					"schemaname": {
 						"type": "string",
@@ -12091,7 +12090,7 @@
 					},
 					"ColumnList": {
 						"type": "string",
-						"defaultValue": "    Id, IsDeleted, MasterRecordId, Name, LastName, FirstName, Salutation, MiddleName, Type, RecordTypeId, ParentId,      BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude,      BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry,      ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, Phone, Fax, Website, PhotoUrl, Industry,      AnnualRevenue, NumberOfEmployees, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate,      LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, PersonContactId,      IsPersonAccount, PersonMailingStreet, PersonMailingCity, PersonMailingState, PersonMailingPostalCode,      PersonMailingCountry, PersonMailingLatitude, PersonMailingLongitude, PersonMailingGeocodeAccuracy,      PersonOtherStreet, PersonOtherCity, PersonOtherState, PersonOtherPostalCode, PersonOtherCountry,      PersonOtherLatitude, PersonOtherLongitude, PersonOtherGeocodeAccuracy, PersonMobilePhone, PersonHomePhone,      PersonOtherPhone, PersonAssistantPhone, PersonEmail, PersonTitle, PersonDepartment, PersonAssistantName,      PersonLeadSource, PersonBirthdate, PersonLastCURequestDate, PersonLastCUUpdateDate, PersonEmailBouncedReason,      PersonEmailBouncedDate, PersonIndividualId, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, BillingGrade__c,      CountryOfBirth__c, Gender__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c,      PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c,      VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebRoles__c, AzureId__c, BoxFolderId__c,      BusinessName__c, ConsentDateTimeofInitiatingAgent__c, Create_Free_Skills_Membership__c, DateOfBirth__c,      HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, OldSalesforceRecordId__c, PassportNumber__c,      PreferredName__c, ABN__c, WebRoles__pc, MARANumber__pc, AzureId__pc, OldOrgContactID__pc, OldOrgSkillAgentId__pc,      SkillAgentId__pc, AgentId__pc, UnreadMessageCountbyAgent__pc, UnreadMessageCountbyApplicant__pc"
+						"defaultValue": "Id, IsDeleted, MasterRecordId, Name, LastName, FirstName, Salutation, MiddleName, Type, RecordTypeId, ParentId,      BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude,      BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry,      ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, Phone, Fax, Website, PhotoUrl, Industry,      AnnualRevenue, NumberOfEmployees, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate,      LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, PersonContactId,      IsPersonAccount, PersonMailingStreet, PersonMailingCity, PersonMailingState, PersonMailingPostalCode,      PersonMailingCountry, PersonMailingLatitude, PersonMailingLongitude, PersonMailingGeocodeAccuracy,      PersonOtherStreet, PersonOtherCity, PersonOtherState, PersonOtherPostalCode, PersonOtherCountry,      PersonOtherLatitude, PersonOtherLongitude, PersonOtherGeocodeAccuracy, PersonMobilePhone, PersonHomePhone,      PersonOtherPhone, PersonAssistantPhone, PersonEmail, PersonTitle, PersonDepartment, PersonAssistantName,      PersonLeadSource, PersonBirthdate, PersonLastCURequestDate, PersonLastCUUpdateDate, PersonEmailBouncedReason,      PersonEmailBouncedDate, PersonIndividualId, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, BillingGrade__c,      CountryOfBirth__c, Gender__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c,      PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c,      VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebRoles__c, AzureId__c, BoxFolderId__c,      BusinessName__c, ConsentDateTimeofInitiatingAgent__c, Create_Free_Skills_Membership__c, DateOfBirth__c,      HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, OldSalesforceRecordId__c, PassportNumber__c,      PreferredName__c, ABN__c, WebRoles__pc, MARANumber__pc, AzureId__pc, OldOrgContactID__pc, OldOrgSkillAgentId__pc,      SkillAgentId__pc, AgentId__pc, UnreadMessageCountbyAgent__pc, UnreadMessageCountbyApplicant__pc"
 					},
 					"schemaname": {
 						"type": "string",
@@ -18114,75 +18113,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]",
 				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select * from \t[dbo].[member_dump]",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_sql_memebershipdb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "AzureSQLSP",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "ACS/Membership/Monthly"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_sql_memebershipdb')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSQLSP')]"
 			]
 		},
 		{
@@ -41559,7 +41489,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -42154,14 +42084,14 @@
 					},
 					{
 						"pipelineReference": {
-							"referenceName": "SF Experience Refresh",
+							"referenceName": "SF CampaignRefresh",
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF Experience Refresh_parameters_schemaname')]"
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_schemaname')]"
 						}
 					},
 					{
@@ -42500,7 +42430,7 @@
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Hour",
-						"interval": 12,
+						"interval": 1,
 						"startTime": "2022-12-24T00:00:00",
 						"timeZone": "AUS Eastern Standard Time"
 					}
@@ -42515,7 +42445,7 @@
 				"[concat(variables('factoryId'), '/pipelines/SF Qualification History Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF OpportunityLineItem Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF Experience Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF CampaignRefresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryCstm Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF AccountHistoryStd Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Account Refresh')]",
