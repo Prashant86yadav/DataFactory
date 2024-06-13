@@ -1,5 +1,5 @@
 {
-	"name": "SF Experience Refresh",
+	"name": "SF CampaignRefresh",
 	"properties": {
 		"activities": [
 			{
@@ -201,11 +201,11 @@
 		"parameters": {
 			"SourceTableName": {
 				"type": "string",
-				"defaultValue": "Experience__c"
+				"defaultValue": "Campaign"
 			},
 			"TargetTableName": {
 				"type": "string",
-				"defaultValue": "experience"
+				"defaultValue": "Campaign"
 			},
 			"ColumnList": {
 				"type": "string",

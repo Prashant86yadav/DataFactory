@@ -104,7 +104,7 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF Experience Refresh",
+					"referenceName": "SF CampaignRefresh",
 					"type": "PipelineReference"
 				},
 				"parameters": {
