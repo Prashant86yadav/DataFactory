@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "EventSponsor__c"
+				"defaultValue": "Activity"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "EventSponsor__c"
+				"defaultValue": "Activity"
 			}
 		},
 		"variables": {
