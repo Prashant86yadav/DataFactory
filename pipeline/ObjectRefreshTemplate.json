@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "account"
+				"defaultValue": "contact"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "account"
+				"defaultValue": "contact"
 			},
 			"schemaname": {
 				"type": "string",
