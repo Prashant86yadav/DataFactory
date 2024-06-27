@@ -10,9 +10,23 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": []
+				"userProperties": [
+					{
+						"name": "date",
+						"value": "@"
+					}
+				],
+				"typeProperties": {
+					"variableName": "",
+					"value": ""
+				}
 			}
 		],
+		"parameters": {
+			"date": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "ACS/Membership/Monthly"
 		},
