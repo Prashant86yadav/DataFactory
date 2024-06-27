@@ -18,7 +18,10 @@
 				],
 				"typeProperties": {
 					"variableName": "date",
-					"value": ""
+					"value": {
+						"value": "@addToTime('utcnow()', 1,'month')",
+						"type": "Expression"
+					}
 				}
 			}
 		],
