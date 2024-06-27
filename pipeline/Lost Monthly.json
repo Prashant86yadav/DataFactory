@@ -5,14 +5,7 @@
 			{
 				"name": "update dashboard_category Lost",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set variable1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -457,23 +450,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Set variable1",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "date",
-					"value": {
-						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"parameters": {
@@ -485,7 +461,7 @@
 		"variables": {
 			"date": {
 				"type": "String",
-				"defaultValue": "@concat('''', formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd'), '''')"
+				"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
 			}
 		},
 		"folder": {
