@@ -10,12 +10,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "date",
-						"value": "@"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"variableName": "date",
 					"value": {
@@ -28,7 +23,7 @@
 		"parameters": {
 			"date": {
 				"type": "string",
-				"defaultValue": "@concat('''', formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd'), '''')"
+				"defaultValue": "@addToTime('utcnow()', 1,'month')"
 			}
 		},
 		"variables": {
