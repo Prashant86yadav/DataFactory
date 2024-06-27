@@ -17,14 +17,21 @@
 					}
 				],
 				"typeProperties": {
-					"variableName": "",
+					"variableName": "date",
 					"value": ""
 				}
 			}
 		],
 		"parameters": {
 			"date": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "@concat('''', formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd'), '''')"
+			}
+		},
+		"variables": {
+			"date": {
+				"type": "String",
+				"defaultValue": "@concat('''', formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd'), '''')"
 			}
 		},
 		"folder": {
