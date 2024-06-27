@@ -455,7 +455,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "@concat('', formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd'), '''')"
+				"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
 			}
 		},
 		"variables": {
