@@ -13,7 +13,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "date",
-					"value": "@addToTime(utcnow(), 1,'month')"
+					"value": {
+						"value": "@{formatDateTime(adddays(utcnow(),-2), 'yyyy-MM-ddT23:59:59.999')}",
+						"type": "Expression"
+					}
 				}
 			}
 		],
