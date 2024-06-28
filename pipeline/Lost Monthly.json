@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "update dashboard_category Lost",
+				"name": "Update dashboard_category Lost",
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set variable1",
+						"activity": "Set end on the month as Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -455,7 +455,7 @@
 				]
 			},
 			{
-				"name": "Set variable1",
+				"name": "Set end on the month as Date",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
