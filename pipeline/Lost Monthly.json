@@ -33,7 +33,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from membership.Mem_dashboard01\nwhere monthdate =",
+						"preCopyScript": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
