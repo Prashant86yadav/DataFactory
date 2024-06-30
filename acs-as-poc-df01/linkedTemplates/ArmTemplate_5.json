@@ -1029,6 +1029,246 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SF new User Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": "user"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n[salesforce].[user]\n\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"dataset": {
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": "user"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id\t, Username\t, LastName\t, FirstName\t, MiddleName\t, Name\t, CompanyName\t, Division\t, Department\t, Title\t, Street\t, City\t, State\t, PostalCode\t, Country\t, Latitude\t, Longitude\t, GeocodeAccuracy\t, Email\t, EmailPreferencesAutoBcc\t, EmailPreferencesAutoBccStayInTouch\t, EmailPreferencesStayInTouchReminder\t, SenderEmail\t, SenderName\t, Signature\t, StayInTouchSubject\t, StayInTouchSignature\t, StayInTouchNote\t, Phone\t, Fax\t, MobilePhone\t, Alias\t, CommunityNickname\t, BadgeText\t, IsActive\t, TimeZoneSidKey\t, UserRoleId\t, LocaleSidKey\t, ReceivesInfoEmails\t, ReceivesAdminInfoEmails\t, EmailEncodingKey\t, ProfileId\t, UserType\t, LanguageLocaleKey\t, EmployeeNumber\t, DelegatedApproverId\t, ManagerId\t, LastLoginDate\t, LastPasswordChangeDate\t, CreatedDate\t, CreatedById\t, LastModifiedDate\t, LastModifiedById\t, SystemModstamp\t, NumberOfFailedLogins\t, OfflineTrialExpirationDate\t, OfflinePdaTrialExpirationDate\t, UserPermissionsMarketingUser\t, UserPermissionsOfflineUser\t, UserPermissionsAvantgoUser\t, UserPermissionsCallCenterAutoLogin\t, UserPermissionsSFContentUser\t, UserPermissionsInteractionUser\t, UserPermissionsSupportUser\t, ForecastEnabled\t, UserPreferencesActivityRemindersPopup\t, UserPreferencesEventRemindersCheckboxDefault\t, UserPreferencesTaskRemindersCheckboxDefault\t, UserPreferencesReminderSoundOff\t, UserPreferencesDisableAllFeedsEmail\t, UserPreferencesDisableFollowersEmail\t, UserPreferencesDisableProfilePostEmail\t, UserPreferencesDisableChangeCommentEmail\t, UserPreferencesDisableLaterCommentEmail\t, UserPreferencesDisProfPostCommentEmail\t, UserPreferencesApexPagesDeveloperMode\t, UserPreferencesReceiveNoNotificationsAsApprover\t, UserPreferencesReceiveNotificationsAsDelegatedApprover\t, UserPreferencesHideCSNGetChatterMobileTask\t, UserPreferencesDisableMentionsPostEmail\t, UserPreferencesDisMentionsCommentEmail\t, UserPreferencesHideCSNDesktopTask\t, UserPreferencesHideChatterOnboardingSplash\t, UserPreferencesHideSecondChatterOnboardingSplash\t, UserPreferencesDisCommentAfterLikeEmail\t, UserPreferencesDisableLikeEmail\t, UserPreferencesSortFeedByComment\t, UserPreferencesDisableMessageEmail\t, UserPreferencesDisableBookmarkEmail\t, UserPreferencesDisableSharePostEmail\t, UserPreferencesEnableAutoSubForFeeds\t, UserPreferencesDisableFileShareNotificationsForApi\t, UserPreferencesShowTitleToExternalUsers\t, UserPreferencesShowManagerToExternalUsers\t, UserPreferencesShowEmailToExternalUsers\t, UserPreferencesShowWorkPhoneToExternalUsers\t, UserPreferencesShowMobilePhoneToExternalUsers\t, UserPreferencesShowFaxToExternalUsers\t, UserPreferencesShowStreetAddressToExternalUsers\t, UserPreferencesShowCityToExternalUsers\t, UserPreferencesShowStateToExternalUsers\t, UserPreferencesShowPostalCodeToExternalUsers\t, UserPreferencesShowCountryToExternalUsers\t, UserPreferencesShowProfilePicToGuestUsers\t, UserPreferencesShowTitleToGuestUsers\t, UserPreferencesShowCityToGuestUsers\t, UserPreferencesShowStateToGuestUsers\t, UserPreferencesShowPostalCodeToGuestUsers\t, UserPreferencesShowCountryToGuestUsers\t, UserPreferencesHideInvoicesRedirectConfirmation\t, UserPreferencesHideStatementsRedirectConfirmation\t, UserPreferencesHideS1BrowserUI\t, UserPreferencesDisableEndorsementEmail\t, UserPreferencesPathAssistantCollapsed\t, UserPreferencesCacheDiagnostics\t, UserPreferencesShowEmailToGuestUsers\t, UserPreferencesShowManagerToGuestUsers\t, UserPreferencesShowWorkPhoneToGuestUsers\t, UserPreferencesShowMobilePhoneToGuestUsers\t, UserPreferencesShowFaxToGuestUsers\t, UserPreferencesShowStreetAddressToGuestUsers\t, UserPreferencesLightningExperiencePreferred\t, UserPreferencesPreviewLightning\t, UserPreferencesHideEndUserOnboardingAssistantModal\t, UserPreferencesHideLightningMigrationModal\t, UserPreferencesHideSfxWelcomeMat\t, UserPreferencesHideBiggerPhotoCallout\t, UserPreferencesGlobalNavBarWTShown\t, UserPreferencesGlobalNavGridMenuWTShown\t, UserPreferencesCreateLEXAppsWTShown\t, UserPreferencesFavoritesWTShown\t, UserPreferencesRecordHomeSectionCollapseWTShown\t, UserPreferencesRecordHomeReservedWTShown\t, UserPreferencesFavoritesShowTopFavorites\t, UserPreferencesExcludeMailAppAttachments\t, UserPreferencesSuppressTaskSFXReminders\t, UserPreferencesSuppressEventSFXReminders\t, UserPreferencesPreviewCustomTheme\t, UserPreferencesHasCelebrationBadge\t, UserPreferencesUserDebugModePref\t, UserPreferencesSRHOverrideActivities\t, UserPreferencesNewLightningReportRunPageEnabled\t, UserPreferencesNativeEmailClient\t, UserPreferencesHideBrowseProductRedirectConfirmation\t, ContactId\t, AccountId\t, CallCenterId\t, Extension\t, FederationIdentifier\t, AboutMe\t, FullPhotoUrl\t, SmallPhotoUrl\t, IsExtIndicatorVisible\t, OutOfOfficeMessage\t, MediumPhotoUrl\t, DigestFrequency\t, DefaultGroupNotificationFrequency\t, LastViewedDate\t, LastReferencedDate\t, BannerPhotoUrl\t, SmallBannerPhotoUrl\t, MediumBannerPhotoUrl\t, IsProfilePhotoActive\t, IndividualId\t, dfsle__CanManageAccount__c\t, dfsle__Provisioned__c\t, dfsle__Status__c\t, dfsle__Username__c\t"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31T00:00:00Z"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31T00:00:00Z"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SF new lead Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -20355,6 +20595,63 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Membership Monthly')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Lost Monthly",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Active Unfinancial",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "New Monthly",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Renew Monthly",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 1,
+						"startTime": "2024-06-27T22:17:00",
+						"timeZone": "AUS Eastern Standard Time",
+						"schedule": {
+							"minutes": [
+								59
+							],
+							"hours": [
+								23
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/NewSFRefresh_Hourly')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -20686,7 +20983,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new User Refresh')]"
 			]
 		},
 		{
@@ -21292,7 +21590,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new User Refresh')]"
 			]
 		}
 	]
