@@ -34,7 +34,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "delete from  [membership].[Mem_dashboard01] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='new'\n",
+							"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nwhere category ='New'",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
