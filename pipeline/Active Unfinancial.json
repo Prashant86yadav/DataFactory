@@ -432,27 +432,6 @@
 							},
 							{
 								"sink": {
-									"name": "ShippingPostalCode",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "industry",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "PersonAccountPositionTitle__c",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"sink": {
 									"name": "Expertise__c",
 									"type": "String",
 									"physicalType": "varchar"
