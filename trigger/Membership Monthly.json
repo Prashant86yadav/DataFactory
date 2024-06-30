@@ -8,9 +8,6 @@
 				"pipelineReference": {
 					"referenceName": "Lost Monthly",
 					"type": "PipelineReference"
-				},
-				"parameters": {
-					"Month": "@formatDateTime(addDays(startOfMonth(addMonths(utcnow(), 1)), -1), 'yyyy-MM-dd')\n"
 				}
 			}
 		],
@@ -18,7 +15,7 @@
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Month",
-				"interval": 14,
+				"interval": 1,
 				"startTime": "2024-06-27T22:17:00",
 				"timeZone": "AUS Eastern Standard Time",
 				"schedule": {
