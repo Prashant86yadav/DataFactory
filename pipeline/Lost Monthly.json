@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set end on the month as Date",
+						"activity": "Set end of the month as Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -34,7 +34,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\ncategory ='lost'",
+							"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nwhere category ='Lost'",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
@@ -459,7 +459,7 @@
 				]
 			},
 			{
-				"name": "Set end on the month as Date",
+				"name": "Set end of the month as Date",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
