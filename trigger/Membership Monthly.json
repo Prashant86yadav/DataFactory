@@ -9,19 +9,13 @@
 					"referenceName": "Lost Monthly",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "Active Unfinancial",
-					"type": "PipelineReference"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Month",
-				"interval": 1,
+				"interval": 14,
 				"startTime": "2024-06-27T22:17:00",
 				"timeZone": "AUS Eastern Standard Time",
 				"schedule": {
