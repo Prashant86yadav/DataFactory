@@ -62,12 +62,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"Month": {
-				"type": "string",
-				"defaultValue": "''"
-			}
-		},
 		"folder": {
 			"name": "ACS/Membership/Monthly"
 		},
