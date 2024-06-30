@@ -34,7 +34,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "delete from  [membership].[Mem_dashboard01]\nwhere monthdate =@{pipeline().parameters.Month}\nand  category ='Active Unfinancial'",
+						"preCopyScript": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nand  category ='Active Unfinancial'",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -476,7 +476,8 @@
 		],
 		"parameters": {
 			"date": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
 			}
 		},
 		"folder": {
