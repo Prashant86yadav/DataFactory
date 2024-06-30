@@ -5,14 +5,7 @@
 			{
 				"name": "update dashboard_category New",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set end of the month as Date",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -67,23 +60,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Set end of the month as Date",
-				"type": "SetVariable",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "date",
-					"value": {
-						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"variables": {
