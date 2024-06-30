@@ -7,7 +7,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Set end on the month as Date",
+						"activity": "Set end of the month as Date",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -456,7 +456,7 @@
 				]
 			},
 			{
-				"name": "Set end on the month as Date",
+				"name": "Set end of the month as Date",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
