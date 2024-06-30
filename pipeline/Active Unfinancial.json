@@ -422,27 +422,6 @@
 									"type": "String",
 									"physicalType": "varchar"
 								}
-							},
-							{
-								"sink": {
-									"name": "BillingPostalCode",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "Expertise__c",
-									"type": "String",
-									"physicalType": "varchar"
-								}
-							},
-							{
-								"sink": {
-									"name": "PPPName",
-									"type": "String",
-									"physicalType": "varchar"
-								}
 							}
 						],
 						"typeConversion": true,
