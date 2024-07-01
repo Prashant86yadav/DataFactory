@@ -450,25 +450,6 @@
 						}
 					}
 				]
-			},
-			{
-				"name": "Set end of the month as Date",
-				"type": "SetVariable",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"variableName": "date",
-					"value": {
-						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"variables": {
