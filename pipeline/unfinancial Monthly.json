@@ -5,7 +5,14 @@
 			{
 				"name": "update dashboard_category Unfinancial",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Set end of the month as Date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -27,7 +34,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "delete from  [membership].[Mem_dashboard01] where \nMonthdate = @{pipeline().parameters.Month}\nand category ='Unfinancial'\n",
+							"value": "delete from  [membership].[Mem_dashboard01] where \nMonthdate = @{variables('date')}\nand category ='Unfinancial Monthly'\n",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
@@ -60,6 +67,23 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Set end of the month as Date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "date",
+					"value": {
+						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"variables": {
