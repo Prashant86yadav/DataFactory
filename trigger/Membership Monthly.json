@@ -27,6 +27,12 @@
 					"referenceName": "Renew Monthly",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "unfinancial Monthly",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
