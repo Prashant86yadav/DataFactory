@@ -5,14 +5,7 @@
 			{
 				"name": "update dashboard_category Unfinancial",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Set end of the month as Date",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -461,6 +454,8 @@
 			{
 				"name": "Set end of the month as Date",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureOutput": false,
