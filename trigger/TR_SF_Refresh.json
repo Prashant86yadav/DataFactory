@@ -104,18 +104,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF CampaignRefresh",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"SourceTableName": "Experience__c",
-					"TargetTableName": "Experience",
-					"ColumnList": "Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate, Assessment__c, ANZSCO_Code__c, Applicant_Name__c, CongaRefMark__c, CountableExperience__c, Country__c, Data_Migrated_from_XEN__c, ExperienceAccepted__c, ExperienceCommentTimestamp__c, Experience_Comments__c, FinishDate__c, NumberOfDaysExperience__c, PositionTitle__c, ProfessionalYearComplete__c, ReasonExperienceNotAccepted__c, SFIACode__c, SFIALevel__c, Secondary_SFIA_Level__c, Secondary_SFIA_Skill__c, StartDate__c, Third_SFIA_Level__c, Third_SFIA_Skill__c, TotalYears__c, XEN_Company_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, RecordLocked__c, XenId_Experience__c, BypassValidation__c, CountableExperienceMonths__c, CountableExperienceYears__c, ApplicantName__c, SubmissionDate__c, CloneFromApplicantAttachmentsBoxFolderId__c, CloneFromAssessorAttachmentsBoxFolderId__c, CloneFromBoxFolderId__c ",
-					"schemaname": "salesforce"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "SF AccountHistoryCstm Refresh",
 					"type": "PipelineReference"
 				},
