@@ -40,6 +40,18 @@
 					"referenceName": "Update Daily Cases Table Legacy",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF EventSponsor Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "EventSponsor__c",
+					"TargetTableName": "EventSponsor__c",
+					"ColumnList": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Event__c, SponsorImage__c, Sponsor__c, Company_Website__c\n",
+					"schemaname": "salesforce"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
