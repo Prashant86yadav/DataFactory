@@ -555,6 +555,54 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
+		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "EventSponsor__c"
+		},
+		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "EventSponsor__c"
+		},
+		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Event__c, SponsorImage__c, Sponsor__c, Company_Website__c\n"
+		},
+		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
+		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Campaign"
+		},
+		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Campaign"
+		},
+		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "\nId, IsDeleted, Name, ParentId, Type, Status, StartDate, EndDate, CurrencyIsoCode, ExpectedRevenue, BudgetedCost, ActualCost, ExpectedResponse, NumberSent, IsActive, Description, NumberOfLeads, NumberOfConvertedLeads, NumberOfContacts, NumberOfResponses, NumberOfOpportunities, NumberOfWonOpportunities, AmountAllOpportunities, AmountWonOpportunities, HierarchyNumberOfLeads, HierarchyNumberOfConvertedLeads, HierarchyNumberOfContacts, HierarchyNumberOfResponses, HierarchyNumberOfOpportunities, HierarchyNumberOfWonOpportunities, HierarchyAmountAllOpportunities, HierarchyAmountWonOpportunities, HierarchyNumberSent, HierarchyExpectedRevenue, HierarchyBudgetedCost, HierarchyActualCost, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, CampaignMemberRecordTypeId, ActivationDate__c, AvailableCapacity__c, AvailableWaitlistCapacity__c, BatchRunDate__c, BranchEmail__c, BranchName__c, BudgetApproved__c, BusinessCaseApproved__c, CPDEvent__c, CPDHours__c, CancellationReason__c, Capacity_Filled__c, Capacity__c, CongaACSLogoURL1__c, CongaACSLogoURL__c, CongaFacebookURL__c, CongaLocationIconURL__c, CongaTimeIconURL__c, CongaTwitterURL__c, Conga_LinkedIn_URL__c, DeliveryMethod__c, DetailedDescription__c, DoNotPublishOnline__c, DoNotRegisterOnline__c, EndDateAndTime__c, EventBudget__c, EventCity__c, EventLocationURL__c, EventOwner__c, EventState__c, EventType__c, EventVenue__c, Event_Label_ID__c, Event_Label__c, Event_Location_Conga_URL__c, ExternalURL__c, ICSLocationForCalendar__c, ICS_File_ID__c, Level_Room__c, Location_del__c, MemberOnlyEvent__c, NationalEventOfSignificance__c, PortalImageId__c, Postcode__c, PostponeReason__c, RegistrationEndDateAndTime__c, Related_ACS_Office__c, SFIASkillLevel__c, SFIA_Category__c, SFIA_Skill__c, SFIA_Subcategory__c, StartDateAndTime__c, StreetAddress__c, TermsAndConditions__c, TitleInPortal__c, Topics__c, WaitlistCapacity__c, Waitlist_Capacity_Filled__c, ActualTotalEventExpenditure__c, ActualTotalEventIncome__c, AttendeeCount__c, BookingAdditionsAvailableCount__c GroupBookingAvailableSum__c, No_of_People_Attended__c, No_of_People_Cancelled__c, No_of_People_No_Show__c, No_of_People_Registered__c, No_of_People_in_Wait_List__c, NumberOfWaitlisted__c, Country__c, NonMemberProduct__c, MemeberProduct__c, Timezone__c, EventImage__c, Campaign18DigitsId__c, AttendeesinclGroupBookings__c, EventEndTime__c, EventStartTime__c, EventTimezoneId__c, Objective__c, XENEventId__c, Detailed_Description_Text_Only__c, Dimension1_List__c, Dimension2_List__c, Dimension3_List__c, AutoCloseRegistration__c, ROI_Account__c, ROI_Amount__c, Total_Price__c, Virtual__c, Virtual_Event_Reminder_Send_Date__c, Event_Web_URL__c, Event_Web_URL_Display__c, Event_States__c, Excluded_Billing_Grades__c, Invoice_Payment_Expiry__c, Max_Tickets_Per_Account__c, Registration_End_Date_is_Reached__c, Invoice_Payment_Expiry_Formatted__c, Label_Outfit_Document_Id__c, Event_Survey_Link__c, Event_Presentation_Link__c, Micro_Tribe__c, Primary_Competency_Framework__c, Primary_Competency_Full_Label__c, Primary_Competency_Label__c, Primary_Competency_Updated_from_Child__c, Primary_Competency__c, Micro_Tribe_Label__c, Virtual_Event_Time_Zone__c\n"
+		},
+		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
+		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "CampaignMember"
+		},
+		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "CampaignMember"
+		},
+		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, IsDeleted, CampaignId, LeadId, ContactId, Status, HasResponded, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, FirstRespondedDate, CurrencyIsoCode, Salutation, Name, FirstName, LastName, Title, Street, City, State, PostalCode, Country, Email, Phone, Fax, MobilePhone, Description, DoNotCall, HasOptedOutOfEmail, HasOptedOutOfFax, LeadSource, CompanyOrAccount, Type, LeadOrContactId, LeadOrContactOwnerId, ArrivedLate__c, Attendee_Title__c, BookingAddition__c, CampaignMemberAccountId__c, CancellationReasonReference__c, Comments__c, CongaEventConfirmationEmail__c, Conga_Event_Confirmation_Email_RM__c, ConvertedEventOwner__c, ConvertedStartDate__c, DateTimeWhenMemberAttended__c, DietaryRequirements_del__c, DoNotSendAutoEmails__c, Employer__c, EventOwnerEmail__c, EventPricing__c, EventRegistrationNumber__c, FirstReminderEmailSent__c, Gender__c, GroupBooking__c, InGroupBooking__c, LeftEarly__c, MemberGrade__c, Member__c, MemeberContactName__c, PPP__c, Paid__c, PostponeReasonReference__c, Primary_Account_Type__c, QRCodeToTrackEventsAttendance__c, RefundRequired__c, ReminderEmailTemplate__c, SendCancellationEmail__c, SendPostponementEmail__c, Table__c, VIP__c, WalkIn__c, CampaignMemberContactEmail__c, AmountPaid__c, Account__c, EventAddressLine1__c, EventAddressLine2__c, EventStartDateFormatted__c, EventStartDate__c, EventStartTime__c, EventVenue__c, QR_Code_Link__c, SendRegoConfirmationEmail__c, AttendeeCount__c, CurrentEmployer__c, CurrentPositionTitle__c, MembershipNumber__c, Event_Member_18_Digits_Id__c, AttendeeFirstName__c, Price__c, ROI_Account__c, PreferredFirstName__c, ROI_Amount__c, ROI_Payment__c, CPD_Hours_Added__c, Not_Attending__c, ACS_Event_Member_Guest__c, Booker_Name__c, Campaign_Member_Id__c, Guest__c, Payment_Method__c, Is_Free__c, Ticket_Type__c, Created_By_Date_Time__c\n\n"
+		},
+		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforce"
+		},
 		"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "assessment__c"
@@ -688,22 +736,6 @@
 			"defaultValue": "Id ,OpportunityId ,SortOrder ,PricebookEntryId ,Product2Id ,ProductCode ,Name ,CurrencyIsoCode ,Quantity ,Discount ,Subtotal ,TotalPrice, UnitPrice, ListPrice, ServiceDate, HasRevenueSchedule, HasQuantitySchedule, Description, HasSchedule, CanUseQuantitySchedule, CanUseRevenueSchedule, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, IsDeleted, LastViewedDate, LastReferencedDate, Assessment__c, BalanceDue__c, Course__c, Data_Migrated_from_XEN__c, EventPricing__c, Event__c, GST__c, Income_Schedule_Start_Date__c, Membership__c, OpportunityNumber__c, Optional__c, Program__c, SponsorshipFutureDate__c, Tax_Code_ID__c, Total_Price_GST__c, Total_Price_Incl_GST__c, Opportunity_Stage__c, Sales_Price_Excl_GST__c, Sales_Price_Override__c, Total_Price_Excl_GST__c, Opportunity_Line_Item_ID__c, Refund_Amount_Excl_GST__c, XenId_OpportunityProduct__c, Accreditation__c, ProductName__c, Membership_Id_18_Digits__c, MembershipBillingGrade__c, AssessmentResult__c, AssessmentStatus__c, AssessmentSubmissionDate__c, AssessmentFinalisedDate__c, AssessmentAppTypeSubType__c, AssessmentApplicantName__c, AssessmentRecordType__c, Opportunity_Related_Program__c, Add_to_FF_Invoice__c, Billing_Grade__c, End_Date__c, Exempt_From_WFD_Validations__c, Is_Closed_Won__c, Product_Family_Value__c, Product_Family__c, Project_Deliverable__c, Project__c, ROI_Budget_Calculation__c, Refund_Amount__c, Tax_Rate__c, Has_Refund_Amount__c, Event_Name__c, Disable_Validation__c"
 		},
 		"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
-		},
-		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Experience__c"
-		},
-		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Experience"
-		},
-		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id ,IsDeleted ,Name ,CurrencyIsoCode ,RecordTypeId ,CreatedDate ,CreatedById ,LastModifiedDate ,LastModifiedById ,SystemModstamp ,LastActivityDate, Assessment__c, ANZSCO_Code__c, Applicant_Name__c, CongaRefMark__c, CountableExperience__c, Country__c, Data_Migrated_from_XEN__c, ExperienceAccepted__c, ExperienceCommentTimestamp__c, Experience_Comments__c, FinishDate__c, NumberOfDaysExperience__c, PositionTitle__c, ProfessionalYearComplete__c, ReasonExperienceNotAccepted__c, SFIACode__c, SFIALevel__c, Secondary_SFIA_Level__c, Secondary_SFIA_Skill__c, StartDate__c, Third_SFIA_Level__c, Third_SFIA_Skill__c, TotalYears__c, XEN_Company_Name__c, ApplicantAttachmentsBoxFolderId__c, AssessorAttachmentsBoxFolderId__c, BoxFolderId__c, CmsApplicantBoxDocumentDetails__c, CmsBoxApplicantFileIdsToMove__c, CreateBoxFolder__c, UniqueRecordIdentifier__c, RecordLocked__c, XenId_Experience__c, BypassValidation__c, CountableExperienceMonths__c, CountableExperienceYears__c, ApplicantName__c, SubmissionDate__c, CloneFromApplicantAttachmentsBoxFolderId__c, CloneFromAssessorAttachmentsBoxFolderId__c, CloneFromBoxFolderId__c "
-		},
-		"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
@@ -1691,6 +1723,42 @@
 					"NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname')]"
 					},
+					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_TargetTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_ColumnList')]"
+					},
+					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_schemaname')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_SourceTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_TargetTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_ColumnList": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_ColumnList')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_schemaname": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_schemaname')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_SourceTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_TargetTableName')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_ColumnList')]"
+					},
+					"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname')]"
+					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
 					},
@@ -1792,18 +1860,6 @@
 					},
 					"TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF OpportunityLineItem Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF CampaignRefresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF CampaignRefresh_parameters_schemaname')]"
 					},
 					"TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF AccountHistoryCstm Refresh_parameters_SourceTableName')]"
