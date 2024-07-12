@@ -2927,11 +2927,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Assessment__c"
+						"defaultValue": "IdentityVerification__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Assessment__c"
+						"defaultValue": "IdentityVerification__c"
 					},
 					"schemaname": {
 						"type": "string",
