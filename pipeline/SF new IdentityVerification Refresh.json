@@ -212,7 +212,7 @@
 			},
 			"ColumnList": {
 				"type": "string",
-				"defaultValue": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Applicant__c, IdVerificationResult__c, Lead__c, PassportCountryofIssue__c, PassportExpiryDate__c, PassportNumber__c, SecondaryIDDocumentType__c, SecondaryIDFirstName__c, SecondaryIDFullName__c, SecondaryIDLastName__c, SecondaryIDMiddleName__c, TransactionCompletionDate__c, TransactionID__c, TransactionStatus__c, VerifiedDateofBirth__c, VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, createdAt__c, PassportExpired__c, Citizenship_Number__c, Computerised_National_Identity_Card__c"
+				"defaultValue": "Id, OwnerId, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastViewedDate, LastReferencedDate, Applicant__c, IdVerificationResult__c, Lead__c, PassportCountryofIssue__c, PassportExpiryDate__c, PassportNumber__c, TransactionCompletionDate__c, TransactionID__c, TransactionStatus__c, VerifiedDateofBirth__c, VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, createdAt__c, PassportExpired__c, Citizenship_Number__c, Computerised_National_Identity_Card__c"
 			},
 			"schemaname": {
 				"type": "string",
