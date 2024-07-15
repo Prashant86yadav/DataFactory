@@ -1,10 +1,6 @@
 {
 	"name": "DestinationDataset_psa",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "search_index",
-			"type": "LinkedServiceReference"
-		},
 		"annotations": [],
 		"type": "AzureSearchIndex",
 		"schema": [],
