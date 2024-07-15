@@ -4,7 +4,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://raw.githubusercontent.com/Azure-Samples/azure-sql-db-import-data/main/json/user1.json.",
+			"url": "https://raw.githubusercontent.com/Azure-Samples/azure-sql-db-import-data/main/json/user1.json",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
