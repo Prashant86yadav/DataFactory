@@ -175,22 +175,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "AccountContactRelation"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "AccountContactRelation"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "ANZSCOGroup__c"
@@ -823,22 +807,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "\nAccountContactRelation"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "\nAccountContactRelation"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"TR_SF_Refresh_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "ANZSCOGroup__c"
@@ -1426,18 +1394,6 @@
 					"NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Account Refresh_parameters_schemaname')]"
 					},
-					"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
-					},
 					"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName')]"
 					},
@@ -1911,18 +1867,6 @@
 					},
 					"TR_SF_Refresh_properties_SF new Account Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Account Refresh_parameters_schemaname')]"
-					},
-					"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
 					},
 					"TR_SF_Refresh_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName')]"

@@ -39,22 +39,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "AccountContactRelation"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "AccountContactRelation"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"NewSFRefresh_Hourly_properties_SF new ANZSCOGroup__c refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "ANZSCOGroup__c"
@@ -684,22 +668,6 @@
 			"defaultValue": "Id, IsDeleted, MasterRecordId, Name, LastName, FirstName, Salutation, MiddleName, Type, RecordTypeId, ParentId,      BillingStreet, BillingCity, BillingState, BillingPostalCode, BillingCountry, BillingLatitude, BillingLongitude,      BillingGeocodeAccuracy, ShippingStreet, ShippingCity, ShippingState, ShippingPostalCode, ShippingCountry,      ShippingLatitude, ShippingLongitude, ShippingGeocodeAccuracy, Phone, Fax, Website, PhotoUrl, Industry,      AnnualRevenue, NumberOfEmployees, Description, OwnerId, CreatedDate, CreatedById, LastModifiedDate,      LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, PersonContactId,      IsPersonAccount, PersonMailingStreet, PersonMailingCity, PersonMailingState, PersonMailingPostalCode,      PersonMailingCountry, PersonMailingLatitude, PersonMailingLongitude, PersonMailingGeocodeAccuracy,      PersonOtherStreet, PersonOtherCity, PersonOtherState, PersonOtherPostalCode, PersonOtherCountry,      PersonOtherLatitude, PersonOtherLongitude, PersonOtherGeocodeAccuracy, PersonMobilePhone, PersonHomePhone,      PersonOtherPhone, PersonAssistantPhone, PersonEmail, PersonTitle, PersonDepartment, PersonAssistantName,      PersonLeadSource, PersonBirthdate, PersonLastCURequestDate, PersonLastCUUpdateDate, PersonEmailBouncedReason,      PersonEmailBouncedDate, PersonIndividualId, Jigsaw, JigsawCompanyId, AccountSource, SicDesc, BillingGrade__c,      CountryOfBirth__c, Gender__c, IdVerificationSectionStatus__c, PassportCountryOfIssue__c,      PersonalDetailsSectionCompleted__c, Pronouns__c, VerifiedDateOfBirthText__c, VerifiedDateofBirth__c,      VerifiedFirstName__c, VerifiedLastName__c, VerifiedMiddleName__c, WebRoles__c, AzureId__c, BoxFolderId__c,      BusinessName__c, ConsentDateTimeofInitiatingAgent__c, Create_Free_Skills_Membership__c, DateOfBirth__c,      HasActiveMSAApplication__c, InitiatingMigrationAgent__c, LeadId__c, OldSalesforceRecordId__c, PassportNumber__c,      PreferredName__c, ABN__c, WebRoles__pc, MARANumber__pc, AzureId__pc, OldOrgContactID__pc, OldOrgSkillAgentId__pc,      SkillAgentId__pc, AgentId__pc, UnreadMessageCountbyAgent__pc, UnreadMessageCountbyApplicant__pc"
 		},
 		"TR_SF_Refresh_properties_SF new Account Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "\nAccountContactRelation"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "\nAccountContactRelation"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
-		},
-		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
@@ -20884,18 +20852,6 @@
 					},
 					{
 						"pipelineReference": {
-							"referenceName": "SF new AccountContactRelation Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
 							"referenceName": "SF new ANZSCOGroup__c refresh",
 							"type": "PipelineReference"
 						},
@@ -21521,18 +21477,6 @@
 							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new Account Refresh_parameters_TargetTableName')]",
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new Account Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new Account Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF new AccountContactRelation Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
 						}
 					},
 					{
