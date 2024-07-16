@@ -30,18 +30,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF new AccountContactRelation Refresh",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"SourceTableName": "AccountContactRelation",
-					"TargetTableName": "AccountContactRelation",
-					"ColumnList": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c",
-					"schemaname": "salesforcenew"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "SF new ANZSCOGroup__c refresh",
 					"type": "PipelineReference"
 				},
