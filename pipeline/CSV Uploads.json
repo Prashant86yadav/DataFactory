@@ -42,12 +42,6 @@
 						"referenceName": "AzureSQLSP",
 						"type": "DatasetReference"
 					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DeltaLakeDeleteafteruse",
-						"type": "DatasetReference"
-					}
 				]
 			}
 		],
