@@ -1142,6 +1142,22 @@
 		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "AccountContactRelation"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "AccountContactRelation"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
 		}
 	},
 	"variables": {
@@ -45047,6 +45063,18 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new AccountContactRelation Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
+						}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -45095,7 +45123,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF new Assessment History Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF new Product Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Contact Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF new Assessment Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new Assessment Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new AccountContactRelation Refresh')]"
 			]
 		},
 		{

@@ -857,6 +857,18 @@
 		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
 			"value": "salesforcenew"
 		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_SourceTableName": {
+			"value": "AccountContactRelation"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_TargetTableName": {
+			"value": "AccountContactRelation"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList": {
+			"value": "Id, AccountId, ContactId, Roles, IsDirect, IsActive, StartDate, EndDate, IsDeleted, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Status__c"
+		},
+		"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
 		"containerUri": {
 			"value": ""
 		},
