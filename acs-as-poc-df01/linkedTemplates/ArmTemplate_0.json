@@ -111,6 +111,10 @@
 			"type": "string",
 			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
 		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/Azure-Samples/azure-sql-db-import-data/main/json/user1.json"
+		},
 		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
@@ -423,6 +427,21 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LSSQLPOC')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -553,16 +572,6 @@
 				"typeProperties": {
 					"connectionString": "[parameters('ls_SQL_membership_connectionString')]"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureVM-IR')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
 			},
 			"dependsOn": []
 		}

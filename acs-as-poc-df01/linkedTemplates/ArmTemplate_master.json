@@ -115,6 +115,10 @@
 			"type": "string",
 			"defaultValue": "https://serpapi.com/search.json?engine=google_maps_reviews&data_id=0x6ad642ea3beac025:0xed69f6a75b142c6d&api_key=9641d55c404951eab2dcbe36a8c4e5577593a583f44d570f889d8fd1add13ddc"
 		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/Azure-Samples/azure-sql-db-import-data/main/json/user1.json"
+		},
 		"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://s-ause-kv-covid19dvr.vault.azure.net"
@@ -248,22 +252,6 @@
 			"defaultValue": "Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
 		},
 		"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "assessment__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "assessment__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": " Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantNameChange__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, ApplicationOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, DetailsOnResultLetter__c, DocusignProcessCompleted__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationOutcome__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c, Change_Since_RMD__c, RMD_Calculate_Run_Timestamp__c, ReasonApplicationUnsuitable__c, Trigger_RPL_Validation__c, RMD_Validation__c, On_Hold_Reason__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
@@ -899,22 +887,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "assessment__c"
-		},
-		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "assessment__c"
-		},
-		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, AssessmentOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationVerdict__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c\n"
-		},
-		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"TR_SF_Refresh_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "AssessmentANZSCO__c"
@@ -1187,6 +1159,22 @@
 			"type": "string",
 			"defaultValue": "salesforce"
 		},
+		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c"
+		},
+		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c"
+		},
+		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": " Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantNameChange__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, ApplicationOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, DetailsOnResultLetter__c, DocusignProcessCompleted__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationOutcome__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c, Change_Since_RMD__c, RMD_Calculate_Run_Timestamp__c, ReasonApplicationUnsuitable__c, Trigger_RPL_Validation__c, RMD_Validation__c, On_Hold_Reason__c"
+		},
+		"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -1291,6 +1279,9 @@
 					},
 					"GoogleRestAPI_properties_typeProperties_url": {
 						"value": "[parameters('GoogleRestAPI_properties_typeProperties_url')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
 					"LS_AZKV_DVR_properties_typeProperties_baseUrl": {
 						"value": "[parameters('LS_AZKV_DVR_properties_typeProperties_baseUrl')]"
@@ -1494,18 +1485,6 @@
 					},
 					"NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment History Refresh_parameters_schemaname')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname')]"
 					},
 					"NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName')]"
@@ -1981,18 +1960,6 @@
 					"TR_SF_Refresh_properties_SF new Assessment_Comment__c Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment_Comment__c Refresh_parameters_schemaname')]"
 					},
-					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName')]"
-					},
-					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList')]"
-					},
-					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
-						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname')]"
-					},
 					"TR_SF_Refresh_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new AssessmentANZSCO__c Refresh_parameters_SourceTableName')]"
 					},
@@ -2196,6 +2163,18 @@
 					},
 					"TR_SF_Refresh_properties_SF Contact Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Contact Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Assessment Refresh_parameters_schemaname')]"
 					}
 				}
 			},
