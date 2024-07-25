@@ -14,11 +14,10 @@
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "Transpose.csv",
-				"folderPath": "rawAssessment/",
+				"folderPath": "rawAssessment",
 				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
-			"compressionCodec": "gzip",
 			"encodingName": "UTF-8",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
