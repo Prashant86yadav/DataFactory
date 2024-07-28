@@ -177,13 +177,6 @@
 								}
 							},
 							{
-								"sink": {
-									"name": "DateOfBirth__c",
-									"type": "String",
-									"physicalType": "nvarchar"
-								}
-							},
-							{
 								"source": {
 									"name": "Days_since_Current_Membership_Expiry__c",
 									"type": "Int32",
