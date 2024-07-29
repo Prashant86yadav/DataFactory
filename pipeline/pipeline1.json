@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": "\nselect \ncategory ='Renewed', \n[Account 18 Digits ID] as Accountid,\nEOMONTH(ExtractDate) as monthdate,\n[Member Grade] as MemberGrade,\n[Branch Group] as BranchGroup,\ngender as gender,\n[Certification Group]   as CertificationGroup,\n[Certification Level]   as CertificationLevel,\n[PPP]  as PPP,\n[Account 18 Digits ID]  as AccountObjID,\nEmail as Email,\n[Primary Account Type]  as AccountType,\n--DateOfBirth__c as DateOfBirth__c,\n[Days since Current Membership Expiry] as Days_since_Current_Membership_Expiry__c,\n[Account Name] as PersonFullName,\n[Current Membership Expiry] as CurrentMembershipExpiry,\n[Joined date] as joineddate,\nbranch as branch,\ngeography  as geography,\n[Work Country] as Workcountry,\n[Home Country] as Homecountry,\n[Former Billing Grade1] as Former_Billing_Grade1__c,\nBGG as BGG,\nnull as BillingGradeConcat,\nExtractdate as Extractdate,\n[FY Year] as FYYear,\nFY as FY ,\nmonth as Month,\n[Billing Grade] as BillingGrade,\nHeirarchy as Heirarchy,\nsubsegments as subsegments,\n[Membership Status] as Membership_Status,\nnull as BillingPostalCode,\nnull as ShippingPostalCode,\nnull as industry,\nnull as PersonAccountPositionTitle__c,\nnull as Expertise__c,\nPPP as PPPName,\nnull  as errorflag\nfrom  [dbo].[member_dump]\nwhere extractdate ='2023-05-01'\nand [Retained_flag] =1  \n--and [Retained_flag] =1    --Renewed \n--and [Actual] =1                 --Continuing \n--and [At Risk] =1                --unfinancial \n--and [churn_flag] =1         --Lost\n--and [new_flag] =1 --New\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -24,7 +25,6 @@
 						"type": "AzureSqlSink",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
