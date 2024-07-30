@@ -10,6 +10,12 @@
 					"referenceName": "Active Financial Forecast",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "Lost Members Forecasting",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
