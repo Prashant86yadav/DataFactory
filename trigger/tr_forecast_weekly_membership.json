@@ -16,6 +16,12 @@
 					"referenceName": "Lost Members Forecasting",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "New Members forecasting",
+					"type": "PipelineReference"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
