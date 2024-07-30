@@ -19,12 +19,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "New Members forecasting",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Update Daily Cases Table Legacy",
 					"type": "PipelineReference"
 				}
