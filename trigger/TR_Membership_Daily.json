@@ -13,12 +13,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "Lost Members Forecasting",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Update Daily Cases Table Legacy",
 					"type": "PipelineReference"
 				}
