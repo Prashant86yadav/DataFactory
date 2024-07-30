@@ -25,12 +25,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "Renewed Members Forecast",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Update Daily Cases Table Legacy",
 					"type": "PipelineReference"
 				}
