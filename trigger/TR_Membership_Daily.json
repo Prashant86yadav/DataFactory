@@ -31,12 +31,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "Unfinancial Numbers Forecast",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Update Daily Cases Table Legacy",
 					"type": "PipelineReference"
 				}
@@ -81,7 +75,7 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Day",
+				"frequency": "Week",
 				"interval": 1,
 				"startTime": "2024-02-22T23:20:00",
 				"timeZone": "AUS Eastern Standard Time",
