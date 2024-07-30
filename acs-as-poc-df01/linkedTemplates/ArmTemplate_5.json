@@ -1717,6 +1717,536 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "\nselect \ncategory ='Renewed', \n[Account 18 Digits ID] as Accountid,\nEOMONTH(ExtractDate) as monthdate,\n[Member Grade] as MemberGrade,\n[Branch Group] as BranchGroup,\ngender as gender,\n[Certification Group]   as CertificationGroup,\n[Certification Level]   as CertificationLevel,\n[PPP]  as PPP,\n[Account 18 Digits ID]  as AccountObjID,\nEmail as Email,\n[Primary Account Type]  as AccountType,\n--DateOfBirth__c as DateOfBirth__c,\n[Days since Current Membership Expiry] as Days_since_Current_Membership_Expiry__c,\n[Account Name] as PersonFullName,\n[Current Membership Expiry] as CurrentMembershipExpiry,\n[Joined date] as joineddate,\nbranch as branch,\ngeography  as geography,\n[Work Country] as Workcountry,\n[Home Country] as Homecountry,\n[Former Billing Grade1] as Former_Billing_Grade1__c,\nBGG as BGG,\nnull as BillingGradeConcat,\nExtractdate as Extractdate,\n[FY Year] as FYYear,\nFY as FY ,\nmonth as Month,\n[Billing Grade] as BillingGrade,\nHeirarchy as Heirarchy,\nsubsegments as subsegments,\n[Membership Status] as Membership_Status,\nnull as BillingPostalCode,\nnull as ShippingPostalCode,\nnull as industry,\nnull as PersonAccountPositionTitle__c,\nnull as Expertise__c,\nPPP as PPPName,\nnull  as errorflag\nfrom  [dbo].[member_dump]\nwhere extractdate ='2023-05-01'\nand [Retained_flag] =1  \n--and [Retained_flag] =1    --Renewed \n--and [Actual] =1                 --Continuing \n--and [At Risk] =1                --unfinancial \n--and [churn_flag] =1         --Lost\n--and [new_flag] =1 --New\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "category",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "category",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Accountid",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "AccountID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "monthdate",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "MonthDate",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "MemberGrade",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "MemberGrade",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BranchGroup",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "BranchGroup",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "gender",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Gender",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertificationGroup",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "certificationGroup",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CertificationLevel",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "CertificationLevel",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PPP",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PPP",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountObjID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "AccountObjID",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Email",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Email",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AccountType",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "AccountType",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Days_since_Current_Membership_Expiry__c",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Days_since_Current_Membership_Expiry__c",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 0,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "PersonFullName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PersonFullName",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CurrentMembershipExpiry",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "CurrentMembershipExpiry",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "joineddate",
+											"type": "DateTime",
+											"physicalType": "date"
+										},
+										"sink": {
+											"name": "JoinedDate",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "branch",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Branch",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "geography",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Geography",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Workcountry",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "WorkCountry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Homecountry",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "HomeCountry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Former_Billing_Grade1__c",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Former_Billing_Grade1__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BGG",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "BGG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingGradeConcat",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "BillingGradeConcat",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Extractdate",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "ExtractDate",
+											"type": "DateTime",
+											"physicalType": "date"
+										}
+									},
+									{
+										"source": {
+											"name": "FYYear",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "FYYear",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FY",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "FY",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Month",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Month",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingGrade",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "BillingGrade",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Heirarchy",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Heirarchy",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "subsegments",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "subsegments",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Membership_Status",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Membership_Status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "BillingPostalCode",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "BillingPostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ShippingPostalCode",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "ShippingPostalCode",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "industry",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "industry",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PersonAccountPositionTitle__c",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "PersonAccountPositionTitle__c",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Expertise__c",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Expertise__c",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PPPName",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PPPName",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "errorflag",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "errorflag",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": true
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_sql_memebershipdb",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "Mem_dashboard01",
+									"schemaname": "membership"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Membership/Monthly"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_RawAnalyticsDaily_Incre')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -21210,41 +21740,6 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "Active Financial Forecast",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "Lost Members Forecasting",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "New Members forecasting",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "Renewed Members Forecast",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "Unfinancial Numbers Forecast",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
 							"referenceName": "Update Daily Cases Table Legacy",
 							"type": "PipelineReference"
 						},
@@ -21290,7 +21785,7 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Day",
+						"frequency": "Week",
 						"interval": 1,
 						"startTime": "2024-02-22T23:20:00",
 						"timeZone": "AUS Eastern Standard Time",
@@ -21306,7 +21801,6 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Unfinancial Numbers Forecast')]",
 				"[concat(variables('factoryId'), '/pipelines/Update Daily Cases Table Legacy')]"
 			]
 		},
@@ -21773,6 +22267,76 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/tr_forecast_weekly_membership')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Weekly Forecast Runs for membership metrics",
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Active Financial Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Lost Members Forecasting",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "New Members forecasting",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Renewed Members Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "Unfinancial Numbers Forecast",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2024-07-30T00:27:00",
+						"timeZone": "AUS Eastern Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								6
+							],
+							"weekDays": [
+								"Sunday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Unfinancial Numbers Forecast')]"
 			]
 		}
 	]
