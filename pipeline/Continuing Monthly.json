@@ -480,7 +480,7 @@
 		"parameters": {
 			"Month": {
 				"type": "string",
-				"defaultValue": "'2024-06-30'"
+				"defaultValue": "'2024-07-31'"
 			}
 		},
 		"variables": {
