@@ -41,7 +41,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select Newmembers  from  [membership].[members_renew12months_A]('@{variables('date')}') )",
+						"sqlReaderQuery": {
+							"value": "select Newmembers  from  [membership].[members_renew12months_A](variables('date'))",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
