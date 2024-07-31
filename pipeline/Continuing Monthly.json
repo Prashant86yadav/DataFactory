@@ -477,6 +477,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"month": {
+				"type": "string",
+				"defaultValue": "2024-07-31"
+			}
+		},
 		"variables": {
 			"date": {
 				"type": "String",
