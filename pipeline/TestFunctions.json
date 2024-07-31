@@ -42,7 +42,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select Newmembers  from  [membership].[members_renew12months_A](variables('date'))",
+							"value": "select Newmembers  from  [membership].[members_renew12months_A](@{variables('date')})",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
