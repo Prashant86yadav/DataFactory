@@ -34,7 +34,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nwhere category ='Lost'",
+							"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nand  category ='Lost'",
 							"type": "Expression"
 						},
 						"writeBehavior": "insert",
