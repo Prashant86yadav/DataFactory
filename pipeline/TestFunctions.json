@@ -14,7 +14,7 @@
 				"typeProperties": {
 					"variableName": "date",
 					"value": {
-						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
+						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')\n",
 						"type": "Expression"
 					}
 				}
@@ -22,7 +22,7 @@
 		],
 		"variables": {
 			"date": {
-				"type": "String",
+				"type": "Integer",
 				"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
 			}
 		},
