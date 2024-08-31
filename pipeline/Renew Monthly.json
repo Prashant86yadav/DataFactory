@@ -479,7 +479,7 @@
 		"variables": {
 			"date": {
 				"type": "String",
-				"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
+				"defaultValue": "'2024-08-31'"
 			}
 		},
 		"folder": {
