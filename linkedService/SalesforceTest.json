@@ -1,0 +1,15 @@
+{
+	"name": "SalesforceTest",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SalesforceV2",
+		"typeProperties": {
+			"environmentUrl": "https://acsau.my.salesforce.com/",
+			"clientId": "ratna.chouhan@acs.org.au",
+			"apiVersion": "51.0",
+			"authenticationType": "OAuth2ClientCredential",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBFNTExNTAyLUU1ODgtNDJEMC1BMUQzLTUxREI5ODRFODg2OF9jY2M5M2RhNC1hNmNkLTQ2OTEtOTM0OS0xN2ViMzEyMjQ5NTEiDQp9"
+		}
+	}
+}
