@@ -479,7 +479,7 @@
 		"variables": {
 			"date": {
 				"type": "String",
-				"defaultValue": "'2024-08-31'"
+				"defaultValue": "'2024-09-30'"
 			}
 		},
 		"folder": {
