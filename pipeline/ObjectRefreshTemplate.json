@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"query": "SELECT Id, Name, CreatedDate, (CreatedDate + (11 / 24)) AS CreatedDateAEST\nFROM Account;\n",
 						"includeDeletedObjects": false
 					},
 					"sink": {
