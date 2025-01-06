@@ -21,9 +21,11 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true
+						},
 						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -68,15 +70,15 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "IdentityVerification__c"
+				"defaultValue": "Account"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "IdentityVerification__c"
+				"defaultValue": "Account"
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "salesforcenew"
+				"defaultValue": "salesforce"
 			}
 		},
 		"variables": {
