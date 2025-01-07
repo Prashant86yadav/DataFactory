@@ -215,7 +215,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[AssessmentnewAEST]"
+					"storedProcedureName": "[dbo].[AssessmenoldAEST]"
 				},
 				"linkedServiceName": {
 					"referenceName": "LSSQLPOC",
