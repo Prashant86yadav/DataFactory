@@ -57,6 +57,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
+							"object1": "account",
 							"object2": "assessment"
 						}
 					}
@@ -192,6 +193,33 @@
 						"value": "@formatDateTime(replace(activity('GET SRC HighWaterMark').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "update AEST",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Copy Salesforce object",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[AssessmentnewAEST]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LSSQLPOC",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
