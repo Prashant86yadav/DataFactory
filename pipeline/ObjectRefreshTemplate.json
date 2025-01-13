@@ -71,7 +71,7 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Account"
+				"defaultValue": "Replication__c"
 			},
 			"targettable": {
 				"type": "string",
