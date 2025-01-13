@@ -75,7 +75,7 @@
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Account"
+				"defaultValue": "Relationship__c"
 			},
 			"schemaname": {
 				"type": "string",
