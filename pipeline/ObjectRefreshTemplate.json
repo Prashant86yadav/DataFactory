@@ -17,6 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
+						"query": "SELECT Id, Email__c, EmployerName__c FROM Relationship__c\n",
 						"includeDeletedObjects": false
 					},
 					"sink": {
