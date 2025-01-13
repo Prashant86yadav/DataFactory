@@ -297,7 +297,7 @@
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Minute",
-				"interval": 5,
+				"interval": 60,
 				"startTime": "2024-05-30T23:23:00",
 				"timeZone": "AUS Eastern Standard Time"
 			}
