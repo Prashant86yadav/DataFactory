@@ -222,18 +222,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF new Qualification history Refresh",
-					"type": "PipelineReference"
-				},
-				"parameters": {
-					"SourceTableName": "Qualification_history",
-					"TargetTableName": "Qualification_history",
-					"ColumnList": " Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue",
-					"schemaname": "salesforcenew"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "SF new Qualification Refresh",
 					"type": "PipelineReference"
 				},
