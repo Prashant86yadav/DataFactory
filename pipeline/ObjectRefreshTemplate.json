@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"query": "SELECT Id FROM Relationships",
+						"query": "SELECT Id FROM Relationships__c",
 						"includeDeletedObjects": false
 					},
 					"sink": {
@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Relationship__c"
+				"defaultValue": "Campaign_Member__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Relationship__c"
+				"defaultValue": "Campaign_Member__c"
 			},
 			"schemaname": {
 				"type": "string",
