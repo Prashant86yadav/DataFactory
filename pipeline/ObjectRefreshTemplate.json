@@ -75,7 +75,7 @@
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "salesforce"
+				"defaultValue": "salesforcenew"
 			}
 		},
 		"variables": {
