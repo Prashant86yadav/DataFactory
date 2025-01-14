@@ -17,6 +17,276 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_sql_memebershipdb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureMember_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Billing Grade",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch Group",
+						"type": "varchar"
+					},
+					{
+						"name": "Member Grade",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of Birth",
+						"type": "date"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Certification Group",
+						"type": "varchar"
+					},
+					{
+						"name": "Certification Level",
+						"type": "varchar"
+					},
+					{
+						"name": "PPP",
+						"type": "varchar"
+					},
+					{
+						"name": "PPP Account for Current Membership",
+						"type": "varchar"
+					},
+					{
+						"name": "Account 18 Digits ID",
+						"type": "varchar"
+					},
+					{
+						"name": "Email",
+						"type": "varchar"
+					},
+					{
+						"name": "Primary Account Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Membership Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Membership Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Account Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Current Membership Expiry",
+						"type": "date"
+					},
+					{
+						"name": "Joined Date",
+						"type": "date"
+					},
+					{
+						"name": "BGG",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch",
+						"type": "varchar"
+					},
+					{
+						"name": "Geography",
+						"type": "varchar"
+					},
+					{
+						"name": "Home Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Work Country",
+						"type": "varchar"
+					},
+					{
+						"name": "Former Billing Grade1",
+						"type": "varchar"
+					},
+					{
+						"name": "Former Billing Grade2",
+						"type": "varchar"
+					},
+					{
+						"name": "Days since Current Membership Expiry",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Check",
+						"type": "varchar"
+					},
+					{
+						"name": "Billing Grade 2",
+						"type": "varchar"
+					},
+					{
+						"name": "BGG2",
+						"type": "varchar"
+					},
+					{
+						"name": "Branch Group 2",
+						"type": "varchar"
+					},
+					{
+						"name": "Comment",
+						"type": "varchar"
+					},
+					{
+						"name": "New?",
+						"type": "varchar"
+					},
+					{
+						"name": "Created Date",
+						"type": "date"
+					},
+					{
+						"name": "Deactivated Date",
+						"type": "date"
+					},
+					{
+						"name": "Certification Expiry Date",
+						"type": "date"
+					},
+					{
+						"name": "Date Of Commencement",
+						"type": "date"
+					},
+					{
+						"name": "Last Modified Date",
+						"type": "date"
+					},
+					{
+						"name": "FY Year",
+						"type": "varchar"
+					},
+					{
+						"name": "FY",
+						"type": "varchar"
+					},
+					{
+						"name": "Retained_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Churn_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "new_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Heirarchy",
+						"type": "varchar"
+					},
+					{
+						"name": "At Risk",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "subsegments",
+						"type": "varchar"
+					},
+					{
+						"name": "Actual",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Order",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "ontimerenewal",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "growthmonthly",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "order month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "On time renewals",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Active",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_New",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Lapsed",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_Unfinancials",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CP/CT_Total",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Active_financial",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month",
+						"type": "varchar"
+					},
+					{
+						"name": "ExtractDate",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "member_dump"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LS_AZST_BlobLanding')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -647,7 +917,7 @@
 				"variables": {
 					"date": {
 						"type": "String",
-						"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
+						"defaultValue": "'2024-12-31'"
 					}
 				},
 				"folder": {
@@ -813,7 +1083,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "\n---[ Creating Data For  Continuing V 0.2]\n---Versioning starts with V0.1 (It means this is second version of the original script)\n-- A is the the Account table Output while B is the contract table here \n--30 columns in CTE \n\n\nWITH CTE AS (\n    SELECT \n\tcategory='Continuing', \n\tB.AccountID  , \n\tEOMONTH(GETDATE()) as MonthDate, \n\n     CASE \n\t WHEN A.MemberGrade__c  IS NULL \n\t  Then B.Grade__c\n\t  Else A.MemberGrade__c \n\t END \n\t AS [MemberGrade],\n\n\tCASE \n\t  WHEN A.BillingGrade__c  IS NULL \n\t\tTHEN  B.MemberBillingGrade__c \n\t\tWHEN A.BillingGrade__c IN ( '14 - Student - PYear' ,  '14 – Student – PYear' , '16 - Student - PYear',  '17 - Student - PYear' , '18 - Student - PYear' ) \n\t\tThen  '14 - Student - PYear'         \n\t  ELSE  A.BillingGrade__c \n\t\tEND \n\t\tAS [BillingGrade], \n\n       --We create BranchGroup from Branch Infromation avaialble in Account table  \n\t\tCASE            \n\t\twhen A.branch__c ='Canberra'  then  'CANB'          \n\t\twhen A.branch__c ='New South Wales'  then  'NSW'          \n\t\twhen A.branch__c ='Northern Territory' then  'NT'          \n\t\twhen A.branch__c ='Overseas' then  'os'          \n\t\twhen A.branch__c IN  ('Queensland' , 'South Pacific Overseas')  then  'QLD'          \n\t\twhen A.branch__c ='South Australia' then  'SA'          \n\t\twhen A.branch__c ='Tasmania' then  'TAS'          \n\t\twhen A.branch__c ='Victoria' then  'VIC'          \n\t\twhen A.branch__c ='Western Australia' then  'WA'          \n\t\twhen A.branch__C is NULL and HiddenUserLocationState__c ='Overseas' then 'os'          \n\t\tELSE null          \n       END as [BranchGroup]  , \n\t\t\n\n\t\t-- Codifying the gender from Account table & assessment Table where ever Present \n\t\tCASE           \n\t\tWhen A.Gender__c in ('F', 'Female' )  or  A.Title__c  in ('Miss', 'Mrs', 'Ms')  Then 'Female'          \n\t\tWhen A.Gender__c in ('MALE', 'M')  or  A.Title__c  in ('Mr.', 'Sir', 'Ms')   then 'Male'          \n\t\tWhen A.Gender__c is NULL then (select DISTINCT(c.Applicant_Title__c) from  [dbo].[assessment] c  where B.accountid = c.applicantname__C  )          \n\t\telse A.Gender__c          \n\t\tend as [Gender]    , \n\n\t\t\n\t\t\n\t\t--Codifying certification level into [certificationGroup] from Account object \n\t\tCASE          \n\t\twhen  CertificationLevel__c in ('CP','CP Lapsed') then 'CP'          \n\t\twhen CertificationLevel__c in ('CT','CT Lapsed') then 'CT'          \n\t\twhen CertificationLevel__c in ('Not Certified') then 'Not Certified'          \n\t\telse NULL          \n\t\tend as [certificationGroup],\n\t\t\n\t\t---Fetching Attributes from Account table \n\n\t\tCertificationLevel__c as  [CertificationLevel] ,           \n\t\t A.PPP__c as PPP ,              \n\t\t A.id as [AccountObjID],           \n\t\t A.email__c as [Email],           \n\t\t A.type as [AccountType],          \n\t\t A.MembershipNumber__c as [MembershipNumber],    \n\t\t A.DateOfBirth__c, \n\t\tA.Days_since_Current_Membership_Expiry__c, \n\t\tA.HiddenFullName__c as [PersonFullName],          \n\t\tA.CurrentMembershipExpiry__c as [CurrentMembershipExpiry],          \n\t\tA.PersonAccountJoinedDate__c as [JoinedDate],  \n\t\tA.branch__c as [Branch],           \n\t\tA.Geography__c as [Geography],           \n\t\tA.[ShippingCountry] as [WorkCountry],           \n\t\tA.[BillingCountry] as [HomeCountry],       \n\t\tA.Former_Billing_Grade1__c  ,    \n\t\t\n\t\tA.Membership_Status__c as AccountStatus,\n\t\tB.status as contractStatus, \n\n\t  CASE \n\t   WHEN A.Membership_Status__c  IS NULL \n\t   Then B.Status \n\t   ELSE A.Membership_Status__c\n\t   END as Membership_Status,       \n\t\t\n\t\t\n\n\t--Concanating Billing Grade & Former Billing Grades into BillingGradeConcat , To be used in next CTE \n\t\tCONCAT(A.BillingGrade__c, '_',A.Former_Billing_Grade1__c) as BillingGradeConcat ,  \n\t\t\t   \n\t\tCONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0)) AS ExtractDate,  --it will return the First Day of the month on any day , '2024-06-01'\n\t\t\n\t\t LEFT(DATENAME(MONTH, GETDATE()), 3) + '-' + RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2) AS [FYYear],  --It will return month & Year , exmaple Jun-24 \n\n\n\t\t--Case statement will look for financial year \n\t    CASE\n\t\tWHEN CONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0))  between '2024-07-01' and '2025-06-30'\n\t\tTHEN 'FY 25'\n\t\tWHEN CONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0))  between '2023-07-01' and '2024-06-30'\n\t\tTHEN 'FY 24'\n\t\t ELSE NULL \n\t\tEND \n\t\tas [FY],\t\n\t\t\n\t\tLEFT(LEFT(DATENAME(MONTH, GETDATE()), 3) + '-' + RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2),3)   AS [Month]     --it will return the current month \n\t  \t  \n\t --update the Function here \n      from [salesforce].[Contract]  B\n\t  Inner join  [salesforce].[Account] A \n\t  on B.AccountId=A.id\n\t  where  B.currentmembership__c =1\n\t  and  B.Status IN ('Active Financial') \n\t  and B.accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](('@{variables('date')}')  )\n      and B.accountid not in  ( select Newmembers from   [membership].[members_new12month_A]('@{variables('date')}')  )\n\t  \n\n\n\n)\n,\n-----Updating the Billing Grade Values -------\n\n\nCTE1 \nAS\n(\nselect \ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\n DateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \n\n--Updating Billing Grade based on Previous Billing Grades \nCASE     \n   WHEN   Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30  and billinggradeconcat ='3 - Full Fee_2 - PPP Full fee' \n   Then  '2 - PPP Full fee'    \n   WHEN Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and  billinggradeconcat ='3 - Full Fee_1 - Continuing'\n   Then   '1 - Continuing'    \n   WHEN Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and  billinggradeconcat ='7 - Graduate - 2nd Year_4 - Graduate - 1st Year' \n   Then    '4 - Graduate - 1st Year'    \n   WHEN   Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='3 - Full Fee_7 - Graduate - 2nd Year' \n   Then   '7 - Graduate - 2nd Year'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_10 - Student - PPP' \n   Then  '10 - Student - PPP'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_11 - Student' \n   Then   '11 - Student'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='3 - Full Fee_12 - Complimentary' \n   Then  '12 - Complimentary'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='3 - Full Fee 13 - Honoured' \n   Then  '13 - Honoured'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='4 - Graduate - 1st Year_14 - Student - PYear'  \n   Then  '14 - Student - PYear'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_15 - Student - ACSF' \n   Then   '15 - Student - ACSF'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='3 - Full Fee_16 - Unemployed / On Hiatus' \n   Then  '16 - Unemployed / On Hiatus'    \n  WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='18 - Digital Subscriber 20 - Skills Applicant' \n  Then  '20 - Skills Applicant'    \n  ELSE [BillingGrade]\n   END    \n   AS [BillingGrade]\n\n\nfrom CTE\n\n)\n\n, \n\n----- Transofromation Heirarchy & Subsegment  --------------------\n----- we have upgraded billing grade in previous CTE  which is also used by BGG , create  BGG in this cte \n--30 columns \n--we are using this CTE to create the BGG column using billing grade\nCTE2 \nAS (\n    SELECT \n\t\ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\n\n\n\t\t--Codifying Billing grade into BGG from Account Object \n\t    CASE           \n\t\tWhen [BillingGrade] in ('0 - n/a', '1 - Continuing' , '12 - Complimentary','13 - Honoured', '16 - Unemployed / On Hiatus', '5 - Life Member')   Then 'Other'          \n\t\tWhen [BillingGrade] in ('10 - Student - PPP', '11 - Student', '15 - Student - ACSF', '15 – Student – ACSF')   then 'Student'          \n\t\tWhen [BillingGrade] in ('14 - Student - PYear', '14 – Student – PYear', '16 - Student - PYear', '17 - Student - PYear', '18 - Student - PYear') then 'Professional Year'          \n\t\tWhen [BillingGrade] in ('17 - PPP MOU2', '2 - PPP Full fee') then 'PPP'          \n\t\tWhen [BillingGrade] in ('19 - Subscriber - PPP') then 'Subscriber'          \n\t\tWhen [BillingGrade] in ('20 - Skills Applicant') then 'Overseas'          \n\t\tWhen [BillingGrade] in ('7 - Graduate - 2nd Year') then 'Graduate'          \n\t\tWhen [BillingGrade] in ('3 - Full Fee') then 'Full Fee'          \n\t\tWhen [BillingGrade] in ('8 - Retired') then 'Retired'          \n\t\telse NULL           \n\t\tend as [BGG]\n\n         from CTE1), \n\n\n--We create  Heirarchy based on MemberGrade & Billing Grade \n-- we Update Branch Group based on BGG again\n\n\n\t\tCTE3 as (\n\n\n\t\tselect \ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\nBGG, \n\n\nCASE \nWhen BGG ='Overseas' THEN  'OS'\n       ELSE BranchGroup \n\t END  as BranchGroup , \n\n\n        CASE    \n            WHEN [MemberGrade] IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow')\n\t\t\tTHEN 'Professional'    \n\n            WHEN [MemberGrade] IN ( 'Associate' )\n\t\t\t AND \n\t\t\t[BillingGrade] IN (    \n                '1 - Continuing', \n\t\t\t\t'3 - Full Fee', \n\t\t\t\t'5 - Life Member',    \n                '2 - PPP Full Fee',\n\t\t\t\t'3 - Full Fee',\n\t\t\t\t'17 - PPP MOU2',    \n                '8 - Retired'  \n            ) THEN 'Full Fee Associates'    \n\n            WHEN ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')    OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade] IN (    \n                    '4 - Graduate - 1st Year', \n\t\t\t\t\t'7 - Graduate - 2nd Year',    \n                    '10 - Student - PPP',\n\t\t\t\t\t'11 - Student',    \n                    '15 - Student - ACSF',\n\t\t\t\t\t'16 - Unemployed / On Hiatus'    \n                ) THEN 'Discounted (Full Benefits)'    \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade]\n\t\t\t\tIN ('20 - Skills Applicant') \n\t\t\t\tTHEN 'Skills Applicants'  \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber') OR  [MemberGrade] in ('Associate', 'Honorary Member') )\n\t\t\t                AND [BillingGrade] IN \n\t\t\t\t\t\t\t('11 - Complimentary', \n\t\t\t\t\t\t\t'12 - Complimentary', \n\t\t\t\t\t\t\t'13 - Honoured')\n\t\t\t\t\t\t\tTHEN 'Complimentary (Full Benefits)'  \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')  OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade] IN \n\t\t\t\t('14 - Student - PYear') \n\t\t\t\tTHEN 'Professional Year'  \n\n            WHEN  ([MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   OR  [MemberGrade] in ('Associate', 'Subscriber'))\n                AND [BillingGrade] IN (\n                    '18 - Digital Subscriber',\n\t\t\t\t\t'19 - Subscriber - PPP', \n\t\t\t\t\t'18 - Subscriber - PPP'    \n                ) THEN 'Subscribers (Discounted Limited Benefits)'\n            ELSE NULL -- Set Heirarchy to NULL if none of the conditions are met\n        END AS Heirarchy\n    FROM CTE2\n), \n\n\n\nCTE4\nAs (\n\nSELECT \n\ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\nBGG, \nHeirarchy, \n\n \n    CASE  \n\t--Professinal Segments\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] NOT IN ('5 - Life Member', \n\t\t'13 - Honoured', \n\t\t'1 - Continuing', \n\t\t'8 - Retired', \n\t\t'3 - Full Fee',\n\t\t'2 - PPP Full Fee',\n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2') \n\t\tTHEN 'Member, Senior Member, Fellow'  \n   \n        WHEN [Heirarchy] = 'Professional' \n\t\tAND\n\t\t[BillingGrade] \n\t\tIN \n\t\t('5 - Life Member', \n\t\t'13 - Honoured', \n\t\t'1 - Continuing') \n\t\tTHEN 'Life Members, Hon Members'        \n\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] = '3 - Full Fee' \n\t\tTHEN 'Full Fee (Individual)'        \n\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] IN (\n\t\t'2 - PPP Full Fee', \n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2')\n\t\tTHEN 'Full Fee (PPP)'        \n\n        WHEN [Heirarchy] IN ( 'Professional', 'Full Fee Associates')\n\t\tAND \n\t\t[BillingGrade] = '8 - Retired' \n\t\tTHEN 'Retired'        \n  \n      --Full Fee Segments      \n        WHEN [Heirarchy] = 'Full Fee Associates' \n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('3 - Full Fee',\n\t\t'5 - Life Member',\n\t\t'1 - Continuing') \n\t\tTHEN 'Full Fee Associates (Individual)'  \n\t\t\n        WHEN [Heirarchy] = 'Full Fee Associates' \n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('2 - PPP Full Fee',\n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2')\n\t\tTHEN 'Full Fee Associates (PPP)'        \n\n            \n\n\t   --Discounted \n              \n        WHEN [Heirarchy] = 'Discounted (Full Benefits)'\n\t\tAND\n\t\t[BillingGrade] IN\n\t\t('10 - Student - PPP',\n\t\t'11 - Student', \n\t\t'15 - Student - ACSF') \n\t\tTHEN 'Students'        \n\n        WHEN [Heirarchy] = 'Discounted (Full Benefits)'\n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('4 - Graduate - 1st Year',\n\t\t'7 - Graduate - 2nd Year')\n\t\tTHEN 'Graduate'        \n\n        WHEN [Heirarchy] = 'Discounted (Full Benefits)' \n\t\tAND \n\t\t[BillingGrade] = '16 - Unemployed / On Hiatus' \n\t\tTHEN 'Unemployed'   \n \n --Subscriber\n            \n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)'\n\t\tAND \n\t\t[BillingGrade] NOT IN\n\t\t('19 - Subscriber - PPP',\n\t\t'18 - Subscriber - PPP') \n\t\tTHEN 'Individuals'     \n\t\t\n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)'\n\t\tAND\n\t\t[BillingGrade] IN\n\t\t('19 - Subscriber - PPP', \n\t\t'18 - Subscriber - PPP')\n\t\tTHEN 'PPP'        \n\n        WHEN [Heirarchy] = 'Professional Year'\n\t\tTHEN 'Professional Year'        \n\n        WHEN [Heirarchy] = 'Complimentary (Full Benefits)' \n\t\tTHEN 'Complimentary'        \n\n        WHEN [Heirarchy] = 'Skills Applicants'\n\t\tTHEN 'Skills Applicants'        \n\n\t\t  WHEN [BGG] = 'Overseas' AND [Heirarchy] != 'Professional' \n\t\t  THEN 'Skills Applicants'  \n\n    END as subsegments\nFROM CTE3)\n\n\nselect * from CTE4\n\n\n",
+									"value": "\n---[ Creating Data For  Continuing V 0.2]\n---Versioning starts with V0.1 (It means this is second version of the original script)\n-- A is the the Account table Output while B is the contract table here \n--30 columns in CTE \n\n\nWITH CTE AS (\n    SELECT \n\tcategory='Continuing', \n\tB.AccountID  , \n\tEOMONTH(GETDATE()) as MonthDate, \n\n     CASE \n\t WHEN A.MemberGrade__c  IS NULL \n\t  Then B.Grade__c\n\t  Else A.MemberGrade__c \n\t END \n\t AS [MemberGrade],\n\n\tCASE \n\t  WHEN A.BillingGrade__c  IS NULL \n\t\tTHEN  B.MemberBillingGrade__c \n\t\tWHEN A.BillingGrade__c IN ( '14 - Student - PYear' ,  '14 – Student – PYear' , '16 - Student - PYear',  '17 - Student - PYear' , '18 - Student - PYear' ) \n\t\tThen  '14 - Student - PYear'         \n\t  ELSE  A.BillingGrade__c \n\t\tEND \n\t\tAS [BillingGrade], \n\n       --We create BranchGroup from Branch Infromation avaialble in Account table  \n\t\tCASE            \n\t\twhen A.branch__c ='Canberra'  then  'CANB'          \n\t\twhen A.branch__c ='New South Wales'  then  'NSW'          \n\t\twhen A.branch__c ='Northern Territory' then  'NT'          \n\t\twhen A.branch__c ='Overseas' then  'os'          \n\t\twhen A.branch__c IN  ('Queensland' , 'South Pacific Overseas')  then  'QLD'          \n\t\twhen A.branch__c ='South Australia' then  'SA'          \n\t\twhen A.branch__c ='Tasmania' then  'TAS'          \n\t\twhen A.branch__c ='Victoria' then  'VIC'          \n\t\twhen A.branch__c ='Western Australia' then  'WA'          \n\t\twhen A.branch__C is NULL and HiddenUserLocationState__c ='Overseas' then 'os'          \n\t\tELSE null          \n       END as [BranchGroup]  , \n\t\t\n\n\t\t-- Codifying the gender from Account table & assessment Table where ever Present \n\t\tCASE           \n\t\tWhen A.Gender__c in ('F', 'Female' )  or  A.Title__c  in ('Miss', 'Mrs', 'Ms')  Then 'Female'          \n\t\tWhen A.Gender__c in ('MALE', 'M')  or  A.Title__c  in ('Mr.', 'Sir', 'Ms')   then 'Male'          \n\t\tWhen A.Gender__c is NULL then (select DISTINCT(c.Applicant_Title__c) from  [dbo].[assessment] c  where B.accountid = c.applicantname__C  )          \n\t\telse A.Gender__c          \n\t\tend as [Gender]    , \n\n\t\t\n\t\t\n\t\t--Codifying certification level into [certificationGroup] from Account object \n\t\tCASE          \n\t\twhen  CertificationLevel__c in ('CP','CP Lapsed') then 'CP'          \n\t\twhen CertificationLevel__c in ('CT','CT Lapsed') then 'CT'          \n\t\twhen CertificationLevel__c in ('Not Certified') then 'Not Certified'          \n\t\telse NULL          \n\t\tend as [certificationGroup],\n\t\t\n\t\t---Fetching Attributes from Account table \n\n\t\tCertificationLevel__c as  [CertificationLevel] ,           \n\t\t A.PPP__c as PPP ,              \n\t\t A.id as [AccountObjID],           \n\t\t A.email__c as [Email],           \n\t\t A.type as [AccountType],          \n\t\t A.MembershipNumber__c as [MembershipNumber],    \n\t\t A.DateOfBirth__c, \n\t\tA.Days_since_Current_Membership_Expiry__c, \n\t\tA.HiddenFullName__c as [PersonFullName],          \n\t\tA.CurrentMembershipExpiry__c as [CurrentMembershipExpiry],          \n\t\tA.PersonAccountJoinedDate__c as [JoinedDate],  \n\t\tA.branch__c as [Branch],           \n\t\tA.Geography__c as [Geography],           \n\t\tA.[ShippingCountry] as [WorkCountry],           \n\t\tA.[BillingCountry] as [HomeCountry],       \n\t\tA.Former_Billing_Grade1__c  ,    \n\t\t\n\t\tA.Membership_Status__c as AccountStatus,\n\t\tB.status as contractStatus, \n\n\t  CASE \n\t   WHEN A.Membership_Status__c  IS NULL \n\t   Then B.Status \n\t   ELSE A.Membership_Status__c\n\t   END as Membership_Status,       \n\t\t\n\t\t\n\n\t--Concanating Billing Grade & Former Billing Grades into BillingGradeConcat , To be used in next CTE \n\t\tCONCAT(A.BillingGrade__c, '_',A.Former_Billing_Grade1__c) as BillingGradeConcat ,  \n\t\t\t   \n\t\tCONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0)) AS ExtractDate,  --it will return the First Day of the month on any day , '2024-06-01'\n\t\t\n\t\t LEFT(DATENAME(MONTH, GETDATE()), 3) + '-' + RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2) AS [FYYear],  --It will return month & Year , exmaple Jun-24 \n\n\n\t\t--Case statement will look for financial year \n\t    CASE\n\t\tWHEN CONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0))  between '2024-07-01' and '2025-06-30'\n\t\tTHEN 'FY 25'\n\t\tWHEN CONVERT(DATE, DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0))  between '2023-07-01' and '2024-06-30'\n\t\tTHEN 'FY 24'\n\t\t ELSE NULL \n\t\tEND \n\t\tas [FY],\t\n\t\t\n\t\tLEFT(LEFT(DATENAME(MONTH, GETDATE()), 3) + '-' + RIGHT(CONVERT(VARCHAR(4), YEAR(GETDATE())), 2),3)   AS [Month]     --it will return the current month \n\t  \t  \n\t --update the Function here \n      from [salesforce].[Contract]  B\n\t  Inner join  [salesforce].[Account] A \n\t  on B.AccountId=A.id\n\t  where  B.currentmembership__c =1\n\t  and  B.Status IN ('Active Financial') \n\t-- and B.accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A](('@{variables('date')}')  )\n\t and B.accountid not in  ( select Newmembers  from  [membership].[members_renew12months_A]('2024-12-31'))\n     -- and B.accountid not in  ( select Newmembers from   [membership].[members_new12month_A]('@{variables('date')}')  )\n\t and B.accountid not in  ( select Newmembers from   [membership].[members_new12month_A]('2024-12-31'))\n\t  \n\n\n\n)\n,\n-----Updating the Billing Grade Values -------\n\n\nCTE1 \nAS\n(\nselect \ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\n DateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \n\n--Updating Billing Grade based on Previous Billing Grades \nCASE     \n   WHEN   Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30  and billinggradeconcat ='3 - Full Fee_2 - PPP Full fee' \n   Then  '2 - PPP Full fee'    \n   WHEN Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and  billinggradeconcat ='3 - Full Fee_1 - Continuing'\n   Then   '1 - Continuing'    \n   WHEN Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and  billinggradeconcat ='7 - Graduate - 2nd Year_4 - Graduate - 1st Year' \n   Then    '4 - Graduate - 1st Year'    \n   WHEN   Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='3 - Full Fee_7 - Graduate - 2nd Year' \n   Then   '7 - Graduate - 2nd Year'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_10 - Student - PPP' \n   Then  '10 - Student - PPP'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_11 - Student' \n   Then   '11 - Student'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='3 - Full Fee_12 - Complimentary' \n   Then  '12 - Complimentary'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='3 - Full Fee 13 - Honoured' \n   Then  '13 - Honoured'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and   billinggradeconcat ='4 - Graduate - 1st Year_14 - Student - PYear'  \n   Then  '14 - Student - PYear'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='4 - Graduate - 1st Year_15 - Student - ACSF' \n   Then   '15 - Student - ACSF'    \n   WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='3 - Full Fee_16 - Unemployed / On Hiatus' \n   Then  '16 - Unemployed / On Hiatus'    \n  WHEN  Former_Billing_Grade1__c  IS  NOT NULL  and Days_since_Current_Membership_Expiry__c   >= -30 and    billinggradeconcat ='18 - Digital Subscriber 20 - Skills Applicant' \n  Then  '20 - Skills Applicant'    \n  ELSE [BillingGrade]\n   END    \n   AS [BillingGrade]\n\n\nfrom CTE\n\n)\n\n, \n\n----- Transofromation Heirarchy & Subsegment  --------------------\n----- we have upgraded billing grade in previous CTE  which is also used by BGG , create  BGG in this cte \n--30 columns \n--we are using this CTE to create the BGG column using billing grade\nCTE2 \nAS (\n    SELECT \n\t\ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\n\n\n\t\t--Codifying Billing grade into BGG from Account Object \n\t    CASE           \n\t\tWhen [BillingGrade] in ('0 - n/a', '1 - Continuing' , '12 - Complimentary','13 - Honoured', '16 - Unemployed / On Hiatus', '5 - Life Member')   Then 'Other'          \n\t\tWhen [BillingGrade] in ('10 - Student - PPP', '11 - Student', '15 - Student - ACSF', '15 – Student – ACSF')   then 'Student'          \n\t\tWhen [BillingGrade] in ('14 - Student - PYear', '14 – Student – PYear', '16 - Student - PYear', '17 - Student - PYear', '18 - Student - PYear') then 'Professional Year'          \n\t\tWhen [BillingGrade] in ('17 - PPP MOU2', '2 - PPP Full fee') then 'PPP'          \n\t\tWhen [BillingGrade] in ('19 - Subscriber - PPP') then 'Subscriber'          \n\t\tWhen [BillingGrade] in ('20 - Skills Applicant') then 'Overseas'          \n\t\tWhen [BillingGrade] in ('7 - Graduate - 2nd Year') then 'Graduate'          \n\t\tWhen [BillingGrade] in ('3 - Full Fee') then 'Full Fee'          \n\t\tWhen [BillingGrade] in ('8 - Retired') then 'Retired'          \n\t\telse NULL           \n\t\tend as [BGG]\n\n         from CTE1), \n\n\n--We create  Heirarchy based on MemberGrade & Billing Grade \n-- we Update Branch Group based on BGG again\n\n\n\t\tCTE3 as (\n\n\n\t\tselect \ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\nBGG, \n\n\nCASE \nWhen BGG ='Overseas' THEN  'OS'\n       ELSE BranchGroup \n\t END  as BranchGroup , \n\n\n        CASE    \n            WHEN [MemberGrade] IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow')\n\t\t\tTHEN 'Professional'    \n\n            WHEN [MemberGrade] IN ( 'Associate' )\n\t\t\t AND \n\t\t\t[BillingGrade] IN (    \n                '1 - Continuing', \n\t\t\t\t'3 - Full Fee', \n\t\t\t\t'5 - Life Member',    \n                '2 - PPP Full Fee',\n\t\t\t\t'3 - Full Fee',\n\t\t\t\t'17 - PPP MOU2',    \n                '8 - Retired'  \n            ) THEN 'Full Fee Associates'    \n\n            WHEN ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')    OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade] IN (    \n                    '4 - Graduate - 1st Year', \n\t\t\t\t\t'7 - Graduate - 2nd Year',    \n                    '10 - Student - PPP',\n\t\t\t\t\t'11 - Student',    \n                    '15 - Student - ACSF',\n\t\t\t\t\t'16 - Unemployed / On Hiatus'    \n                ) THEN 'Discounted (Full Benefits)'    \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade]\n\t\t\t\tIN ('20 - Skills Applicant') \n\t\t\t\tTHEN 'Skills Applicants'  \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber') OR  [MemberGrade] in ('Associate', 'Honorary Member') )\n\t\t\t                AND [BillingGrade] IN \n\t\t\t\t\t\t\t('11 - Complimentary', \n\t\t\t\t\t\t\t'12 - Complimentary', \n\t\t\t\t\t\t\t'13 - Honoured')\n\t\t\t\t\t\t\tTHEN 'Complimentary (Full Benefits)'  \n\n            WHEN  ( [MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')  OR  [MemberGrade] in ('Associate') )\n                AND [BillingGrade] IN \n\t\t\t\t('14 - Student - PYear') \n\t\t\t\tTHEN 'Professional Year'  \n\n            WHEN  ([MemberGrade] NOT IN ('Member', 'Senior Member', 'Fellow', 'Honorary Fellow', 'Subscriber', 'Honorary Member')   OR  [MemberGrade] in ('Associate', 'Subscriber'))\n                AND [BillingGrade] IN (\n                    '18 - Digital Subscriber',\n\t\t\t\t\t'19 - Subscriber - PPP', \n\t\t\t\t\t'18 - Subscriber - PPP'    \n                ) THEN 'Subscribers (Discounted Limited Benefits)'\n            ELSE NULL -- Set Heirarchy to NULL if none of the conditions are met\n        END AS Heirarchy\n    FROM CTE2\n), \n\n\n\nCTE4\nAs (\n\nSELECT \n\ncategory,\nAccountID,\nMonthDate,\n[MemberGrade]\t,\nBranchGroup,\t\nGender\t,\ncertificationGroup\t,\nCertificationLevel,\n[PPP],\nAccountObjID,\n[Email]\t,\nAccountType\t,\nMembershipNumber,\nDateOfBirth__c\t,\nDays_since_Current_Membership_Expiry__c,\nPersonFullName\t,\nCurrentMembershipExpiry\t,\nJoinedDate\t,\nBranch\t,\nGeography,\nWorkCountry,\nHomeCountry\t,\nFormer_Billing_Grade1__c\t,\nMembership_Status,\nBillingGradeConcat,\nExtractDate\t,\n[FYYear]\t,\nFY\t,\nMonth, \nBillingGrade,\nBGG, \nHeirarchy, \n\n \n    CASE  \n\t--Professinal Segments\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] NOT IN ('5 - Life Member', \n\t\t'13 - Honoured', \n\t\t'1 - Continuing', \n\t\t'8 - Retired', \n\t\t'3 - Full Fee',\n\t\t'2 - PPP Full Fee',\n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2') \n\t\tTHEN 'Member, Senior Member, Fellow'  \n   \n        WHEN [Heirarchy] = 'Professional' \n\t\tAND\n\t\t[BillingGrade] \n\t\tIN \n\t\t('5 - Life Member', \n\t\t'13 - Honoured', \n\t\t'1 - Continuing') \n\t\tTHEN 'Life Members, Hon Members'        \n\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] = '3 - Full Fee' \n\t\tTHEN 'Full Fee (Individual)'        \n\n        WHEN [Heirarchy] = 'Professional'\n\t\tAND\n\t\t[BillingGrade] IN (\n\t\t'2 - PPP Full Fee', \n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2')\n\t\tTHEN 'Full Fee (PPP)'        \n\n        WHEN [Heirarchy] IN ( 'Professional', 'Full Fee Associates')\n\t\tAND \n\t\t[BillingGrade] = '8 - Retired' \n\t\tTHEN 'Retired'        \n  \n      --Full Fee Segments      \n        WHEN [Heirarchy] = 'Full Fee Associates' \n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('3 - Full Fee',\n\t\t'5 - Life Member',\n\t\t'1 - Continuing') \n\t\tTHEN 'Full Fee Associates (Individual)'  \n\t\t\n        WHEN [Heirarchy] = 'Full Fee Associates' \n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('2 - PPP Full Fee',\n\t\t'17 - PPP MOU2', \n\t\t'16 - PPP MOU2')\n\t\tTHEN 'Full Fee Associates (PPP)'        \n\n            \n\n\t   --Discounted \n              \n        WHEN [Heirarchy] = 'Discounted (Full Benefits)'\n\t\tAND\n\t\t[BillingGrade] IN\n\t\t('10 - Student - PPP',\n\t\t'11 - Student', \n\t\t'15 - Student - ACSF') \n\t\tTHEN 'Students'        \n\n        WHEN [Heirarchy] = 'Discounted (Full Benefits)'\n\t\tAND \n\t\t[BillingGrade] \n\t\tIN ('4 - Graduate - 1st Year',\n\t\t'7 - Graduate - 2nd Year')\n\t\tTHEN 'Graduate'        \n\n        WHEN [Heirarchy] = 'Discounted (Full Benefits)' \n\t\tAND \n\t\t[BillingGrade] = '16 - Unemployed / On Hiatus' \n\t\tTHEN 'Unemployed'   \n \n --Subscriber\n            \n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)'\n\t\tAND \n\t\t[BillingGrade] NOT IN\n\t\t('19 - Subscriber - PPP',\n\t\t'18 - Subscriber - PPP') \n\t\tTHEN 'Individuals'     \n\t\t\n        WHEN [Heirarchy] = 'Subscribers (Discounted Limited Benefits)'\n\t\tAND\n\t\t[BillingGrade] IN\n\t\t('19 - Subscriber - PPP', \n\t\t'18 - Subscriber - PPP')\n\t\tTHEN 'PPP'        \n\n        WHEN [Heirarchy] = 'Professional Year'\n\t\tTHEN 'Professional Year'        \n\n        WHEN [Heirarchy] = 'Complimentary (Full Benefits)' \n\t\tTHEN 'Complimentary'        \n\n        WHEN [Heirarchy] = 'Skills Applicants'\n\t\tTHEN 'Skills Applicants'        \n\n\t\t  WHEN [BGG] = 'Overseas' AND [Heirarchy] != 'Professional' \n\t\t  THEN 'Skills Applicants'  \n\n    END as subsegments\nFROM CTE3)\n\n\nselect * from CTE4\n\n\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -822,7 +1092,7 @@
 							"sink": {
 								"type": "AzureSqlSink",
 								"preCopyScript": {
-									"value": "delete from  [membership].[Mem_dashboard01]\nwhere monthdate =@{pipeline().parameters.Month}\nand  category ='Continuing'",
+									"value": "delete from  [membership].[Mem_dashboard01]\nwhere  monthdate ='@{variables('date')}'\nand  category ='Continuing'",
 									"type": "Expression"
 								},
 								"writeBehavior": "insert",
@@ -1267,12 +1537,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"Month": {
-						"type": "string",
-						"defaultValue": "'2024-06-30'"
-					}
 				},
 				"variables": {
 					"date": {
@@ -1577,7 +1841,7 @@
 							"sink": {
 								"type": "AzureSqlSink",
 								"preCopyScript": {
-									"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nwhere category ='Lost'",
+									"value": "delete from membership.Mem_dashboard01\nwhere monthdate ='@{variables('date')}'\nand  category ='Lost'",
 									"type": "Expression"
 								},
 								"writeBehavior": "insert",
@@ -2026,7 +2290,7 @@
 				"variables": {
 					"date": {
 						"type": "String",
-						"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
+						"defaultValue": "'2024-12-31'"
 					}
 				},
 				"folder": {
@@ -2775,7 +3039,7 @@
 				"variables": {
 					"date": {
 						"type": "String",
-						"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
+						"defaultValue": "'2024-12-31'"
 					}
 				},
 				"folder": {
@@ -2812,7 +3076,6 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -2860,15 +3123,15 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "IdentityVerification__c"
+						"defaultValue": "Relationship__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "IdentityVerification__c"
+						"defaultValue": "Relationship__c"
 					},
 					"schemaname": {
 						"type": "string",
-						"defaultValue": "salesforcenew"
+						"defaultValue": "salesforce"
 					}
 				},
 				"variables": {
@@ -3749,7 +4012,7 @@
 				"variables": {
 					"date": {
 						"type": "String",
-						"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
+						"defaultValue": "'2024-12-31'"
 					}
 				},
 				"folder": {
@@ -8421,256 +8684,6 @@
 					"schemaname": {
 						"type": "string",
 						"defaultValue": "salesforce"
-					}
-				},
-				"variables": {
-					"brpExtractFrom": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					},
-					"brpExtractTo": {
-						"type": "String",
-						"defaultValue": "1900-12-31 00:00:00"
-					}
-				},
-				"folder": {
-					"name": "ACS/Salesforce"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SF Accreditation Refresh')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy Salesforce object",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Set brpExtractTo",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"id"
-									]
-								},
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": "salesforce"
-								}
-							}
-						]
-					},
-					{
-						"name": "Set  brpExtractFrom",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET TGT HWM  SQL",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractFrom",
-							"value": {
-								"value": "@if(\n  less(  pipeline().parameters.brpExtractFrom,\nformatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')), \npipeline().parameters.brpExtractFrom,\nformatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
-								"type": "Expression"
-							}
-						}
-					},
-					{
-						"name": "GET TGT HWM  SQL",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n",
-									"type": "Expression"
-								},
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": {
-										"value": "@pipeline().parameters.TargetTableName",
-										"type": "Expression"
-									},
-									"schemaname": {
-										"value": "@pipeline().parameters.schemaname",
-										"type": "Expression"
-									}
-								}
-							}
-						}
-					},
-					{
-						"name": "GET SRC HighWaterMark",
-						"description": "Find the latest change in the Salesforce table indicated by the parameter",
-						"type": "Lookup",
-						"dependsOn": [
-							{
-								"activity": "Set  brpExtractFrom",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SalesforceSource",
-								"query": {
-									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM @{pipeline().parameters.SourceTableName}\nWHERE LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'}",
-									"type": "Expression"
-								},
-								"readBehavior": "query"
-							},
-							"dataset": {
-								"referenceName": "ACSDSSF",
-								"type": "DatasetReference",
-								"parameters": {
-									"object1": "account",
-									"object2": "assessment"
-								}
-							}
-						}
-					},
-					{
-						"name": "Set brpExtractTo",
-						"description": "",
-						"type": "SetVariable",
-						"dependsOn": [
-							{
-								"activity": "GET SRC HighWaterMark",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "brpExtractTo",
-							"value": {
-								"value": "@if(\n  less(  pipeline().parameters.brpExtractTo,\nformatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff')), \npipeline().parameters.brpExtractTo,\nformatDateTime(replace(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,' ','T'), 'yyyy-MM-dd HH:mm:ss.fff'))",
-								"type": "Expression"
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"SourceTableName": {
-						"type": "string",
-						"defaultValue": "Accreditation__c"
-					},
-					"TargetTableName": {
-						"type": "string",
-						"defaultValue": "Accreditation__c"
-					},
-					"ColumnList": {
-						"type": "string",
-						"defaultValue": " Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AccommodationBooked__c, AccreditationManager__c, ApplicationType__c, DueDate__c, ExtraMembers__c, FlightsBooked__c, HeadofSchoolEmail__c, HeadofSchoolPhone__c, HeadofSchool__c, InvoiceSent__c, Location__c, LogisticNotes__c, NextActionDueDate__c, NextAction__c, Notes__c, OtherApplicationInformation__c, OtherVisitManager__c, PanelAppointed__c, PanelChair__c, PanelMembers__c, Postcode__c, PrimaryContactEmail__c, PrimaryContactName__c, PrimaryContactPhone__c, RenewDate__c, RenewYear__c, School__c, State__c, StatusIndicator__c, Status__c, Street__c, Suburb__c, UniversityName__c, VisitDate12Weeks__c, VisitDate8weeks__c, VisitDate9weeks__c, VisitDate__c, VisitEmailSent__c, VisitLocation__c, VisitManager__c, Visit_Date_End__c, X2YearsBeforeRenewal__c, UniversityId__c, UniversityCountry__c, Renew_Date_Override__c"
-					},
-					"schemaname": {
-						"type": "string",
-						"defaultValue": "salesforce"
-					},
-					"brpExtractFrom": {
-						"type": "string",
-						"defaultValue": "1900-12-31 00:00:00"
-					},
-					"brpExtractTo": {
-						"type": "string",
-						"defaultValue": "1900-12-31 00:00:00"
 					}
 				},
 				"variables": {

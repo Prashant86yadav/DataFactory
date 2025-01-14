@@ -63,6 +63,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
+		"SalesforceNewAPItest_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'SalesforceNewAPItest'"
+		},
 		"dewr_ls_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
@@ -70,10 +74,6 @@
 		"ls_DataLake_DPP_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_DataLake_DPP'"
-		},
-		"ls_SQL_membership_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_SQL_membership'"
 		},
 		"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
 			"type": "string",
@@ -130,6 +130,14 @@
 		"SalesforceACSProd_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
+		},
+		"SalesforceNewAPItest_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"SalesforceNewAPItest_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
 		},
 		"dewr_ls_properties_typeProperties_url": {
 			"type": "string",
@@ -236,7 +244,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Set variable1",
+						"name": "Set end of the month as Date",
 						"type": "SetVariable",
 						"dependsOn": [],
 						"policy": {
@@ -247,7 +255,7 @@
 						"typeProperties": {
 							"variableName": "date",
 							"value": {
-								"value": "concat('\\'', formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd'), '\\'')\n",
+								"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
 								"type": "Expression"
 							}
 						}
@@ -258,7 +266,8 @@
 				},
 				"variables": {
 					"date": {
-						"type": "String"
+						"type": "String",
+						"defaultValue": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')"
 					}
 				},
 				"folder": {
@@ -528,6 +537,27 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SalesforceNewAPItest')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Just to test the new API versions for SF",
+				"annotations": [],
+				"type": "SalesforceV2",
+				"typeProperties": {
+					"environmentUrl": "[parameters('SalesforceNewAPItest_properties_typeProperties_environmentUrl')]",
+					"clientId": "[parameters('SalesforceNewAPItest_properties_typeProperties_clientId')]",
+					"clientSecret": {
+						"type": "SecureString",
+						"value": "[parameters('SalesforceNewAPItest_clientSecret')]"
+					},
+					"apiVersion": "57.0",
+					"authenticationType": "OAuth2ClientCredential"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dewr_ls')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -558,19 +588,6 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_DataLake_DPP_accountKey')]"
 					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_SQL_membership')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_SQL_membership_connectionString')]"
 				}
 			},
 			"dependsOn": []

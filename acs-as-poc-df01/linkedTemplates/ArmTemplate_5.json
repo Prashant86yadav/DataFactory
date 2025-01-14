@@ -295,22 +295,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Qualification_history"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Qualification_history"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": " Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"NewSFRefresh_Hourly_properties_SF new Qualification Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "Qualification__c"
@@ -356,22 +340,6 @@
 			"defaultValue": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DetailsonResultLetter__c, ExperienceForProject1__c, ExperienceForProject2__c, Plagiarism_Detected__c, RPLAccepted__c, RPLOutcome__c, RPLRejectionReason__c"
 		},
 		"NewSFRefresh_Hourly_properties_SF new SupportingInfo__c Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Unit__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Unit__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Qualification__c, CloselyRelatedANZSCOgroups__c, CoreUnitANZSCOGroup__c, GradeAchieved__c, ICT__c, Pass__c, SubmittedBy__c, UnitCredits__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
@@ -1028,6 +996,246 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/SF new User Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": "user"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n[salesforce].[user]\n\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"dataset": {
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": "user"
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "user"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id\t, Username\t, LastName\t, FirstName\t, MiddleName\t, Name\t, CompanyName\t, Division\t, Department\t, Title\t, Street\t, City\t, State\t, PostalCode\t, Country\t, Latitude\t, Longitude\t, GeocodeAccuracy\t, Email\t, EmailPreferencesAutoBcc\t, EmailPreferencesAutoBccStayInTouch\t, EmailPreferencesStayInTouchReminder\t, SenderEmail\t, SenderName\t, Signature\t, StayInTouchSubject\t, StayInTouchSignature\t, StayInTouchNote\t, Phone\t, Fax\t, MobilePhone\t, Alias\t, CommunityNickname\t, BadgeText\t, IsActive\t, TimeZoneSidKey\t, UserRoleId\t, LocaleSidKey\t, ReceivesInfoEmails\t, ReceivesAdminInfoEmails\t, EmailEncodingKey\t, ProfileId\t, UserType\t, LanguageLocaleKey\t, EmployeeNumber\t, DelegatedApproverId\t, ManagerId\t, LastLoginDate\t, LastPasswordChangeDate\t, CreatedDate\t, CreatedById\t, LastModifiedDate\t, LastModifiedById\t, SystemModstamp\t, NumberOfFailedLogins\t, OfflineTrialExpirationDate\t, OfflinePdaTrialExpirationDate\t, UserPermissionsMarketingUser\t, UserPermissionsOfflineUser\t, UserPermissionsAvantgoUser\t, UserPermissionsCallCenterAutoLogin\t, UserPermissionsSFContentUser\t, UserPermissionsInteractionUser\t, UserPermissionsSupportUser\t, ForecastEnabled\t, UserPreferencesActivityRemindersPopup\t, UserPreferencesEventRemindersCheckboxDefault\t, UserPreferencesTaskRemindersCheckboxDefault\t, UserPreferencesReminderSoundOff\t, UserPreferencesDisableAllFeedsEmail\t, UserPreferencesDisableFollowersEmail\t, UserPreferencesDisableProfilePostEmail\t, UserPreferencesDisableChangeCommentEmail\t, UserPreferencesDisableLaterCommentEmail\t, UserPreferencesDisProfPostCommentEmail\t, UserPreferencesApexPagesDeveloperMode\t, UserPreferencesReceiveNoNotificationsAsApprover\t, UserPreferencesReceiveNotificationsAsDelegatedApprover\t, UserPreferencesHideCSNGetChatterMobileTask\t, UserPreferencesDisableMentionsPostEmail\t, UserPreferencesDisMentionsCommentEmail\t, UserPreferencesHideCSNDesktopTask\t, UserPreferencesHideChatterOnboardingSplash\t, UserPreferencesHideSecondChatterOnboardingSplash\t, UserPreferencesDisCommentAfterLikeEmail\t, UserPreferencesDisableLikeEmail\t, UserPreferencesSortFeedByComment\t, UserPreferencesDisableMessageEmail\t, UserPreferencesDisableBookmarkEmail\t, UserPreferencesDisableSharePostEmail\t, UserPreferencesEnableAutoSubForFeeds\t, UserPreferencesDisableFileShareNotificationsForApi\t, UserPreferencesShowTitleToExternalUsers\t, UserPreferencesShowManagerToExternalUsers\t, UserPreferencesShowEmailToExternalUsers\t, UserPreferencesShowWorkPhoneToExternalUsers\t, UserPreferencesShowMobilePhoneToExternalUsers\t, UserPreferencesShowFaxToExternalUsers\t, UserPreferencesShowStreetAddressToExternalUsers\t, UserPreferencesShowCityToExternalUsers\t, UserPreferencesShowStateToExternalUsers\t, UserPreferencesShowPostalCodeToExternalUsers\t, UserPreferencesShowCountryToExternalUsers\t, UserPreferencesShowProfilePicToGuestUsers\t, UserPreferencesShowTitleToGuestUsers\t, UserPreferencesShowCityToGuestUsers\t, UserPreferencesShowStateToGuestUsers\t, UserPreferencesShowPostalCodeToGuestUsers\t, UserPreferencesShowCountryToGuestUsers\t, UserPreferencesHideInvoicesRedirectConfirmation\t, UserPreferencesHideStatementsRedirectConfirmation\t, UserPreferencesHideS1BrowserUI\t, UserPreferencesDisableEndorsementEmail\t, UserPreferencesPathAssistantCollapsed\t, UserPreferencesCacheDiagnostics\t, UserPreferencesShowEmailToGuestUsers\t, UserPreferencesShowManagerToGuestUsers\t, UserPreferencesShowWorkPhoneToGuestUsers\t, UserPreferencesShowMobilePhoneToGuestUsers\t, UserPreferencesShowFaxToGuestUsers\t, UserPreferencesShowStreetAddressToGuestUsers\t, UserPreferencesLightningExperiencePreferred\t, UserPreferencesPreviewLightning\t, UserPreferencesHideEndUserOnboardingAssistantModal\t, UserPreferencesHideLightningMigrationModal\t, UserPreferencesHideSfxWelcomeMat\t, UserPreferencesHideBiggerPhotoCallout\t, UserPreferencesGlobalNavBarWTShown\t, UserPreferencesGlobalNavGridMenuWTShown\t, UserPreferencesCreateLEXAppsWTShown\t, UserPreferencesFavoritesWTShown\t, UserPreferencesRecordHomeSectionCollapseWTShown\t, UserPreferencesRecordHomeReservedWTShown\t, UserPreferencesFavoritesShowTopFavorites\t, UserPreferencesExcludeMailAppAttachments\t, UserPreferencesSuppressTaskSFXReminders\t, UserPreferencesSuppressEventSFXReminders\t, UserPreferencesPreviewCustomTheme\t, UserPreferencesHasCelebrationBadge\t, UserPreferencesUserDebugModePref\t, UserPreferencesSRHOverrideActivities\t, UserPreferencesNewLightningReportRunPageEnabled\t, UserPreferencesNativeEmailClient\t, UserPreferencesHideBrowseProductRedirectConfirmation\t, ContactId\t, AccountId\t, CallCenterId\t, Extension\t, FederationIdentifier\t, AboutMe\t, FullPhotoUrl\t, SmallPhotoUrl\t, IsExtIndicatorVisible\t, OutOfOfficeMessage\t, MediumPhotoUrl\t, DigestFrequency\t, DefaultGroupNotificationFrequency\t, LastViewedDate\t, LastReferencedDate\t, BannerPhotoUrl\t, SmallBannerPhotoUrl\t, MediumBannerPhotoUrl\t, IsProfilePhotoActive\t, IndividualId\t, dfsle__CanManageAccount__c\t, dfsle__Provisioned__c\t, dfsle__Status__c\t, dfsle__Username__c\t"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31T00:00:00Z"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31T00:00:00Z"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SF new lead Refresh')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -1711,536 +1919,6 @@
 				},
 				"folder": {
 					"name": "ACS/MSA Forecasting"
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy data1",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "\nselect \ncategory ='Renewed', \n[Account 18 Digits ID] as Accountid,\nEOMONTH(ExtractDate) as monthdate,\n[Member Grade] as MemberGrade,\n[Branch Group] as BranchGroup,\ngender as gender,\n[Certification Group]   as CertificationGroup,\n[Certification Level]   as CertificationLevel,\n[PPP]  as PPP,\n[Account 18 Digits ID]  as AccountObjID,\nEmail as Email,\n[Primary Account Type]  as AccountType,\n--DateOfBirth__c as DateOfBirth__c,\n[Days since Current Membership Expiry] as Days_since_Current_Membership_Expiry__c,\n[Account Name] as PersonFullName,\n[Current Membership Expiry] as CurrentMembershipExpiry,\n[Joined date] as joineddate,\nbranch as branch,\ngeography  as geography,\n[Work Country] as Workcountry,\n[Home Country] as Homecountry,\n[Former Billing Grade1] as Former_Billing_Grade1__c,\nBGG as BGG,\nnull as BillingGradeConcat,\nExtractdate as Extractdate,\n[FY Year] as FYYear,\nFY as FY ,\nmonth as Month,\n[Billing Grade] as BillingGrade,\nHeirarchy as Heirarchy,\nsubsegments as subsegments,\n[Membership Status] as Membership_Status,\nnull as BillingPostalCode,\nnull as ShippingPostalCode,\nnull as industry,\nnull as PersonAccountPositionTitle__c,\nnull as Expertise__c,\nPPP as PPPName,\nnull  as errorflag\nfrom  [dbo].[member_dump]\nwhere extractdate ='2023-05-01'\nand [Retained_flag] =1  \n--and [Retained_flag] =1    --Renewed \n--and [Actual] =1                 --Continuing \n--and [At Risk] =1                --unfinancial \n--and [churn_flag] =1         --Lost\n--and [new_flag] =1 --New\n",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false,
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "category",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "category",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Accountid",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "AccountID",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "monthdate",
-											"type": "DateTime",
-											"physicalType": "date"
-										},
-										"sink": {
-											"name": "MonthDate",
-											"type": "DateTime",
-											"physicalType": "date"
-										}
-									},
-									{
-										"source": {
-											"name": "MemberGrade",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "MemberGrade",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BranchGroup",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "BranchGroup",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "gender",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Gender",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CertificationGroup",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "certificationGroup",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CertificationLevel",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "CertificationLevel",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PPP",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "PPP",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountObjID",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "AccountObjID",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Email",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Email",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "AccountType",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "AccountType",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Days_since_Current_Membership_Expiry__c",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Days_since_Current_Membership_Expiry__c",
-											"type": "Decimal",
-											"physicalType": "decimal",
-											"scale": 0,
-											"precision": 18
-										}
-									},
-									{
-										"source": {
-											"name": "PersonFullName",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "PersonFullName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CurrentMembershipExpiry",
-											"type": "DateTime",
-											"physicalType": "date"
-										},
-										"sink": {
-											"name": "CurrentMembershipExpiry",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "joineddate",
-											"type": "DateTime",
-											"physicalType": "date"
-										},
-										"sink": {
-											"name": "JoinedDate",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "branch",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Branch",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "geography",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Geography",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Workcountry",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "WorkCountry",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Homecountry",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "HomeCountry",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Former_Billing_Grade1__c",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Former_Billing_Grade1__c",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BGG",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "BGG",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BillingGradeConcat",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "BillingGradeConcat",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Extractdate",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "ExtractDate",
-											"type": "DateTime",
-											"physicalType": "date"
-										}
-									},
-									{
-										"source": {
-											"name": "FYYear",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "FYYear",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "FY",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "FY",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Month",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Month",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BillingGrade",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "BillingGrade",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Heirarchy",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Heirarchy",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "subsegments",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "subsegments",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Membership_Status",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "Membership_Status",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "BillingPostalCode",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "BillingPostalCode",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ShippingPostalCode",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "ShippingPostalCode",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "industry",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "industry",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PersonAccountPositionTitle__c",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "PersonAccountPositionTitle__c",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Expertise__c",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Expertise__c",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PPPName",
-											"type": "String",
-											"physicalType": "varchar"
-										},
-										"sink": {
-											"name": "PPPName",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "errorflag",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "errorflag",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": true
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "ds_sql_memebershipdb",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "SQLTableQ",
-								"type": "DatasetReference",
-								"parameters": {
-									"tablename": "Mem_dashboard01",
-									"schemaname": "membership"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "ACS/Membership/Monthly"
 				},
 				"annotations": []
 			},
@@ -21235,7 +20913,7 @@
 				"variables": {
 					"date": {
 						"type": "String",
-						"defaultValue": "2024-06-30"
+						"defaultValue": "2024-12-31"
 					}
 				},
 				"folder": {
@@ -21370,7 +21048,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -21590,18 +21268,6 @@
 					},
 					{
 						"pipelineReference": {
-							"referenceName": "SF new Qualification history Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
 							"referenceName": "SF new Qualification Refresh",
 							"type": "PipelineReference"
 						},
@@ -21638,18 +21304,6 @@
 					},
 					{
 						"pipelineReference": {
-							"referenceName": "SF new Unit Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
 							"referenceName": "SF new User Refresh",
 							"type": "PipelineReference"
 						},
@@ -21672,7 +21326,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new User Refresh')]"
 			]
 		},
 		{
@@ -22266,7 +21921,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/SF task Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new lead Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF new User Refresh')]"
 			]
 		},
 		{

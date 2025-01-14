@@ -67,6 +67,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'securityToken' of 'SalesforceACSProd'"
 		},
+		"SalesforceNewAPItest_clientSecret": {
+			"type": "secureString",
+			"metadata": "Secure string for 'clientSecret' of 'SalesforceNewAPItest'"
+		},
 		"dewr_ls_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'dewr_ls'"
@@ -134,6 +138,14 @@
 		"SalesforceACSProd_properties_typeProperties_username": {
 			"type": "string",
 			"defaultValue": "prashant.yadvendra@acs.org.au"
+		},
+		"SalesforceNewAPItest_properties_typeProperties_environmentUrl": {
+			"type": "string",
+			"defaultValue": "https://australiancomputersociety.my.salesforce.com"
+		},
+		"SalesforceNewAPItest_properties_typeProperties_clientId": {
+			"type": "string",
+			"defaultValue": "3MVG9n_HvETGhr3AH_H.4I2Qc4Wi_IeHq6Jwy_JIJ0rZttZ7qqacVLP_jxCmm_QSpef0B41muTJluVw2QGPxP"
 		},
 		"dewr_ls_properties_typeProperties_url": {
 			"type": "string",
@@ -431,22 +443,6 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Qualification_history"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Qualification_history"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": " Id, IsDeleted, ParentId, CreatedById, CreatedDate, Field, DataType, OldValue, NewValue"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
 		"NewSFRefresh_Hourly_properties_SF new Qualification Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "Qualification__c"
@@ -492,22 +488,6 @@
 			"defaultValue": "Id, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, Assessment__c, DetailsonResultLetter__c, ExperienceForProject1__c, ExperienceForProject2__c, Plagiarism_Detected__c, RPLAccepted__c, RPLOutcome__c, RPLRejectionReason__c"
 		},
 		"NewSFRefresh_Hourly_properties_SF new SupportingInfo__c Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforcenew"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Unit__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Unit__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Qualification__c, CloselyRelatedANZSCOgroups__c, CoreUnitANZSCOGroup__c, GradeAchieved__c, ICT__c, Pass__c, SubmittedBy__c, UnitCredits__c"
-		},
-		"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
@@ -1175,7 +1155,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_0",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1228,14 +1208,14 @@
 					"SalesforceACSProd_securityToken": {
 						"value": "[parameters('SalesforceACSProd_securityToken')]"
 					},
+					"SalesforceNewAPItest_clientSecret": {
+						"value": "[parameters('SalesforceNewAPItest_clientSecret')]"
+					},
 					"dewr_ls_accountKey": {
 						"value": "[parameters('dewr_ls_accountKey')]"
 					},
 					"ls_DataLake_DPP_accountKey": {
 						"value": "[parameters('ls_DataLake_DPP_accountKey')]"
-					},
-					"ls_SQL_membership_connectionString": {
-						"value": "[parameters('ls_SQL_membership_connectionString')]"
 					},
 					"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
@@ -1279,6 +1259,12 @@
 					"SalesforceACSProd_properties_typeProperties_username": {
 						"value": "[parameters('SalesforceACSProd_properties_typeProperties_username')]"
 					},
+					"SalesforceNewAPItest_properties_typeProperties_environmentUrl": {
+						"value": "[parameters('SalesforceNewAPItest_properties_typeProperties_environmentUrl')]"
+					},
+					"SalesforceNewAPItest_properties_typeProperties_clientId": {
+						"value": "[parameters('SalesforceNewAPItest_properties_typeProperties_clientId')]"
+					},
 					"dewr_ls_properties_typeProperties_url": {
 						"value": "[parameters('dewr_ls_properties_typeProperties_url')]"
 					},
@@ -1292,7 +1278,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_1",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1302,6 +1288,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_SQL_membership_connectionString": {
+						"value": "[parameters('ls_SQL_membership_connectionString')]"
 					}
 				}
 			},
@@ -1312,7 +1301,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_2",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1335,7 +1324,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_3",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1355,7 +1344,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_4",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1375,7 +1364,7 @@
 		{
 			"name": "acs-as-poc-df01_ArmTemplate_5",
 			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
+			"apiVersion": "2024-03-01",
 			"properties": {
 				"mode": "incremental",
 				"templateLink": {
@@ -1602,18 +1591,6 @@
 					"NewSFRefresh_Hourly_properties_SF new Product Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Product Refresh_parameters_schemaname')]"
 					},
-					"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_SourceTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_SourceTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_TargetTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_TargetTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_ColumnList": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_ColumnList')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_schemaname": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification history Refresh_parameters_schemaname')]"
-					},
 					"NewSFRefresh_Hourly_properties_SF new Qualification Refresh_parameters_SourceTableName": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Qualification Refresh_parameters_SourceTableName')]"
 					},
@@ -1649,18 +1626,6 @@
 					},
 					"NewSFRefresh_Hourly_properties_SF new SupportingInfo__c Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new SupportingInfo__c Refresh_parameters_schemaname')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_SourceTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_SourceTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_TargetTableName": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_TargetTableName')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_ColumnList": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_ColumnList')]"
-					},
-					"NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_schemaname": {
-						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Unit Refresh_parameters_schemaname')]"
 					},
 					"NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_SourceTableName": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_SourceTableName')]"
