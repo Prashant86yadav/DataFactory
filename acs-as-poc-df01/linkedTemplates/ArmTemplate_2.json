@@ -3123,15 +3123,15 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Relationship__c"
+						"defaultValue": "Campaign_Member__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Relationship__c"
+						"defaultValue": "Campaign_Member__c"
 					},
 					"schemaname": {
 						"type": "string",
-						"defaultValue": "salesforce"
+						"defaultValue": "salesforcenew"
 					}
 				},
 				"variables": {

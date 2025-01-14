@@ -4004,15 +4004,15 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Relationship__c"
+						"defaultValue": "Campaign_Member__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Relationship__c"
+						"defaultValue": "Campaign_Member__c"
 					},
 					"schemaname": {
 						"type": "string",
-						"defaultValue": "salesforce"
+						"defaultValue": "salesforcenew"
 					}
 				},
 				"variables": {
@@ -13270,6 +13270,80 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ACSDSSF')]",
+				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF Relationship__c Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceSource",
+								"readBehavior": "query"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ACSDSSFOR",
+								"type": "DatasetReference",
+								"parameters": {
+									"SourceTableName": "Relationship__c"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": "Relationship__c",
+									"schemaname": "salesforce"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "ACS/Salesforce"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ACSDSSFOR')]",
 				"[concat(variables('factoryId'), '/datasets/SQLTableQ')]"
 			]
 		},
@@ -45425,6 +45499,13 @@
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
 						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF Relationship__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
 					}
 				],
 				"type": "ScheduleTrigger",
@@ -45474,7 +45555,8 @@
 				"[concat(variables('factoryId'), '/pipelines/SF new Product Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF Contact Refresh')]",
 				"[concat(variables('factoryId'), '/pipelines/SF new Assessment Refresh')]",
-				"[concat(variables('factoryId'), '/pipelines/SF new AccountContactRelation Refresh')]"
+				"[concat(variables('factoryId'), '/pipelines/SF new AccountContactRelation Refresh')]",
+				"[concat(variables('factoryId'), '/pipelines/SF Relationship__c Refresh')]"
 			]
 		},
 		{
