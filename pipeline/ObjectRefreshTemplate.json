@@ -17,7 +17,6 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceV2Source",
-						"query": "SELECT Id FROM Campaign_Member__c",
 						"includeDeletedObjects": false
 					},
 					"sink": {
