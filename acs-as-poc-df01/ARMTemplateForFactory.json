@@ -3957,6 +3957,7 @@
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -4004,11 +4005,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Campaign_Member__c"
+						"defaultValue": "Contact"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Campaign_Member__c"
+						"defaultValue": "Contact"
 					},
 					"schemaname": {
 						"type": "string",
