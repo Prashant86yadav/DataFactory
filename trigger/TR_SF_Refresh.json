@@ -449,6 +449,18 @@
 					"referenceName": "SF Relationship__c Refresh",
 					"type": "PipelineReference"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Vendor__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Vendor__c",
+					"TargetTableName": "Vendor__c",
+					"ColumnList": "Id\n      ,OwnerId\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,IsActive__c\n      ,VendorCode__c\n      ,VendorName__c\n      ,DisplayName__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
