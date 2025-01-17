@@ -686,12 +686,78 @@
 		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "VendorCertificationExperience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "VendorCertificationExperience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,VendorCertification__c\n      ,Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/TR_HCO_pipelines')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pl_broadcastingDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_trackingDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "pl_RawAnalyticsDaily_Incre",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2022-10-04T00:00:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								0
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/TR_Membership_Daily')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
@@ -1255,6 +1321,18 @@
 							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]",
 							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]",
 							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
+						}
+					},
+					{
+						"pipelineReference": {
+							"referenceName": "SF new VendorCertificationExperience__c Refresh",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"SourceTableName": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_SourceTableName')]",
+							"TargetTableName": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_TargetTableName')]",
+							"ColumnList": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_ColumnList')]",
+							"schemaname": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_schemaname')]"
 						}
 					}
 				],

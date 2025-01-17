@@ -890,6 +890,18 @@
 		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
 			"value": "salesforcenew"
 		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_SourceTableName": {
+			"value": "VendorCertificationExperience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_TargetTableName": {
+			"value": "VendorCertificationExperience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_ColumnList": {
+			"value": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,VendorCertification__c\n      ,Experience__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationExperience__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
+		},
 		"containerUri": {
 			"value": ""
 		},
