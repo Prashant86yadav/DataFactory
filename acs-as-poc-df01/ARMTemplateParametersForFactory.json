@@ -877,6 +877,18 @@
 		},
 		"TR_SF_Refresh_properties_SF new Vendorcertification__c Refresh_parameters_schemaname": {
 			"value": "salesforcenew"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"value": "VendorCertificationAssessmentANZSCO__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"value": "VendorCertificationAssessmentANZSCO__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"value": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,VendorCertification__c\n      ,CloselyRelated__c\n      ,AssessmentANZSCO__c\n      ,ANZSCOName__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
+			"value": "salesforcenew"
 		}
 	}
 }

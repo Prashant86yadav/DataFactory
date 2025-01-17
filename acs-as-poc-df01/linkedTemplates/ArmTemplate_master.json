@@ -1171,6 +1171,22 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "VendorCertificationAssessmentANZSCO__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "VendorCertificationAssessmentANZSCO__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,VendorCertification__c\n      ,CloselyRelated__c\n      ,AssessmentANZSCO__c\n      ,ANZSCOName__c"
+		},
+		"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -1670,6 +1686,26 @@
 					},
 					"NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "acs-as-poc-df01_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
 					},
 					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName')]"
@@ -1706,26 +1742,6 @@
 					},
 					"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_4')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_6",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2024-03-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
 					},
 					"TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF Assessment Refresh_parameters_SourceTableName')]"
@@ -2188,6 +2204,18 @@
 					},
 					"TR_SF_Refresh_properties_SF new Vendorcertification__c Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new Vendorcertification__c Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new VendorCertificationAssessmentANZSCO__c Refresh_parameters_schemaname')]"
 					}
 				}
 			},

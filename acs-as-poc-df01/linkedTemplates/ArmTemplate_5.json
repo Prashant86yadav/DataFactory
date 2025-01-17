@@ -358,54 +358,6 @@
 		"NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname": {
 			"type": "string",
 			"defaultValue": "salesforcenew"
-		},
-		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "EventSponsor__c"
-		},
-		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "EventSponsor__c"
-		},
-		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, OwnerId, IsDeleted, Name, CurrencyIsoCode, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, Event__c, SponsorImage__c, Sponsor__c, Company_Website__c\n"
-		},
-		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
-		},
-		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "Campaign"
-		},
-		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "Campaign"
-		},
-		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "\nId, IsDeleted, Name, ParentId, Type, Status, StartDate, EndDate, CurrencyIsoCode, ExpectedRevenue, BudgetedCost, ActualCost, ExpectedResponse, NumberSent, IsActive, Description, NumberOfLeads, NumberOfConvertedLeads, NumberOfContacts, NumberOfResponses, NumberOfOpportunities, NumberOfWonOpportunities, AmountAllOpportunities, AmountWonOpportunities, HierarchyNumberOfLeads, HierarchyNumberOfConvertedLeads, HierarchyNumberOfContacts, HierarchyNumberOfResponses, HierarchyNumberOfOpportunities, HierarchyNumberOfWonOpportunities, HierarchyAmountAllOpportunities, HierarchyAmountWonOpportunities, HierarchyNumberSent, HierarchyExpectedRevenue, HierarchyBudgetedCost, HierarchyActualCost, OwnerId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, CampaignMemberRecordTypeId, ActivationDate__c, AvailableCapacity__c, AvailableWaitlistCapacity__c, BatchRunDate__c, BranchEmail__c, BranchName__c, BudgetApproved__c, BusinessCaseApproved__c, CPDEvent__c, CPDHours__c, CancellationReason__c, Capacity_Filled__c, Capacity__c, CongaACSLogoURL1__c, CongaACSLogoURL__c, CongaFacebookURL__c, CongaLocationIconURL__c, CongaTimeIconURL__c, CongaTwitterURL__c, Conga_LinkedIn_URL__c, DeliveryMethod__c, DetailedDescription__c, DoNotPublishOnline__c, DoNotRegisterOnline__c, EndDateAndTime__c, EventBudget__c, EventCity__c, EventLocationURL__c, EventOwner__c, EventState__c, EventType__c, EventVenue__c, Event_Label_ID__c, Event_Label__c, Event_Location_Conga_URL__c, ExternalURL__c, ICSLocationForCalendar__c, ICS_File_ID__c, Level_Room__c, Location_del__c, MemberOnlyEvent__c, NationalEventOfSignificance__c, PortalImageId__c, Postcode__c, PostponeReason__c, RegistrationEndDateAndTime__c, Related_ACS_Office__c, SFIASkillLevel__c, SFIA_Category__c, SFIA_Skill__c, SFIA_Subcategory__c, StartDateAndTime__c, StreetAddress__c, TermsAndConditions__c, TitleInPortal__c, Topics__c, WaitlistCapacity__c, Waitlist_Capacity_Filled__c, ActualTotalEventExpenditure__c, ActualTotalEventIncome__c, AttendeeCount__c, BookingAdditionsAvailableCount__c GroupBookingAvailableSum__c, No_of_People_Attended__c, No_of_People_Cancelled__c, No_of_People_No_Show__c, No_of_People_Registered__c, No_of_People_in_Wait_List__c, NumberOfWaitlisted__c, Country__c, NonMemberProduct__c, MemeberProduct__c, Timezone__c, EventImage__c, Campaign18DigitsId__c, AttendeesinclGroupBookings__c, EventEndTime__c, EventStartTime__c, EventTimezoneId__c, Objective__c, XENEventId__c, Detailed_Description_Text_Only__c, Dimension1_List__c, Dimension2_List__c, Dimension3_List__c, AutoCloseRegistration__c, ROI_Account__c, ROI_Amount__c, Total_Price__c, Virtual__c, Virtual_Event_Reminder_Send_Date__c, Event_Web_URL__c, Event_Web_URL_Display__c, Event_States__c, Excluded_Billing_Grades__c, Invoice_Payment_Expiry__c, Max_Tickets_Per_Account__c, Registration_End_Date_is_Reached__c, Invoice_Payment_Expiry_Formatted__c, Label_Outfit_Document_Id__c, Event_Survey_Link__c, Event_Presentation_Link__c, Micro_Tribe__c, Primary_Competency_Framework__c, Primary_Competency_Full_Label__c, Primary_Competency_Label__c, Primary_Competency_Updated_from_Child__c, Primary_Competency__c, Micro_Tribe_Label__c, Virtual_Event_Time_Zone__c\n"
-		},
-		"TR_Membership_Daily_properties_SF CampaignRefresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
-		},
-		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_SourceTableName": {
-			"type": "string",
-			"defaultValue": "CampaignMember"
-		},
-		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_TargetTableName": {
-			"type": "string",
-			"defaultValue": "CampaignMember"
-		},
-		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_ColumnList": {
-			"type": "string",
-			"defaultValue": "Id, IsDeleted, CampaignId, LeadId, ContactId, Status, HasResponded, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, FirstRespondedDate, CurrencyIsoCode, Salutation, Name, FirstName, LastName, Title, Street, City, State, PostalCode, Country, Email, Phone, Fax, MobilePhone, Description, DoNotCall, HasOptedOutOfEmail, HasOptedOutOfFax, LeadSource, CompanyOrAccount, Type, LeadOrContactId, LeadOrContactOwnerId, ArrivedLate__c, Attendee_Title__c, BookingAddition__c, CampaignMemberAccountId__c, CancellationReasonReference__c, Comments__c, CongaEventConfirmationEmail__c, Conga_Event_Confirmation_Email_RM__c, ConvertedEventOwner__c, ConvertedStartDate__c, DateTimeWhenMemberAttended__c, DietaryRequirements_del__c, DoNotSendAutoEmails__c, Employer__c, EventOwnerEmail__c, EventPricing__c, EventRegistrationNumber__c, FirstReminderEmailSent__c, Gender__c, GroupBooking__c, InGroupBooking__c, LeftEarly__c, MemberGrade__c, Member__c, MemeberContactName__c, PPP__c, Paid__c, PostponeReasonReference__c, Primary_Account_Type__c, QRCodeToTrackEventsAttendance__c, RefundRequired__c, ReminderEmailTemplate__c, SendCancellationEmail__c, SendPostponementEmail__c, Table__c, VIP__c, WalkIn__c, CampaignMemberContactEmail__c, AmountPaid__c, Account__c, EventAddressLine1__c, EventAddressLine2__c, EventStartDateFormatted__c, EventStartDate__c, EventStartTime__c, EventVenue__c, QR_Code_Link__c, SendRegoConfirmationEmail__c, AttendeeCount__c, CurrentEmployer__c, CurrentPositionTitle__c, MembershipNumber__c, Event_Member_18_Digits_Id__c, AttendeeFirstName__c, Price__c, ROI_Account__c, PreferredFirstName__c, ROI_Amount__c, ROI_Payment__c, CPD_Hours_Added__c, Not_Attending__c, ACS_Event_Member_Guest__c, Booker_Name__c, Campaign_Member_Id__c, Guest__c, Payment_Method__c, Is_Free__c, Ticket_Type__c, Created_By_Date_Time__c\n\n"
-		},
-		"TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname": {
-			"type": "string",
-			"defaultValue": "salesforce"
 		}
 	},
 	"variables": {
@@ -892,6 +844,255 @@
 					"brpExtractTo": {
 						"type": "String",
 						"defaultValue": "1900-12-31T00:00:00Z"
+					}
+				},
+				"folder": {
+					"name": "ACS/Salesforce New MSA"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SF new VendorCertificationAssessmentANZSCO__c Refresh')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy Salesforce object",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Set brpExtractTo",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "Select   @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= @{variables('brpExtractFrom')} AND\nLastModifiedDate <= @{variables('brpExtractTo')}",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"id"
+									]
+								},
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": {
+										"value": "@pipeline().parameters.SourceTableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": "salesforcenew"
+								}
+							}
+						]
+					},
+					{
+						"name": "Set  brpExtractFrom",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET TGT HWM  SQL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractFrom",
+							"value": {
+								"value": "@if(equals(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark,null),variables('brpExtractTo') ,\n    formatDateTime(activity('GET TGT HWM  SQL').output.firstRow.HighWaterMark, 'yyyy-MM-ddTHH:mm:ss.fffZ'))\n",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "GET TGT HWM  SQL",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "SELECT MAX(LastModifiedDate) AS HighWaterMark\nFROM \n@{concat(pipeline().parameters.schemaname,'.',pipeline().parameters.TargetTableName)}\n\n",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SQLTableQ",
+								"type": "DatasetReference",
+								"parameters": {
+									"tablename": {
+										"value": "@pipeline().parameters.TargetTableName",
+										"type": "Expression"
+									},
+									"schemaname": {
+										"value": "@pipeline().parameters.schemaname",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "GET SRC HighWaterMark",
+						"description": "Find the latest change in the Salesforce table indicated by the parameter",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Set  brpExtractFrom",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SalesforceV2Source",
+								"SOQLQuery": {
+									"value": "\nSELECT LastModifiedDate\nFROM @{pipeline().parameters.SourceTableName}\nwhere LastModifiedDate >= @{variables('brpExtractFrom')}\norder by LastModifiedDate desc \nlimit 1",
+									"type": "Expression"
+								},
+								"includeDeletedObjects": false
+							},
+							"dataset": {
+								"referenceName": "SalesforceMSANew",
+								"type": "DatasetReference",
+								"parameters": {
+									"sourcetable": {
+										"value": "@pipeline().parameters.SourceTableName",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					},
+					{
+						"name": "Set brpExtractTo",
+						"description": "",
+						"type": "SetVariable",
+						"dependsOn": [
+							{
+								"activity": "GET SRC HighWaterMark",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"variableName": "brpExtractTo",
+							"value": {
+								"value": "@formatDateTime(activity('GET SRC HighWaterMark').output.firstRow.LastModifiedDate, 'yyyy-MM-ddTHH:mm:ss.fffZ')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"SourceTableName": {
+						"type": "string",
+						"defaultValue": "VendorCertificationAssessmentANZSCO__c"
+					},
+					"TargetTableName": {
+						"type": "string",
+						"defaultValue": "VendorCertificationAssessmentANZSCO__c"
+					},
+					"ColumnList": {
+						"type": "string",
+						"defaultValue": "Id       ,IsDeleted       ,Name       ,CreatedDate       ,CreatedById       ,LastModifiedDate       ,LastModifiedById       ,SystemModstamp       ,LastViewedDate       ,LastReferencedDate       ,VendorCertification__c       ,CloselyRelated__c       ,AssessmentANZSCO__c       ,ANZSCOName__c"
+					},
+					"schemaname": {
+						"type": "string",
+						"defaultValue": "salesforcenew"
+					}
+				},
+				"variables": {
+					"brpExtractFrom": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
+					},
+					"brpExtractTo": {
+						"type": "String",
+						"defaultValue": "1900-12-31 00:00:00"
 					}
 				},
 				"folder": {
@@ -21545,81 +21746,6 @@
 				"[concat(variables('factoryId'), '/pipelines/pl_broadcastingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_trackingDaily_Incre')]",
 				"[concat(variables('factoryId'), '/pipelines/pl_RawAnalyticsDaily_Incre')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TR_Membership_Daily')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Membership Pipelines will be Triggered everyday at 6 AM ",
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Update Daily Cases Table Legacy",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF EventSponsor Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF CampaignRefresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_Membership_Daily_properties_SF CampaignRefresh_parameters_schemaname')]"
-						}
-					},
-					{
-						"pipelineReference": {
-							"referenceName": "SF CampaignMember Refresh",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"SourceTableName": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_SourceTableName')]",
-							"TargetTableName": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_TargetTableName')]",
-							"ColumnList": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_ColumnList')]",
-							"schemaname": "[parameters('TR_Membership_Daily_properties_SF CampaignMember Refresh_parameters_schemaname')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2024-02-22T23:20:00",
-						"timeZone": "AUS Eastern Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								6
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Update Daily Cases Table Legacy')]"
 			]
 		}
 	]
