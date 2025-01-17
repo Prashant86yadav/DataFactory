@@ -1139,6 +1139,22 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
+		"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "Vendor__c"
+		},
+		"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "Vendor__c"
+		},
+		"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": "Id\n      ,OwnerId\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,IsActive__c\n      ,VendorCode__c\n      ,VendorName__c\n      ,DisplayName__c"
+		},
+		"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": "salesforcenew"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -2112,11 +2128,43 @@
 					},
 					"TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname": {
 						"value": "[parameters('TR_SF_Refresh_properties_SF new AccountContactRelation Refresh_parameters_schemaname')]"
+					},
+					"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_SourceTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_SourceTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_TargetTableName": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_TargetTableName')]"
+					},
+					"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_ColumnList": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_ColumnList')]"
+					},
+					"TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_schemaname": {
+						"value": "[parameters('TR_SF_Refresh_properties_SF new Vendor__c Refresh_parameters_schemaname')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "acs-as-poc-df01_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_5')]"
 			]
 		}
 	]
