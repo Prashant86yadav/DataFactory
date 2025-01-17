@@ -485,6 +485,18 @@
 					"ColumnList": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,VendorCertification__c\n      ,CloselyRelated__c\n      ,AssessmentANZSCO__c\n      ,ANZSCOName__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new VendorCertificationExperience__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "VendorCertificationExperience__c",
+					"TargetTableName": "VendorCertificationExperience__c",
+					"ColumnList": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,VendorCertification__c\n      ,Experience__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
