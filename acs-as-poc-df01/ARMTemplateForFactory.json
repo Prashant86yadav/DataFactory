@@ -4005,11 +4005,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "Contact"
+						"defaultValue": "VendorCertificationExperience__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "Contact"
+						"defaultValue": "VendorCertificationExperience__c"
 					},
 					"schemaname": {
 						"type": "string",
