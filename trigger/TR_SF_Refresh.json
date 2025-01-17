@@ -461,6 +461,18 @@
 					"ColumnList": "Id\n      ,OwnerId\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,IsActive__c\n      ,VendorCode__c\n      ,VendorName__c\n      ,DisplayName__c",
 					"schemaname": "salesforcenew"
 				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "SF new Vendorcertification__c Refresh",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"SourceTableName": "Vendorcertification__c",
+					"TargetTableName": "Vendorcertification__c",
+					"ColumnList": "Id\n      ,IsDeleted\n      ,Name\n      ,CreatedDate\n      ,CreatedById\n      ,LastModifiedDate\n      ,LastModifiedById\n      ,SystemModstamp\n      ,LastViewedDate\n      ,LastReferencedDate\n      ,Assessment__c\n      ,VendorCertificationAccepted__c\n      ,VendorCertificationStatus__c\n      ,Certification__c\n      ,DateCompleted__c\n      ,DetailsOnResultLetter__c\n      ,VerificationSteps__c\n      ,VerificationUrl__c\n      ,CertificationName__c\n      ,ReasonVendorCertificationNotAccepted__c\n      ,VendorName__c",
+					"schemaname": "salesforcenew"
+				}
 			}
 		],
 		"type": "ScheduleTrigger",
