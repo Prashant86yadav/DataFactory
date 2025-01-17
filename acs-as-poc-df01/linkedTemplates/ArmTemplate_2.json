@@ -3124,11 +3124,11 @@
 				"parameters": {
 					"sourcetable": {
 						"type": "string",
-						"defaultValue": "VendorCertificationExperience__c"
+						"defaultValue": "AssessmentANZSCO__c"
 					},
 					"targettable": {
 						"type": "string",
-						"defaultValue": "VendorCertificationExperience__c"
+						"defaultValue": "AssessmentANZSCO__c"
 					},
 					"schemaname": {
 						"type": "string",
