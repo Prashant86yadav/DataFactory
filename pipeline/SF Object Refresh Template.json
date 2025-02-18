@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Activity"
+				"defaultValue": "Opportunity"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Activity"
+				"defaultValue": "Opportunity01"
 			}
 		},
 		"variables": {
