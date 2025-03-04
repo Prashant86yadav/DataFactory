@@ -9,8 +9,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "[dbo]",
-			"table": "[member_dump_jan]"
+			"schema": "membership",
+			"table": "Mem_dashboard01"
 		}
 	}
 }
