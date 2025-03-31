@@ -6,12 +6,6 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "Active Unfinancial",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "Renew Monthly",
 					"type": "PipelineReference"
 				}
