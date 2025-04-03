@@ -9,12 +9,6 @@
 					"referenceName": "pl_trackingDaily_Incre",
 					"type": "PipelineReference"
 				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "pl_RawAnalyticsDaily_Incre",
-					"type": "PipelineReference"
-				}
 			}
 		],
 		"type": "ScheduleTrigger",
