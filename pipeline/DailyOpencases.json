@@ -1,0 +1,64 @@
+{
+	"name": "DailyOpencases",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "\nWITH MinMaxDates AS (\n    SELECT\n        CAST('2024-03-19' AS DATE) AS MinDate,\n        CAST(MAX(createddateAEST) AS DATE) AS MaxDate\n    FROM [salesforcenew].[Assessment__History]\n),\n\n-- Step 2: Generate all calendar dates between min and max\nAllDates AS (\n    SELECT MinDate AS DateValue FROM MinMaxDates\n    UNION ALL\n    SELECT DATEADD(day, 1, DateValue)\n    FROM AllDates\n    WHERE DateValue < (SELECT MaxDate FROM MinMaxDates)\n),\n\n-- Step 3: Get all case status change events\nCaseStatus AS (\n    SELECT\n        H.ParentId,\n        CAST(H.createddateAEST AS DATE) AS StatusChangeDate,\n        A.FinaliseDateAEST__c AS FinalisedDate,\n        H.newvalue,\n        CASE\n            WHEN H.newvalue IN (\n                'Assessment', 'On Hold', 'Case Officer Screening', 'Awaiting Response',\n                'Unallocated Assessment', 'Manual Reallocation', 'Appeal',\n                'Fraud Investigation', 'Unallocated Appeal', 'Potential Fraud'\n            ) THEN 1\n            WHEN H.newvalue IN ('Finalised', 'Appeal Successful', 'Appeal Unsuccessful') THEN 0\n        END AS IsOpenFlag\n    FROM [salesforcenew].[assessment__c] A\n    INNER JOIN [salesforcenew].[assessment__history] H\n        ON A.id = H.ParentId\n    WHERE\n        A.ApplicationType__c IN (\n            'Recognition of Prior Learning',\n            'Temporary Graduate 485',\n            'Skills',\n            'Post Australian Study'\n        )\n        AND A.ApplicationStatus__c NOT IN ('Cancelled')\n        AND H.Field = 'ApplicationStatus__c'\n),\n\n-- Step 4: Identify finalised dates (case closure candidates)\nFinalisedDates AS (\n    SELECT\n        ParentId,\n        MAX(StatusChangeDate) AS FinalisedDate\n    FROM CaseStatus\n    WHERE newvalue IN ('Finalised', 'Appeal Successful', 'Appeal Unsuccessful')\n    GROUP BY ParentId\n),\n\n-- Step 5: Identify if the case was reopened after finalisation\nReopenedCases AS (\n    SELECT DISTINCT cs.ParentId\n    FROM CaseStatus cs\n    INNER JOIN FinalisedDates fd ON cs.ParentId = fd.ParentId\n    WHERE \n        cs.StatusChangeDate > fd.FinalisedDate\n        AND cs.IsOpenFlag = 1\n        AND cs.newvalue NOT IN ('Appeal Successful', 'Appeal Unsuccessful')\n),\n\n-- Step 6: Determine open and close dates, but clear closed date if reopened\nCaseOpenCloseDates AS (\n    SELECT \n        cs.ParentId,\n        MIN(cs.StatusChangeDate) AS OpenedDate, -- Earliest open status\n        CASE \n            WHEN rc.ParentId IS NOT NULL THEN NULL  -- Case was reopened, treat as still open\n            ELSE fd.FinalisedDate                  -- Otherwise use known finalised date\n        END AS ClosedDate\n    FROM CaseStatus cs\n    LEFT JOIN FinalisedDates fd ON cs.ParentId = fd.ParentId\n    LEFT JOIN ReopenedCases rc ON cs.ParentId = rc.ParentId\n    WHERE cs.IsOpenFlag = 1\n    GROUP BY cs.ParentId, fd.FinalisedDate, rc.ParentId\n),\n\n-- Step 7: Count how many cases are open on each calendar day\nDailyOpenCases AS (\n    SELECT\n        d.DateValue AS [Date],\n        COUNT(DISTINCT c.ParentId) AS OpenCasesCount\n    FROM AllDates d\n    LEFT JOIN CaseOpenCloseDates c\n        ON d.DateValue BETWEEN c.OpenedDate AND ISNULL(c.ClosedDate, '9999-12-31')\n    GROUP BY d.DateValue\n)\n\n-- Final output\nSELECT *\nFROM DailyOpenCases\nOPTION (MAXRECURSION 0);",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table  [psas].[DailyOpenCases]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSQLSP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SQLTableQ",
+						"type": "DatasetReference",
+						"parameters": {
+							"tablename": "psas",
+							"schemaname": "DailyOpenCases"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "ACS/Transformations"
+		},
+		"annotations": []
+	}
+}
