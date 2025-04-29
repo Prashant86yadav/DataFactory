@@ -507,6 +507,22 @@
 			"type": "string",
 			"defaultValue": "salesforcenew"
 		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+			"type": "string",
+			"defaultValue": "assessment__c\n"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
+			"type": "string",
+			"defaultValue": " Id, OwnerId, IsDeleted, Name, RecordTypeId, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, AgentEmailAddress__c, AgentName__c, AllocationDate__c, AppealAllocationDate__c, AppealAssessor__c, AppealCaseOfficer__c, AppealDate__c, AppealFinalisedDate__c, AppealLetterContent__c, AppealLetterFileId__c, AppealLetterFileName__c, AppealOutcome__c, ApplicantEmailAddress__c, ApplicantNameChange__c, ApplicantOtherName__c, Applicant__c, ApplicationStatus__c, ApplicationType__c, AppliedANZSCOs__c, ApplicationOutcome__c, Assessor__c, AuthorisedAgent__c, CalculatedDeadlineDate__c, CaseOfficer__c, CongaLettersGenerated__c, Conga_Trigger_Appeal_Result_Letters__c, Contact__c, CurrentAttemptCount__c, DetailsOnResultLetter__c, DocusignProcessCompleted__c, EligibleforAppeal__c, ExperienceSectionStatus__c, FinaliseDate__c, FraudFlagDate__c, GenerateOutcomeLetterConga__c, GraduationDate__c, History__c, IDVerification__c, InvestigationOutcome__c, NameChangeRequested__c, NameHistorySectionStatus__c, NextActionDueDate__c, NumberOfResultLetters__c, OnHoldDate__c, PriorityRange__c, ProfessionalYearStudentID__c, Professional_Year_Complete__c, QAAssessor__c, QAFlagDate__c, RPLSectionStatus__c, ReasonforAppeal__c, ResultLetterContent__c, ResultLetterFileId__c, ResultLetterFileName__c, ResultLetterGenerated__c, SelectYourSkillsSectionStatus__c, SubmissionDate__c, SuitableANZSCOs__c, VEVOValidationFailed__c, VisaExpirationDate__c, VisaGrantNumber__c, Additional_docs_requested__c, AppealProcessingTime__c, ApplicantName__c, Applicantpreferredname__c, Conga_Trigger_Unsuitable_Result_Letters__c, CountryOfBirth__c, History_Indicator__c, IsRessignedApplication__c, ListViewFilter__c, ProcessingTime__c, UnsuitableTemplateId__c, MaxAttemptCount__c, QualificationsSectionStatus__c, ANZSCOsSelection__c, RejectedRPLCount__c, CongaTemplateId__c, Conga_Trigger_FraudPlagiarismRejected__c, Change_Since_RMD__c, RMD_Calculate_Run_Timestamp__c, ReasonApplicationUnsuitable__c, Trigger_RPL_Validation__c, RMD_Validation__c, On_Hold_Reason__c\n"
+		},
+		"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
+			"type": "string",
+			"defaultValue": " salesforcenew"
+		},
 		"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
 			"type": "string",
 			"defaultValue": "EventSponsor__c"
@@ -1281,6 +1297,9 @@
 					"ls_DataLake_DPP_accountKey": {
 						"value": "[parameters('ls_DataLake_DPP_accountKey')]"
 					},
+					"ls_SQL_membership_connectionString": {
+						"value": "[parameters('ls_SQL_membership_connectionString')]"
+					},
 					"ACS Databricks Premium_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('ACS Databricks Premium_properties_typeProperties_existingClusterId')]"
 					},
@@ -1352,9 +1371,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"ls_SQL_membership_connectionString": {
-						"value": "[parameters('ls_SQL_membership_connectionString')]"
 					}
 				}
 			},
@@ -1702,26 +1718,18 @@
 					},
 					"NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname": {
 						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new User Refresh_parameters_schemaname')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_4')]"
-			]
-		},
-		{
-			"name": "acs-as-poc-df01_ArmTemplate_6",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2024-03-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
+					},
+					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_SourceTableName')]"
+					},
+					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_TargetTableName')]"
+					},
+					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_ColumnList')]"
+					},
+					"NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname": {
+						"value": "[parameters('NewSFRefresh_Hourly_properties_SF new Assessment Refresh_parameters_schemaname')]"
 					},
 					"TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName": {
 						"value": "[parameters('TR_Membership_Daily_properties_SF EventSponsor Refresh_parameters_SourceTableName')]"
@@ -2248,7 +2256,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_5')]"
+				"[resourceId('Microsoft.Resources/deployments', 'acs-as-poc-df01_ArmTemplate_4')]"
 			]
 		}
 	]
