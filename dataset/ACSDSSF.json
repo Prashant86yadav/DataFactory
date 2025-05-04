@@ -6,9 +6,8 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"object1": {
-				"type": "string",
-				"defaultValue": "account"
+			"sourcetable": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
