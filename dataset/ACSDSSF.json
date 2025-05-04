@@ -19,7 +19,7 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "user"
+			"objectApiName": "Opportunity"
 		}
 	}
 }
