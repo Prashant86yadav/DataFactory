@@ -68,15 +68,15 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "AssessmentANZSCO__c"
+				"defaultValue": "Opportunity"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "AssessmentANZSCO__c"
+				"defaultValue": "Opportunity"
 			},
 			"schemaname": {
 				"type": "string",
-				"defaultValue": "salesforcenew"
+				"defaultValue": "salesforce"
 			}
 		},
 		"variables": {
