@@ -9,10 +9,6 @@
 			"object1": {
 				"type": "string",
 				"defaultValue": "account"
-			},
-			"object2": {
-				"type": "string",
-				"defaultValue": "assessment"
 			}
 		},
 		"annotations": [],
