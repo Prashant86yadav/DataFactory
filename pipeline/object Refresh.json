@@ -68,13 +68,16 @@
 		],
 		"parameters": {
 			"sourcetable": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Opportunity"
 			},
 			"targettable": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "Opportunity"
 			},
 			"schemaname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "salesforce"
 			}
 		},
 		"folder": {
