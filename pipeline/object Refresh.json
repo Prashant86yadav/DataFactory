@@ -43,8 +43,8 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"object1": "Opportunity",
+							"object2": "Opportunity"
 						}
 					}
 				],
