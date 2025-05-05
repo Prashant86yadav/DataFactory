@@ -55,7 +55,10 @@
 				"inputs": [
 					{
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
+						}
 					}
 				],
 				"outputs": [
@@ -106,7 +109,10 @@
 					},
 					"dataset": {
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
+						}
 					}
 				}
 			},
