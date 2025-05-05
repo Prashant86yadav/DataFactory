@@ -55,7 +55,10 @@
 				"inputs": [
 					{
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
+						}
 					}
 				],
 				"outputs": [
@@ -167,8 +170,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
 						}
 					}
 				}
