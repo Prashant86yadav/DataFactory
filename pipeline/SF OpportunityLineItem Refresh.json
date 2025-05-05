@@ -57,7 +57,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": {
+							"SourceTableName": {
 								"value": "@pipeline().parameters.SourceTableName",
 								"type": "Expression"
 							}
@@ -173,7 +173,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": {
+							"SourceTableName": {
 								"value": "@pipeline().parameters.SourceTableName",
 								"type": "Expression"
 							}
