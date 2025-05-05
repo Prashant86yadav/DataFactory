@@ -57,8 +57,10 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -166,7 +168,13 @@
 					},
 					"dataset": {
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
+						}
 					}
 				}
 			},
