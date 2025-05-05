@@ -54,10 +54,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ACSDSSFOR",
+						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"SourceTableName": "Relationship__c"
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
