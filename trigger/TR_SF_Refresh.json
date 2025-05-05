@@ -446,12 +446,6 @@
 			},
 			{
 				"pipelineReference": {
-					"referenceName": "SF Relationship__c Refresh",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
 					"referenceName": "SF new Vendor__c Refresh",
 					"type": "PipelineReference"
 				},
