@@ -24,7 +24,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "SalesforceSource",
-						"query": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+						"query": {
+							"value": "Select  @{pipeline().parameters.ColumnList}  \nFROM @{pipeline().parameters.SourceTableName}\nwhere  LastModifiedDate >= {ts'@{variables('brpExtractFrom')}'} AND\nLastModifiedDate <= {ts'@{variables('brpExtractTo')}'}",
+							"type": "Expression"
+						},
 						"readBehavior": "query"
 					},
 					"sink": {
@@ -54,8 +57,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
 						}
 					}
 				],
@@ -168,8 +170,7 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": "@pipeline().parameters.SourceTableName"
 						}
 					}
 				}
