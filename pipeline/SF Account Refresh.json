@@ -3882,8 +3882,10 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
@@ -3999,8 +4001,10 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "account",
-							"object2": "assessment"
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				}
