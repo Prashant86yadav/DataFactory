@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"sourcetable": {
+			"SourceTableName": {
 				"type": "string"
 			}
 		},
@@ -14,7 +14,10 @@
 		"type": "SalesforceObject",
 		"schema": [],
 		"typeProperties": {
-			"objectApiName": "@dataset().SourceTableName"
+			"objectApiName": {
+				"value": "@dataset().SourceTableName",
+				"type": "Expression"
+			}
 		}
 	}
 }
