@@ -1,0 +1,17 @@
+{
+	"name": "NewSFRefresh_Hourly",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 60,
+				"startTime": "2025-05-06T01:06:00",
+				"timeZone": "AUS Eastern Standard Time"
+			}
+		}
+	}
+}
