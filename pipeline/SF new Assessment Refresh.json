@@ -57,7 +57,10 @@
 						"referenceName": "SalesforceMSANew",
 						"type": "DatasetReference",
 						"parameters": {
-							"sourcetable": "assessment__c"
+							"sourcetable": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
 						}
 					}
 				],
