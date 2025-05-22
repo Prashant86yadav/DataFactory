@@ -39,20 +39,18 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"object1": {
-						"type": "string",
-						"defaultValue": "account"
-					},
-					"object2": {
-						"type": "string",
-						"defaultValue": "assessment"
+					"SourceTableName": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
 				"type": "SalesforceObject",
 				"schema": [],
 				"typeProperties": {
-					"objectApiName": "user"
+					"objectApiName": {
+						"value": "@dataset().SourceTableName",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": []
