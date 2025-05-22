@@ -55,7 +55,13 @@
 				"inputs": [
 					{
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
@@ -168,7 +174,13 @@
 					},
 					"dataset": {
 						"referenceName": "ACSDSSF",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"SourceTableName": {
+								"value": "@pipeline().parameters.SourceTableName",
+								"type": "Expression"
+							}
+						}
 					}
 				}
 			},
