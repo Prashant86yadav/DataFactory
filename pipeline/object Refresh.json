@@ -43,8 +43,10 @@
 						"referenceName": "ACSDSSF",
 						"type": "DatasetReference",
 						"parameters": {
-							"object1": "Opportunity",
-							"object2": "Opportunity"
+							"SourceTableName": {
+								"value": "@pipeline().parameters.sourcetable",
+								"type": "Expression"
+							}
 						}
 					}
 				],
