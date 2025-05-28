@@ -68,11 +68,11 @@
 		"parameters": {
 			"sourcetable": {
 				"type": "string",
-				"defaultValue": "Assessment__c"
+				"defaultValue": "ANZSCO__c"
 			},
 			"targettable": {
 				"type": "string",
-				"defaultValue": "Assessment__c"
+				"defaultValue": "ANZSCO__c"
 			},
 			"schemaname": {
 				"type": "string",
