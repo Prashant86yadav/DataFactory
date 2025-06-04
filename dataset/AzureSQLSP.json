@@ -12,8 +12,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dbo",
-			"table": "dashboard01_backupApril"
+			"schema": "membership",
+			"table": "Mem_dashboard_dummy"
 		}
 	}
 }
