@@ -51,7 +51,7 @@
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
-				"frequency": "Week",
+				"frequency": "Day",
 				"interval": 1,
 				"startTime": "2024-02-22T23:20:00",
 				"timeZone": "AUS Eastern Standard Time",
