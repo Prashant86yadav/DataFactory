@@ -471,7 +471,7 @@
 				"typeProperties": {
 					"variableName": "date",
 					"value": {
-						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 0, 'Month')), -1), 'yyyy-MM-dd')",
+						"value": "@formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 0, 'Month')), 0), 'yyyy-MM-dd')",
 						"type": "Expression"
 					}
 				}
@@ -480,7 +480,7 @@
 		"variables": {
 			"date": {
 				"type": "String",
-				"defaultValue": "'2025-04-30'"
+				"defaultValue": "'2025-06-30'"
 			}
 		},
 		"folder": {
