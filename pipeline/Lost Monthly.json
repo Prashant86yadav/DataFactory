@@ -460,6 +460,7 @@
 			},
 			{
 				"name": "Set end of the month as Date",
+				"description": "we use 1 if we are running this before EOM as Per UTC   ::  @formatDateTime(addDays(startOfMonth(addToTime(utcnow(), 1, 'Month')), -1), 'yyyy-MM-dd')",
 				"type": "SetVariable",
 				"dependsOn": [],
 				"policy": {
