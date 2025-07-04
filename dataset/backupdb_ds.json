@@ -1,0 +1,177 @@
+{
+	"name": "backupdb_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "backupdb_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "category",
+				"type": "varchar"
+			},
+			{
+				"name": "AccountID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MonthDate",
+				"type": "date"
+			},
+			{
+				"name": "MemberGrade",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BranchGroup",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Gender",
+				"type": "nvarchar"
+			},
+			{
+				"name": "certificationGroup",
+				"type": "varchar"
+			},
+			{
+				"name": "CertificationLevel",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PPP",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountObjID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AccountType",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DateOfBirth__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Days_since_Current_Membership_Expiry__c",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			},
+			{
+				"name": "PersonFullName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CurrentMembershipExpiry",
+				"type": "datetime2",
+				"scale": 3
+			},
+			{
+				"name": "JoinedDate",
+				"type": "datetime2",
+				"scale": 3
+			},
+			{
+				"name": "Branch",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Geography",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WorkCountry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HomeCountry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Former_Billing_Grade1__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BGG",
+				"type": "varchar"
+			},
+			{
+				"name": "BillingGradeConcat",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ExtractDate",
+				"type": "date"
+			},
+			{
+				"name": "FYYear",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FY",
+				"type": "varchar"
+			},
+			{
+				"name": "Month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "BillingGrade",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Heirarchy",
+				"type": "varchar"
+			},
+			{
+				"name": "subsegments",
+				"type": "varchar"
+			},
+			{
+				"name": "Membership_Status",
+				"type": "varchar"
+			},
+			{
+				"name": "BillingPostalCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ShippingPostalCode",
+				"type": "nvarchar"
+			},
+			{
+				"name": "industry",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PersonAccountPositionTitle__c",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Expertise__c",
+				"type": "varchar"
+			},
+			{
+				"name": "PPPName",
+				"type": "varchar"
+			},
+			{
+				"name": "errorflag",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "membership",
+			"table": "Mem_dashboard01"
+		}
+	}
+}
